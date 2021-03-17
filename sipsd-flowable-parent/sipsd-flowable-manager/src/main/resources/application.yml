@@ -81,4 +81,4 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
   profiles:
-    active: hotline
+    active: dev
