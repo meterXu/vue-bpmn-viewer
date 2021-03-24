@@ -47,4 +47,9 @@ public class FlowConstant {
      * BUCKET_NAME
      */
     public final static String BUCKET_NAME = "chengtg";
+
+    /**
+     * 增强客户端UI界面 节点最大审批天数属性-PROPERTY_USERTASK_TASKMAXDAY-高强
+     */
+    public final static String PROPERTY_USERTASK_TASKMAXDAY = "task_max_day";
 }

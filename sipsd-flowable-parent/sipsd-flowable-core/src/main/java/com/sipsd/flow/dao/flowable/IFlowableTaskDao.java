@@ -1,13 +1,10 @@
 package com.sipsd.flow.dao.flowable;
 
+import com.github.pagehelper.Page;
 import com.sipsd.flow.vo.flowable.TaskQueryVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
-import com.sipsd.flow.vo.flowable.ret.UserVo;
-import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 /**
  * @author : chengtg
@@ -31,7 +28,7 @@ public interface IFlowableTaskDao {
      * @param params 参数
      * @return
      */
-    public Page<TaskVo> getApplyedTasks(TaskQueryVo params) ;
+    public Page<TaskVo> getApplyedTasks(TaskQueryVo params);
     
     /**
      * 根据任务ID 查询任务

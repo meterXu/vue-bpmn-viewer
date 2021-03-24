@@ -322,6 +322,13 @@ public class DateUtil {
     c.setTimeInMillis(getMillis(date) + day * 24L * 3600L * 1000L);
     return c.getTime();
   }
+
+  public static String getEndDate(Date date, Integer day) {
+    SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Calendar c = Calendar.getInstance();
+    c.add(Calendar.DAY_OF_MONTH, day);
+    return sf.format(c.getTime());
+  }
   
   public static int diffDate(Date date, Date date1) {
     return (int)((getMillis(date) - getMillis(date1)) / 86400000L);
@@ -415,8 +422,12 @@ public class DateUtil {
   }
   
   public static void main(String[] args) throws Exception {
-    System.err.println((new SimpleDateFormat("yyyy-MM-dd mm:HH:ss")).format(addMonth(new Date(), 2)));
-    List<Date> days = getDatesBetweenTwoDate(getdate("2013-01-09"), getdate("2013-01-11"));
-    System.out.println(days.size());
+//    System.err.println((new SimpleDateFormat("yyyy-MM-dd mm:HH:ss")).format(addMonth(new Date(), 2)));
+//    List<Date> days = getDatesBetweenTwoDate(getdate("2013-01-09"), getdate("2013-01-11"));
+//    System.out.println(days.size());
+
+    System.out.println(addDate(new Date(),4));
+
+
   }
 }

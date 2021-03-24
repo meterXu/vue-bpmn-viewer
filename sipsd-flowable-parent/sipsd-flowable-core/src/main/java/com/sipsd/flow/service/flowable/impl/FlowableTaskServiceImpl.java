@@ -1,18 +1,26 @@
 package com.sipsd.flow.service.flowable.impl;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.constant.FlowConstant;
+import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
+import com.sipsd.flow.enm.flowable.CommentTypeEnum;
+import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
+import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
+import com.sipsd.flow.service.flowable.IFlowableTaskService;
+import com.sipsd.flow.vo.flowable.*;
+import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
+import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.constants.BpmnXMLConstants;
-import org.flowable.bpmn.model.FlowNode;
+import org.flowable.bpmn.model.Process;
+import org.flowable.bpmn.model.*;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ActivityInstance;
 import org.flowable.engine.runtime.Execution;
@@ -28,27 +36,10 @@ import org.flowable.task.service.impl.persistence.entity.TaskEntityImpl;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.constant.FlowConstant;
-import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
-import com.sipsd.flow.enm.flowable.CommentTypeEnum;
-import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
-import com.sipsd.flow.vo.flowable.AddSignTaskVo;
-import com.sipsd.flow.vo.flowable.BackTaskVo;
-import com.sipsd.flow.vo.flowable.ClaimTaskVo;
-import com.sipsd.flow.vo.flowable.CompleteTaskVo;
-import com.sipsd.flow.vo.flowable.DelegateTaskVo;
-import com.sipsd.flow.vo.flowable.FormInfoQueryVo;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
-import com.sipsd.flow.vo.flowable.TurnTaskVo;
-import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
-import com.sipsd.flow.vo.flowable.ret.TaskVo;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : chengtg
@@ -64,6 +55,10 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private IFlowableTaskDao flowableTaskDao;
 	@Autowired
 	private IFlowableBpmnModelService flowableBpmnModelService;
+	@Autowired
+	private RepositoryService repositoryService;
+	@Autowired
+	private IFlowableExtensionTaskService flowableExtensionTaskService;
 
 	@Override
 	public boolean checkParallelgatewayNode(String taskId) {
@@ -131,7 +126,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 			result = Result.sucess("驳回成功!");
 		} else {
-			result = Result.failed("不存在任务实例,请确认!"); 
+			result = Result.failed("不存在任务实例,请确认!");
 		}
 		return result;
 	}
@@ -151,7 +146,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				+ " t.ASSIGNEE_, t.START_TIME_,t.END_TIME_ as END_TIME_, t.DURATION_, t.DELETE_REASON_, t.TENANT_ID_"
 				+ " FROM  act_ru_actinst t WHERE t.ACT_TYPE_ = 'parallelGateway' AND t.PROC_INST_ID_ = #{processInstanceId} and t.END_TIME_ is not null"
 				+ " and t.ACT_ID_ <> #{actId} ";
-		
+
 //		sql = "SELECT t.ID_, t.REV_,t.PROC_DEF_ID_,t.PROC_INST_ID_,t.EXECUTION_ID_,t.ACT_ID_, t.TASK_ID_, t.CALL_PROC_INST_ID_, t.ACT_NAME_, t.ACT_TYPE_, "
 //				+ " t.ASSIGNEE_, t.START_TIME_, max(t.END_TIME_) as END_TIME_, t.DURATION_, t.DELETE_REASON_, t.TENANT_ID_"
 //				+ " FROM  act_ru_actinst t WHERE t.ACT_TYPE_ = 'parallelGateway' AND t.PROC_INST_ID_ = #{processInstanceId} and t.END_TIME_ is not null"
@@ -456,6 +451,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Result<String> complete(CompleteTaskVo params) {
 		Result<String> result = Result.sucess( "审批成功");
 		if (StringUtils.isNotBlank(params.getProcessInstanceId()) && StringUtils.isNotBlank(params.getTaskId())) {
@@ -494,6 +490,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 						}
 					}
 				}
+				//保存流程的自定义属性-最大审批天数
+				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId());
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
 				// 5.生成审批意见
 				this.addComment(taskId, params.getUserCode(), params.getProcessInstanceId(), type, params.getMessage());
@@ -606,4 +604,34 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
         rep.setVariables(taskHis.getProcessVariables());
         return rep;
     }
+
+
+	public FlowElement getFlowElementByActivityIdAndProcessDefinitionId(String taskDefinedKey, String processDefinitionId) {
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+		List<Process> processes = bpmnModel.getProcesses();
+		if (CollectionUtils.isNotEmpty(processes)) {
+			for (Process process : processes) {
+				FlowElement flowElement = process.getFlowElement(taskDefinedKey, true);
+				if (Objects.nonNull(flowElement)) {
+					return flowElement;
+				}
+			}
+		}
+		return null;
+	}
+
+	public List<ExtensionElement> getCustomProperty(String taskDefinedKey, String processDefinitionId, String customPropertyName) {
+		FlowElement flowElement = this.getFlowElementByActivityIdAndProcessDefinitionId(taskDefinedKey, processDefinitionId);
+		if (flowElement != null && flowElement instanceof UserTask) {
+			UserTask userTask = (UserTask) flowElement;
+			Map<String, List<ExtensionElement>> extensionElements = userTask.getExtensionElements();
+			if (MapUtils.isNotEmpty(extensionElements)) {
+				List<ExtensionElement> values = extensionElements.get(customPropertyName);
+				if (CollectionUtils.isNotEmpty(values)) {
+					return values;
+				}
+			}
+		}
+		return null;
+	}
 }

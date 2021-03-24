@@ -1,11 +1,20 @@
 package com.sipsd.flow.service.flowable.impl;
 
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.constant.FlowConstant;
+import com.sipsd.flow.dao.flowable.IFlowableProcessInstanceDao;
+import com.sipsd.flow.enm.flowable.CommentTypeEnum;
+import com.sipsd.flow.service.flowable.*;
+import com.sipsd.flow.vo.flowable.EndProcessVo;
+import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
+import com.sipsd.flow.vo.flowable.RevokeProcessVo;
+import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
+import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.constants.BpmnXMLConstants;
 import org.flowable.bpmn.model.Activity;
@@ -23,24 +32,11 @@ import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.constant.FlowConstant;
-import com.sipsd.flow.dao.flowable.IFlowableProcessInstanceDao;
-import com.sipsd.flow.enm.flowable.CommentTypeEnum;
-import com.sipsd.flow.service.flowable.FlowProcessDiagramGenerator;
-import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
-import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
-import com.sipsd.flow.vo.flowable.EndProcessVo;
-import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
-import com.sipsd.flow.vo.flowable.RevokeProcessVo;
-import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
-import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : chengtg
@@ -60,6 +56,8 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 	private FlowProcessDiagramGenerator flowProcessDiagramGenerator;
 	@Autowired
 	private IFlowableTaskService flowableTaskService;
+	@Autowired
+	private IFlowableExtensionTaskService flowableExtensionTaskService;
 
 	@Override
 	public PageModel<ProcessInstanceVo> getPagerModel(ProcessInstanceQueryVo params, Query query) {
@@ -139,6 +137,8 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 			// 4.添加审批记录
 			this.addComment(creator, processInstance.getProcessInstanceId(), CommentTypeEnum.TJ.toString(),
 					params.getFormName() + "提交");
+			//保存流程的自定义属性-最大审批天数
+			flowableExtensionTaskService.saveExtensionTask(processInstance.getProcessInstanceId());
 			// 5.TODO 推送消息数据
 
 		} else {

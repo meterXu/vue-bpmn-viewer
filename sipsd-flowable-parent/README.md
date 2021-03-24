@@ -65,4 +65,20 @@ postman：https://www.getpostman.com/collections/2830462af356ed1164c9
 1. 导入《户外广告设置审批.bpmn20.xml》文件  
 2. 点击发布按钮启动工作流
 3. postman或者swagger-ui页面请求api
+
+
+1.查询代办任务和已办任务接口中新增 表单名称和业务主键属性的查询
+2. (1.在stencilset_bpmn.json文件中新增自定义属性节点-最大审批天数
+   (2.新增modelui界面的节点的自定义属性最大审批天数-继承UserTaskJsonConverter类,BpmnJsonConverter类
+     来实现增强
+   (3.新增UI界面属性-最大审批天数(定义在xml中为task_max_day)，新增拓展表-act_ru_extension_task中设置
+了最大审批天数的字段，TASK_MAX_DAY_为流程定义时的默认天数，CUSTOM_TASK_MAX_DAY_为自定义最大审批天数
+
+
+
+
+
+
+
+
  
