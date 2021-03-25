@@ -1,5 +1,8 @@
 package com.sipsd.flow.vo.flowable.ret;
 
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -70,6 +73,12 @@ public class TaskExtensionVo implements Serializable {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+
+    @ApiModelProperty("秒")
+    @Setter
+    @Getter
+    private Long restTime;
     /**
      * 审批节点id
      */

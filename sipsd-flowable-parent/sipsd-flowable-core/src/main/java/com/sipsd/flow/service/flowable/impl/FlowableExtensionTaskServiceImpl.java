@@ -79,7 +79,11 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					{
 						//算出结束日期
 						taskExtensionVo.setTaskMaxDay(elementText);
+						taskExtensionVo.setCustomTaskMaxDay(elementText);
 						taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(elementText)));
+						//算出剩余处理时间
+						Long restTime = DateUtil.diffDateTime(taskExtensionVo.getEndTime(),new Date());
+						taskExtensionVo.setRestTime(restTime);
 					}
 					taskExtensionVo.setTaskMaxDay(elementText);
 					taskExtensionVo.setTaskDefinitionKey(task.getTaskDefinitionKey());

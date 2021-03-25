@@ -3,8 +3,8 @@ package com.sipsd.flow.dao.flowable;
 import com.github.pagehelper.Page;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author : 高强
@@ -22,7 +22,7 @@ public interface IFlowableExtensionTaskDao
      * @return com.sipsd.flow.vo.flowable.ret.TaskExtensionVo
      * @Description 根据流程实例id查询自定义任务属性表
      */
-    public Page<TaskExtensionVo>  getExtensionTaskByProcessInstanceId(@RequestParam String processInstanceId);
+    public Page<TaskExtensionVo>  getExtensionTaskByProcessInstanceId(@Param("processInstanceId") String processInstanceId);
 
     /**
      * @param params
@@ -46,5 +46,5 @@ public interface IFlowableExtensionTaskDao
      * @return java.lang.Integer
      * @Description  根据流程实例id和taskId查询记录
      */
-    public TaskExtensionVo getExtensionTaskByProcessInstanceIdAndTaskId(@RequestParam String processInstanceId,@RequestParam String taskId);
+    public TaskExtensionVo getExtensionTaskByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId);
 }

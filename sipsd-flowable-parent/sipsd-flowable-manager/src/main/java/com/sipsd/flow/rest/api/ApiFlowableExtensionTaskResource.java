@@ -34,7 +34,7 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
      */
     @ApiOperation("根据流程实例id查询自定义任务属性表")
     @GetMapping(value = "/get-extension-tasks")
-    public PageModel<TaskExtensionVo> getExtensionTaskByProcessInstanceId(@RequestParam String processInstanceId, Query query) {
+    public PageModel<TaskExtensionVo> getExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId, Query query) {
         return flowableExtensionTaskService.getExtensionTaskByProcessInstanceId(processInstanceId,query);
     }
 
