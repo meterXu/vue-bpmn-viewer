@@ -66,6 +66,12 @@ postman：https://www.getpostman.com/collections/2830462af356ed1164c9
 2. 点击发布按钮启动工作流
 3. postman或者swagger-ui页面请求api
 
+bug:
+分支内的驳回，即驳回前有多少条分支，驳回后还是有多少条分支,研究一下act_ru_execution，看清哪些数据再处理
+分支外的驳回，即原来有5条分支，可能驳回后只有一条。这样的话，还是删除掉act_ru_execution到只剩下两条记录即可
+1.并行网关跳转驳回bug
+2.多实例加签减签bug
+
 
 1.查询代办任务和已办任务接口中新增 表单名称和业务主键属性的查询
 2. (1.在stencilset_bpmn.json文件中新增自定义属性节点-最大审批天数
@@ -73,8 +79,10 @@ postman：https://www.getpostman.com/collections/2830462af356ed1164c9
      来实现增强
    (3.新增UI界面属性-最大审批天数(定义在xml中为task_max_day)，新增拓展表-act_ru_extension_task中设置
 了最大审批天数的字段，TASK_MAX_DAY_为流程定义时的默认天数，CUSTOM_TASK_MAX_DAY_为自定义最大审批天数
+3.定义了附加表act_ru_extension_task --resource/db/flowable.mssql.create.attach.sql
 
-
+提示：
+在设计流程的时候节点需要显示的设置是串行还是并行属性
 
 
 

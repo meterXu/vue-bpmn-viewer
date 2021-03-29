@@ -1,23 +1,15 @@
 package com.sipsd.flow.service.flowable;
 
-import java.util.List;
-
-import org.flowable.idm.api.User;
-import org.flowable.task.api.Task;
-
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.vo.flowable.AddSignTaskVo;
-import com.sipsd.flow.vo.flowable.BackTaskVo;
-import com.sipsd.flow.vo.flowable.ClaimTaskVo;
-import com.sipsd.flow.vo.flowable.CompleteTaskVo;
-import com.sipsd.flow.vo.flowable.DelegateTaskVo;
-import com.sipsd.flow.vo.flowable.FormInfoQueryVo;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
-import com.sipsd.flow.vo.flowable.TurnTaskVo;
+import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
+import org.flowable.idm.api.User;
+import org.flowable.task.api.Task;
+
+import java.util.List;
 
 /**
  * @author : chengtg
@@ -34,6 +26,14 @@ public interface IFlowableTaskService {
      * @return
      */
     public Result<String> backToStepTask(BackTaskVo backTaskVo);
+
+    /**
+     * 驳回到原节点原处理人 暂时没有考虑子流程
+     *
+     * @param preBackTaskVo 参数
+     * @return
+     */
+    public Result<String> backToPreStepTask(PreBackTaskVo preBackTaskVo);
 
     /**
      * 获取可驳回节点列表

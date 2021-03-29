@@ -47,4 +47,7 @@ public interface IFlowableExtensionTaskDao
      * @Description  根据流程实例id和taskId查询记录
      */
     public TaskExtensionVo getExtensionTaskByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId);
+
+    public TaskExtensionVo getExtensionTaskByTaskDefinitionKey(@Param("processInstanceId") String processInstanceId,@Param("taskDefinitionKey") String taskDefinitionKey);
+
 }

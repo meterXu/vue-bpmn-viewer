@@ -1,12 +1,16 @@
 package com.sipsd.flow.rest.api;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.service.flowable.IFlowableCommentService;
+import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
+import com.sipsd.flow.service.flowable.IFlowableTaskService;
+import com.sipsd.flow.vo.flowable.*;
+import com.sipsd.flow.vo.flowable.ret.CommentVo;
+import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -14,35 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.service.flowable.IFlowableCommentService;
-import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
-import com.sipsd.flow.vo.flowable.AddSignTaskVo;
-import com.sipsd.flow.vo.flowable.BackTaskVo;
-import com.sipsd.flow.vo.flowable.ClaimTaskVo;
-import com.sipsd.flow.vo.flowable.CompleteTaskVo;
-import com.sipsd.flow.vo.flowable.DelegateTaskVo;
-import com.sipsd.flow.vo.flowable.EndProcessVo;
-import com.sipsd.flow.vo.flowable.RevokeProcessVo;
-import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
-import com.sipsd.flow.vo.flowable.TurnTaskVo;
-import com.sipsd.flow.vo.flowable.ret.CommentVo;
-import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.apachecommons.CommonsLog;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author : chengtg
@@ -340,22 +322,35 @@ public class ApiFormDetailReource extends BaseResource {
 	}
 
 	/**
-	 * 驳回节点
+	 * 跳转
 	 * 
 	 * @param params 参数
 	 * @return
 	 */
-	@ApiOperation("驳回节点")
-	@PostMapping(value = "/doBackStep")
-	public Result<String> doBackStep(@Validated @RequestBody BackTaskVo params) {
+	@ApiOperation("跳转")
+	@PostMapping(value = "/doJumpStep")
+	public Result<String> doJumpStep(@Validated @RequestBody BackTaskVo params) {
 		// params.setUserCode(this.getLoginUser().getId());
 		Result<String> result = flowableTaskService.backToStepTask(params);
+		return result;
+	}
+
+	/**
+	 * 驳回
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("驳回")
+	@PostMapping(value = "/doBackStep")
+	public Result<String> doBackStep(@Validated @RequestBody PreBackTaskVo params) {
+		Result<String> result = flowableTaskService.backToPreStepTask(params);
 		return result;
 	}
 	
     /**
      * 获取流程动态表单信息
-     * @param processInstanceId
+     * @param taskId
      * @return
      */
     @GetMapping(value = "/formData/taskId")

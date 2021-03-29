@@ -52,9 +52,14 @@ public class TaskExtensionVo implements Serializable {
     private String taskMaxDay;
 
     /**
-     * 审批人/审批角色
+     * 审批人
      */
     private String assignee;
+
+    /**
+     * 审批角色
+     */
+    private String groupId;
 
     /**
      * 创建时间
@@ -91,6 +96,11 @@ public class TaskExtensionVo implements Serializable {
      * 审批节点key
      */
     private String taskDefinitionKey;
+
+    /**
+     * 上个审批节点key
+     */
+    private String fromKey;
 
     /**
      * 租户
@@ -279,5 +289,25 @@ public class TaskExtensionVo implements Serializable {
     public void setAssignee(String assignee)
     {
         this.assignee = assignee;
+    }
+
+    public String getFromKey()
+    {
+        return fromKey;
+    }
+
+    public void setFromKey(String fromKey)
+    {
+        this.fromKey = fromKey;
+    }
+
+    public String getGroupId()
+    {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId)
+    {
+        this.groupId = groupId;
     }
 }

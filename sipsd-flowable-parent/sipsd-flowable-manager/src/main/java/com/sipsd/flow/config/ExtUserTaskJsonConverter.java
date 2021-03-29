@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
  * @author 高强
  * @title: ExtUserTaskJsonConverter
  * @projectName sipsd-flowable-parent
- * @description: TODO
+ * @description: 拓展自定义属性
  * @date 2021/3/23下午2:46
  */
 public class ExtUserTaskJsonConverter extends UserTaskJsonConverter

@@ -20,7 +20,15 @@ public interface IFlowableExtensionTaskService
      * @return void
      * @Description 插入自定义属性表
      */
-    public void saveExtensionTask(String processDefinitionId);
+    public void saveExtensionTask(String processDefinitionId,String fromKey);
+
+    /**
+     *
+     * @param processDefinitionId
+     * @return void
+     * @Description 驳回插入自定义属性表
+     */
+    public void saveBackExtensionTask(String processDefinitionId);
 
     /**
      * @param processInstanceId

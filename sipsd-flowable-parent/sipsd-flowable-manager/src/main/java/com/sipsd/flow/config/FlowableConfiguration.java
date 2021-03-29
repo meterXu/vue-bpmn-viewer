@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author 高强
  * @title: FlowableConfiguration
  * @projectName sipsd-flowable-parent
- * @description: TODO
+ * @description: 拓展自定义属性配置
  * @date 2021/3/23下午3:24
  */
 @Configuration

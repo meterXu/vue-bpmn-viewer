@@ -6,13 +6,16 @@ import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.constant.FlowConstant;
+import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
+import com.sipsd.flow.dao.flowable.ProcessDefinitionUtils;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
 import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.service.flowable.IFlowableTaskService;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
+import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
@@ -59,6 +62,10 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private RepositoryService repositoryService;
 	@Autowired
 	private IFlowableExtensionTaskService flowableExtensionTaskService;
+	@Autowired
+	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
+	@Autowired
+	private ProcessDefinitionUtils processDefinitionUtils;
 
 	@Override
 	public boolean checkParallelgatewayNode(String taskId) {
@@ -79,12 +86,23 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public Result<String> backToStepTask(BackTaskVo backTaskVo) {
 		Result<String> result = null;
 		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId())
 				.singleResult();
 		// 1.把当前的节点设置为空
 		if (taskEntity != null) {
+			Activity activity = processDefinitionUtils.findFlowElementById(taskEntity.getProcessDefinitionId(), backTaskVo.getDistFlowElementId());
+			if (activity != null)
+			{
+				//1. 判断该节点上一个节点是不是并行网关节点
+				//在流程设计器中需要显示的选择是串联还是并联节点
+				if(StringUtils.isNotBlank(((UserTask) activity).getCategory()))
+				{
+					return  Result.failed("并行节点无法驳回，请选择其他节点!");
+				}
+			}
 			// 2.设置审批人
 			taskEntity.setAssignee(backTaskVo.getUserCode());
 			taskService.saveTask(taskEntity);
@@ -123,6 +141,89 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 						.parentId(taskEntity.getProcessInstanceId()).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
+			}
+			result = Result.sucess("跳转成功!");
+			//保存流程的自定义属性-最大审批天数
+			//TODO 跳转只能跳转到以前的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
+			flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
+		} else {
+			result = Result.failed("不存在任务实例,请确认!");
+		}
+		return result;
+	}
+
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public Result<String> backToPreStepTask(PreBackTaskVo preBackTaskVo) {
+		//查看上一步任务的执行人和审批节点key
+		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(preBackTaskVo.getProcessInstanceId(),preBackTaskVo.getTaskId());
+		if(taskExtensionVo == null || StringUtils.isEmpty(taskExtensionVo.getFromKey()))
+		{
+			return Result.failed("无法找到上个审批节点的信息");
+		}
+		taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(preBackTaskVo.getProcessInstanceId(),taskExtensionVo.getFromKey());
+		if(taskExtensionVo == null)
+		{
+			return Result.failed("无法找到上个审批节点的信息");
+		}
+
+		Result<String> result = null;
+		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(preBackTaskVo.getTaskId())
+				.singleResult();
+		// 1.把当前的节点设置为空
+		if (taskEntity != null) {
+			Activity activity = processDefinitionUtils.findFlowElementById(taskEntity.getProcessDefinitionId(), taskExtensionVo.getTaskDefinitionKey());
+			if (activity != null)
+			{
+				//1. 判断该节点上一个节点是不是并行网关节点
+				//在流程设计器中需要显示的选择是串联还是并联节点
+				//TODO 如果是驳回是否自动跳过上一步所有并联节点 驳回到上一个串联节点
+				if(StringUtils.isNotBlank(((UserTask) activity).getCategory()))
+				{
+					return  Result.failed("并行节点无法驳回，请选择其他节点!");
+				}
+			}
+			// 2.设置审批人
+			taskEntity.setAssignee(taskExtensionVo.getAssignee());
+			taskService.saveTask(taskEntity);
+			// 3.添加驳回意见
+			this.addComment(preBackTaskVo.getTaskId(), taskExtensionVo.getAssignee(), preBackTaskVo.getProcessInstanceId(),
+					CommentTypeEnum.BH.toString(), preBackTaskVo.getMessage());
+			// 4.处理提交人节点
+			FlowNode distActivity = flowableBpmnModelService
+					.findFlowNodeByActivityId(taskEntity.getProcessDefinitionId(), taskExtensionVo.getTaskDefinitionKey());
+			if (distActivity != null) {
+				if (FlowConstant.FLOW_SUBMITTER.equals(distActivity.getName())) {
+					ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+							.processInstanceId(taskEntity.getProcessInstanceId()).singleResult();
+					runtimeService.setVariable(preBackTaskVo.getProcessInstanceId(), FlowConstant.FLOW_SUBMITTER_VAR,
+							processInstance.getStartUserId());
+				}
+			}
+			// 5.删除节点
+			this.deleteActivity(taskExtensionVo.getTaskDefinitionKey(), taskEntity.getProcessInstanceId());
+			List<String> executionIds = new ArrayList<>();
+			// 6.判断节点是不是子流程内部的节点
+			if (flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
+					taskExtensionVo.getTaskDefinitionKey())
+					&& flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
+					taskEntity.getTaskDefinitionKey())) {
+				// 6.1 子流程内部驳回
+				Execution executionTask = runtimeService.createExecutionQuery().executionId(taskEntity.getExecutionId())
+						.singleResult();
+				String parentId = executionTask.getParentId();
+				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
+				executions.forEach(execution -> executionIds.add(execution.getId()));
+				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
+			} else {
+				// 6.2 普通驳回
+				List<Execution> executions = runtimeService.createExecutionQuery()
+						.parentId(taskEntity.getProcessInstanceId()).list();
+				executions.forEach(execution -> executionIds.add(execution.getId()));
+				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
+				//插入自定义属性表
+				flowableExtensionTaskService.saveBackExtensionTask(preBackTaskVo.getProcessInstanceId());
 			}
 			result = Result.sucess("驳回成功!");
 		} else {
@@ -491,7 +592,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					}
 				}
 				//保存流程的自定义属性-最大审批天数
-				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId());
+				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey());
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
 				// 5.生成审批意见
 				this.addComment(taskId, params.getUserCode(), params.getProcessInstanceId(), type, params.getMessage());

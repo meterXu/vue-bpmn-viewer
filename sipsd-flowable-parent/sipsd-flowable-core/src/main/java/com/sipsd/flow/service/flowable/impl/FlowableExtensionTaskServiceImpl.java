@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.model.Process;
 import org.flowable.bpmn.model.*;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,15 +41,17 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
 
 	@Override
-	public void saveExtensionTask(String processDefinitionId)
+	public void saveExtensionTask(String processDefinitionId,String fromKey)
 	{
-		//首先考虑串联
 		String elementText = null;
-		List<org.flowable.task.api.Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
+		List<Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
 		if (!CollectionUtils.isEmpty(waitedTaskList))
 		{
 			for(Task task:waitedTaskList)
 			{
+
+				String assignee = "";
+				String groupId = "";
 				List<ExtensionElement> elementList = getCustomProperty(task.getTaskDefinitionKey(), task.getProcessDefinitionId(), FlowConstant.PROPERTY_USERTASK_TASKMAXDAY);
 				if (!CollectionUtils.isEmpty(elementList))
 				{
@@ -63,6 +66,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						}
 					}
 				}
+				List<IdentityLink> identityLinks=taskService.getIdentityLinksForTask(task.getId());
+				//只可能是一条
+				if(!CollectionUtils.isEmpty(identityLinks)){
+					assignee = identityLinks.get(0).getUserId();
+					groupId = identityLinks.get(0).getGroupId();
+				}
 
 				//如果是并联请求需要判断是否需要插入-通过流程实例id和taskId来判断
 				//TODO 如果是null 应该删掉这条并联中的记录，不过不影响查询
@@ -71,10 +80,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				{
 					TaskExtensionVo taskExtensionVo = new TaskExtensionVo();
 					taskExtensionVo.setTaskId(task.getId());
-					taskExtensionVo.setAssignee(task.getAssignee());
+					taskExtensionVo.setAssignee(assignee);
+					taskExtensionVo.setGroupId(groupId);
 					taskExtensionVo.setExecutionId(task.getExecutionId());
 					taskExtensionVo.setProcessDefinitionId(task.getProcessDefinitionId());
 					taskExtensionVo.setProcessInstanceId(task.getProcessInstanceId());
+					taskExtensionVo.setFromKey(fromKey);
 					if(StringUtils.isNotEmpty(elementText))
 					{
 						//算出结束日期
@@ -85,13 +96,47 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						Long restTime = DateUtil.diffDateTime(taskExtensionVo.getEndTime(),new Date());
 						taskExtensionVo.setRestTime(restTime);
 					}
-					taskExtensionVo.setTaskMaxDay(elementText);
 					taskExtensionVo.setTaskDefinitionKey(task.getTaskDefinitionKey());
 					taskExtensionVo.setTenantId(task.getTenantId());
 					taskExtensionVo.setTaskName(task.getName());
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
 			}
+		}
+	}
+
+
+	@Override
+	public void saveBackExtensionTask(String processDefinitionId)
+	{
+		List<org.flowable.task.api.Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
+		if (!CollectionUtils.isEmpty(waitedTaskList))
+		{
+			Task task = waitedTaskList.get(0);
+			//查询驳回之后的代办节点的前审批节点
+			TaskExtensionVo taskExtensionVo =  flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(processDefinitionId,task.getTaskDefinitionKey());
+			TaskExtensionVo vo = new TaskExtensionVo();
+			vo.setTaskId(task.getId());
+			vo.setAssignee(taskExtensionVo.getAssignee());
+			vo.setGroupId(taskExtensionVo.getGroupId());
+			vo.setExecutionId(task.getExecutionId());
+			vo.setProcessDefinitionId(task.getProcessDefinitionId());
+			vo.setProcessInstanceId(task.getProcessInstanceId());
+			vo.setFromKey(taskExtensionVo.getFromKey());
+			vo.setTaskMaxDay(taskExtensionVo.getTaskMaxDay());
+			vo.setCustomTaskMaxDay(taskExtensionVo.getCustomTaskMaxDay());
+			String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
+			if(StringUtils.isNotEmpty(taskMaxDay))
+			{
+				vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+				//算出剩余处理时间
+				Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
+				vo.setRestTime(restTime);
+			}
+			vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
+			vo.setTenantId(task.getTenantId());
+			vo.setTaskName(task.getName());
+			flowableExtensionTaskDao.insertExtensionTask(vo);
 		}
 	}
 
@@ -114,6 +159,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		//计算出代办的截止日期
 		Date endDate = DateUtil.addDate(taskExtensionVo.getStartTime(),Integer.parseInt(params.getCustomTaskMaxDay()));
 		taskExtensionVo.setEndTime(endDate);
+		taskExtensionVo.setUpdateTime(new Date());
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
 		return Result.failed("更新成功!");

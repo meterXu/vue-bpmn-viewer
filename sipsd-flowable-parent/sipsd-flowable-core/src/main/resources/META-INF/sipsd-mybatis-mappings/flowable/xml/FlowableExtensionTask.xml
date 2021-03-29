@@ -17,7 +17,8 @@
             t3.PROC_DEF_ID_ as processDefinitionId,
 #             t3.END_TIME_ as endTime,
             t1.ASSIGNEE_ as assignee,
-            t3.TASK_REST_TIME_ as restTime
+            t3.TASK_REST_TIME_ as restTime,
+            t3.GROUP_ID_ as groupId
         FROM
             act_ru_task t1
                 LEFT JOIN  act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_ and t1.EXECUTION_ID_ = t2.ID_
@@ -34,10 +35,25 @@
                t1.ID_ AS id,
                t1.TASK_ID_ as taskId,
                t1.PROC_INST_ID_ as processInstanceId,
-               t1.CREATE_TIME_ as startTime
+               t1.CREATE_TIME_ as startTime,
+               t1.FROM_KEY_ as fromKey,
+               t1.ASSIGNEE_ as assignee
+
         FROM
             act_ru_extension_task t1
         WHERE PROC_INST_ID_ = #{processInstanceId} and TASK_ID_ = #{taskId}
+    </select>
+
+    <select id="getExtensionTaskByTaskDefinitionKey" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
+            t1.ASSIGNEE_ as assignee,
+            t1.FROM_KEY_ as fromKey,
+            t1.TASK_MAX_DAY_ as taskMaxDay,
+            t1.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay
+        FROM
+            act_ru_extension_task t1
+        WHERE PROC_INST_ID_ = #{processInstanceId} and TASK_DEF_KEY_ = #{taskDefinitionKey} order by CREATE_TIME_ desc limit 1
     </select>
 
 
@@ -50,7 +66,7 @@
     </update>
 
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
-        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_)
-         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay});
+        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_)
+         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId});
     </insert>
 </mapper>

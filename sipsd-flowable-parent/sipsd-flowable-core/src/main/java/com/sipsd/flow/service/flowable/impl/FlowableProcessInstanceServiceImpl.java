@@ -138,7 +138,7 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 			this.addComment(creator, processInstance.getProcessInstanceId(), CommentTypeEnum.TJ.toString(),
 					params.getFormName() + "提交");
 			//保存流程的自定义属性-最大审批天数
-			flowableExtensionTaskService.saveExtensionTask(processInstance.getProcessInstanceId());
+			flowableExtensionTaskService.saveExtensionTask(processInstance.getProcessInstanceId(),processInstance.getActivityId());
 			// 5.TODO 推送消息数据
 
 		} else {
