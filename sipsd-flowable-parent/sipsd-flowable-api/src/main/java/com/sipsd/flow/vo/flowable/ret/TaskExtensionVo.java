@@ -121,6 +121,17 @@ public class TaskExtensionVo implements Serializable {
      */
     private String taskName;
 
+    /**
+     * 流程节点类型 串联/并联
+     */
+    private String flowType;
+
+
+    /**
+     * 代办或者已办状态
+     */
+    private String status;
+
     public Integer getId()
     {
         return id;
@@ -309,5 +320,25 @@ public class TaskExtensionVo implements Serializable {
     public void setGroupId(String groupId)
     {
         this.groupId = groupId;
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(String status)
+    {
+        this.status = status;
+    }
+
+    public String getFlowType()
+    {
+        return flowType;
+    }
+
+    public void setFlowType(String flowType)
+    {
+        this.flowType = flowType;
     }
 }

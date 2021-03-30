@@ -1,5 +1,7 @@
 package com.sipsd.flow.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sipsd.flow.common.SpringContextHolder;
 import org.activiti.compatibility.spring.SpringFlowable5CompatibilityHandlerFactory;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.common.engine.impl.de.odysseus.el.misc.TypeConverter;
@@ -12,12 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.core.task.TaskExecutor;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sipsd.flow.common.SpringContextHolder;
 
 
 /**
@@ -52,6 +50,8 @@ public class FlowableConfig implements EngineConfigurationConfigurer<SpringProce
         configure.setEnableTaskRelationshipCounts(true);
         //启动同步功能 一定要启动否则报错
         configure.setAsyncExecutor(springAsyncExecutor());
+        //配置自定义的Bpmn转换器
+        ExtBpmnJsonConverter.addJsonToBpmnConverts();
     }
 
     @Bean

@@ -1,14 +1,15 @@
 package com.sipsd.flow.rest.api;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.cmd.DeployModelCmd;
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.model.form.FlowableForm;
+import com.sipsd.flow.service.flowable.FlowProcessDiagramGenerator;
+import com.sipsd.flow.service.flowable.IFlowableModelService;
+import com.sipsd.flow.service.form.FlowableFormService;
+import com.sipsd.flow.vo.flowable.ModelVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
@@ -28,26 +29,16 @@ import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.cmd.DeployModelCmd;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.model.form.FlowableForm;
-import com.sipsd.flow.service.flowable.FlowProcessDiagramGenerator;
-import com.sipsd.flow.service.flowable.IFlowableModelService;
-import com.sipsd.flow.service.form.FlowableFormService;
-import com.sipsd.flow.vo.flowable.ModelVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : chengtg
@@ -202,6 +193,7 @@ public class ApiFlowableModelResource extends BaseResource {
 	 * @param modelId
 	 * @return
 	 */
+	@ApiOperation("显示xml")
 	@GetMapping(value = "/loadXmlByModelId/{modelId}")
 	public void loadXmlByModelId(@PathVariable String modelId, HttpServletResponse response) {
 		try {

@@ -14,9 +14,10 @@ create table ACT_RU_EXTENSION_TASK (
     TASK_NAME_ nvarchar(255) default '',
     END_TIME_ datetime,
     TASK_REST_TIME_ int,
-    FROM_KEY_ nvarchar(255),
-    ASSIGNEE_ nvarchar(255),
-    GROUP_ID_ nvarchar(255),
+    FROM_KEY_ nvarchar(100),
+    ASSIGNEE_ nvarchar(100),
+    GROUP_ID_ nvarchar(100),
+    FLOW_TYPE_ nvarchar(100),
     primary key (ID_)
 );
 create index ACT_RU_EXTENSION_TASK_PROC_INST on ACT_RU_EXTENSION_TASK(PROC_INST_ID_);

@@ -16,9 +16,10 @@
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
 #             t3.END_TIME_ as endTime,
-            t1.ASSIGNEE_ as assignee,
+            t3.ASSIGNEE_ as assignee,
             t3.TASK_REST_TIME_ as restTime,
-            t3.GROUP_ID_ as groupId
+            t3.GROUP_ID_ as groupId,
+            t3.FLOW_TYPE_ as flowType
         FROM
             act_ru_task t1
                 LEFT JOIN  act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_ and t1.EXECUTION_ID_ = t2.ID_
@@ -27,6 +28,51 @@
         <if test="null != processInstanceId and '' != processInstanceId ">
             and t1.PROC_INST_ID_ = #{processInstanceId}
         </if>
+<!--        <if test="formName != null and formName != ''">-->
+<!--            AND t2.NAME_ = #{formName}-->
+<!--        </if>-->
+
+<!--        <if test="businessKey != null and businessKey != ''">-->
+<!--            AND t2.BUSINESS_KEY_ = #{businessKey}-->
+<!--        </if>-->
+    </select>
+
+    <select id="getAllExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT DISTINCT
+            t3.ID_ as id,
+            t1.ID_ AS taskId,
+            t1.NAME_ AS taskName,
+            t1.START_TIME_ AS startTime,
+            t3.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay,
+            t3.TASK_MAX_DAY_  as taskMaxDay,
+            t3.TASK_DEF_KEY_  as taskDefinitionKey,
+            t3.PROC_DEF_ID_ as processDefinitionId,
+            t1.ASSIGNEE_ as assignee,
+            t3.TASK_REST_TIME_ as restTime,
+            t3.GROUP_ID_ as groupId,
+            t1.TENANT_ID_ AS tenantId,
+            t1.PROC_INST_ID_ AS processInstanceId,
+            t1.END_TIME_ as endTime,
+            t3.FLOW_TYPE_ as flowType,
+            case when t1.END_TIME_ is null then '待办'
+                else '已办' end  as 'status',
+            t2.NAME_  as formName,
+            t2.BUSINESS_KEY_  as businessKey
+        FROM
+            act_hi_taskinst t1
+                LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+                LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
+        WHERE
+            t1.PROC_INST_ID_ = #{processInstanceId}
+
+<!--        <if test="formName != null and formName != ''">-->
+<!--            AND t2.NAME_ = #{formName}-->
+<!--        </if>-->
+
+<!--        <if test="businessKey != null and businessKey != ''">-->
+<!--            AND t2.BUSINESS_KEY_ = #{businessKey}-->
+<!--        </if>-->
+        order by t1.END_TIME_
     </select>
 
 
@@ -50,7 +96,8 @@
             t1.ASSIGNEE_ as assignee,
             t1.FROM_KEY_ as fromKey,
             t1.TASK_MAX_DAY_ as taskMaxDay,
-            t1.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay
+            t1.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay,
+            t1.FLOW_TYPE_ as flowType
         FROM
             act_ru_extension_task t1
         WHERE PROC_INST_ID_ = #{processInstanceId} and TASK_DEF_KEY_ = #{taskDefinitionKey} order by CREATE_TIME_ desc limit 1
@@ -66,7 +113,7 @@
     </update>
 
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
-        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_)
-         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId});
+        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_,FLOW_TYPE_)
+         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId},#{flowType});
     </insert>
 </mapper>

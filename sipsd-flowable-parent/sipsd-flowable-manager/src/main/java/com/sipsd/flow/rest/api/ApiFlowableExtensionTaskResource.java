@@ -39,6 +39,18 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
     }
 
     /**
+     * 根据流程实例id查询历史自定义任务属性表(已办代办查询)
+     *
+     * @param processInstanceId 参数
+     * @return
+     */
+    @ApiOperation("根据流程实例id查询历史自定义任务属性表(已办代办查询)")
+    @GetMapping(value = "/get-all-extension-tasks")
+    public PageModel<TaskExtensionVo> getAllExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId, Query query) {
+        return flowableExtensionTaskService.getAllExtensionTaskByProcessInstanceId(processInstanceId,query);
+    }
+
+    /**
      * 通过流程实例id来更新最大审批天数值
      *
      * @param params 参数

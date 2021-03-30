@@ -25,6 +25,15 @@ public interface IFlowableExtensionTaskDao
     public Page<TaskExtensionVo>  getExtensionTaskByProcessInstanceId(@Param("processInstanceId") String processInstanceId);
 
     /**
+     * @param processInstanceId
+     * @return com.sipsd.flow.vo.flowable.ret.TaskExtensionVo
+     * @Description 根据流程实例id查询历史自定义任务属性表(已办代办查询)
+     */
+    public Page<TaskExtensionVo>  getAllExtensionTaskByProcessInstanceId(@Param("processInstanceId") String processInstanceId);
+
+
+
+    /**
      * @param params
      * @return void
      * @Description 根据流程实例id查询自定义任务属性表

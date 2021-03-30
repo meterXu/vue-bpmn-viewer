@@ -45,11 +45,17 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	{
 		String elementText = null;
 		List<Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
+		//TODO 对于加签的情况驳回的时候无法判断
+		String flowType = FlowConstant.FLOW_SEQUENTIAL;
+		if(waitedTaskList.size()>1)
+		{
+			flowType = FlowConstant.FLOW_PARALLEL;
+		}
+		//设置
 		if (!CollectionUtils.isEmpty(waitedTaskList))
 		{
 			for(Task task:waitedTaskList)
 			{
-
 				String assignee = "";
 				String groupId = "";
 				List<ExtensionElement> elementList = getCustomProperty(task.getTaskDefinitionKey(), task.getProcessDefinitionId(), FlowConstant.PROPERTY_USERTASK_TASKMAXDAY);
@@ -67,7 +73,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					}
 				}
 				List<IdentityLink> identityLinks=taskService.getIdentityLinksForTask(task.getId());
-				//只可能是一条
+				//只可能是一条(子流程除外)
 				if(!CollectionUtils.isEmpty(identityLinks)){
 					assignee = identityLinks.get(0).getUserId();
 					groupId = identityLinks.get(0).getGroupId();
@@ -99,6 +105,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					taskExtensionVo.setTaskDefinitionKey(task.getTaskDefinitionKey());
 					taskExtensionVo.setTenantId(task.getTenantId());
 					taskExtensionVo.setTaskName(task.getName());
+					taskExtensionVo.setFlowType(flowType);
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
 			}
@@ -109,6 +116,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	@Override
 	public void saveBackExtensionTask(String processDefinitionId)
 	{
+		String flowType = FlowConstant.FLOW_SEQUENTIAL;
 		List<org.flowable.task.api.Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
 		if (!CollectionUtils.isEmpty(waitedTaskList))
 		{
@@ -136,6 +144,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 			vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
 			vo.setTenantId(task.getTenantId());
 			vo.setTaskName(task.getName());
+			taskExtensionVo.setFlowType(flowType);
 			flowableExtensionTaskDao.insertExtensionTask(vo);
 		}
 	}
@@ -145,6 +154,14 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	{
 		PageHelper.startPage(query.getPageNum(), query.getPageSize());
 		Page<TaskExtensionVo> taskExtensionList = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceId(processInstanceId);
+		return new PageModel<>(taskExtensionList);
+	}
+
+	@Override
+	public PageModel<TaskExtensionVo> getAllExtensionTaskByProcessInstanceId(String processInstanceId, Query query)
+	{
+		PageHelper.startPage(query.getPageNum(), query.getPageSize());
+		Page<TaskExtensionVo> taskExtensionList = flowableExtensionTaskDao.getAllExtensionTaskByProcessInstanceId(processInstanceId);
 		return new PageModel<>(taskExtensionList);
 	}
 

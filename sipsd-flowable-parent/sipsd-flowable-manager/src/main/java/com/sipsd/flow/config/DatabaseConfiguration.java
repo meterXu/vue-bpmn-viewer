@@ -45,7 +45,6 @@ public class DatabaseConfiguration {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);
             database.setDatabaseChangeLogTableName(LIQUIBASE_CHANGELOG_PREFIX + database.getDatabaseChangeLogTableName());
             database.setDatabaseChangeLogLockTableName(LIQUIBASE_CHANGELOG_PREFIX + database.getDatabaseChangeLogLockTableName());
-
             liquibase = new Liquibase("META-INF/liquibase/flowable-modeler-app-db-changelog.xml", new ClassLoaderResourceAccessor(), database);
             liquibase.update("flowable");
             return liquibase;

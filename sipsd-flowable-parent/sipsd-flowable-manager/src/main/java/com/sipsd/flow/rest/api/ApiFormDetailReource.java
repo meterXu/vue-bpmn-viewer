@@ -62,7 +62,7 @@ public class ApiFormDetailReource extends BaseResource {
 	/**
 	 * 流程启动
 	 *
-	 * @param params 参数
+	 * @param startProcessInstanceVo 参数
 	 * @return
 	 */
 	@ApiOperation("流程启动")
@@ -292,7 +292,7 @@ public class ApiFormDetailReource extends BaseResource {
 	/**
 	 * 获取流程所有节点
 	 * 
-	 * @param processInstanceId 流程实例id
+	 * @param processKey 流程实例id
 	 * @return
 	 */
 	@ApiOperation("获取流程所有节点")

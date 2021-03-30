@@ -52,4 +52,14 @@ public class FlowConstant {
      * 增强客户端UI界面 节点最大审批天数属性-PROPERTY_USERTASK_TASKMAXDAY-高强
      */
     public final static String PROPERTY_USERTASK_TASKMAXDAY = "task_max_day";
+
+    /**
+     * 节点串联值
+     */
+    public final static String FLOW_PARALLEL = "parallel";
+
+    /**
+     * 节点并联值
+     */
+    public final static String FLOW_SEQUENTIAL = "sequential";
 }

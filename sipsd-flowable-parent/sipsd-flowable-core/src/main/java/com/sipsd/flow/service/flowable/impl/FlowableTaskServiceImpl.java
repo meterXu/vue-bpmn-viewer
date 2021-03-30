@@ -8,7 +8,6 @@ import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
-import com.sipsd.flow.dao.flowable.ProcessDefinitionUtils;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
 import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
@@ -64,8 +63,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private IFlowableExtensionTaskService flowableExtensionTaskService;
 	@Autowired
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
-	@Autowired
-	private ProcessDefinitionUtils processDefinitionUtils;
 
 	@Override
 	public boolean checkParallelgatewayNode(String taskId) {
@@ -88,21 +85,23 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Result<String> backToStepTask(BackTaskVo backTaskVo) {
+
+		//通过fromkey找到当前最新的那一条审批节点信息(通过时间排序)
+		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(backTaskVo.getProcessInstanceId(),backTaskVo.getDistFlowElementId());
+		if(taskExtensionVo == null)
+		{
+			return Result.failed("无法找到上个审批节点的信息");
+		}
+		if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL))
+		{
+			return  Result.failed("并行节点无法驳回，请选择其他节点!");
+		}
+
 		Result<String> result = null;
 		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId())
 				.singleResult();
 		// 1.把当前的节点设置为空
 		if (taskEntity != null) {
-			Activity activity = processDefinitionUtils.findFlowElementById(taskEntity.getProcessDefinitionId(), backTaskVo.getDistFlowElementId());
-			if (activity != null)
-			{
-				//1. 判断该节点上一个节点是不是并行网关节点
-				//在流程设计器中需要显示的选择是串联还是并联节点
-				if(StringUtils.isNotBlank(((UserTask) activity).getCategory()))
-				{
-					return  Result.failed("并行节点无法驳回，请选择其他节点!");
-				}
-			}
 			// 2.设置审批人
 			taskEntity.setAssignee(backTaskVo.getUserCode());
 			taskService.saveTask(taskEntity);
@@ -156,16 +155,21 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public Result<String> backToPreStepTask(PreBackTaskVo preBackTaskVo) {
-		//查看上一步任务的执行人和审批节点key
+		//找到当前节点的上个审批节点-fromKey
 		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(preBackTaskVo.getProcessInstanceId(),preBackTaskVo.getTaskId());
 		if(taskExtensionVo == null || StringUtils.isEmpty(taskExtensionVo.getFromKey()))
 		{
 			return Result.failed("无法找到上个审批节点的信息");
 		}
+		//通过fromkey找到当前最新的那一条审批节点信息(通过时间排序)
 		taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(preBackTaskVo.getProcessInstanceId(),taskExtensionVo.getFromKey());
 		if(taskExtensionVo == null)
 		{
 			return Result.failed("无法找到上个审批节点的信息");
+		}
+		if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL))
+		{
+			return  Result.failed("并行节点无法驳回，请选择其他节点!");
 		}
 
 		Result<String> result = null;
@@ -173,17 +177,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				.singleResult();
 		// 1.把当前的节点设置为空
 		if (taskEntity != null) {
-			Activity activity = processDefinitionUtils.findFlowElementById(taskEntity.getProcessDefinitionId(), taskExtensionVo.getTaskDefinitionKey());
-			if (activity != null)
-			{
-				//1. 判断该节点上一个节点是不是并行网关节点
-				//在流程设计器中需要显示的选择是串联还是并联节点
-				//TODO 如果是驳回是否自动跳过上一步所有并联节点 驳回到上一个串联节点
-				if(StringUtils.isNotBlank(((UserTask) activity).getCategory()))
-				{
-					return  Result.failed("并行节点无法驳回，请选择其他节点!");
-				}
-			}
 			// 2.设置审批人
 			taskEntity.setAssignee(taskExtensionVo.getAssignee());
 			taskService.saveTask(taskEntity);
