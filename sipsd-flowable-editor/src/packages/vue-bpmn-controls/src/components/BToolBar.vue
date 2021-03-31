@@ -1,30 +1,30 @@
 <template>
   <div class="bpmn-toolbar-container">
-    <el-button-group>
-      <el-tooltip class="item" effect="dark" content="修改模型属性" placement="bottom-start">
-        <el-button type="primary" icon="el-icon-edit" @click="handleEdit"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="复制这个模型" placement="bottom">
-        <el-button type="primary" icon="el-icon-document-copy" @click="handleCopy"></el-button>
-      </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="删除这个模型" placement="bottom-end">
-        <el-button type="primary" icon="el-icon-delete" @click="handleDelete"></el-button>
-      </el-tooltip>
-    </el-button-group>
-    <el-button-group>
-      <el-tooltip class="item" effect="dark" content="导出到BPMN2" placement="bottom">
-        <el-button type="primary" icon="el-icon-download" @click="handleExport"></el-button>
-      </el-tooltip>
-    </el-button-group>
-    <el-button-group>
-      <el-button type="primary" icon="el-icon-check" @click="handlePush">发布</el-button>
-      <el-button type="primary" icon="el-icon-edit-outline" @click="handleViewEdit">可视化编辑</el-button>
-    </el-button-group>
-    <el-button-group>
-      <el-tooltip class="item" effect="dark" content="关闭" placement="bottom-end">
-        <el-button type="primary" icon="el-icon-close" @click="handleClose"></el-button>
-      </el-tooltip>
-    </el-button-group>
+    <a-button-group>
+      <a-tooltip class="item" effect="dark" content="修改模型属性" placement="bottomLeft">
+        <a-button type="primary" icon="el-icon-edit" @click="handleEdit"></a-button>
+      </a-tooltip>
+      <a-tooltip class="item" effect="dark" content="复制这个模型" placement="bottom">
+        <a-button type="primary" icon="el-icon-document-copy" @click="handleCopy"></a-button>
+      </a-tooltip>
+      <a-tooltip class="item" effect="dark" content="删除这个模型" placement="bottomRight">
+        <a-button type="primary" icon="el-icon-delete" @click="handleDelete"></a-button>
+      </a-tooltip>
+    </a-button-group>
+    <a-button-group>
+      <a-tooltip class="item" effect="dark" content="导出到BPMN2" placement="bottom">
+        <a-button type="primary" icon="el-icon-download" @click="handleExport"></a-button>
+      </a-tooltip>
+    </a-button-group>
+    <a-button-group>
+      <a-button type="primary" icon="el-icon-check" @click="handlePush">发布</a-button>
+      <a-button type="primary" icon="el-icon-edit-outline" @click="handleViewEdit">可视化编辑</a-button>
+    </a-button-group>
+    <a-button-group>
+      <a-tooltip class="item" effect="dark" content="关闭" placement="bottomRight">
+        <a-button type="primary" icon="el-icon-close" @click="handleClose"></a-button>
+      </a-tooltip>
+    </a-button-group>
   </div>
 </template>
 

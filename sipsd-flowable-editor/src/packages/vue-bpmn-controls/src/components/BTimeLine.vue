@@ -1,23 +1,25 @@
 <template>
   <div class="bpmn-time-line">
-    <el-timeline>
-      <el-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
-        <p>{{fmtDate(item.startTime)}}</p>
-        <p>{{item.taskName}}</p>
-        <p>已审批</p>
-      </el-timeline-item>
-      <el-timeline-item v-for="item in uData" :key="item.id" color="orange">
-        <p>{{item.taskName}}</p>
-        <p>待审批</p>
-      </el-timeline-item>
-    </el-timeline>
+    <a-spin :spinning="loading">
+      <a-timeline>
+        <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
+          <p>{{fmtDate(item.startTime)}}</p>
+          <p>{{item.taskName}}</p>
+          <p>已审批</p>
+        </a-timeline-item>
+        <a-timeline-item v-for="item in uData" :key="item.id" color="orange">
+          <p>{{item.taskName}}</p>
+          <p>待审批</p>
+        </a-timeline-item>
+      </a-timeline>
+    </a-spin>
   </div>
 </template>
 
 <script>
 export default {
   name: "BTimeLine",
-  props:['data','uData'],
+  props:['loading','data','uData'],
   methods:{
     fmtDate(dt){
       const t = new Date(dt)

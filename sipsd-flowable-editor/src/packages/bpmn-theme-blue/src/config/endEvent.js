@@ -1,5 +1,4 @@
 import {append, attr, create} from "tiny-svg";
-import app from "../../../../store/modules/app";
 
 export default (options)=>{
     const g = create('g',{

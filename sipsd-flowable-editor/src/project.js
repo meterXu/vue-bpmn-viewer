@@ -3,11 +3,11 @@ const project = {
   mainSys:true,
   variable: {
     development: {
-      baseApi: "",
+      baseApi: "http://192.168.172.11:9001/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000
     },
     production: {
-      baseApi: "",
+      baseApi: "http://192.168.172.11:9001/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000
     },
     proxy:{

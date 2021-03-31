@@ -2,7 +2,7 @@
 <div id="bpmn">
   <vue-bpmn ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
   <BTZoom ref="BTZoom"/>
-  <BTimeLine v-loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+  <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
   <BToolBar
       @edit="handleEdit"
       @copy="handleCopy"
@@ -12,18 +12,18 @@
       @viewEdit="handleViewEdit"
       @close="handleClose"
   />
-  <el-dialog
+  <a-modal
       :title="taskTitle"
-      :visible.sync="dialogVisible"
+      v-model="dialogVisible"
       width="30%">
     <span>
       {{taskContent}}
     </span>
     <span slot="footer" class="dialog-footer">
-    <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <a-button @click="dialogVisible = false">取 消</a-button>
+    <a-button type="primary" @click="dialogVisible = false">确 定</a-button>
   </span>
-  </el-dialog>
+  </a-modal>
 </div>
 </template>
 
@@ -32,13 +32,11 @@ import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from '../packages/bpmn-theme-blue'
 import BTZoom from '../packages/vue-bpmn-controls'
 import {BTimeLine,utils,BToolBar} from '../packages/vue-bpmn-controls'
+import {getAction} from "@/api/manage";
+
 export default {
   name: "Viewer",
   props:{
-    baseUrl:{
-      type:String,
-      default:'http://192.168.172.11:9001/sipsd-flow-modeler/'
-    },
     xmlId:{
       type:String,
       default:'423739ec-8c80-11eb-a15e-f2326a570310'
@@ -79,7 +77,7 @@ export default {
   },
   computed:{
     xmlUrl(){
-      return `${this.baseUrl}${this.url.xmlUrl}${this.xmlId}`
+      return `${this.$project_bpmn.variable.baseApi}${this.url.xmlUrl}${this.xmlId}`
     }
   },
   watch:{
@@ -108,14 +106,12 @@ export default {
     },
     getTaskList(){
       return new Promise(((resolve, reject) => {
-        this.axios.get(this.baseUrl+this.url.allExtensionTasks,{
-          params:{
-            initPageIndex:1,
-            pageIndex:1,
-            pageNum:1,
-            pageSize:99,
-            processInstanceId:this.processInstanceId,
-          }
+        getAction(this.url.allExtensionTasks,{
+          initPageIndex:1,
+          pageIndex:1,
+          pageNum:1,
+          pageSize:99,
+          processInstanceId:this.processInstanceId,
         }).then(res=>{
           resolve(res.data)
         }).catch(err=>{
@@ -170,7 +166,7 @@ export default {
   },
   async created() {
     const tasks = await this.getTaskList()
-    tasks.data.forEach(f=>{
+    tasks.forEach(f=>{
       utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
       if(f.status==='已办'){
         this.taskData.completeTask.push(f)
@@ -186,6 +182,7 @@ export default {
 <style scoped>
 #bpmn{
   width: 100%;
+  height: 100%;
   background: #F5F5F7;
   cursor: grab;
 }
