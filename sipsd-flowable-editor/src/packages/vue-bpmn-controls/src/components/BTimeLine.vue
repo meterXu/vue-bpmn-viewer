@@ -1,7 +1,7 @@
 <template>
-  <div class="bpmn-time-line" :class="{'spin-center':loading}">
+  <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0&&uData.length===0)}">
     <a-spin :spinning="loading" tip="加载中...">
-      <a-timeline>
+      <a-timeline v-if="data.length>0||uData.length>0">
         <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
           <p>{{fmtDate(item.startTime)}}</p>
           <p>{{item.taskName}}</p>
@@ -12,7 +12,9 @@
           <p>待审批</p>
         </a-timeline-item>
       </a-timeline>
+      <span v-else-if="!loading">无数据</span>
     </a-spin>
+
   </div>
 </template>
 
@@ -61,6 +63,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 }
 .spin-center .ant-spin-nested-loading{
   flex: 1;

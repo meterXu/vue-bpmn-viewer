@@ -1,8 +1,8 @@
 <template>
 <div id="bpmn">
-  <vue-bpmn ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
+  <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
   <BTZoom :bpmnViewer="bpmnViewer" ref="BTZoom"/>
-  <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+  <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
   <BToolBar
       @edit="handleEdit"
       @copy="handleCopy"
@@ -39,11 +39,9 @@ export default {
   props:{
     xmlId:{
       type:String,
-      default:'423739ec-8c80-11eb-a15e-f2326a570310'
     },
     instanceId:{
       type:String,
-      default:'0837e105905d11eb86a576c39c853d34'
     }
   },
   components:{
@@ -148,35 +146,31 @@ export default {
     }
   },
   mounted() {
+    this.xmlId = this.$route.query.xmlId
+    this.instanceId = this.$route.query.instanceId
     let that = this
     this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
     window.xx =  this.bpmnViewer
     this.bpmnViewer.on('import.done', function() {
       that.$refs.BTZoom.handleZoomReset()
-      document.querySelector('.bjs-powered-by').remove()
-    });
-    const eventBus = this.bpmnViewer.get('eventBus');
-    this.events.forEach(function(event) {
-      eventBus.on(event, function(e) {
-        switch (e.type){
-          case 'element.click':{
-            that.elementClick(e.element)
-          }
-        }
-      });
+      if(document.querySelector('.bjs-powered-by')){
+        document.querySelector('.bjs-powered-by').remove()
+      }
     });
   },
   async created() {
-    const tasks = await this.getTaskList()
-    tasks.forEach(f=>{
-      utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
-      if(f.status==='已办'){
-        this.taskData.completeTask.push(f)
-      }else if(f.status==='待办'){
-        this.taskData.upcomingTask.push(f)
-      }
-    })
-    this.timeLine_loading=false
+    if(this.instanceId){
+      const tasks = await this.getTaskList()
+      tasks.forEach(f=>{
+        utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+        if(f.status==='已办'){
+          this.taskData.completeTask.push(f)
+        }else if(f.status==='待办'){
+          this.taskData.upcomingTask.push(f)
+        }
+      })
+      this.timeLine_loading=false
+    }
   }
 }
 </script>

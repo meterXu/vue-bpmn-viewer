@@ -6,7 +6,6 @@ export default [
     meta: {
       title: 'viewer'
     },
-    component: Viewer,
-    props: (route) => ({ xmlId: route.query.xmlId,instanceId: route.query.instanceId })
+    component: Viewer
   }
 ]
