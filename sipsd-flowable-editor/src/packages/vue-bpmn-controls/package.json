@@ -1,0 +1,19 @@
+{
+  "name": "vue-bpmn-controls",
+  "version": "1.0.1",
+  "description": "vue-bpmn控件库",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "module": "index.js",
+  "keywords": [
+    "vue-bpmn",
+    "control"
+  ],
+  "author": "isaac",
+  "license": "MIT",
+  "dependencies": {
+    "ant-design-vue": "^1.6.3"
+  }
+}
