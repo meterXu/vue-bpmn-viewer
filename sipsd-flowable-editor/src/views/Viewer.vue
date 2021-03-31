@@ -41,7 +41,7 @@ export default {
       type:String,
       default:'423739ec-8c80-11eb-a15e-f2326a570310'
     },
-    processInstanceId:{
+    instanceId:{
       type:String,
       default:'0837e105905d11eb86a576c39c853d34'
     }
@@ -112,7 +112,7 @@ export default {
           pageIndex:1,
           pageNum:1,
           pageSize:99,
-          processInstanceId:this.processInstanceId,
+          processInstanceId:this.instanceId,
         }).then(res=>{
           resolve(res.data)
         }).catch(err=>{

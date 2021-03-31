@@ -1,11 +1,12 @@
 import Viewer from './Viewer.vue'
 export default [
   {
-    path: '/bpmn/Viewer',
+    path: '/bpmn/Viewer/:xmlId/:instanceId"',
     name: '@getRoutesName(path)',
     meta: {
-      title: 'readme'
+      title: 'viewer'
     },
-    component: Viewer
+    component: Viewer,
+    props: true
   }
 ]
