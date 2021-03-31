@@ -3,6 +3,7 @@ package com.sipsd.flow.service.flowable.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.constant.FlowConstant;
@@ -84,7 +85,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Result<String> backToStepTask(BackTaskVo backTaskVo) {
+	public Result<String> jumpToStepTask(BackTaskVo backTaskVo) {
 
 		//通过fromkey找到当前最新的那一条审批节点信息(通过时间排序)
 		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(backTaskVo.getProcessInstanceId(),backTaskVo.getDistFlowElementId());
@@ -94,7 +95,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		}
 		if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL))
 		{
-			return  Result.failed("并行节点无法驳回，请选择其他节点!");
+			return  Result.failed("无法驳回到并行节点，请选择其他节点!");
 		}
 
 		Result<String> result = null;
@@ -154,9 +155,10 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public Result<String> backToPreStepTask(PreBackTaskVo preBackTaskVo) {
+	public Result<String> backToStepTask(PreBackTaskVo preBackTaskVo) {
 		//找到当前节点的上个审批节点-fromKey
 		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(preBackTaskVo.getProcessInstanceId(),preBackTaskVo.getTaskId());
+		String currentTaskDefKey = taskExtensionVo.getTaskDefinitionKey();
 		if(taskExtensionVo == null || StringUtils.isEmpty(taskExtensionVo.getFromKey()))
 		{
 			return Result.failed("无法找到上个审批节点的信息");
@@ -166,10 +168,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		if(taskExtensionVo == null)
 		{
 			return Result.failed("无法找到上个审批节点的信息");
-		}
-		if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL))
-		{
-			return  Result.failed("并行节点无法驳回，请选择其他节点!");
 		}
 
 		Result<String> result = null;
@@ -209,15 +207,32 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
-			} else {
+			} else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+				List<String> distActivityIds = new ArrayList<>();
+				//查询该节点的其他并联节点
+				List<TaskExtensionVo> parallelTask =  flowableExtensionTaskService.getExtensionTaskByStartTime(preBackTaskVo.getProcessInstanceId(),
+						DateUtil.getDateTime(taskExtensionVo.getStartTime()));
+				for(TaskExtensionVo extensionVo:parallelTask)
+				{
+					distActivityIds.add(extensionVo.getTaskDefinitionKey());
+				}
+
+				//5.执行驳回操作
+				runtimeService.createChangeActivityStateBuilder()
+						.processInstanceId(preBackTaskVo.getProcessInstanceId())
+						.moveSingleActivityIdToActivityIds(currentTaskDefKey,distActivityIds)
+						.changeState();
+			}
+			else {
 				// 6.2 普通驳回
 				List<Execution> executions = runtimeService.createExecutionQuery()
 						.parentId(taskEntity.getProcessInstanceId()).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
-				//插入自定义属性表
-				flowableExtensionTaskService.saveBackExtensionTask(preBackTaskVo.getProcessInstanceId());
+
 			}
+			//插入自定义属性表
+			flowableExtensionTaskService.saveBackExtensionTask(preBackTaskVo.getProcessInstanceId());
 			result = Result.sucess("驳回成功!");
 		} else {
 			result = Result.failed("不存在任务实例,请确认!");

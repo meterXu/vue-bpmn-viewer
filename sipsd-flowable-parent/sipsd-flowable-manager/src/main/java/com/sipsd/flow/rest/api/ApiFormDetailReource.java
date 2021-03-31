@@ -331,7 +331,7 @@ public class ApiFormDetailReource extends BaseResource {
 	@PostMapping(value = "/doJumpStep")
 	public Result<String> doJumpStep(@Validated @RequestBody BackTaskVo params) {
 		// params.setUserCode(this.getLoginUser().getId());
-		Result<String> result = flowableTaskService.backToStepTask(params);
+		Result<String> result = flowableTaskService.jumpToStepTask(params);
 		return result;
 	}
 
@@ -344,9 +344,10 @@ public class ApiFormDetailReource extends BaseResource {
 	@ApiOperation("驳回")
 	@PostMapping(value = "/doBackStep")
 	public Result<String> doBackStep(@Validated @RequestBody PreBackTaskVo params) {
-		Result<String> result = flowableTaskService.backToPreStepTask(params);
+		Result<String> result = flowableTaskService.backToStepTask(params);
 		return result;
 	}
+
 	
     /**
      * 获取流程动态表单信息

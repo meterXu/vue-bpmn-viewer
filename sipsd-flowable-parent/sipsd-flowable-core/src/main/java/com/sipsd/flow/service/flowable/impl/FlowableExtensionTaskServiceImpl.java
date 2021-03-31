@@ -43,6 +43,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	@Override
 	public void saveExtensionTask(String processDefinitionId,String fromKey)
 	{
+		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
+		Date startTime = new Date();
 		String elementText = null;
 		List<Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
 		//TODO 对于加签的情况驳回的时候无法判断
@@ -106,6 +108,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					taskExtensionVo.setTenantId(task.getTenantId());
 					taskExtensionVo.setTaskName(task.getName());
 					taskExtensionVo.setFlowType(flowType);
+					taskExtensionVo.setStartTime(startTime);
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
 			}
@@ -116,36 +119,46 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	@Override
 	public void saveBackExtensionTask(String processDefinitionId)
 	{
+		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
+		Date startTime = new Date();
 		String flowType = FlowConstant.FLOW_SEQUENTIAL;
 		List<org.flowable.task.api.Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processDefinitionId).active().list();
+		//TODO 对于加签的情况驳回的时候无法判断
+		if(waitedTaskList.size()>1)
+		{
+			flowType = FlowConstant.FLOW_PARALLEL;
+		}
 		if (!CollectionUtils.isEmpty(waitedTaskList))
 		{
-			Task task = waitedTaskList.get(0);
-			//查询驳回之后的代办节点的前审批节点
-			TaskExtensionVo taskExtensionVo =  flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(processDefinitionId,task.getTaskDefinitionKey());
-			TaskExtensionVo vo = new TaskExtensionVo();
-			vo.setTaskId(task.getId());
-			vo.setAssignee(taskExtensionVo.getAssignee());
-			vo.setGroupId(taskExtensionVo.getGroupId());
-			vo.setExecutionId(task.getExecutionId());
-			vo.setProcessDefinitionId(task.getProcessDefinitionId());
-			vo.setProcessInstanceId(task.getProcessInstanceId());
-			vo.setFromKey(taskExtensionVo.getFromKey());
-			vo.setTaskMaxDay(taskExtensionVo.getTaskMaxDay());
-			vo.setCustomTaskMaxDay(taskExtensionVo.getCustomTaskMaxDay());
-			String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
-			if(StringUtils.isNotEmpty(taskMaxDay))
+			for(Task task:waitedTaskList)
 			{
-				vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
-				//算出剩余处理时间
-				Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
-				vo.setRestTime(restTime);
+				//查询驳回之后的代办节点的前审批节点
+				TaskExtensionVo taskExtensionVo =  flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(processDefinitionId,task.getTaskDefinitionKey());
+				TaskExtensionVo vo = new TaskExtensionVo();
+				vo.setTaskId(task.getId());
+				vo.setAssignee(taskExtensionVo.getAssignee());
+				vo.setGroupId(taskExtensionVo.getGroupId());
+				vo.setExecutionId(task.getExecutionId());
+				vo.setProcessDefinitionId(task.getProcessDefinitionId());
+				vo.setProcessInstanceId(task.getProcessInstanceId());
+				vo.setFromKey(taskExtensionVo.getFromKey());
+				vo.setTaskMaxDay(taskExtensionVo.getTaskMaxDay());
+				vo.setCustomTaskMaxDay(taskExtensionVo.getCustomTaskMaxDay());
+				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
+				if(StringUtils.isNotEmpty(taskMaxDay))
+				{
+					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					//算出剩余处理时间
+					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
+					vo.setRestTime(restTime);
+				}
+				vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
+				vo.setTenantId(task.getTenantId());
+				vo.setTaskName(task.getName());
+				vo.setFlowType(flowType);
+				vo.setStartTime(startTime);
+				flowableExtensionTaskDao.insertExtensionTask(vo);
 			}
-			vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
-			vo.setTenantId(task.getTenantId());
-			vo.setTaskName(task.getName());
-			taskExtensionVo.setFlowType(flowType);
-			flowableExtensionTaskDao.insertExtensionTask(vo);
 		}
 	}
 
@@ -180,6 +193,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
 		return Result.failed("更新成功!");
+	}
+
+	@Override
+	public List<TaskExtensionVo> getExtensionTaskByStartTime(String processInstanceId, String startTime)
+	{
+		return flowableExtensionTaskDao.getExtensionTaskByStartTime(processInstanceId,startTime);
 	}
 
 	public FlowElement getFlowElementByActivityIdAndProcessDefinitionId(String taskDefinedKey, String processDefinitionId) {
