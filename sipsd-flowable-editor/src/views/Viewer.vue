@@ -146,7 +146,7 @@ export default {
 
     },
     handleClose(){
-
+      window.history.back()
     }
   },
   mounted() {

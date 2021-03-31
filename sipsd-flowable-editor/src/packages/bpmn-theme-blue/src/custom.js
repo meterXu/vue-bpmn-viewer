@@ -98,7 +98,6 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
     }
     drawShape(parentNode, element) {
         const type = element.type // 获取到类型
-        console.log(type)
         if (customElements.includes(type)) {
             const { draw} = customConfig[type]
             const customIcon = draw({
