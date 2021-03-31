@@ -1,0 +1,8 @@
+{
+  "bpmn": {
+    "immediately": true,
+    "js":[
+      "http://localhost:8081/bpmn.js"
+    ]
+  }
+}
