@@ -4,9 +4,10 @@
   <div v-else class="no-bpmn">
     <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
   </div>
-  <BTZoom :bpmnViewer="bpmnViewer" ref="BTZoom"/>
+  <BTZoom v-if="instanceId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
   <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
   <BToolBar
+      v-if="xmlId"
       @edit="handleEdit"
       @copy="handleCopy"
       @delete="handleDelete"
@@ -193,10 +194,12 @@ export default {
 #bpmn:active{
   cursor: grabbing;
 }
-.demo-btn{
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 9999;
+.no-bpmn{
+  text-align: center;
+}
+.no-bpmn img{
+  display: inline-block;
+  margin-top: 100px;
+  width: 700px;
 }
 </style>
