@@ -1,6 +1,6 @@
 <template>
-  <div class="bpmn-time-line">
-    <a-spin :spinning="loading">
+  <div class="bpmn-time-line" :class="{'spin-center':loading}">
+    <a-spin :spinning="loading" tip="加载中...">
       <a-timeline>
         <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
           <p>{{fmtDate(item.startTime)}}</p>
@@ -48,7 +48,8 @@ export default {
   right: 20px;
   top: 60px;
   bottom: 50px;
-  padding: 30px 60px 30px 30px;
+  padding: 30px 30px 30px 30px;
+  width: 245px;
   background: #fff;
   border-radius: 5px;
   border: 1px solid #E0E0E0;
@@ -56,6 +57,15 @@ export default {
   overflow-y: auto;
   transition: height .3s;
 }
+.spin-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spin-center .ant-spin-nested-loading{
+  flex: 1;
+}
+
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
   width:8px;
