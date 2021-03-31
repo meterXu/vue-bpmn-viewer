@@ -48,11 +48,11 @@ export default {
   right: 20px;
   top: 60px;
   bottom: 50px;
-  padding: 30px 60px 30px 10px;
+  padding: 30px 60px 30px 30px;
   background: #fff;
   border-radius: 5px;
   border: 1px solid #E0E0E0;
-  /*box-shadow: 1px 1px 5px #cdcdcd;*/
+  box-shadow: 0 2px 2px #0000000d;
   overflow-y: auto;
   transition: height .3s;
 }
@@ -73,6 +73,6 @@ export default {
   -webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(51, 101, 189,0.6);
+  background: rgba(94, 94, 94, 0.3);
 }
 </style>

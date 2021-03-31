@@ -3,7 +3,7 @@
     <ul class="io-zoom-reset io-control io-control-list">
       <li>
         <button title="reset zoom" @click="handleZoomReset">
-          <span class="icon-size-reset"></span>
+          <a-icon type="redo" />
         </button>
       </li>
       <li>
@@ -11,7 +11,7 @@
       </li>
       <li>
         <button title="zoom in" @click="handleZoomIn">
-          <span class="icon-plus"></span>
+          <a-icon type="plus" />
         </button>
       </li>
       <li>
@@ -19,7 +19,7 @@
       </li>
       <li>
         <button href title="zoom out" @click="handleZoomOut">
-          <span class="icon-minus"></span>
+          <a-icon type="minus" />
         </button>
       </li>
     </ul>
