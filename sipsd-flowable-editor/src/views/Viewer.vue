@@ -1,7 +1,7 @@
 <template>
 <div id="bpmn">
   <vue-bpmn ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
-  <BTZoom ref="BTZoom"/>
+  <BTZoom :bpmnViewer="bpmnViewer" ref="BTZoom"/>
   <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
   <BToolBar
       @edit="handleEdit"
@@ -54,6 +54,7 @@ export default {
   },
   data(){
     return {
+      bpmnViewer:null,
       dialogVisible:false,
       taskContent:null,
       taskTitle:null,
@@ -148,12 +149,13 @@ export default {
   },
   mounted() {
     let that = this
-    window.xx = this.$bpmnViewer
-    this.$bpmnViewer.on('import.done', function() {
+    this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
+    window.xx =  this.bpmnViewer
+    this.bpmnViewer.on('import.done', function() {
       that.$refs.BTZoom.handleZoomReset()
       document.querySelector('.bjs-powered-by').remove()
     });
-    const eventBus = this.$bpmnViewer.get('eventBus');
+    const eventBus = this.bpmnViewer.get('eventBus');
     this.events.forEach(function(event) {
       eventBus.on(event, function(e) {
         switch (e.type){

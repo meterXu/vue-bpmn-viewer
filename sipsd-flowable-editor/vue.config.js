@@ -41,7 +41,19 @@ module.exports = {
             }
           }]
         })
-      ]
+      ],
+      module:{
+        rules:[
+          // {
+          //   test: /\.(ttf|otf|eot|woff|woff2)$/,
+          //   loader:'url-loader',
+          //   options:{
+          //     limit: 10000,
+          //     name: 'fonts/[name].[contenthash:4].[ext]'
+          //   }
+          // }
+        ]
+      }
     }
   },
   chainWebpack:config=>{
@@ -57,7 +69,7 @@ module.exports = {
           }
         };
         return options;
-      });
+      })
   },
   devServer: {
     port: 8081

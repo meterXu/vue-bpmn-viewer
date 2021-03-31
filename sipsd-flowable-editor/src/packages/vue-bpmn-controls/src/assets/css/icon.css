@@ -2,7 +2,7 @@
  * bpmn + custom icon definitions
  */
 @font-face {
-    font-family: 'app';
+    font-family: 'bpmn';
     src: url(../font/bpmn.eot);
     src: url(../font/bpmn.eot#iefix) format('embedded-opentype'), url(../font/bpmn.woff) format('woff'), url(../font/bpmn.ttf) format('truetype');
     font-weight: normal;
@@ -23,7 +23,7 @@
 }
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
-    font-family: "app";
+    font-family: "bpmn";
 }
 .icon-bpmn-io-logo:before {
     content: '\e800';
