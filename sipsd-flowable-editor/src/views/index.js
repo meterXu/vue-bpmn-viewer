@@ -1,8 +1,8 @@
 import Viewer from './Viewer.vue'
 export default [
   {
-    path: '/bpmn/Viewer/:xmlId/:instanceId"',
-    name: '@getRoutesName(path)',
+    path: '/bpmn/viewer/:xmlId/:instanceId',
+    name: 'bpmn-viewer',
     meta: {
       title: 'viewer'
     },
