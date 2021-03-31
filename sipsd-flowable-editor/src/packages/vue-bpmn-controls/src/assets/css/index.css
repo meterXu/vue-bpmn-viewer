@@ -1,0 +1,27 @@
+.d-userTask{
+    cursor: pointer;
+}
+.d-userTask:hover{
+    stroke: #3296fa !important;
+}
+.highlight-custom-path{
+    stroke-dasharray:6;
+    animation: complete 2s infinite;
+    animation-timing-function:linear;
+}
+
+@keyframes complete {
+    0%{
+        stroke-dashoffset:0;
+        stroke-width: 3;
+    }
+    50%{
+        stroke-dashoffset:-30;
+        stroke-width: 3;
+    }
+
+    100% {
+        stroke-dashoffset:-60;
+        stroke-width: 3;
+    }
+}

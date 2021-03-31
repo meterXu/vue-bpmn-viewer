@@ -1,0 +1,4 @@
+!dist
+example
+rollup.config.js
+yarn.lock

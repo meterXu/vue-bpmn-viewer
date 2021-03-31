@@ -1,0 +1,13 @@
+.clock-spin{
+    transform-origin: 512px 512px;
+    animation: spin 1s infinite;
+    animation-timing-function:linear;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

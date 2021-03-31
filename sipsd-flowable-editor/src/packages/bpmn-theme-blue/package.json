@@ -1,0 +1,27 @@
+{
+  "name": "bpmn-theme-blue",
+  "version": "1.0.1",
+  "description": "bpmn-js蓝色主题",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "module": "dist/index.esm.js",
+  "keywords": [
+    "bpmn",
+    "theme",
+    "vue"
+  ],
+  "author": "isaac",
+  "license": "MIT",
+  "dependencies": {
+    "bpmn-js": "^8.2.2",
+    "tiny-svg": "^2.2.2"
+  },
+  "devDependencies": {
+    "rollup": "^2.43.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-css-only": "^3.1.0"
+  }
+}
