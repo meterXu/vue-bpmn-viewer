@@ -1,6 +1,9 @@
 <template>
 <div id="bpmn">
   <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
+  <div v-else class="no-bpmn">
+    <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
+  </div>
   <BTZoom :bpmnViewer="bpmnViewer" ref="BTZoom"/>
   <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
   <BToolBar
@@ -146,8 +149,6 @@ export default {
     }
   },
   mounted() {
-    this.xmlId = this.$route.query.xmlId
-    this.instanceId = this.$route.query.instanceId
     let that = this
     this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
     window.xx =  this.bpmnViewer
@@ -159,17 +160,24 @@ export default {
     });
   },
   async created() {
+    this.xmlId = this.$route.query.xmlId
+    this.instanceId = this.$route.query.instanceId
     if(this.instanceId){
-      const tasks = await this.getTaskList()
-      tasks.forEach(f=>{
-        utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
-        if(f.status==='已办'){
-          this.taskData.completeTask.push(f)
-        }else if(f.status==='待办'){
-          this.taskData.upcomingTask.push(f)
-        }
-      })
-      this.timeLine_loading=false
+      try{
+        const tasks = await this.getTaskList()
+        tasks.forEach(f=>{
+          utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+          if(f.status==='已办'){
+            this.taskData.completeTask.push(f)
+          }else if(f.status==='待办'){
+            this.taskData.upcomingTask.push(f)
+          }
+        })
+      }catch (err){
+        console.error(err)
+      }finally {
+        this.timeLine_loading=false
+      }
     }
   }
 }
