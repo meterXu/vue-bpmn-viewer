@@ -1,34 +1,36 @@
 <template>
-<div id="bpmn">
-  <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
-  <div v-else class="no-bpmn">
-    <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
-  </div>
-  <BTZoom v-if="instanceId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
-  <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
-  <BToolBar
-      v-if="xmlId"
-      @edit="handleEdit"
-      @copy="handleCopy"
-      @delete="handleDelete"
-      @export="handleExport"
-      @push="handlePush"
-      @viewEdit="handleViewEdit"
-      @close="handleClose"
-  />
-  <a-modal
-      :title="taskTitle"
-      v-model="dialogVisible"
-      width="30%">
+  <div id="bpmn">
+    <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xmlUrl"></vue-bpmn>
+    <div v-else class="no-bpmn">
+      <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
+    </div>
+    <BToolBar
+        v-if="xmlId"
+        @edit="handleEdit"
+        @copy="handleCopy"
+        @delete="handleDelete"
+        @export="handleExport"
+        @push="handlePush"
+        @viewEdit="handleViewEdit"
+        @close="handleClose"
+    />
+    <div class="bottomRightTool">
+      <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
+      <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+    </div>
+    <a-modal
+        :title="taskTitle"
+        v-model="dialogVisible"
+        width="30%">
     <span>
       {{taskContent}}
     </span>
-    <span slot="footer" class="dialog-footer">
+      <span slot="footer" class="dialog-footer">
     <a-button @click="dialogVisible = false">取 消</a-button>
     <a-button type="primary" @click="dialogVisible = false">确 定</a-button>
   </span>
-  </a-modal>
-</div>
+    </a-modal>
+  </div>
 </template>
 
 <script>
@@ -74,7 +76,8 @@ export default {
       url:{
         xmlUrl:'rest/model/loadXmlByModelId/',
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
-        exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878'
+        exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
+        restModels:'app/rest/models/'
       }
     }
   },
@@ -154,10 +157,10 @@ export default {
     this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
     window.xx =  this.bpmnViewer
     this.bpmnViewer.on('import.done', function() {
-      that.$refs.BTZoom.handleZoomReset()
       if(document.querySelector('.bjs-powered-by')){
         document.querySelector('.bjs-powered-by').remove()
       }
+      that.$refs.BTZoom.handleZoomReset()
     });
   },
   async created() {
@@ -201,5 +204,12 @@ export default {
   display: inline-block;
   margin-top: 100px;
   width: 700px;
+}
+.bottomRightTool{
+  position: fixed;
+  right: 0;
+  bottom: 30px;
+  display: flex;
+  align-items: baseline;
 }
 </style>

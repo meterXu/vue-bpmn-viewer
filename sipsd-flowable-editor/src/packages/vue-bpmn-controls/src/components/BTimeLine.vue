@@ -45,11 +45,9 @@ export default {
 
 <style scoped>
 .bpmn-time-line{
-  position: fixed;
   z-index: 10;
-  right: 20px;
-  top: 60px;
-  bottom: 50px;
+  height: 800px;
+  margin-right: 20px;
   padding: 30px 30px 30px 30px;
   width: 245px;
   background: #fff;

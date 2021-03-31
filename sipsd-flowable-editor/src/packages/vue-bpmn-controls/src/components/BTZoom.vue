@@ -86,10 +86,7 @@ export default {
 }
 .io-zoom-controls {
   width: auto;
-  position: fixed;
-  z-index: 10;
-  right: 320px;
-  bottom: 40px;
+  margin-right: 10px;
 }
 .io-zoom-reset {
   margin-bottom: 10px;
