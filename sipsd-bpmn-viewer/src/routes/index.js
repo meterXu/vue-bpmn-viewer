@@ -6,7 +6,8 @@ export const frameRoutes = parseRoutes([
         path:'/bpmn/login',
         name:'@getRoutesName(path)',
         component:Login
-    }
+    },
+    ...routes
 ])
 export default parseRoutes([
     {
@@ -14,7 +15,6 @@ export default parseRoutes([
         'name':'@getRoutesName(path)',
         'component':"layouts/RouteView",
         'children':[
-            ...routes
         ]
     }
 ])

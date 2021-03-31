@@ -15,8 +15,8 @@ const project = {
     }
   },
   redirect: {
-    // login: '/bpmn/login',
-    index: '/bpmn/m1/readme'
+    login: '/bpmn/login',
+    index: '/bpmn/viewer'
   },
   style: {
     theme: 'dark',
@@ -32,7 +32,7 @@ const project = {
     "logo": require("./assets/logo_sipsd.png"),
     "darkLogo": require("./assets/logo_sipsd_white.png"),
     "favicon": require("./assets/logo_sipsd_favicon.png"),
-    "title": "bpmn-viewer",
+    "title": "sipsd-bpmn-viewer",
     "login": {
       "title": "bpmn-viewer",
       "desc": "项目由s2驱动！"
