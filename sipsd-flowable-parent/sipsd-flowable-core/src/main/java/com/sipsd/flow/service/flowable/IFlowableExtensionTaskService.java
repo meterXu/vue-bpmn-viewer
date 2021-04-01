@@ -6,6 +6,8 @@ import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.vo.flowable.ExtensionTaskQueryVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 
+import java.util.List;
+
 /**
  * @author : 高强
  * @projectName : flowable
@@ -37,6 +39,15 @@ public interface IFlowableExtensionTaskService
      */
     public PageModel<TaskExtensionVo>  getExtensionTaskByProcessInstanceId(String processInstanceId, Query query);
 
+
+    /**
+     *
+     * @param processInstanceId
+     * @param startTime
+     * @return java.util.List<com.sipsd.flow.vo.flowable.ret.TaskExtensionVo>
+     * @Description 根据实例id和创建时间查询节点
+     */
+    public List<TaskExtensionVo> getExtensionTaskByStartTime(String processInstanceId,String startTime);
 
     /**
      * @param processInstanceId

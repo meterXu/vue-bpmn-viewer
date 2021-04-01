@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author : 高强
  * @title: : IFlowableTaskDao
@@ -32,7 +34,14 @@ public interface IFlowableExtensionTaskDao
     public Page<TaskExtensionVo>  getAllExtensionTaskByProcessInstanceId(@Param("processInstanceId") String processInstanceId);
 
 
-
+    /**
+     *
+     * @param processInstanceId
+     * @param startTime
+     * @return java.util.List<com.sipsd.flow.vo.flowable.ret.TaskExtensionVo>
+     * @Description 根据实例id和创建时间查询节点
+     */
+    public List<TaskExtensionVo> getExtensionTaskByStartTime(@Param("processInstanceId") String processInstanceId,@Param("startTime") String startTime);
     /**
      * @param params
      * @return void

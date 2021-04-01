@@ -57,9 +57,19 @@ public class TaskExtensionVo implements Serializable {
     private String assignee;
 
     /**
+     * 审批人名称
+     */
+    private String realName;
+
+    /**
      * 审批角色
      */
     private String groupId;
+
+    /**
+     * 审批角色名称
+     */
+    private String groupName;
 
     /**
      * 创建时间
@@ -340,5 +350,25 @@ public class TaskExtensionVo implements Serializable {
     public void setFlowType(String flowType)
     {
         this.flowType = flowType;
+    }
+
+    public String getRealName()
+    {
+        return realName;
+    }
+
+    public void setRealName(String realName)
+    {
+        this.realName = realName;
+    }
+
+    public String getGroupName()
+    {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName)
+    {
+        this.groupName = groupName;
     }
 }

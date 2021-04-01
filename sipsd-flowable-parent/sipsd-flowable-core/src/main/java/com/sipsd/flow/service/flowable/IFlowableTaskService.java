@@ -25,7 +25,7 @@ public interface IFlowableTaskService {
      * @param backTaskVo 参数
      * @return
      */
-    public Result<String> backToStepTask(BackTaskVo backTaskVo);
+    public Result<String> jumpToStepTask(BackTaskVo backTaskVo);
 
     /**
      * 驳回到原节点原处理人 暂时没有考虑子流程
@@ -33,7 +33,8 @@ public interface IFlowableTaskService {
      * @param preBackTaskVo 参数
      * @return
      */
-    public Result<String> backToPreStepTask(PreBackTaskVo preBackTaskVo);
+    public Result<String> backToStepTask(PreBackTaskVo preBackTaskVo);
+
 
     /**
      * 获取可驳回节点列表
