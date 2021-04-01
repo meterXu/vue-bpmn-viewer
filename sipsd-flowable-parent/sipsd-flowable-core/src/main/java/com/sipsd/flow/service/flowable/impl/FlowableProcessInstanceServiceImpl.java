@@ -17,6 +17,7 @@ import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.constants.BpmnXMLConstants;
+import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.Activity;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.EndEvent;
@@ -198,6 +199,43 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 		// 6. 转化成byte便于网络传输
 		byte[] datas = IoUtil.readInputStream(inputStream, "image inputStream name");
 		return datas;
+	}
+
+	@Override
+	public byte[] createXml(String processInstanceId)
+	{
+		// 1.获取当前的流程实例
+		ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
+				.processInstanceId(processInstanceId).singleResult();
+		String processDefinitionId = null;
+		List<String> activeActivityIds = new ArrayList<>();
+		List<String> highLightedFlows = new ArrayList<>();
+		// 2.获取所有的历史轨迹线对象
+		List<HistoricActivityInstance> historicSquenceFlows = historyService.createHistoricActivityInstanceQuery()
+				.processInstanceId(processInstanceId).activityType(BpmnXMLConstants.ELEMENT_SEQUENCE_FLOW).list();
+		historicSquenceFlows
+				.forEach(historicActivityInstance -> highLightedFlows.add(historicActivityInstance.getActivityId()));
+		// 3. 获取流程定义id和高亮的节点id
+		if (processInstance != null) {
+			// 3.1. 正在运行的流程实例
+			processDefinitionId = processInstance.getProcessDefinitionId();
+			activeActivityIds = runtimeService.getActiveActivityIds(processInstanceId);
+		} else {
+			// 3.2. 已经结束的流程实例
+			HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+					.processInstanceId(processInstanceId).singleResult();
+			processDefinitionId = historicProcessInstance.getProcessDefinitionId();
+			// 3.3. 获取结束节点列表
+			List<HistoricActivityInstance> historicEnds = historyService.createHistoricActivityInstanceQuery()
+					.processInstanceId(processInstanceId).activityType(BpmnXMLConstants.ELEMENT_EVENT_END).list();
+			List<String> finalActiveActivityIds = activeActivityIds;
+			historicEnds.forEach(
+					historicActivityInstance -> finalActiveActivityIds.add(historicActivityInstance.getActivityId()));
+		}
+		// 4. 获取bpmnModel对象
+		BpmnModel bpmnModel = flowableBpmnModelService.getBpmnModelByProcessDefId(processDefinitionId);
+		byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);// 转xml
+		return bpmnBytes;
 	}
 
 	@Override

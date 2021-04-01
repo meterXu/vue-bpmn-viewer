@@ -1,9 +1,5 @@
 package com.sipsd.flow.service.flowable;
 
-import java.util.Map;
-
-import org.flowable.engine.runtime.ProcessInstance;
-
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -12,6 +8,9 @@ import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;
 import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import org.flowable.engine.runtime.ProcessInstance;
+
+import java.util.Map;
 
 /**
  * @author : chengtg
@@ -54,6 +53,14 @@ public interface IFlowableProcessInstanceService {
      * @return
      */
     public byte[] createImage(String processInstanceId);
+
+    /**
+     * 获取流程图xml
+     *
+     * @param processInstanceId 流程实例id
+     * @return
+     */
+    public byte[] createXml(String processInstanceId);
 
     /**
      * 删除流程实例

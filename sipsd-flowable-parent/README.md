@@ -69,7 +69,7 @@ postman：https://www.getpostman.com/collections/2830462af356ed1164c9
 bug:
 分支内的驳回，即驳回前有多少条分支，驳回后还是有多少条分支,研究一下act_ru_execution，看清哪些数据再处理
 分支外的驳回，即原来有5条分支，可能驳回后只有一条。这样的话，还是删除掉act_ru_execution到只剩下两条记录即可
-1.并行网关跳转驳回bug
+1.并行网关跳转驳回bug(已解决，驳回可以驳回到任意节点)
 2.多实例加签减签bug
 3.当在流程实例中设置候选用户时无法在act_ru_task中插入assignee，可以用最新的附加接口来查询
 

@@ -39,6 +39,7 @@ import org.flowable.task.service.impl.persistence.entity.TaskEntityImpl;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -84,20 +85,17 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 	public Result<String> jumpToStepTask(BackTaskVo backTaskVo) {
-
-		//通过fromkey找到当前最新的那一条审批节点信息(通过时间排序)
-		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(backTaskVo.getProcessInstanceId(),backTaskVo.getDistFlowElementId());
+		//获取当前的节点名称
+		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(backTaskVo.getProcessInstanceId(),backTaskVo.getTaskId());
+		String currentTaskDefKey = taskExtensionVo.getTaskDefinitionKey();
+		taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(backTaskVo.getProcessInstanceId(),backTaskVo.getDistFlowElementId());
 		if(taskExtensionVo == null)
 		{
-			return Result.failed("无法找到上个审批节点的信息");
+			return Result.failed("无法找到跳转的审批节点的信息");
 		}
-		if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL))
-		{
-			return  Result.failed("无法驳回到并行节点，请选择其他节点!");
-		}
-
+		// 1.把当前的节点设置为空
 		Result<String> result = null;
 		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId())
 				.singleResult();
@@ -127,7 +125,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			if (flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
 					backTaskVo.getDistFlowElementId())
 					&& flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
-							taskEntity.getTaskDefinitionKey())) {
+					taskEntity.getTaskDefinitionKey())) {
 				// 6.1 子流程内部驳回
 				Execution executionTask = runtimeService.createExecutionQuery().executionId(taskEntity.getExecutionId())
 						.singleResult();
@@ -135,17 +133,34 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
-			} else {
+			} else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+				//驳回到并联节点
+				List<String> distActivityIds = new ArrayList<>();
+				//查询该节点的其他并联节点
+				List<TaskExtensionVo> parallelTask =  flowableExtensionTaskService.getExtensionTaskByStartTime(backTaskVo.getProcessInstanceId(),
+						DateUtil.getDateTime(taskExtensionVo.getStartTime()));
+				for(TaskExtensionVo extensionVo:parallelTask)
+				{
+					distActivityIds.add(extensionVo.getTaskDefinitionKey());
+				}
+
+				//5.执行驳回操作
+				runtimeService.createChangeActivityStateBuilder()
+						.processInstanceId(backTaskVo.getProcessInstanceId())
+						.moveSingleActivityIdToActivityIds(currentTaskDefKey,distActivityIds)
+						.changeState();
+			}
+			else {
 				// 6.2 普通驳回
 				List<Execution> executions = runtimeService.createExecutionQuery()
 						.parentId(taskEntity.getProcessInstanceId()).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
 			}
-			result = Result.sucess("跳转成功!");
 			//保存流程的自定义属性-最大审批天数
 			//TODO 跳转只能跳转到以前的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
 			flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
+			result = Result.sucess("驳回成功!");
 		} else {
 			result = Result.failed("不存在任务实例,请确认!");
 		}
@@ -208,6 +223,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
 			} else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+				//驳回到并联节点
 				List<String> distActivityIds = new ArrayList<>();
 				//查询该节点的其他并联节点
 				List<TaskExtensionVo> parallelTask =  flowableExtensionTaskService.getExtensionTaskByStartTime(preBackTaskVo.getProcessInstanceId(),
