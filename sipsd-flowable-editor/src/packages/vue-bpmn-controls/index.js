@@ -1,14 +1,1 @@
-import './src/assets/css/icon.css'
-import './src/assets/css/index.css'
-import utils from './src/lib/utils'
-import BTZoom from "./src/components/BTZoom";
-import BTimeLine from "./src/components/BTimeLine";
-import BToolBar from "./src/components/BToolBar";
-import BTLayout from "./src/components/BTLayout"
-export {
-    utils,
-    BTimeLine,
-    BToolBar,
-    BTLayout
-}
-export default BTZoom
+import"src/assets/css/icon.css";import"src/assets/css/index.css";export{default as utils}from"src/lib/utils";import o from"src/components/BTZoom";export{default}from"src/components/BTZoom";export{default as BTimeLine}from"src/components/BTimeLine";export{default as BToolBar}from"src/components/BToolBar";export{default as BTLayout}from"src/components/BTLayout";

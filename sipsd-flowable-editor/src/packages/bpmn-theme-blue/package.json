@@ -4,8 +4,7 @@
   "description": "bpmn-js蓝色主题",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c",
-    "clean": "lerna clean"
+    "build": "rollup -c"
   },
   "module": "dist/index.esm.js",
   "keywords": [
