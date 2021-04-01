@@ -4,32 +4,24 @@
     <div v-else class="no-bpmn">
       <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
     </div>
-    <BToolBar
-        v-if="xmlId"
-        @edit="handleEdit"
-        @copy="handleCopy"
-        @delete="handleDelete"
-        @export="handleExport"
-        @push="handlePush"
-        @viewEdit="handleViewEdit"
-        @close="handleClose"
-    />
-    <div class="bottomRightTool">
-      <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
-      <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
-    </div>
-    <a-modal
-        :title="taskTitle"
-        v-model="dialogVisible"
-        width="30%">
-    <span>
-      {{taskContent}}
-    </span>
-      <span slot="footer" class="dialog-footer">
-    <a-button @click="dialogVisible = false">取 消</a-button>
-    <a-button type="primary" @click="dialogVisible = false">确 定</a-button>
-  </span>
-    </a-modal>
+    <BTLayout>
+      <template slot="head">
+        <BToolBar
+            v-if="xmlId"
+            @edit="handleEdit"
+            @copy="handleCopy"
+            @delete="handleDelete"
+            @export="handleExport"
+            @push="handlePush"
+            @viewEdit="handleViewEdit"
+            @close="handleClose"
+        />
+      </template>
+      <template slot="right">
+        <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
+        <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+      </template>
+    </BTLayout>
   </div>
 </template>
 
@@ -37,7 +29,7 @@
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from '../packages/bpmn-theme-blue'
 import BTZoom from '../packages/vue-bpmn-controls'
-import {BTimeLine,utils,BToolBar} from '../packages/vue-bpmn-controls'
+import {BTimeLine,utils,BToolBar,BTLayout} from '../packages/vue-bpmn-controls'
 import {getAction} from "@/api/manage";
 
 export default {
@@ -52,6 +44,7 @@ export default {
   },
   components:{
     VueBpmn,
+    BTLayout,
     BTZoom,
     BTimeLine,
     BToolBar
@@ -59,9 +52,6 @@ export default {
   data(){
     return {
       bpmnViewer:null,
-      dialogVisible:false,
-      taskContent:null,
-      taskTitle:null,
       timeLine_loading:true,
       options:{
         additionalModules:[bpmnThemeBlue]
@@ -204,12 +194,5 @@ export default {
   display: inline-block;
   margin-top: 100px;
   width: 700px;
-}
-.bottomRightTool{
-  position: fixed;
-  right: 0;
-  bottom: 30px;
-  display: flex;
-  align-items: flex-end;
 }
 </style>
