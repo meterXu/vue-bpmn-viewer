@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn">
-    <vue-bpmn v-show="xmlId" ref="bpmnObj" :options="options" :url="xml"></vue-bpmn>
-    <div v-show="!xmlId" class="no-bpmn">
+    <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xml" @shown="bpmnLoadDone"></vue-bpmn>
+    <div v-else class="no-bpmn">
       <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
     </div>
     <BTLayout>
@@ -83,20 +83,6 @@ export default {
           utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true})
         }
       }
-    },
-    xmlId(nv){
-      if(nv){
-        let that = this
-        this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
-        window.bpmnViewer =  this.bpmnViewer
-        this.bpmnViewer.on('import.done', function() {
-          if(document.querySelector('.bjs-powered-by')){
-            document.querySelector('.bjs-powered-by').remove()
-          }
-          that.$refs.BTZoom.handleZoomReset()
-          that.getTaskList()
-        });
-      }
     }
   },
   methods:{
@@ -150,6 +136,15 @@ export default {
     },
     handleClose(){
       window.history.back()
+    },
+    bpmnLoadDone(){
+      this.getTaskList()
+      this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
+      window.bpmnViewer =  this.bpmnViewer
+      if(document.querySelector('.bjs-powered-by')){
+        document.querySelector('.bjs-powered-by').remove()
+      }
+      this.$refs.BTZoom.handleZoomReset()
     }
   }
 }
