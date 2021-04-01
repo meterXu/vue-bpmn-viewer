@@ -8665,6 +8665,13 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-bpmn-controls@^1.0.3:
+  version "1.0.3"
+  resolved "http://192.168.126.25:80/npm/vue-bpmn-controls/-/vue-bpmn-controls-1.0.3.tgz#f0c2db539ae63140dfec738823be55eb9800d9b0"
+  integrity sha512-eHjUM9XRCLZMJV2cX1EY6vr68uBgqfwXtwJlo057WiSGo6rXWys/EKp+BRV7eWmRgIh1vggBoSpcFWqkPcknGA==
+  dependencies:
+    ant-design-vue "^1.6.3"
+
 vue-bpmn@^0.3.1:
   version "0.3.1"
   resolved "http://192.168.126.25:80/npm/vue-bpmn/-/vue-bpmn-0.3.1.tgz#9d8d1c772bf2e6e16f611c932baf1e068469d573"

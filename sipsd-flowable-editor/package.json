@@ -19,6 +19,7 @@
     "bpmn-theme-blue": "^1.0.4",
     "vue": "^2.6.11",
     "vue-bpmn": "^0.3.1",
+    "vue-bpmn-controls": "^1.0.3",
     "vue-ls": "^3.2.0",
     "vuex": "^3.5.1"
   },

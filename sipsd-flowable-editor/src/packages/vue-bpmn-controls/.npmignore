@@ -1,6 +1,5 @@
 !dist
 src
-assets
 index.js
 rollup.config.js
 yarn.lock

@@ -19,8 +19,8 @@
 import 'bpmn-theme-blue/dist/bundle.css'
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from 'bpmn-theme-blue'
-import BTZoom from '../vue-bpmn-controls'
-import {BTimeLine,utils,BToolBar,BTLayout} from '../vue-bpmn-controls'
+import BTZoom from '../../packages/vue-bpmn-controls'
+import {BTimeLine,utils,BToolBar,BTLayout} from '../../packages/vue-bpmn-controls'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
