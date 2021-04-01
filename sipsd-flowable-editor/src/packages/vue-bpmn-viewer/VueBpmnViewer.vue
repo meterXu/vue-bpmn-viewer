@@ -26,8 +26,9 @@
 </template>
 
 <script>
+import 'bpmn-theme-blue/dist/index.css'
 import VueBpmn from 'vue-bpmn';
-import bpmnThemeBlue from '../bpmn-theme-blue'
+import bpmnThemeBlue from 'bpmn-theme-blue'
 import BTZoom from '../vue-bpmn-controls'
 import {BTimeLine,utils,BToolBar,BTLayout} from '../vue-bpmn-controls'
 import axios from 'axios'

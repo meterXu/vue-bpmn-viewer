@@ -1,35 +1,29 @@
-import pkg from './package.json';
-import cjs from 'rollup-plugin-commonjs';
-import { terser } from 'rollup-plugin-terser'
+// /packages/button/rollup.config.js
 import vue from 'rollup-plugin-vue'
+import { terser } from 'rollup-plugin-terser'
 
-function pgl() {
-    return [
-        cjs(),
-        vue({
-            css: true,
-            compileTemplate: true
-        }),
-        terser()
-    ]
-}
-
-export default [
+module.exports = [
     {
-        input: './index.js',
-        output: {
-            name: 'vue-bpmn-viewer',
-            file: `dist/vue-bpmn-viewer.umd.js`,
-            format: 'umd'
-        },
-        plugins: pgl()
-    },
-    {
-        input: './index.js',
+        // 入口
+        input: 'VueBpmnViewer.vue',
+        // 出口
         output: [
-            { file: pkg.main, format: 'cjs' },
-            { file: pkg.module, format: 'es' }
+            {
+                file: 'dist/index.js',
+                // 配置打包模块化的方式 es:ESM  cjs:CommonJS
+                format: 'es'
+            }
         ],
-        plugins: pgl()
+        // 插件
+        plugins: [
+            vue({
+                // 把单文件组件中的样式，插入到html中的style标签
+                css: true,
+                // 把组件转换成 render 函数
+                compileTemplate: true
+            }),
+            // 代码压缩
+            terser()
+        ]
     }
-];
+]

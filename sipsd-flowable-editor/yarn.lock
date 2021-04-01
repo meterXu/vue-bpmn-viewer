@@ -1822,6 +1822,14 @@ bpmn-moddle@^7.0.4:
     moddle "^5.0.1"
     moddle-xml "^9.0.4"
 
+bpmn-theme-blue@^1.0.1:
+  version "1.0.1"
+  resolved "http://192.168.126.25:80/npm/bpmn-theme-blue/-/bpmn-theme-blue-1.0.1.tgz#a96b081a3cb37a7aeaccb3cc3dc208640b990bcd"
+  integrity sha512-8olTtU42kcLDDCdiVgCfAT6NifIh/HRWNWhNsVpFW2xqP5C077sFf6EPRaHWiVsdcX+RW1oRIRRy+B5Dp1Fefg==
+  dependencies:
+    bpmn-js "^8.2.2"
+    tiny-svg "^2.2.2"
+
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
