@@ -16,7 +16,7 @@
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
-    "bpmn-theme-blue": "^1.0.4",
+    "bpmn-theme-blue": "^1.0.6",
     "tiny-svg": "^2.2.2",
     "vue": "^2.6.11",
     "vue-bpmn": "^0.3.1",

@@ -12,7 +12,6 @@ npm i bpmn-theme-blue --registry http://192.168.126.25/npm
 ```
 
 ```js
-import 'bpmn-theme-blue/dist/bundle.css'
 import bpmnThemeBlue from 'bpmn-theme-blue'
 this.bpmnViewer = new BpmnJS({
     container: document.getElementById('container'),

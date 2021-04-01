@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import 'bpmn-theme-blue/dist/bundle.css'
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from 'bpmn-theme-blue'
 import BTZoom from '../../packages/vue-bpmn-controls'
