@@ -210,6 +210,6 @@ export default {
   right: 0;
   bottom: 30px;
   display: flex;
-  align-items: baseline;
+  align-items: flex-end;
 }
 </style>

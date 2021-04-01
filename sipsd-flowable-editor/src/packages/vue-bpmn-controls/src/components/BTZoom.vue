@@ -85,17 +85,8 @@ export default {
   margin: 0;
 }
 .io-zoom-controls {
-  width: auto;
+  width: 34px;
   margin-right: 10px;
-}
-.io-zoom-reset {
-  margin-bottom: 10px;
-}
-.io-zoom-reset {
-  margin-bottom: 10px;
-}
-.io-zoom-reset {
-  margin-bottom: 10px;
 }
 .io-control {
   background: #FAFAFA;
