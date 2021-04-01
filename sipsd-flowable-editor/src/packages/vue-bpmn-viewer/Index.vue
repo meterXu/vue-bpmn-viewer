@@ -6,16 +6,16 @@
     </div>
     <BTLayout>
       <template slot="head">
-        <BToolBar
-            v-if="xmlId"
-            @edit="handleEdit"
-            @copy="handleCopy"
-            @delete="handleDelete"
-            @export="handleExport"
-            @push="handlePush"
-            @viewEdit="handleViewEdit"
-            @close="handleClose"
-        />
+<!--        <BToolBar-->
+<!--            v-if="xmlId"-->
+<!--            @edit="handleEdit"-->
+<!--            @copy="handleCopy"-->
+<!--            @delete="handleDelete"-->
+<!--            @export="handleExport"-->
+<!--            @push="handlePush"-->
+<!--            @viewEdit="handleViewEdit"-->
+<!--            @close="handleClose"-->
+<!--        />-->
       </template>
       <template slot="right">
         <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
