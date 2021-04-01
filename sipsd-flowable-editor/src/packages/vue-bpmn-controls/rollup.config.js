@@ -11,6 +11,7 @@ function pgl() {
     return [
         cjs(),
         vue({
+            target: 'browser',
             css: true,
             compileTemplate: true
         }),

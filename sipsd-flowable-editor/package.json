@@ -17,9 +17,10 @@
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
     "bpmn-theme-blue": "^1.0.4",
+    "tiny-svg": "^2.2.2",
     "vue": "^2.6.11",
     "vue-bpmn": "^0.3.1",
-    "vue-bpmn-controls": "^1.0.3",
+    "vue-bpmn-controls": "^1.0.6",
     "vue-ls": "^3.2.0",
     "vuex": "^3.5.1"
   },

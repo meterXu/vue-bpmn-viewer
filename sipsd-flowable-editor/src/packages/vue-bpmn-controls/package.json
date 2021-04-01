@@ -1,6 +1,6 @@
 {
   "name": "vue-bpmn-controls",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "vue-bpmn控件库",
   "main": "dist/index.js",
   "scripts": {
@@ -14,13 +14,15 @@
   "author": "isaac",
   "license": "MIT",
   "dependencies": {
-    "ant-design-vue": "^1.6.3"
+    "ant-design-vue": "^1.6.3",
+    "tiny-svg": "^2.2.2"
   },
   "devDependencies": {
     "cssnano": "^4.1.10",
     "postcss": "^8.2.9",
     "postcss-url": "^10.1.3",
     "rollup": "^2.44.0",
+    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-css-only": "^3.1.0",
