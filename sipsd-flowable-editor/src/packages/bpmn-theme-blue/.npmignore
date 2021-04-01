@@ -1,4 +1,7 @@
 !dist
+src
+assets
+index.js
 example
 rollup.config.js
 yarn.lock

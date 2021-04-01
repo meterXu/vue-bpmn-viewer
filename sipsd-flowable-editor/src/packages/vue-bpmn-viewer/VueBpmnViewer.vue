@@ -6,16 +6,6 @@
     </div>
     <BTLayout>
       <template slot="head">
-<!--        <BToolBar-->
-<!--            v-if="xmlId"-->
-<!--            @edit="handleEdit"-->
-<!--            @copy="handleCopy"-->
-<!--            @delete="handleDelete"-->
-<!--            @export="handleExport"-->
-<!--            @push="handlePush"-->
-<!--            @viewEdit="handleViewEdit"-->
-<!--            @close="handleClose"-->
-<!--        />-->
       </template>
       <template slot="right">
         <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
@@ -26,7 +16,7 @@
 </template>
 
 <script>
-import 'bpmn-theme-blue/dist/index.css'
+import 'bpmn-theme-blue/dist/bundle.css'
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from 'bpmn-theme-blue'
 import BTZoom from '../vue-bpmn-controls'
@@ -112,31 +102,6 @@ export default {
           this.timeLine_loading=false
         })
       }
-    },
-    handleEdit(){
-
-    },
-    handleCopy(){
-
-    },
-    handleExport(){
-      let a = document.createElement('a')
-      a.href=this.baseUrl+this.url.exportUrl.replace('[]',this.xmlId)
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-    },
-    handleDelete(){
-
-    },
-    handlePush(){
-
-    },
-    handleViewEdit(){
-
-    },
-    handleClose(){
-      window.history.back()
     },
     bpmnLoadDone(){
       this.getTaskList()

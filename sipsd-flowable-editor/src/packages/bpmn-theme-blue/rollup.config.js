@@ -5,7 +5,7 @@ import cjs from 'rollup-plugin-commonjs';
 function pgl() {
     return [
         cjs(),
-        css({output: 'index.css'})
+        css({output: 'bundle.css'})
     ];
 }
 
