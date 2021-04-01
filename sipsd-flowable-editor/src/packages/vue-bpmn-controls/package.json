@@ -2,11 +2,11 @@
   "name": "vue-bpmn-controls",
   "version": "1.0.1",
   "description": "vue-bpmn控件库",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c"
   },
-  "module": "index.js",
+  "module": "dist/index.esm.js",
   "keywords": [
     "vue-bpmn",
     "control"
