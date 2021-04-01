@@ -290,6 +290,36 @@ public class ApiFormDetailReource extends BaseResource {
 	}
 
 	/**
+	 * 生成流程图
+	 *
+	 * @param processInstanceId 流程实例IDD
+	 */
+	@GetMapping(value = "getprocessXml/{processInstanceId}")
+	@ResponseBody
+	@ApiOperation("根据流程编号（来自启动）生成流程xml")
+	public void getprocessXml(@ApiParam(value = "流程ID") @PathVariable("processInstanceId") String processInstanceId,
+								  HttpServletResponse httpServletResponse) throws Exception {
+		InputStream in = null;
+		OutputStream out = null;
+		try {
+			byte[] b = flowableProcessInstanceService.createXml(processInstanceId);
+			out = httpServletResponse.getOutputStream();
+			out.write(b);
+			IOUtils.copy(in, out);
+		} catch (Exception e) {
+			log.error("processInstanceId:【" + processInstanceId + "】生成xml:" + e.getMessage());
+			log.debug("错误堆栈:", e);
+		} finally {
+			if (in != null) {
+				IOUtils.closeQuietly(in);
+			}
+			if (out != null) {
+				IOUtils.closeQuietly(out);
+			}
+		}
+	}
+
+	/**
 	 * 获取流程所有节点
 	 * 
 	 * @param processKey 流程实例id
