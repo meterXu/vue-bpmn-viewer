@@ -8665,10 +8665,10 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-bpmn-controls@^1.0.6:
-  version "1.0.6"
-  resolved "http://192.168.126.25:80/npm/vue-bpmn-controls/-/vue-bpmn-controls-1.0.6.tgz#71470a6167a7d94fff0730a1dcc3a5337a48b93a"
-  integrity sha512-ik+QJgwzYfEMp1hDncEe+Ci0HxF5LvX23EniYnSpsUiuiStmlUDioiaPvSpGgB5PHgDS3R5bFLHX8o/xpktpBQ==
+vue-bpmn-controls@^1.0.7:
+  version "1.0.7"
+  resolved "http://192.168.126.25:80/npm/vue-bpmn-controls/-/vue-bpmn-controls-1.0.7.tgz#22cc012c57a2bb24969cdf5c6cd73a085323dfca"
+  integrity sha512-wmCioZ3Gj3YaTrreu9rBF+niNmOc8jTPgltm2FTSKAssP1QK/eH98DH0UmOBV1abYyQ0BQr6EIxvRADoFMHLaQ==
   dependencies:
     ant-design-vue "^1.6.3"
     tiny-svg "^2.2.2"
