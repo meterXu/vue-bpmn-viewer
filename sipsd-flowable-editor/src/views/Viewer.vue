@@ -21,6 +21,11 @@ export default {
       instanceId:null
     }
   },
+  beforeRouteUpdate(to, from, next) {
+    this.xmlId = this.$route.query.xmlId
+    this.instanceId = this.$route.query.instanceId
+    this.baseApi = this.$project_bpmn.variable.baseApi
+  },
   mounted() {
     this.xmlId = this.$route.query.xmlId
     this.instanceId = this.$route.query.instanceId
