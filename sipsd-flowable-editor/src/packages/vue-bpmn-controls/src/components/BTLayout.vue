@@ -17,7 +17,8 @@ name: "BTLayout"
 #bt-layout{
   position: fixed;
   right: 0;
-  bottom: 30px;
+  top: 60px;
+  bottom: 60px;
   display: flex;
   align-items: flex-end;
 }
