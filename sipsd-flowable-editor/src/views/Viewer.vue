@@ -30,17 +30,13 @@ import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from '../packages/bpmn-theme-blue'
 import BTZoom from '../packages/vue-bpmn-controls'
 import {BTimeLine,utils,BToolBar,BTLayout} from '../packages/vue-bpmn-controls'
-import {getAction} from "@/api/manage";
-
+import axios from 'axios'
 export default {
   name: "Viewer",
   props:{
-    xmlId:{
-      type:String,
-    },
-    instanceId:{
-      type:String,
-    }
+    baseApi:{type:String},
+    xmlId:{type:String},
+    instanceId:{type:String}
   },
   components:{
     VueBpmn,
@@ -93,23 +89,18 @@ export default {
     }
   },
   methods:{
-    elementClick(element){
-      if(element.type==='bpmn:UserTask'){
-        this.dialogVisible = true
-        this.taskTitle = element.businessObject.name + ' - 任务属性';
-        this.taskContent=JSON.stringify(element.businessObject)
-      }
-    },
     getTaskList(){
       return new Promise(((resolve, reject) => {
-        getAction(this.url.allExtensionTasks,{
-          initPageIndex:1,
-          pageIndex:1,
-          pageNum:1,
-          pageSize:99,
-          processInstanceId:this.instanceId,
+        axios.get(this.baseApi+this.url.allExtensionTasks,{
+          params:{
+            initPageIndex:1,
+            pageIndex:1,
+            pageNum:1,
+            pageSize:99,
+            processInstanceId:this.instanceId
+          }
         }).then(res=>{
-          resolve(res.data)
+          resolve(res.data.data)
         }).catch(err=>{
           reject(err)
         })
@@ -154,8 +145,13 @@ export default {
     });
   },
   async created() {
-    this.xmlId = this.$route.query.xmlId
-    this.instanceId = this.$route.query.instanceId
+    if(this.$route&&(this.$route.xmlId||this.$route.query.instanceId)){
+      this.xmlId = this.$route.query.xmlId
+      this.instanceId = this.$route.query.instanceId
+    }
+    if(this.$project_bpmn&&this.$project_bpmn.variable.baseApi){
+      this.baseApi = this.$project_bpmn.variable.baseApi
+    }
     if(this.instanceId){
       try{
         const tasks = await this.getTaskList()
