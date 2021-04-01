@@ -1,7 +1,6 @@
 <template>
   <div id="bpmn">
     <VueBpmnViewer :baseApi="baseApi"
-                :xmlId="xmlId"
                 :instanceId="instanceId"
     ></VueBpmnViewer>
   </div>
@@ -17,17 +16,14 @@ export default {
   data(){
     return {
       baseApi:null,
-      xmlId:null,
       instanceId:null
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.xmlId = this.$route.query.xmlId
     this.instanceId = this.$route.query.instanceId
     this.baseApi = this.$project_bpmn.variable.baseApi
   },
   mounted() {
-    this.xmlId = this.$route.query.xmlId
     this.instanceId = this.$route.query.instanceId
     this.baseApi = this.$project_bpmn.variable.baseApi
   }

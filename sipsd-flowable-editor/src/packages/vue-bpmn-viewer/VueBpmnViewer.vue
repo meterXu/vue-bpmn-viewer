@@ -1,6 +1,6 @@
 <template>
   <div id="bpmn">
-    <vue-bpmn v-if="xmlId" ref="bpmnObj" :options="options" :url="xml" @shown="bpmnLoadDone"></vue-bpmn>
+    <vue-bpmn v-if="instanceId" ref="bpmnObj" :options="options" :url="xml" @shown="bpmnLoadDone"></vue-bpmn>
     <div v-else class="no-bpmn">
       <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
     </div>
@@ -8,7 +8,7 @@
       <template slot="head">
       </template>
       <template slot="right">
-        <BTZoom v-show="xmlId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
+        <BTZoom v-show="instanceId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
         <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
       </template>
     </BTLayout>
@@ -26,7 +26,6 @@ export default {
   name: "VueBpmnViewer",
   props:{
     baseApi:{type:String},
-    xmlId:{type:String},
     instanceId:{type:String}
   },
   components:{
@@ -48,7 +47,7 @@ export default {
         upcomingTask:[]
       },
       url:{
-        xmlUrl:'rest/model/loadXmlByModelId/',
+        xmlUrl:'rest/formdetail/getprocessXml/',
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/'
@@ -57,7 +56,7 @@ export default {
   },
   computed:{
     xml(){
-      return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
+      return `${this.baseApi}${this.url.xmlUrl}${this.instanceId}`
     }
   },
   watch:{
