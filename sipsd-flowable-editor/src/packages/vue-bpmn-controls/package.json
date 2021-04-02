@@ -1,6 +1,6 @@
 {
   "name": "vue-bpmn-controls",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "vue-bpmn控件库",
   "main": "dist/index.js",
   "scripts": {

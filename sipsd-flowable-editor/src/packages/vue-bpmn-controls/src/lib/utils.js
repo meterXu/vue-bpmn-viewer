@@ -95,9 +95,9 @@ function hexToRgb(hex) {
     ]
 }
 
-class utils{
-    taskHighlightTimer = {}
-    setTaskHighlight(ids,options={color:'#5BC14B',setline:false,user:undefined}) {
+function utils(){
+    let taskHighlightTimer = {}
+    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined}) {
         ids.forEach(id => {
             this.clearHighLight(id)
             const xx =setSingleTaskHighLight(id,options)
@@ -110,7 +110,7 @@ class utils{
         })
     }
 
-    setFlowHighLight(id,options={color:'#5BC14B'}) {
+    this.setFlowHighLight=function(id,options={color:'#5BC14B'}) {
         let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if (paths) {
             paths.forEach(c=>{
@@ -125,13 +125,13 @@ class utils{
 
     }
 
-    clearAllFlowHighLight() {
+    this.clearAllFlowHighLight=function() {
         let paths = document.querySelectorAll('.djs-connection path')
         paths.forEach(c => {
             classes(c).remove('highlight-custom-path')
         })
     }
-    clearFlowHighLight(id){
+    this.clearFlowHighLight=function(id){
         let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if(paths){
             paths.forEach(c => {
@@ -140,7 +140,7 @@ class utils{
         }
     }
 
-    setAllHighLight() {
+    this.setAllHighLight=function() {
         this.clearAllHighLight()
         let tasks = document.querySelectorAll('.djs-shape')
         tasks.forEach(c => {
@@ -150,7 +150,7 @@ class utils{
     }
 
 
-    setEndHighLight(color = {stroke: '#db4744', fill: '#FD706D'}) {
+    this.setEndHighLight=function(color = {stroke: '#db4744', fill: '#FD706D'}) {
         let endEvents = document.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
         if(endEvents.length>0){
             endEvents.forEach(c=>{
@@ -165,7 +165,7 @@ class utils{
     }
 
 
-    clearAllHighLight() {
+    this.clearAllHighLight=function() {
         Object.keys(this.taskHighlightTimer).forEach(key => {
             window.clearInterval(this.taskHighlightTimer[key])
         })
@@ -178,13 +178,13 @@ class utils{
         this.clearAllFlowHighLight()
     }
 
-    clearHighLight(id) {
+    this.clearHighLight=function(id) {
         window.clearInterval(this.taskHighlightTimer[id])
         clearSingleTaskHighLight(id)
         this.clearFlowHighLight(id)
     }
 
-    setTaskMaxDay(id,day){
+    this.setTaskMaxDay=function(id,day){
         let text = document.querySelector(`[data-element-id="${id}"] .custom-max-day text`)
         if(text){
             text.innerHTML = day

@@ -7,8 +7,9 @@ import BToolBar from "./src/components/BToolBar.vue";
 import BTLayout from "./src/components/BTLayout.vue"
 export {
     utils,
+    BTZoom,
     BTimeLine,
     BToolBar,
     BTLayout
 }
-export default BTZoom
+export default null
