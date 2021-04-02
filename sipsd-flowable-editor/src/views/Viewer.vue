@@ -1,8 +1,8 @@
 <template>
   <div id="bpmn">
     <VueBpmnViewer :baseApi="baseApi"
-                :instanceId="instanceId"
-    ></VueBpmnViewer>
+                   :instanceId="instanceId">
+    </VueBpmnViewer>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.instanceId = this.$route.query.instanceId
+    this.instanceId = to.query.instanceId
     this.baseApi = this.$project_bpmn.variable.baseApi
   },
   mounted() {
@@ -34,6 +34,7 @@ export default {
 #bpmn{
   width: 100%;
   height: 100%;
+  display: flex;
   background: #F5F5F7;
   cursor: grab;
 }

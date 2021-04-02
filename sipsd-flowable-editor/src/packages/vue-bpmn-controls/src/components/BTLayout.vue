@@ -1,10 +1,15 @@
 <template>
-  <div id="bt-layout">
-    <slot name="head">
-    </slot>
-    <slot name="right">
-    </slot>
+  <div>
+    <div class="bt-layout-header">
+      <slot name="head">
+      </slot>
+    </div>
+    <div class="bt-layout-right">
+      <slot name="right">
+      </slot>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -14,7 +19,12 @@ name: "BTLayout"
 </script>
 
 <style scoped>
-#bt-layout{
+.bt-layout-header{
+  position: fixed;
+  top: 0px;
+  right: 0px;
+}
+.bt-layout-right{
   position: fixed;
   right: 0;
   top: 60px;

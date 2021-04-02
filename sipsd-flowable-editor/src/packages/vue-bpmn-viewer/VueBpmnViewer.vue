@@ -1,16 +1,18 @@
 <template>
-  <div id="bpmn">
-    <vue-bpmn v-if="instanceId" ref="bpmnObj" :options="options" :url="xml" @shown="bpmnLoadDone"></vue-bpmn>
-    <div v-else class="no-bpmn">
-      <img :src="require('./assets/no-bpmn.svg')">
-    </div>
-    <BTLayout is="isControl">
+  <div id="bpmn-viewer">
+    <a-spin :spinning="loading" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
+      <vue-bpmn v-if="instanceId" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
+      <div v-else class="no-bpmn">
+        <img :src="require('./assets/no-bpmn.svg')">
+      </div>
+    </a-spin>
+    <BTLayout>
       <template slot="head">
-        <BToolBar v-if="control.toolbar"/>
+        <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="instanceId&&control.zoom" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <BTimeLine v-if="instanceId&&control.timeLine" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        <BTZoom v-show="instanceId&&options.zoom" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTimeLine v-if="instanceId&&options.timeLine" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
       </template>
     </BTLayout>
   </div>
@@ -19,17 +21,16 @@
 <script>
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from 'bpmn-theme-blue'
-import {BTimeLine,utils,BToolBar,BTLayout,BTZoom} from 'vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from 'vue-bpmn-controls'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
   props:{
-    baseApi:{type:String},
-    instanceId:{type:String},
-    control:{type:Object,default:{
+    baseApi:{type:String,required:true},
+    instanceId:{type:String,required:true},
+    options:{type:Object,default:{
       zoom:true,
-      timeLine:true,
-      toolbar:false
+      timeLine:true
     }}
   },
   components:{
@@ -37,13 +38,13 @@ export default {
     BTLayout,
     BTZoom,
     BTimeLine,
-    BToolBar
   },
   data(){
     return {
+      loading:true,
       bpmnViewer:null,
       timeLine_loading:true,
-      options:{
+      bpmnOptions:{
         additionalModules:[bpmnThemeBlue]
       },
       taskData:{
@@ -60,6 +61,7 @@ export default {
   },
   computed:{
     xml(){
+      this.clearWatermark()
       return `${this.baseApi}${this.url.xmlUrl}${this.instanceId}`
     }
   },
@@ -107,27 +109,45 @@ export default {
       }
     },
     bpmnLoadDone(){
-      this.getTaskList()
+      this.loading=false
+      if(this.options.timeLine){
+        this.getTaskList()
+      }
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      if(document.querySelector('.bjs-powered-by')){
-        document.querySelector('.bjs-powered-by').remove()
-      }
       this.$refs.cBTZoom.handleZoomReset()
+    },
+    bpmnLoadError(){
+      this.instanceId=null
+      this.loading=false
+    },
+    clearWatermark(){
+      setTimeout(()=>{
+        if(document.querySelector('.bjs-powered-by')){
+          document.querySelector('.bjs-powered-by').remove()
+        }
+      },300)
     }
+  },
+  mounted() {
+      this.clearWatermark()
   }
 }
 </script>
 
 <style scoped>
-#bpmn{
+#bpmn-viewer{
   width: 100%;
   height: 100%;
   background: #F5F5F7;
   cursor: grab;
 }
-#bpmn:active{
+#bpmn-viewer:active{
   cursor: grabbing;
+}
+.bpmn-viewer-canvas{
+  width: 100%;
+  height: 100%;
 }
 .no-bpmn{
   text-align: center;
@@ -136,5 +156,11 @@ export default {
   display: inline-block;
   margin-top: 100px;
   width: 700px;
+}
+</style>
+<style>
+.bpmn-viewer-canvas .ant-spin-container{
+  width: 100% !important;
+  height: 100% !important;
 }
 </style>

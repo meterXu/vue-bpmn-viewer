@@ -1,4 +1,3 @@
-import path from 'path'
 import pkg from './package.json';
 import cjs from 'rollup-plugin-commonjs';
 import url from 'rollup-plugin-url'

@@ -1,12 +1,9 @@
-import path from 'path'
 import pkg from './package.json';
 import cjs from 'rollup-plugin-commonjs';
 import vue from 'rollup-plugin-vue'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
 import cssnano from 'cssnano'
-import copy from 'rollup-plugin-copy';
-const url = require('postcss-url');
 function pgl() {
     return [
         cjs(),
@@ -19,19 +16,8 @@ function pgl() {
         postcss({
             plugins: [
                 cssnano(),
-                url({
-                    url: "copy",
-                    basePath: path.resolve('src/assets/font'),
-                    assetsPath: 'font',
-                    useHash: true
-                }),
             ],
             extensions: [ '.css' ],
-        }),
-        copy({
-            targets:[
-                {src:'./src/assets/css/font/*',dest:'dist/font'}
-            ]
         })
     ];
 }
