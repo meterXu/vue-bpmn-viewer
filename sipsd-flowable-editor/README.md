@@ -16,6 +16,12 @@
 <iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?instanceId=[实例ID]"></iframe>
 ...
 ```
+
+url中可使用的参数
+* instanceId 实例ID
+* zoom 显示缩放控件，默认true
+* timeLine 显示时间轴，默认true
+
 部署模式下，请确认好flowable后端地址是否配置正确，配置文件地址：`\biz\bpmn\js\project.[hash].js`，具体配置参考[s2框架](http://192.168.126.25/pldoc/deploy/)
 
 ## 组件模式

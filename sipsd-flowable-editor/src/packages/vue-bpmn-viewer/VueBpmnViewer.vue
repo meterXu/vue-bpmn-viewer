@@ -11,8 +11,8 @@
         <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="instanceId&&options.zoom" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <BTimeLine v-if="instanceId&&options.timeLine" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        <BTZoom v-show="instanceId&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTimeLine v-if="instanceId&&options.timeLine&&!loading" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
       </template>
     </BTLayout>
   </div>
@@ -41,7 +41,7 @@ export default {
   },
   data(){
     return {
-      loading:true,
+      loading:false,
       bpmnViewer:null,
       timeLine_loading:true,
       bpmnOptions:{
@@ -61,6 +61,7 @@ export default {
   },
   computed:{
     xml(){
+      this.loading = true
       this.clearWatermark()
       return `${this.baseApi}${this.url.xmlUrl}${this.instanceId}`
     }
@@ -130,7 +131,7 @@ export default {
     }
   },
   mounted() {
-      this.clearWatermark()
+    this.clearWatermark()
   }
 }
 </script>
