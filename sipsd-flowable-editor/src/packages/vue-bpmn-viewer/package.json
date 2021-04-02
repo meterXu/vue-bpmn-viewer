@@ -9,8 +9,8 @@
   },
   "module": "dist/index.esm.js",
   "keywords": [
-    "bpmn",
-    "theme",
+    "flowable",
+    "view",
     "vue"
   ],
   "author": "isaac",
