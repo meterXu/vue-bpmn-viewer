@@ -2,14 +2,15 @@
   <div id="bpmn">
     <vue-bpmn v-if="instanceId" ref="bpmnObj" :options="options" :url="xml" @shown="bpmnLoadDone"></vue-bpmn>
     <div v-else class="no-bpmn">
-      <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
+      <img :src="require('./assets/no-bpmn.svg')">
     </div>
-    <BTLayout>
+    <BTLayout is="isControl">
       <template slot="head">
+        <BToolBar v-if="control.toolbar"/>
       </template>
       <template slot="right">
-        <BTZoom v-show="instanceId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
-        <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        <BTZoom v-show="instanceId&&control.zoom" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTimeLine v-if="instanceId&&control.timeLine" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
       </template>
     </BTLayout>
   </div>
@@ -24,7 +25,12 @@ export default {
   name: "VueBpmnViewer",
   props:{
     baseApi:{type:String},
-    instanceId:{type:String}
+    instanceId:{type:String},
+    control:{type:Object,default:{
+      zoom:true,
+      timeLine:true,
+      toolbar:false
+    }}
   },
   components:{
     VueBpmn,
@@ -107,7 +113,7 @@ export default {
       if(document.querySelector('.bjs-powered-by')){
         document.querySelector('.bjs-powered-by').remove()
       }
-      this.$refs.BTZoom.handleZoomReset()
+      this.$refs.cBTZoom.handleZoomReset()
     }
   }
 }

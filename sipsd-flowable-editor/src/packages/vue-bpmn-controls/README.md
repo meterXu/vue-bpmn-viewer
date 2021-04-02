@@ -18,7 +18,7 @@
 * clearAllHighLight
 * setTaskMaxDay
 
-### 如何使用
+## 如何使用
 ```bash
 npm i vue-bpmn-controls --registry http://192.168.126.25/npm
 ```
