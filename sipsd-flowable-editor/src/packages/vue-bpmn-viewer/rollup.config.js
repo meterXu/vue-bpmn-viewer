@@ -1,8 +1,9 @@
+import path from 'path'
 import pkg from './package.json';
 import cjs from 'rollup-plugin-commonjs';
-import vue from 'rollup-plugin-vue'
+import url from 'rollup-plugin-url'
 import { terser } from 'rollup-plugin-terser'
-import svg from 'rollup-plugin-svg'
+import vue from "rollup-plugin-vue";
 function pgl() {
     return [
         cjs(),
@@ -11,8 +12,12 @@ function pgl() {
             css: true,
             compileTemplate: true
         }),
-        terser(),
-        svg()
+        url({
+            include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
+            limit: Infinity,
+            publicPath: '/assets',
+        }),
+        terser()
     ];
 }
 
