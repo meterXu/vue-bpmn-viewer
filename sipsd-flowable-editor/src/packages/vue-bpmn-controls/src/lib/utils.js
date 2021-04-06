@@ -128,6 +128,9 @@ function utils(){
     this.clearAllFlowHighLight=function() {
         let paths = document.querySelectorAll('.djs-connection path')
         paths.forEach(c => {
+            attr(c,{
+                stroke:'#ccc'
+            })
             classes(c).remove('highlight-custom-path')
         })
     }
@@ -135,6 +138,9 @@ function utils(){
         let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if(paths){
             paths.forEach(c => {
+                attr(c,{
+                    stroke:'#ccc'
+                })
                 classes(c).remove('highlight-custom-path')
             })
         }
@@ -166,9 +172,11 @@ function utils(){
 
 
     this.clearAllHighLight=function() {
-        Object.keys(this.taskHighlightTimer).forEach(key => {
-            window.clearInterval(this.taskHighlightTimer[key])
-        })
+        if(this.taskHighlightTimer){
+            Object.keys(this.taskHighlightTimer).forEach(key => {
+                window.clearInterval(this.taskHighlightTimer[key])
+            })
+        }
         this.taskHighlightTimer = {}
         let tasks = document.querySelectorAll('[data-element-type="bpmn:userTask"]')
         tasks.forEach(c => {
