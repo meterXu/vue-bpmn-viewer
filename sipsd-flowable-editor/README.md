@@ -1,6 +1,8 @@
 # sipsd-flowable-editor
 > flowable流程图在线预览
 
+![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_f0ef46f14bf612accf91fbd19f8875d6.png)
+
 可以独立部署该工具，通过url传递不同的实例ID即可查看不同的工作流。同时，我们也提供单独的预览组件`vue-bpmn-viewer`，可以在项目中单独使用该组件。
 
 下面是两种使用方式说明：
