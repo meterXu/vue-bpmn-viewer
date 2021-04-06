@@ -102,7 +102,7 @@ function utils(){
             this.clearHighLight(id)
             const xx =setSingleTaskHighLight(id,options)
             if(xx){
-                this.taskHighlightTimer[id]=xx
+                taskHighlightTimer[id]=xx
             }
             if(options.setline){
                 this.setFlowHighLight(id,options)
@@ -172,12 +172,12 @@ function utils(){
 
 
     this.clearAllHighLight=function() {
-        if(this.taskHighlightTimer){
-            Object.keys(this.taskHighlightTimer).forEach(key => {
-                window.clearInterval(this.taskHighlightTimer[key])
+        if(taskHighlightTimer){
+            Object.keys(taskHighlightTimer).forEach(key => {
+                window.clearInterval(taskHighlightTimer[key])
             })
         }
-        this.taskHighlightTimer = {}
+        taskHighlightTimer = {}
         let tasks = document.querySelectorAll('[data-element-type="bpmn:userTask"]')
         tasks.forEach(c => {
             clearSingleTaskHighLight(c.getAttribute('data-element-id'))
@@ -187,7 +187,9 @@ function utils(){
     }
 
     this.clearHighLight=function(id) {
-        window.clearInterval(this.taskHighlightTimer[id])
+        if(taskHighlightTimer){
+            window.clearInterval(taskHighlightTimer[id])
+        }
         clearSingleTaskHighLight(id)
         this.clearFlowHighLight(id)
     }

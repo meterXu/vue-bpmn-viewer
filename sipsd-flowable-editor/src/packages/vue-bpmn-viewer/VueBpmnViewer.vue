@@ -75,7 +75,6 @@ export default {
     'taskData.upcomingTask':{
       handler:function (nv){
         if(nv.length>0){
-          utils.clearAllHighLight()
           utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true})
         }
       }
