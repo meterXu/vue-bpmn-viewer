@@ -1,7 +1,7 @@
 {
   "name": "bpmn-viewer",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0",
+  "private": false,
   "scripts": {
     "pre": "yarn install",
     "dev": "s2 r",
