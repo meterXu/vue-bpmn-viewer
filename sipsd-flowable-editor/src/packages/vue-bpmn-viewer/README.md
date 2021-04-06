@@ -40,7 +40,7 @@ export default {
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴|true|
 
-## toolbar
+## toolbar 插槽
 该预览组件支持自定义顶部toolbar
 ```vue
 <template>
@@ -54,4 +54,17 @@ export default {
     </a-button-group>
   </VueBpmnViewer>
 </template>
+```
+
+## timeLine 插槽
+自定义右侧时间轴内容
+```vue
+<VueBpmnViewer :baseApi="baseApi"
+                   :instanceId="instanceId">
+    <template slot="timeLine" slot-scope="{loading,data,uData}">
+      {{loading}}
+      {{data.length}}
+      {{uData.length}}
+    </template>
+</VueBpmnViewer>
 ```

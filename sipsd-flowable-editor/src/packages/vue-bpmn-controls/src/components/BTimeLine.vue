@@ -3,13 +3,17 @@
     <a-spin :spinning="loading" tip="加载中...">
       <a-timeline v-if="data.length>0||uData.length>0">
         <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
-          <p>{{fmtDate(item.startTime)}}</p>
-          <p>{{item.taskName}}</p>
-          <p>已审批</p>
+          <div class="timeLine-item-over" @mouseover="xx">
+            <p>{{fmtDate(item.startTime)}}</p>
+            <p>{{item.taskName}}</p>
+            <p>已审批</p>
+          </div>
         </a-timeline-item>
         <a-timeline-item v-for="item in uData" :key="item.id" color="orange">
-          <p>{{item.taskName}}</p>
-          <p>待审批</p>
+          <div class="timeLine-item-over" @mouseover="xx">
+            <p>{{item.taskName}}</p>
+            <p>待审批</p>
+          </div>
         </a-timeline-item>
       </a-timeline>
       <span v-else-if="!loading">无数据</span>
@@ -36,6 +40,9 @@ export default {
       let ss=t.getSeconds()
       if(ss<10){ss=`0${ss}`}
       return `${t.getFullYear()}-${m}-${d} ${hh}:${mm}:${ss}`
+    },
+    xx(){
+      console.log('xxx')
     }
   },
   mounted() {
@@ -85,5 +92,13 @@ export default {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(94, 94, 94, 0.3);
+}
+.timeLine-item-over{
+  padding: 5px;
+}
+.timeLine-item-over:hover{
+  background: #ddd;
+  color: #333;
+  border-radius: 5px;
 }
 </style>

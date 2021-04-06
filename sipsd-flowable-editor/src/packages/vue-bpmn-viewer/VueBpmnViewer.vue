@@ -12,7 +12,9 @@
       </template>
       <template slot="right">
         <BTZoom v-show="instanceId&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <BTimeLine v-if="instanceId&&options.timeLine&&!loading" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        <slot name="timeLine" v-if="instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData.completeTask" v-bind:uData="taskData.upcomingTask" >
+          <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        </slot>
       </template>
     </BTLayout>
   </div>
@@ -21,7 +23,7 @@
 <script>
 import VueBpmn from 'vue-bpmn';
 import bpmnThemeBlue from 'bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from 'vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../../packages/vue-bpmn-controls/index'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",

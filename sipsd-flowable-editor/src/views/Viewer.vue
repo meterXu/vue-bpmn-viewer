@@ -1,13 +1,14 @@
 <template>
   <div id="bpmn">
     <VueBpmnViewer :baseApi="baseApi"
-                   :instanceId="instanceId">
+                   :instanceId="instanceId"
+                   :options="{zoom,timeLine}">
     </VueBpmnViewer>
   </div>
 </template>
 
 <script>
-import VueBpmnViewer from 'vue-bpmn-viewer'
+import VueBpmnViewer from '../packages/vue-bpmn-viewer/VueBpmnViewer'
 export default {
   name: "Viewer",
   components:{
@@ -24,13 +25,13 @@ export default {
   beforeRouteUpdate(to, from, next) {
     this.instanceId = to.query.instanceId
     this.baseApi = this.$project_bpmn.variable.baseApi
-    this.zoom = to.query.zoom===undefined?true:to.query.zoom
-    this.timeLine = to.query.timeLine===undefined?true:to.query.timeLine
+    this.zoom = (to.query.zoom||'true')==='true'
+    this.timeLine = (to.query.timeLine||'true')==='true'
   },
   mounted() {
     this.instanceId = this.$route.query.instanceId
-    this.zoom = this.$route.query.zoom===undefined?true:this.$route.query.zoom
-    this.timeLine = this.$route.query.timeLine===undefined?true:this.$route.query.timeLine
+    this.zoom = (this.$route.query.zoom||'true')==='true'
+    this.timeLine = (this.$route.query.timeLine||'true')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
   }
 }
