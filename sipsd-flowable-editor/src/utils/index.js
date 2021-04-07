@@ -33,12 +33,7 @@ export function getAssets(path){
 function getProject(){
     const w_project = window.project[bl_project.namespace]
     let _project = Object.assign({},w_project)
-    if(process.env.NODE_ENV==="development"){
-        _project.variable = _project.variable.development
-    }
-    if(process.env.NODE_ENV==="production"){
-        _project.variable = _project.variable.production
-    }
+    _project.variable = _project.variable[process.env.NODE_ENV]
     return _project
 }
 
