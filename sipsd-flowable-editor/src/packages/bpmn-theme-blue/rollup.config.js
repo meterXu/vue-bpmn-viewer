@@ -2,7 +2,6 @@ import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss'
 import cjs from 'rollup-plugin-commonjs';
 import cssnano from 'cssnano'
-import path from "path";
 
 function pgl() {
     return [
