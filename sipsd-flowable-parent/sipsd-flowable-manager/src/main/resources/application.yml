@@ -68,8 +68,11 @@ spring:
     time-zone: GMT+8
   jmx:
     default-domain: ${spring.application.name}
+  main:
+    allow-bean-definition-overriding: true
   liquibase:
     enabled: false
+    change-log: classpath:/db/changelog/db.changelog-master.xml
   mvc:
     favicon:
       enabled: false

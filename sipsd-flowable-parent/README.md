@@ -80,7 +80,7 @@ bug:
      来实现增强
    (3.新增UI界面属性-最大审批天数(定义在xml中为task_max_day)，新增拓展表-act_ru_extension_task中设置
 了最大审批天数的字段，TASK_MAX_DAY_为流程定义时的默认天数，CUSTOM_TASK_MAX_DAY_为自定义最大审批天数
-3.定义了附加表act_ru_extension_task --resource/db/flowable.mssql.create.attach.sql
+3.定义了附加表act_ru_extension_task --resource/db/flowable.mysql.create.extension.sql
 
 提示：
 在设计流程的时候节点需要显示的设置是串行还是并行属性
