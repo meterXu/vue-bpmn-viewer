@@ -22,7 +22,7 @@
 
 <script>
 import VueBpmn from 'vue-bpmn';
-import bpmnThemeBlue from 'bpmn-theme-blue'
+import bpmnThemeBlue from '../../packages/bpmn-theme-blue/index'
 import {BTimeLine,utils,BTLayout,BTZoom} from '../../packages/vue-bpmn-controls/index'
 import axios from 'axios'
 export default {
@@ -71,13 +71,13 @@ export default {
   watch:{
     'taskData.completeTask':{
       handler:function (nv){
-        utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false})
+        utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: true})
       }
     },
     'taskData.upcomingTask':{
       handler:function (nv){
         if(nv.length>0){
-          utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true})
+          utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true,shadow: true})
         }
       }
     }

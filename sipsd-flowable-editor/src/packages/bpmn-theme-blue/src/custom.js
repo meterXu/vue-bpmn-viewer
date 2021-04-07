@@ -90,7 +90,8 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
             flowEnd:marker(parentNode, '#ccc', '#ccc'),
             sourceRefId:sourceRefId,
             targetRefId:targetRefId,
-            complete:false
+            complete:false,
+            businessObject:element.businessObject
         })
         svgAppend(parentNode, line)
         return line

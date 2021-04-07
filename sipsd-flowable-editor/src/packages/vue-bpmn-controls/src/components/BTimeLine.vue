@@ -3,14 +3,14 @@
     <a-spin :spinning="loading" tip="加载中...">
       <a-timeline v-if="data.length>0||uData.length>0">
         <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
-          <div class="timeLine-item-over" @mouseover="xx">
+          <div class="timeLine-item-over timeLine-item-over-ed" @mouseover="handleItemOver(1,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
             <p>已审批</p>
           </div>
         </a-timeline-item>
         <a-timeline-item v-for="item in uData" :key="item.id" color="orange">
-          <div class="timeLine-item-over" @mouseover="xx">
+          <div class="timeLine-item-over timeLine-item-over-uned" @mouseover="handleItemOver(2,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{item.taskName}}</p>
             <p>待审批</p>
           </div>
@@ -23,9 +23,19 @@
 </template>
 
 <script>
+import utils from "../lib/utils";
 export default {
   name: "BTimeLine",
   props:['loading','data','uData'],
+  data(){
+    return {
+      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false},
+      highLight:[
+        {color:'#5BC14B',setline:false,user:undefined,shadow:true},
+        {color:'#f5842c',setline:false,user:undefined,shadow:true}
+      ]
+    }
+  },
   methods:{
     fmtDate(dt){
       const t = new Date(dt)
@@ -41,11 +51,17 @@ export default {
       if(ss<10){ss=`0${ss}`}
       return `${t.getFullYear()}-${m}-${d} ${hh}:${mm}:${ss}`
     },
-    xx(){
-      console.log('xxx')
+    handleItemOver(type,taskId){
+      const taskObj = utils.getTaskObj(taskId)
+      if(taskObj){
+        this.oldStyle.color=taskObj.color
+      }
+      utils.setTaskHighlight([taskId],this.highLight[type-1])
+    },
+    handleItemOut(taskId){
+      utils.clearHighLight(taskId)
+      utils.setTaskHighlight([taskId],this.oldStyle)
     }
-  },
-  mounted() {
   }
 }
 </script>
@@ -73,6 +89,20 @@ export default {
 .spin-center .ant-spin-nested-loading{
   flex: 1;
 }
+.timeLine-item-over{
+  padding: 5px 8px;
+  transition: background .1s;
+}
+.timeLine-item-over-ed:hover{
+  background: rgba(91,193,75,0.8);
+  color: #fff;
+  border-radius: 5px;
+}
+.timeLine-item-over-uned:hover{
+  background: rgba(245,132,44,0.8);
+  color: #fff;
+  border-radius: 5px;
+}
 
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
@@ -92,13 +122,5 @@ export default {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(94, 94, 94, 0.3);
-}
-.timeLine-item-over{
-  padding: 5px;
-}
-.timeLine-item-over:hover{
-  background: #ddd;
-  color: #333;
-  border-radius: 5px;
 }
 </style>

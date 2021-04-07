@@ -26,28 +26,17 @@ function setSingleTaskHighLight(id,options) {
                     fill:options.color,
                 })
             }
-            if (feColorMatrix && rect) {
+            if (options.shadow&&feColorMatrix && rect) {
                 const rgb = hexToRgb(options.color)
-                let t = 0, x = 0.1
-                let xx = setInterval(() => {
-                    t += x
-                    attr(feColorMatrix, {
-                        values: `${(rgb[0]/255).toFixed(3)} 0 0 0 0
+                attr(feColorMatrix, {
+                    values: `${(rgb[0]/255).toFixed(3)} 0 0 0 0
                                  0 ${(rgb[1]/255).toFixed(3)} 0 0 0
                                  0 0 ${(rgb[2]/255).toFixed(3)} 0 0
-                                 0 0 0 ${t} 0`
-                    }, 100)
-                    attr(rect, {
-                        stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${t})`,
-                    })
-                    if (t >= 1) {
-                        x = -0.1
-                    }
-                    if (t <= 0) {
-                        x = 0.1
-                    }
-                }, 100)
-                return xx
+                                 0 0 0 0.8 0`
+                })
+                attr(rect, {
+                    stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
+                })
             }
         }
 
@@ -97,7 +86,21 @@ function hexToRgb(hex) {
 
 function utils(){
     let taskHighlightTimer = {}
-    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined}) {
+
+    this.getTaskObj=function (id){
+        let completeTask = document.querySelector(`[data-element-id="${id}"]`)
+        if(completeTask){
+            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+            let businessObject= completeTask.getAttribute('businessObject')
+            businessObject = Object.assign(businessObject,{color:title1.getAttribute('fill')})
+            return businessObject
+        }else{
+            return null
+        }
+
+    }
+
+    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined,shadow:false}) {
         ids.forEach(id => {
             this.clearHighLight(id)
             const xx =setSingleTaskHighLight(id,options)
@@ -134,6 +137,7 @@ function utils(){
             classes(c).remove('highlight-custom-path')
         })
     }
+
     this.clearFlowHighLight=function(id){
         let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if(paths){
@@ -155,7 +159,6 @@ function utils(){
         this.setEndHighLight()
     }
 
-
     this.setEndHighLight=function(color = {stroke: '#db4744', fill: '#FD706D'}) {
         let endEvents = document.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
         if(endEvents.length>0){
@@ -169,7 +172,6 @@ function utils(){
             })
         }
     }
-
 
     this.clearAllHighLight=function() {
         if(taskHighlightTimer){

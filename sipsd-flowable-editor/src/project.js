@@ -11,7 +11,8 @@ const project = {
       accessTokenTime: 3600 * 1000
     },
     proxy:{
-
+      baseApi: "http://localhost:3000/mocky/sipsd-flow-modeler/",
+      accessTokenTime: 3600 * 1000
     }
   },
   redirect: {

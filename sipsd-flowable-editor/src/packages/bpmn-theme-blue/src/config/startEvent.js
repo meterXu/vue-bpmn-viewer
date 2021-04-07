@@ -39,5 +39,6 @@ export default (options)=>{
         transform:'matrix(0.5 0 0 0.5 -8 -2)'
     })
     append(g,hand)
+    g.setAttribute('businessObject',options.businessObject)
     return g
 }

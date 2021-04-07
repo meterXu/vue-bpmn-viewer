@@ -29,6 +29,7 @@ export default (options)=>{
     append(g,linearGradie)
     let icon = iconMap[type]()
     append(g,icon)
+    g.setAttribute('businessObject',options.businessObject)
     return g
 }
 

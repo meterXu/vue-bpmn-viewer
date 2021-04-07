@@ -114,7 +114,7 @@ export default (options)=>{
 
     let content = taskIcon[type].content(options)
     append(g,content)
-
+    g.setAttribute('businessObject',options.businessObject)
     return g
 }
 

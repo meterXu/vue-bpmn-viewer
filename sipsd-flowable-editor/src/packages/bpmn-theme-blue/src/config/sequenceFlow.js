@@ -21,5 +21,6 @@ export default (options)=>{
         classes(path).add('highlight-custom-path')
     }
     append(g,path)
+    g.setAttribute('businessObject',options.businessObject)
     return g
 }
