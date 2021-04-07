@@ -71,13 +71,13 @@ export default {
   watch:{
     'taskData.completeTask':{
       handler:function (nv){
-        utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: true})
+        utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: false})
       }
     },
     'taskData.upcomingTask':{
       handler:function (nv){
         if(nv.length>0){
-          utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true,shadow: true})
+          utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true,shadow: false})
         }
       }
     }

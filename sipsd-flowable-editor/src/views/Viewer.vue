@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import VueBpmnViewer from '../packages/vue-bpmn-viewer/VueBpmnViewer'
+import VueBpmnViewer from 'vue-bpmn-viewer'
 export default {
   name: "Viewer",
   components:{
