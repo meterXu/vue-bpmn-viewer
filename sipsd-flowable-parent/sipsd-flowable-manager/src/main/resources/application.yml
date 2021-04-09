@@ -68,8 +68,11 @@ spring:
     time-zone: GMT+8
   jmx:
     default-domain: ${spring.application.name}
+  main:
+    allow-bean-definition-overriding: true
   liquibase:
-    enabled: false
+    enabled: true
+    change-log: classpath:/META-INF/liquibase/flowable-modeler-sipsd-db-changelog.xml
   mvc:
     favicon:
       enabled: false
