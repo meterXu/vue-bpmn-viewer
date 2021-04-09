@@ -1,5 +1,5 @@
 {
-  "name": "vue-bpmn-viewer",
+  "name": "@dpark/vue-bpmn-viewer",
   "version": "1.0.10",
   "description": "bpmn2.0 流程图预览组件",
   "main": "dist/index.js",
@@ -13,7 +13,9 @@
     "view",
     "vue"
   ],
-  "author": "isaac",
+  "private": false,
+  "author": "框架技术研发部",
+  "contributors": ["isaac"],
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
@@ -21,8 +23,8 @@
     "bpmn-theme-blue": "^1.0.7",
     "tiny-svg": "^2.2.2",
     "vue": "^2.6.11",
-    "vue-bpmn": "^0.3.1",
-    "vue-bpmn-controls": "^1.0.13"
+    "@dpark/vue-bpmn": "^0.3.1",
+    "@dpark/vue-bpmn-controls": "^1.0.13"
   },
   "devDependencies": {
     "rollup": "^2.44.0",

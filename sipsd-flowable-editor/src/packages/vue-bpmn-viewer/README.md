@@ -5,7 +5,7 @@
 
 ## 如何使用
 ``` bash
-npm i vue-bpmn-viewer --registry http://192.168.126.25/npm
+npm i @dpark/vue-bpmn-viewer --registry http://192.168.126.25/npm
 ```
 
 ```vue
@@ -15,7 +15,7 @@ npm i vue-bpmn-viewer --registry http://192.168.126.25/npm
   </VueBpmnViewer>
 </template>
 <script>
-import VueBpmnViewer from 'vue-bpmn-viewer'
+import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
 export default {
   components:{VueBpmnViewer},
   data(){

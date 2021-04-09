@@ -20,7 +20,7 @@
 
 ## 如何使用
 ```bash
-npm i vue-bpmn-controls --registry http://192.168.126.25/npm
+npm i @dpark/vue-bpmn-controls --registry http://192.168.126.25/npm
 ```
 ```vue
 <template>
@@ -34,7 +34,7 @@ npm i vue-bpmn-controls --registry http://192.168.126.25/npm
   </BTLayout>
 </template>
 <script>
-import {BTZoom,BTimeLine,BTLayout,utils} from 'vue-bpmn-controls'
+import {BTZoom,BTimeLine,BTLayout,utils} from '@dpark/vue-bpmn-controls'
 export default {
   components:{BTZoom,BTimeLine,BTLayout},
   methods:{
