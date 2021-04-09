@@ -1,5 +1,5 @@
 {
-  "name": "bpmn-theme-blue",
+  "name": "@dpark/bpmn-theme-blue",
   "version": "1.0.7",
   "description": "bpmn-js蓝色主题",
   "main": "dist/index.js",
@@ -12,7 +12,9 @@
     "theme",
     "vue"
   ],
-  "author": "isaac",
+  "private": false,
+  "author": "框架技术研发部",
+  "contributors": ["isaac"],
   "license": "MIT",
   "dependencies": {
     "bpmn-js": "^8.2.2",

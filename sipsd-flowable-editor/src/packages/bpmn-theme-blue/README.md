@@ -8,11 +8,11 @@
 
 ## 如何使用
 ``` bash
-npm i bpmn-theme-blue --registry http://192.168.126.25/npm
+npm i @dpark/bpmn-theme-blue --registry http://192.168.126.25/npm
 ```
 
 ```js
-import bpmnThemeBlue from 'bpmn-theme-blue'
+import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 this.bpmnViewer = new BpmnJS({
     container: document.getElementById('container'),
     additionalModules: [bpmnThemeBlue]

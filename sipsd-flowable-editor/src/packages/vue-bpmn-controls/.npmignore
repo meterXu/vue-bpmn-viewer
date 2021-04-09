@@ -1,4 +1,5 @@
 !dist
+!README.md
 src
 index.js
 rollup.config.js
