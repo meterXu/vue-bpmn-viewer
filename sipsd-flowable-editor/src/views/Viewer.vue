@@ -1,7 +1,9 @@
 <template>
   <div id="bpmn">
     <VueBpmnViewer :baseApi="baseApi"
+                   :type="type"
                    :instanceId="instanceId"
+                   :xmlId="xmlId"
                    :options="{zoom,timeLine}">
     </VueBpmnViewer>
   </div>
@@ -16,20 +18,26 @@ export default {
   },
   data(){
     return {
+      type:null,
       baseApi:null,
+      xmlId:null,
       instanceId:null,
       zoom:true,
       timeLine:true
     }
   },
   beforeRouteUpdate(to, from, next) {
+    this.type = to.query.type
     this.instanceId = to.query.instanceId
+    this.xmlId = to.query.xmlId
     this.baseApi = this.$project_bpmn.variable.baseApi
     this.zoom = (to.query.zoom||'true')==='true'
     this.timeLine = (to.query.timeLine||'true')==='true'
   },
   mounted() {
+    this.type = this.$route.query.type
     this.instanceId = this.$route.query.instanceId
+    this.xmlId = this.$route.query.xmlId
     this.zoom = (this.$route.query.zoom||'true')==='true'
     this.timeLine = (this.$route.query.timeLine||'true')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi

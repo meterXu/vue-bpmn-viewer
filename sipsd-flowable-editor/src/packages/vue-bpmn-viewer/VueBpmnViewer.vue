@@ -29,7 +29,9 @@ export default {
   name: "VueBpmnViewer",
   props:{
     baseApi:{type:String,required:true},
-    instanceId:{type:String,required:true},
+    instanceId:{type:String},
+    xmlId:{type:String},
+    type:{type:Number,required: true},
     options:{type:Object,default:{
       zoom:true,
       timeLine:true
@@ -54,7 +56,8 @@ export default {
         upcomingTask:[]
       },
       url:{
-        xmlUrl:'rest/formdetail/getprocessXml/',
+        xmlUrl:'rest/model/loadXmlByModelId/',
+        instanceUrl:'rest/formdetail/getprocessXml/',
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/'
@@ -65,7 +68,11 @@ export default {
     xml(){
       this.loading = true
       this.clearWatermark()
-      return `${this.baseApi}${this.url.xmlUrl}${this.instanceId}`
+      if(this.type===1){
+        return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
+      }else if(this.type===2){
+        return `${this.baseApi}${this.url.instanceUrl}${this.instanceId}`
+      }
     }
   },
   watch:{
@@ -79,6 +86,12 @@ export default {
         if(nv.length>0){
           utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: true,shadow: false})
         }
+      }
+    },
+    type(nv){
+      if(nv===1){
+        this.instanceId = null
+        this.options = Object.assign(this.options,{timeLine:false})
       }
     }
   },

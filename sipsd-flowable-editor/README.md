@@ -15,14 +15,23 @@
 在项目中显示流程图
 ```html
 ...
-<iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?instanceId=[实例ID]"></iframe>
+<iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?type=2&instanceId=[实例ID]"></iframe>
 ...
 ```
 
 url中可使用的参数
+* type 显示模式，1：流程图，2：流程实例，默认为1
+-------
+### 模式1，流程图显示模式
 * instanceId 实例ID
 * zoom 显示缩放控件，默认true
 * timeLine 显示时间轴，默认true
+
+-------
+### 模式2，流程实例显示模式
+* xmlId 流程图ID，如果使用xmlID则时间轴不显示
+* zoom 显示缩放控件，默认true  
+
 
 部署模式下，请确认好flowable后端地址是否配置正确，配置文件地址：`\biz\bpmn\js\project.[hash].js`，具体配置参考[s2框架](http://192.168.126.25/pldoc/deploy/)
 

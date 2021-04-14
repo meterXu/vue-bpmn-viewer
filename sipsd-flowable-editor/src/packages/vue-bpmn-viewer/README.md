@@ -28,17 +28,31 @@ export default {
 </script>
 ```
 ## 属性
+
+## type
+> 显示模式，1：流程图，2：流程实例，默认为1
+
+* 模式1，流程图显示模式
+
+|名称|说明|默认值|
+|:---:|:---:|:---:|
+|baseApi|后端地址|null|
+|xmlId|流程图ID|null|
+|options|控件配置|{zoom:true,timeLine:true}|
+
+* 模式2，流程实例显示模式
+
 |名称|说明|默认值|
 |:---:|:---:|:---:|
 |baseApi|后端地址|null|
 |instanceId|flowable实例ID|null|
-|options|控件配置|{zoom:true,timeLine:true}|
+|options|控件配置|{zoom:true,timeLine:false}|
 
 ## options
 |名称|说明|默认值|
 |:---:|:---:|:---:|
 |zoom|是否启用缩放控件|true|
-|timeLine|是否启用时间轴|true|
+|timeLine|是否启用时间轴，如果模式为1则强制为false|true|
 
 ## toolbar 插槽
 该预览组件支持自定义顶部toolbar
