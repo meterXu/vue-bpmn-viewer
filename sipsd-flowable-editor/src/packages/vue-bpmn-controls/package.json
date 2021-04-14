@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-controls",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "vue-bpmn控件库",
   "main": "dist/index.js",
   "scripts": {

@@ -158,7 +158,7 @@ function utils(){
         this.setEndHighLight()
     }
 
-    this.setEndHighLight=function(color = {stroke: '#db4744', fill: '#FD706D'}) {
+    this.setEndHighLight=function(color = {stroke: '#db4744', fill: '#FD706D'},setline=false) {
         let endEvents = document.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
         if(endEvents.length>0){
             endEvents.forEach(c=>{
@@ -167,7 +167,9 @@ function utils(){
                     stroke: color.stroke,
                     fill: color.fill,
                 })
-                this.setFlowHighLight(c.getAttribute('data-element-id'))
+                if(setline){
+                    this.setFlowHighLight(c.getAttribute('data-element-id'))
+                }
             })
         }
     }
