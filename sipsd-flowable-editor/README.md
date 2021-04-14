@@ -15,9 +15,16 @@
 在项目中显示流程图
 ```html
 ...
+<iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?type=1&xmlId=[流程图ID]"></iframe>
+...
+```
+
+```html
+...
 <iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?type=2&instanceId=[实例ID]"></iframe>
 ...
 ```
+
 
 url中可使用的参数
 * type 显示模式，1：流程图，2：流程实例，默认为1
