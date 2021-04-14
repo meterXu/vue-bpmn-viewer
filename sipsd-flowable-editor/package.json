@@ -13,7 +13,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@dpark/vue-bpmn-viewer": "^1.0.11",
+    "@dpark/vue-bpmn-controls": "^1.0.14",
+    "@dpark/vue-bpmn-viewer": "^1.0.12",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
