@@ -33,6 +33,7 @@ export default {
     this.baseApi = this.$project_bpmn.variable.baseApi
     this.zoom = (to.query.zoom||'true')==='true'
     this.timeLine = (to.query.timeLine||'true')==='true'
+    next()
   },
   mounted() {
     this.type = parseInt(this.$route.query.type)

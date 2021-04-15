@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn-viewer">
     <a-spin :spinning="loading" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
-      <vue-bpmn v-if="instanceId||xmlId" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
+      <vue-bpmn v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="require('./assets/no-bpmn.svg')">
       </div>
@@ -11,8 +11,8 @@
         <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="instanceId&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <slot name="timeLine" v-if="instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData.completeTask" v-bind:uData="taskData.upcomingTask" >
+        <BTZoom v-show="(type===2&&instanceId||type===1&&xmlId)&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <slot name="timeLine" v-if="type===2&&instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData.completeTask" v-bind:uData="taskData.upcomingTask" >
           <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
         </slot>
       </template>
@@ -66,12 +66,13 @@ export default {
   },
   computed:{
     xml(){
-      debugger
-      this.loading = true
       this.clearWatermark()
-      if(this.type===1){
+      if(this.type===1 && this.xmlId){
+        this.instanceId = null
+        this.options = Object.assign(this.options,{timeLine:false})
+        utils.clearAllHighLight()
         return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
-      }else if(this.type===2){
+      }else if(this.type===2 && this.instanceId){
         return `${this.baseApi}${this.url.instanceUrl}${this.instanceId}`
       }
     }
@@ -89,11 +90,8 @@ export default {
         }
       }
     },
-    type(nv){
-      if(nv===1){
-        this.instanceId = null
-        this.options = Object.assign(this.options,{timeLine:false})
-      }
+    xml(){
+      this.loading = true
     }
   },
   methods:{
