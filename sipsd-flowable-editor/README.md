@@ -19,6 +19,8 @@
 ...
 ```
 
+或者
+
 ```html
 ...
 <iframe src="http://[domain]/flowable-viewer/#/bpmn/viewer?type=2&instanceId=[实例ID]"></iframe>
@@ -47,6 +49,14 @@ url中可使用的参数
 ```vue
     <VueBpmnViewer :baseApi="baseApi"
                    :instanceId="instanceId">
+    </VueBpmnViewer>
+```
+
+或者
+
+```vue
+    <VueBpmnViewer :baseApi="baseApi"
+                   :xmlId="xmlId">
     </VueBpmnViewer>
 ```
 其中，baseApi是flowable后端地址，instanceId为示例ID。

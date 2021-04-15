@@ -29,7 +29,7 @@ export default {
 ```
 ## 属性
 
-## type
+### type
 > 显示模式，1：流程图，2：流程实例，默认为1
 
 * 模式1，流程图显示模式
@@ -48,7 +48,7 @@ export default {
 |instanceId|flowable实例ID|null|
 |options|控件配置|{zoom:true,timeLine:false}|
 
-## options
+### options
 |名称|说明|默认值|
 |:---:|:---:|:---:|
 |zoom|是否启用缩放控件|true|
