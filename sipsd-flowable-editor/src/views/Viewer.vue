@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import VueBpmnViewer from '../packages/vue-bpmn-viewer/VueBpmnViewer'
 export default {
   name: "Viewer",
   components:{
@@ -27,7 +27,7 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.type = to.query.type
+    this.type = parseInt(to.query.type)
     this.instanceId = to.query.instanceId
     this.xmlId = to.query.xmlId
     this.baseApi = this.$project_bpmn.variable.baseApi
@@ -35,7 +35,7 @@ export default {
     this.timeLine = (to.query.timeLine||'true')==='true'
   },
   mounted() {
-    this.type = this.$route.query.type
+    this.type = parseInt(this.$route.query.type)
     this.instanceId = this.$route.query.instanceId
     this.xmlId = this.$route.query.xmlId
     this.zoom = (this.$route.query.zoom||'true')==='true'

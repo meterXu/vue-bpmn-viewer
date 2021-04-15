@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn-viewer">
     <a-spin :spinning="loading" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
-      <vue-bpmn v-if="instanceId" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
+      <vue-bpmn v-if="instanceId||xmlId" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="require('./assets/no-bpmn.svg')">
       </div>
@@ -66,6 +66,7 @@ export default {
   },
   computed:{
     xml(){
+      debugger
       this.loading = true
       this.clearWatermark()
       if(this.type===1){
