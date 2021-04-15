@@ -11,7 +11,7 @@ const project = {
       accessTokenTime: 3600 * 1000
     },
     proxy:{
-      baseApi: "http://127.0.0.1:3000/mocky/sipsd-flow-modeler/",
+      baseApi: "http://192.168.126.25/covenant/mocky/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000
     }
   },

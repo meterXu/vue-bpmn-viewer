@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "bpmn2.0 流程图预览组件",
   "main": "dist/index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@dpark/bpmn-theme-blue": "^1.0.7",
     "@dpark/vue-bpmn": "^0.3.1",
     "@dpark/vue-bpmn-controls": "^1.0.14",
     "axios": "^0.18.0",
