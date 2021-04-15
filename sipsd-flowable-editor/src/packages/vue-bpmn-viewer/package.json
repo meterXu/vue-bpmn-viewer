@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "bpmn2.0 流程图预览组件",
   "main": "dist/index.js",
   "scripts": {
