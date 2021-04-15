@@ -135,7 +135,9 @@ export default {
       }
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      this.$refs.cBTZoom.handleZoomReset()
+       setTimeout(()=>{
+         this.$refs.cBTZoom.handleZoomReset()
+       },10)
     },
     bpmnLoadError(){
       this.instanceId=null
