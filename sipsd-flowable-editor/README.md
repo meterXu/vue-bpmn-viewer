@@ -61,5 +61,5 @@ url中可使用的参数
 ```
 其中，baseApi是flowable后端地址，instanceId为示例ID。
 
-组件详细用法参考[vue-bpmn-viewer](http://192.168.126.25/git/flowable-dev/flowable_v3/-/blob/master/sipsd-flowable-editor/src/packages/vue-bpmn-viewer/README.md)
+组件详细用法参考[vue-bpmn-viewer](http://dpark25.isaacxu.com/git/scri/flowable-dev/flowable_v3/-/blob/master/sipsd-flowable-editor/src/packages/vue-bpmn-viewer/README.md)
 
