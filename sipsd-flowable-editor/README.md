@@ -1,9 +1,9 @@
 # sipsd-flowable-editor
 > flowable流程图在线预览
 
-[演示地址1，流程图](/flowable-editor/#/bpmn/viewer?type=1&xmlId=27b7404f-8c82-11eb-a15e-f2326a570310)
+[演示地址1，流程图](http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=27b7404f-8c82-11eb-a15e-f2326a570310)
 
-[演示地址2，流程实例](/flowable-editor/#/bpmn/viewer?type=2&instanceId=c73077db92aa11ebbc94b6a919c0963e)
+[演示地址2，流程实例](http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=c73077db92aa11ebbc94b6a919c0963e)
 
 ![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_2ad2263d402da54f1ad086cbf8430368.png)
 
