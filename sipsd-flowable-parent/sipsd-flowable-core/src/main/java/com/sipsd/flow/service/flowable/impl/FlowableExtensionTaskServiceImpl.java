@@ -179,6 +179,16 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	}
 
 	@Override
+	public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(String processInstanceId, Query query)
+	{
+		PageHelper.startPage(query.getPageNum(), query.getPageSize());
+		Page<TaskExtensionVo> taskExtensionList = flowableExtensionTaskDao.getFinishExtensionTaskByProcessInstanceId(processInstanceId);
+		return new PageModel<>(taskExtensionList);
+	}
+
+
+
+	@Override
 	public Result<String> updateExtensionCustomTaskById(ExtensionTaskQueryVo params)
 	{
 		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(params.getProcessInstanceId(),params.getTaskId());
@@ -191,6 +201,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		taskExtensionVo.setEndTime(endDate);
 		taskExtensionVo.setUpdateTime(new Date());
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
+		Long restTime = DateUtil.diffDateTime(endDate,new Date());
+		taskExtensionVo.setRestTime(restTime);
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
 		return Result.failed("更新成功!");
 	}

@@ -136,6 +136,11 @@ public class TaskExtensionVo implements Serializable {
      */
     private String flowType;
 
+    @ApiModelProperty("秒")
+    @Setter
+    @Getter
+    private long duration;
+
 
     /**
      * 代办或者已办状态

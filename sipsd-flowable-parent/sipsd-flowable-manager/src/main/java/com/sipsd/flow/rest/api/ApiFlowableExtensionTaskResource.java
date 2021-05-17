@@ -32,7 +32,7 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
      * @param processInstanceId 参数
      * @return
      */
-    @ApiOperation("根据流程实例id查询自定义任务属性表")
+    @ApiOperation("根据流程实例id查询代办任务")
     @GetMapping(value = "/get-extension-tasks")
     public PageModel<TaskExtensionVo> getExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId, Query query) {
         return flowableExtensionTaskService.getExtensionTaskByProcessInstanceId(processInstanceId,query);
@@ -44,10 +44,22 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
      * @param processInstanceId 参数
      * @return
      */
-    @ApiOperation("根据流程实例id查询历史自定义任务属性表(已办代办查询)")
+    @ApiOperation("根据流程实例id查询已办代办任务")
     @GetMapping(value = "/get-all-extension-tasks")
     public PageModel<TaskExtensionVo> getAllExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId, Query query) {
         return flowableExtensionTaskService.getAllExtensionTaskByProcessInstanceId(processInstanceId,query);
+    }
+
+    /**
+     * 根据流程实例id查询历史自定义任务属性表(已办代办查询)
+     *
+     * @param processInstanceId 参数
+     * @return
+     */
+    @ApiOperation("根据流程实例id查询已办任务")
+    @GetMapping(value = "/get-finish-extension-tasks")
+    public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId, Query query) {
+        return flowableExtensionTaskService.getFinishExtensionTaskByProcessInstanceId(processInstanceId,query);
     }
 
     /**
