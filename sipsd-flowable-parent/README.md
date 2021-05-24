@@ -94,7 +94,10 @@ V4更新内容：
 时候初始的最大审批天数，customTaskMaxDay是重新定义最大审批时间的字段，请都以此字段为准，restTime为到期审批时间与当前
 时间的时间差，如果状态为代办，正数为还未到期，如果为负，则超期，如果状态是已办，则字段duration表示这个节点的完成时间段
 4.新增根据实例ID来查询已办代办任务，请参考接口列表-自定义属性任务列表
-
+部署地址：
+后端接口地址：http://192.168.126.25/sipsd-flow-modeler/doc.html
+后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
+前端流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=0da5312e-b6a9-11eb-a362-8af02f3dd3ac
 
 
 
