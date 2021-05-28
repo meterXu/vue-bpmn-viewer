@@ -12,7 +12,7 @@
             t1.CREATE_TIME_ AS startTime,
             t4.CUSTOM_TASK_MAX_DAY_  as customTaskMaxDay,
             t4.TASK_MAX_DAY_ as taskMaxDay,
-        TIMESTAMPDIFF(SECOND,NOW(),t4.END_TIME_) as restTime,
+        TIMESTAMPDIFF(SECOND,NOW(),t4.END_TIME_) as restTime
         FROM
             act_ru_task t1
         INNER JOIN act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_
