@@ -66,6 +66,7 @@
             t1.NAME_ AS taskName,
             t2.FIRST_ AS approver,
             t2.ID_ AS approverId,
+        TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
             t3.NAME_ AS formName,
             t3.BUSINESS_KEY_ AS businessKey,
             t3.PROC_INST_ID_ AS processInstanceId,
