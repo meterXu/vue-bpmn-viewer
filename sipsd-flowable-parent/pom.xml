@@ -16,7 +16,7 @@
 	</parent>
 
 	<modules>
-		<!--<module>sipsd-flowable-api</module>-->
+		<module>sipsd-flowable-api</module>
 		<module>sipsd-flowable-core</module>
 		<module>sipsd-flowable-manager</module>
 	</modules>
