@@ -68,4 +68,12 @@ public interface IFlowableExtensionTaskService
      * @Description 通过流程实例id来更新最大审批天数值
      */
     public Result<String> updateExtensionCustomTaskById(ExtensionTaskQueryVo params);
+
+    /**
+     *
+     * @param params
+     * @return com.sipsd.cloud.common.core.util.Result<java.lang.String>
+     * @Description
+     */
+    public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee);
 }

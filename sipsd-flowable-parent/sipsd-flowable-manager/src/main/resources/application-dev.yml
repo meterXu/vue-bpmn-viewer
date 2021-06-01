@@ -1,5 +1,5 @@
 bath:
-    path: http://127.0.0.1:8989/sipsd-flow-modeler
+    path: http://127.0.0.1:9001/sipsd-flow-modeler
 log:
     level: INFO
     path: classpath:applogs\flow

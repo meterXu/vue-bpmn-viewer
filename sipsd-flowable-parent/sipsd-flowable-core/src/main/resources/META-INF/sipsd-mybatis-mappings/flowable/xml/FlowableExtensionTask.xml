@@ -160,6 +160,13 @@
             t1.ID_ = #{id}
     </update>
 
+    <update id="updateAssigneeByProcessInstanceIdAndTaskID" parameterType="java.lang.String">
+        UPDATE  act_ru_extension_task t1
+        SET ASSIGNEE_ = #{assignee}
+        WHERE
+            t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
+    </update>
+
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_,FLOW_TYPE_,CREATE_TIME_)
          VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId},#{flowType},#{startTime});

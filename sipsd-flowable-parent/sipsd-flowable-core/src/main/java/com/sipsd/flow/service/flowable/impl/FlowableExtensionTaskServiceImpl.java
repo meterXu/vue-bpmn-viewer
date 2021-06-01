@@ -204,7 +204,13 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		Long restTime = DateUtil.diffDateTime(endDate,new Date());
 		taskExtensionVo.setRestTime(restTime);
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
-		return Result.failed("更新成功!");
+		return Result.sucess("更新成功!");
+	}
+
+	@Override
+	public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee)
+	{
+		flowableExtensionTaskDao.updateAssigneeByProcessInstanceIdAndTaskID(processInstanceId,taskId,assignee);
 	}
 
 	@Override
