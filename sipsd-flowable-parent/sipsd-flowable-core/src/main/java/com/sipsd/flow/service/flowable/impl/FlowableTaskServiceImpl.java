@@ -629,7 +629,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					}
 				}
 				//保存流程的自定义属性-最大审批天数
-				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey());
+				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo());
 				//更新当前节点的实际审批人
 				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode());
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();

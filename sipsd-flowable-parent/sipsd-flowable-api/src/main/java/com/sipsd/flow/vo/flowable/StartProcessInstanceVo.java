@@ -1,13 +1,13 @@
 package com.sipsd.flow.vo.flowable;
 
+import com.sipsd.flow.validation.JsonValidation;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.validation.constraints.NotBlank;
-
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 
 /**
  * @author : chengtg
@@ -35,6 +35,12 @@ public class StartProcessInstanceVo implements Serializable {
 	@ApiModelProperty(value = "业务系统id", required = true)
 	@NotBlank(message = "业务系统id 必填")
 	private String businessKey;
+
+	/**
+	 * 业务附加信息
+	 */
+	@JsonValidation
+	private String businessInfo;
 	/**
 	 * 启动流程变量 选填
 	 */

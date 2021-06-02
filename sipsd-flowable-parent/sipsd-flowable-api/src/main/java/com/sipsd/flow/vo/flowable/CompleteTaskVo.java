@@ -1,13 +1,14 @@
 package com.sipsd.flow.vo.flowable;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.sipsd.flow.validation.JsonValidation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author : chengtg
@@ -26,6 +27,9 @@ public class CompleteTaskVo extends BaseProcessVo {
 	private static final long serialVersionUID = 1L;
 	
 	private String candidateGroup;
+
+	@JsonValidation
+    private String businessInfo;
 	/**
      * 任务参数 选填
      */

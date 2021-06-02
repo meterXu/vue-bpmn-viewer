@@ -1,5 +1,6 @@
 package com.sipsd.flow.vo.flowable.ret;
 
+import com.sipsd.flow.validation.JsonValidation;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -149,6 +150,7 @@ public class TaskExtensionVo implements Serializable {
     /**
      * 业务上的附加属性
      */
+    @JsonValidation
     private String businessInfo;
     /**
      * 代办或者已办状态

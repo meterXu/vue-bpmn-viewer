@@ -41,7 +41,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
 
 	@Override
-	public void saveExtensionTask(String processDefinitionId,String fromKey)
+	public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo)
 	{
 		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
 		Date startTime = new Date();
@@ -109,6 +109,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					taskExtensionVo.setTaskName(task.getName());
 					taskExtensionVo.setFlowType(flowType);
 					taskExtensionVo.setStartTime(startTime);
+					taskExtensionVo.setBusinessInfo(businessInfo);
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
 			}
