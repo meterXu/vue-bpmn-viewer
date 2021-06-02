@@ -50,6 +50,19 @@ public interface IFlowableExtensionTaskDao
      * @Description 根据实例id和创建时间查询节点
      */
     public List<TaskExtensionVo> getExtensionTaskByStartTime(@Param("processInstanceId") String processInstanceId,@Param("startTime") String startTime);
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return java.util.List<java.lang.String>
+     * @Description 根据实例ID和任务ID查询当前并联或者串联的节点名称
+     */
+    public List<String> getParallelNodesByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId);
+
+
+
+
     /**
      * @param params
      * @return void
@@ -66,6 +79,14 @@ public interface IFlowableExtensionTaskDao
      */
     public void updateAssigneeByProcessInstanceIdAndTaskID(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId,@Param("assignee") String assignee);
 
+
+    /**
+     *
+     * @param params
+     * @return void
+     * @Description 根据ID来更新督办信息
+     */
+    public void updateDbInfoById(TaskExtensionVo params);
 
     /**
      * @param params

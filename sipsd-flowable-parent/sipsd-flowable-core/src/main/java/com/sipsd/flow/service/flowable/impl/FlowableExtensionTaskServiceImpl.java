@@ -186,7 +186,11 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		return new PageModel<>(taskExtensionList);
 	}
 
-
+	@Override
+	public List<String> getParallelNodesByProcessInstanceIdAndTaskId(String processInstanceId, String taskId)
+	{
+		return flowableExtensionTaskDao.getParallelNodesByProcessInstanceIdAndTaskId(processInstanceId,taskId);
+	}
 
 	@Override
 	public Result<String> updateExtensionCustomTaskById(ExtensionTaskQueryVo params)
@@ -211,6 +215,13 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee)
 	{
 		flowableExtensionTaskDao.updateAssigneeByProcessInstanceIdAndTaskID(processInstanceId,taskId,assignee);
+	}
+
+	@Override
+	public Result<String> updateDbInfoById(TaskExtensionVo params)
+	{
+		flowableExtensionTaskDao.updateDbInfoById(params);
+		return Result.sucess("更新成功!");
 	}
 
 	@Override

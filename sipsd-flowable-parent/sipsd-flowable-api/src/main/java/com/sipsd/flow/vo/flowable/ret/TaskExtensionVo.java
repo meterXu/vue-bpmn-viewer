@@ -141,7 +141,15 @@ public class TaskExtensionVo implements Serializable {
     @Getter
     private long duration;
 
+    /**
+     * 是否督办过
+     */
+    private Boolean isDb;
 
+    /**
+     * 业务上的附加属性
+     */
+    private String businessInfo;
     /**
      * 代办或者已办状态
      */
@@ -375,5 +383,25 @@ public class TaskExtensionVo implements Serializable {
     public void setGroupName(String groupName)
     {
         this.groupName = groupName;
+    }
+
+    public Boolean getDb()
+    {
+        return isDb;
+    }
+
+    public void setDb(Boolean db)
+    {
+        isDb = db;
+    }
+
+    public String getBusinessInfo()
+    {
+        return businessInfo;
+    }
+
+    public void setBusinessInfo(String businessInfo)
+    {
+        this.businessInfo = businessInfo;
     }
 }

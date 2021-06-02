@@ -62,6 +62,18 @@ public interface IFlowableExtensionTaskService
      * @Description 根据流程实例id查询历史自定义任务属性表(已办查询)
      */
     public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(String processInstanceId, Query query);
+
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return java.util.List<java.lang.String>
+     * @Description 根据实例ID和任务ID查询当前并联或者串联的节点名称
+     */
+    public List<String> getParallelNodesByProcessInstanceIdAndTaskId(String processInstanceId,String taskId);
+
+
     /**
      * @param params
      * @return void
@@ -76,4 +88,12 @@ public interface IFlowableExtensionTaskService
      * @Description
      */
     public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee);
+
+    /**
+     *
+     * @param params
+     * @return void
+     * @Description  根据ID来更新督办信息
+     */
+    public Result<String> updateDbInfoById(TaskExtensionVo params);
 }

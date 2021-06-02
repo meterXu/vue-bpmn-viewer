@@ -73,4 +73,16 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
     public Result<String> updateExtensionCustomTaskById(@RequestBody ExtensionTaskQueryVo params) {
         return flowableExtensionTaskService.updateExtensionCustomTaskById(params);
     }
+
+    /**
+     * 通过流程实例id来更新最大审批天数值
+     *
+     * @param params 参数
+     * @return
+     */
+    @ApiOperation("根据ID来更新督办信息")
+    @PostMapping(value = "/updateDbInfoById")
+    public Result<String> updateDbInfoById(@RequestBody TaskExtensionVo params) {
+        return flowableExtensionTaskService.updateDbInfoById(params);
+    }
 }

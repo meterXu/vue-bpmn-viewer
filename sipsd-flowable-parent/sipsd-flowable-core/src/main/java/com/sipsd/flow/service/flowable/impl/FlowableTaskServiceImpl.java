@@ -158,9 +158,9 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
 			}
 			//保存流程的自定义属性-最大审批天数
-			//TODO 跳转只能跳转到以前的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
+			//TODO 跳转只能跳转到以前审批过的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
 			flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
-			result = Result.sucess("驳回成功!");
+			result = Result.sucess("跳转成功!");
 		} else {
 			result = Result.failed("不存在任务实例,请确认!");
 		}
@@ -267,22 +267,22 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		List<ActivityInstance> activityInstances = runtimeService.createNativeActivityInstanceQuery().sql(sql)
 				.parameter("processInstanceId", processInstanceId).list();
 		// 获取运行节点表的parallelGateway节点并出重
-		sql = "SELECT t.ID_, t.REV_,t.PROC_DEF_ID_,t.PROC_INST_ID_,t.EXECUTION_ID_,t.ACT_ID_, t.TASK_ID_, t.CALL_PROC_INST_ID_, t.ACT_NAME_, t.ACT_TYPE_, "
-				+ " t.ASSIGNEE_, t.START_TIME_,t.END_TIME_ as END_TIME_, t.DURATION_, t.DELETE_REASON_, t.TENANT_ID_"
-				+ " FROM  act_ru_actinst t WHERE t.ACT_TYPE_ = 'parallelGateway' AND t.PROC_INST_ID_ = #{processInstanceId} and t.END_TIME_ is not null"
-				+ " and t.ACT_ID_ <> #{actId} ";
+//		sql = "SELECT t.ID_, t.REV_,t.PROC_DEF_ID_,t.PROC_INST_ID_,t.EXECUTION_ID_,t.ACT_ID_, t.TASK_ID_, t.CALL_PROC_INST_ID_, t.ACT_NAME_, t.ACT_TYPE_, "
+//				+ " t.ASSIGNEE_, t.START_TIME_,t.END_TIME_ as END_TIME_, t.DURATION_, t.DELETE_REASON_, t.TENANT_ID_"
+//				+ " FROM  act_ru_actinst t WHERE t.ACT_TYPE_ = 'parallelGateway' AND t.PROC_INST_ID_ = #{processInstanceId} and t.END_TIME_ is not null"
+//				+ " and t.ACT_ID_ <> #{actId} ";
 
 //		sql = "SELECT t.ID_, t.REV_,t.PROC_DEF_ID_,t.PROC_INST_ID_,t.EXECUTION_ID_,t.ACT_ID_, t.TASK_ID_, t.CALL_PROC_INST_ID_, t.ACT_NAME_, t.ACT_TYPE_, "
 //				+ " t.ASSIGNEE_, t.START_TIME_, max(t.END_TIME_) as END_TIME_, t.DURATION_, t.DELETE_REASON_, t.TENANT_ID_"
 //				+ " FROM  act_ru_actinst t WHERE t.ACT_TYPE_ = 'parallelGateway' AND t.PROC_INST_ID_ = #{processInstanceId} and t.END_TIME_ is not null"
 //				+ " and t.ACT_ID_ <> #{actId} GROUP BY t.act_id_";
-		List<ActivityInstance> parallelGatewaies = runtimeService.createNativeActivityInstanceQuery().sql(sql)
-				.parameter("processInstanceId", processInstanceId).parameter("actId", currActId).list();
+//		List<ActivityInstance> parallelGatewaies = runtimeService.createNativeActivityInstanceQuery().sql(sql)
+//				.parameter("processInstanceId", processInstanceId).parameter("actId", currActId).list();
 		// 排序
-		if (CollectionUtils.isNotEmpty(parallelGatewaies)) {
-			activityInstances.addAll(parallelGatewaies);
-			activityInstances.sort(Comparator.comparing(ActivityInstance::getEndTime));
-		}
+//		if (CollectionUtils.isNotEmpty(parallelGatewaies)) {
+//			activityInstances.addAll(parallelGatewaies);
+//			activityInstances.sort(Comparator.comparing(ActivityInstance::getEndTime));
+//		}
 		// 分组节点
 		int count = 0;
 		Map<ActivityInstance, List<ActivityInstance>> parallelGatewayUserTasks = new HashMap<>();
@@ -355,15 +355,28 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				}
 			});
 		}
+
 		// 去重合并
 		List<FlowNodeVo> datas = backNods.stream()
 				.collect(Collectors.collectingAndThen(
 						Collectors
 								.toCollection(() -> new TreeSet<>(Comparator.comparing(nodeVo -> nodeVo.getNodeId()))),
 						ArrayList::new));
-
 		// 排序
 		datas.sort(Comparator.comparing(FlowNodeVo::getEndTime));
+		//查询当前节点和当前的并行节点，剔除
+		List<String> nodeList = flowableExtensionTaskDao.getParallelNodesByProcessInstanceIdAndTaskId(processInstanceId,taskId);
+		for (Iterator<FlowNodeVo> itA = datas.iterator(); itA.hasNext();)
+		{
+			FlowNodeVo temp = itA.next();
+			for (int i = 0; i < nodeList.size(); i++)
+			{
+				if (temp.getNodeId().equals(nodeList.get(i)))
+				{
+					itA.remove();
+				}
+			}
+		}
 		return datas;
 	}
 

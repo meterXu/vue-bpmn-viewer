@@ -20,6 +20,12 @@ public class TaskVo implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+    /**
+     * 附加表ID
+     */
+    private String Id;
+
 	/**
      * 任务id
      */
@@ -48,6 +54,16 @@ public class TaskVo implements Serializable {
      * 流程实例id
      */
     private String processInstanceId;
+
+    /**
+     * 是否督办过
+     */
+    private Boolean isDb;
+
+    /**
+     * 业务上的附加属性
+     */
+    private String businessInfo;
 
     /**
      * 开始时间
@@ -211,5 +227,35 @@ public class TaskVo implements Serializable {
     public void setCustomTaskMaxDay(String customTaskMaxDay)
     {
         this.customTaskMaxDay = customTaskMaxDay;
+    }
+
+    public String getId()
+    {
+        return Id;
+    }
+
+    public void setId(String id)
+    {
+        Id = id;
+    }
+
+    public Boolean getDb()
+    {
+        return isDb;
+    }
+
+    public void setDb(Boolean db)
+    {
+        isDb = db;
+    }
+
+    public String getBusinessInfo()
+    {
+        return businessInfo;
+    }
+
+    public void setBusinessInfo(String businessInfo)
+    {
+        this.businessInfo = businessInfo;
     }
 }

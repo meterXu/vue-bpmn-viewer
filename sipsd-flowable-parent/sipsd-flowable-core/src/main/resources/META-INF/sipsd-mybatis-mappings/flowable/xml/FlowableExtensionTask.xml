@@ -21,6 +21,8 @@
             t3.GROUP_ID_ as groupId,
             t3.FLOW_TYPE_ as flowType,
             t3.FROM_KEY_ as fromKey,
+            t3.IS_DB_ as isDb,
+            t3.BUSINESS_INFO_ as businessInfo,
             '待办' as 'status'
         FROM
             act_ru_task t1
@@ -61,7 +63,9 @@
             case when t1.END_TIME_ is null then '待办'
                 else '已办' end  as 'status',
             t4.NAME_  as formName,
-            t4.BUSINESS_KEY_  as businessKey
+            t4.BUSINESS_KEY_  as businessKey,
+            t3.IS_DB_ as isDb,
+            t3.BUSINESS_INFO_ as businessInfo
         FROM
             act_hi_taskinst t1
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
@@ -101,7 +105,9 @@
         case when t1.END_TIME_ is null then '待办'
         else '已办' end  as 'status',
         t4.NAME_  as formName,
-        t4.BUSINESS_KEY_  as businessKey
+        t4.BUSINESS_KEY_  as businessKey,
+        t3.IS_DB_ as isDb,
+        t3.BUSINESS_INFO_ as businessInfo
         FROM
         act_hi_taskinst t1
         LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
@@ -150,6 +156,11 @@
         WHERE PROC_INST_ID_ = #{processInstanceId} and CREATE_TIME_ = #{startTime}
     </select>
 
+    <select id="getParallelNodesByProcessInstanceIdAndTaskId" parameterType="java.lang.String" resultType="java.lang.String">
+        select t2.TASK_DEF_KEY_ from act_ru_extension_task t2 where t2.CREATE_TIME_ = (select t1.CREATE_TIME_ from act_ru_extension_task t1
+        where t1.PROC_INST_ID_ =  #{processInstanceId} and t1.TASK_ID_ =   #{taskId})
+    </select>
+
 
     <update id="updateExtensionCustomTaskById" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         UPDATE  act_ru_extension_task t1
@@ -165,6 +176,13 @@
         SET ASSIGNEE_ = #{assignee}
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
+    </update>
+
+    <update id="updateDbInfoById" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        UPDATE  act_ru_extension_task t1
+        SET IS_DB_ = #{isDb}
+        WHERE
+            t1.ID_ = #{id}
     </update>
 
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
