@@ -1,22 +1,19 @@
 package com.sipsd.flow.rest.api;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author : chengtg
@@ -31,7 +28,6 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiFlowableProcessInstanceResource.class);
     @Autowired
     private IFlowableProcessInstanceService flowableProcessInstanceService;
-
     /**
      * 分页查询流程定义列表
      *
@@ -98,5 +94,20 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     public Result formData(@RequestParam String processInstanceId) {
     	return flowableProcessInstanceService.formData(processInstanceId);
     }
+
+    /**
+     * 获取当前以及下一任务节点
+     * @param node
+     * @param taskId
+     * @return
+     */
+    @GetMapping(value = "/nextFlowNode")
+    public Result nextFlowNode(@RequestParam String node, @RequestParam String taskId) {
+        Result<List<FlowElementVo>> result =new Result<>();
+        List<FlowElementVo> flowElementVoList =  flowableProcessInstanceService.nextFlowNode(node,taskId);
+        result.setData(flowElementVoList);
+        return result;
+    }
+
 
 }

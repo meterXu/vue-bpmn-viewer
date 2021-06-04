@@ -760,7 +760,6 @@ public class ProcessServiceImpl implements ProcessService
                 FlowElement = sequenceFlow.getTargetFlowElement();
                 if (FlowElement instanceof UserTask) {
                     log.info("下一节点: id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
-
                     flowNodeVo.setFlowNodeName(FlowElement.getName());
                     flowNodeVo.setFlowNodeId(FlowElement.getId());
                 }
