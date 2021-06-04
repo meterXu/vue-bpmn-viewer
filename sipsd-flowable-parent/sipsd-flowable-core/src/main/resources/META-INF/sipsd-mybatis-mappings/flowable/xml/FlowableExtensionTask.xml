@@ -42,6 +42,8 @@
 <!--        </if>-->
     </select>
 
+
+    <!--duration可以取值为act_hi_taskinst表中的duration字段值 不过它是毫秒">-->
     <select id="getAllExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         SELECT DISTINCT
             t3.ID_ as id,
@@ -61,7 +63,9 @@
             t1.END_TIME_ as endTime,
             t3.FLOW_TYPE_ as flowType,
             case when t1.END_TIME_ is null then '待办'
-                else '已办' end  as 'status',
+                else '已办' end  as status,
+            case when t1.DELETE_REASON_ is null then '审批'
+                else '驳回' end  as approveType,
             t4.NAME_  as formName,
             t4.BUSINESS_KEY_  as businessKey,
             t3.IS_DB_ as isDb,
@@ -104,6 +108,8 @@
         t3.FLOW_TYPE_ as flowType,
         case when t1.END_TIME_ is null then '待办'
         else '已办' end  as 'status',
+        case when t1.DELETE_REASON_ is null then '审批'
+             else '驳回' end  as approveType,
         t4.NAME_  as formName,
         t4.BUSINESS_KEY_  as businessKey,
         t3.IS_DB_ as isDb,

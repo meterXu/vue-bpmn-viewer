@@ -148,6 +148,11 @@ public class TaskExtensionVo implements Serializable {
     private Boolean isDb;
 
     /**
+     * 审批类型(驳回，跳转，审批)
+     */
+    private String approveType;
+
+    /**
      * 业务上的附加属性
      */
     @JsonValidation
@@ -405,5 +410,15 @@ public class TaskExtensionVo implements Serializable {
     public void setBusinessInfo(String businessInfo)
     {
         this.businessInfo = businessInfo;
+    }
+
+    public String getApproveType()
+    {
+        return approveType;
+    }
+
+    public void setApproveType(String approveType)
+    {
+        this.approveType = approveType;
     }
 }

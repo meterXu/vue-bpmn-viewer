@@ -154,15 +154,4 @@
     <changeSet id="4" author="flowable">
         <sqlFile path="db/sqlfile/v_1.0.0/flowable.mysql.create.extension.sql" relativeToChangelogFile="true"/>
     </changeSet>
-
-    <changeSet id="5" author="flowable">
-        <addColumn tableName="ACT_RU_EXTENSION_TASK">
-            <column name="IS_DB_" type="tinyint(4)"/>
-            <column name="BUSINESS_INFO_" type="text"/>
-        </addColumn>
-        <createIndex indexName="act_extension_task_id"
-                     tableName="ACT_RU_EXTENSION_TASK" unique="true">
-            <column name="TASK_ID_"/>
-        </createIndex>
-    </changeSet>
 </databaseChangeLog>
