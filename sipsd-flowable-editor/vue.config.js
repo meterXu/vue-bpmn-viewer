@@ -31,7 +31,7 @@ module.exports = {
           [{
             from: './src/project.js', to: `biz/${namespace}/js/project.[contenthash:4].js`,
             transform:(res,p)=>{
-              res = res.toString().replace('export default project','')
+              res = res.toString().replace('export default project_bpmn','')
               const matchs = res.match(/require\(.*\)/g)
               matchs.forEach(c => {
                 const fullpath = c.match(/(?<=assets\/).*(?=")/g)[0]

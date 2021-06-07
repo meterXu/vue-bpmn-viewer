@@ -1,4 +1,4 @@
-const project = {
+const project_bpmn = {
   namespace: "bpmn",
   mainSys:true,
   variable: {
@@ -91,10 +91,10 @@ const project = {
 
 if (!window.project) {
   window.project = {}
-  window.project[project.namespace] = project
-} else if (!window.project[project.namespace]) {
-  window.project[project.namespace] = project
+  window.project[project_bpmn.namespace] = project_bpmn
+} else if (!window.project[project_bpmn.namespace]) {
+  window.project[project_bpmn.namespace] = project_bpmn
 }
 
 
-export default project
+export default project_bpmn
