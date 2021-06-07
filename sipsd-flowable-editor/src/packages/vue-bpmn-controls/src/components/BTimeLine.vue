@@ -6,8 +6,8 @@
           <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
-            <p>{{item.approveType}}</p>
             <p>{{item.status}}</p>
+            <p>{{item.approveType}}</p>
           </div>
         </a-timeline-item>
       </a-timeline>
