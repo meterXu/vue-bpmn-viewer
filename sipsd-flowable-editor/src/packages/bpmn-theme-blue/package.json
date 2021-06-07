@@ -1,6 +1,6 @@
 {
   "name": "@dpark/bpmn-theme-blue",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "bpmn-js蓝色主题",
   "main": "dist/index.js",
   "scripts": {

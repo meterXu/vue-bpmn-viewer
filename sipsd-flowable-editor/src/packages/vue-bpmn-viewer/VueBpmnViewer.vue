@@ -22,8 +22,8 @@
 
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
-import bpmnThemeBlue from '../bpmn-theme-blue/index'
-import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
+import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
+import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
