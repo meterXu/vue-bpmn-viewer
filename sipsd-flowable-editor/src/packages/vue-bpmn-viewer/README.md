@@ -75,10 +75,9 @@ export default {
 ```vue
 <VueBpmnViewer :baseApi="baseApi"
                    :instanceId="instanceId">
-    <template slot="timeLine" slot-scope="{loading,data,uData}">
+    <template slot="timeLine" slot-scope="{loading,data}">
       {{loading}}
       {{data.length}}
-      {{uData.length}}
     </template>
 </VueBpmnViewer>
 ```
