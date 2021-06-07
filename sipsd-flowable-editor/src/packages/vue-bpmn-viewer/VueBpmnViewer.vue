@@ -12,8 +12,8 @@
       </template>
       <template slot="right">
         <BTZoom v-show="(type===2&&instanceId||type===1&&xmlId)&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <slot name="timeLine" v-if="type===2&&instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData.completeTask" v-bind:uData="taskData.upcomingTask" >
-          <BTimeLine :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+        <slot name="timeLine" v-if="type===2&&instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData">
+          <BTimeLine :loading="timeLine_loading" :data="taskData"/>
         </slot>
       </template>
     </BTLayout>
@@ -23,7 +23,7 @@
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls/index'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
@@ -51,10 +51,7 @@ export default {
       bpmnOptions:{
         additionalModules:[bpmnThemeBlue]
       },
-      taskData:{
-        completeTask:[],
-        upcomingTask:[]
-      },
+      taskData:[],
       url:{
         xmlUrl:'rest/model/loadXmlByModelId/',
         instanceUrl:'rest/formdetail/getprocessXml/',
@@ -78,16 +75,11 @@ export default {
     }
   },
   watch:{
-    'taskData.completeTask':{
+    'taskData':{
       handler:function (nv){
-        utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: false})
-      }
-    },
-    'taskData.upcomingTask':{
-      handler:function (nv){
-        if(nv.length>0){
-          utils.setTaskHighlight(nv.map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: false,shadow: false})
-        }
+        utils.setTaskHighlight(nv.filter(c=>c.status==='已办').map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: false})
+        utils.setTaskHighlight(nv.filter(c=>c.status==='待办').map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: false,shadow: false})
+        utils.setTaskHighlight(nv.filter(c=>c.approveType==='驳回').map(c=>c.taskDefinitionKey),{color:'#ff0000',setline: false,shadow: false})
       }
     },
     xml(){
@@ -97,10 +89,7 @@ export default {
   methods:{
     getTaskList(){
       if(this.instanceId){
-        this.taskData={
-          completeTask:[],
-          upcomingTask:[]
-        }
+        this.taskData=[]
         axios.get(this.baseApi+this.url.allExtensionTasks,{
           params:{
             initPageIndex:1,
@@ -110,15 +99,13 @@ export default {
             processInstanceId:this.instanceId
           }
         }).then(res=>{
-          res.data.data.forEach(f=>{
+          res.data.data.sort((a,b)=>{
+            return a.startTime - b.startTime
+          }).forEach(f=>{
             utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
-            if(f.status==='已办'){
-              this.taskData.completeTask.push(f)
-            }else if(f.status==='待办'){
-              this.taskData.upcomingTask.push(f)
-            }
+            this.taskData.push(f)
           })
-          if(this.taskData.upcomingTask.length===0){
+          if(this.taskData.filter(c=>c.status==='待办').length===0){
             utils.setEndHighLight()
           }
         }).catch(err=>{

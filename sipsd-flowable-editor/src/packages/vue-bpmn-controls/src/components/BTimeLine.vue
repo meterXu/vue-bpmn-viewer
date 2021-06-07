@@ -2,17 +2,12 @@
   <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0&&uData.length===0)}">
     <a-spin :spinning="loading" tip="加载中...">
       <a-timeline v-if="data.length>0||uData.length>0">
-        <a-timeline-item v-for="item in data" :key="item.id" color="#5BC14B">
-          <div class="timeLine-item-over timeLine-item-over-ed" @mouseover="handleItemOver(1,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
+        <a-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
+          <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
-            <p>已审批</p>
-          </div>
-        </a-timeline-item>
-        <a-timeline-item v-for="item in uData" :key="item.id" color="orange">
-          <div class="timeLine-item-over timeLine-item-over-uned" @mouseover="handleItemOver(2,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
-            <p>{{item.taskName}}</p>
-            <p>待审批</p>
+            <p>{{item.approveType}}</p>
+            <p>{{item.status}}</p>
           </div>
         </a-timeline-item>
       </a-timeline>
@@ -26,13 +21,14 @@
 import utils from "../lib/utils";
 export default {
   name: "BTimeLine",
-  props:['loading','data','uData'],
+  props:['loading','data'],
   data(){
     return {
       oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false},
       highLight:[
         {color:'#5BC14B',setline:false,user:undefined,shadow:true},
-        {color:'#f5842c',setline:false,user:undefined,shadow:true}
+        {color:'#f5842c',setline:false,user:undefined,shadow:true},
+        {color:'#ff0000',setline:false,user:undefined,shadow:true}
       ]
     }
   },
@@ -51,7 +47,8 @@ export default {
       if(ss<10){ss=`0${ss}`}
       return `${t.getFullYear()}-${m}-${d} ${hh}:${mm}:${ss}`
     },
-    handleItemOver(type,taskId){
+    handleItemOver(item,taskId){
+      const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
       const taskObj = utils.getTaskObj(taskId)
       if(taskObj){
         this.oldStyle.color=taskObj.color
@@ -61,6 +58,18 @@ export default {
     handleItemOut(taskId){
       utils.clearHighLight(taskId)
       utils.setTaskHighlight([taskId],this.oldStyle)
+    },
+    getTimeLineColor(data){
+      if(data.status==='已办'){
+        if(data.approveType==='审批'){
+          return this.highLight[0].color
+        }else if(data.approveType==='驳回'){
+          return this.highLight[2].color
+        }
+      }else if(data.status==='待办'){
+        return this.highLight[1].color
+      }
+
     }
   }
 }
