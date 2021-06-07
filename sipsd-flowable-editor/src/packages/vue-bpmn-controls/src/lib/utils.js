@@ -203,6 +203,13 @@ function utils(){
             text.innerHTML = day
         }
     }
+
+    this.setTaskRealName=function(id,day){
+        let text = document.querySelector(`[data-element-id="${id}"] .custom-realName text`)
+        if(text){
+            text.innerHTML = day
+        }
+    }
 }
 
 export default new utils()

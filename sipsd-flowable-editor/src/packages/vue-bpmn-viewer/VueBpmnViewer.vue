@@ -22,8 +22,8 @@
 
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
-import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import bpmnThemeBlue from '../bpmn-theme-blue/index'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
@@ -103,6 +103,9 @@ export default {
             return a.startTime - b.startTime
           }).forEach(f=>{
             utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+            if(f.realName){
+              utils.setTaskRealName(f.taskDefinitionKey,f.realName)
+            }
             this.taskData.push(f)
           })
           if(this.taskData.filter(c=>c.status==='待办').length===0){
