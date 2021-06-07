@@ -1,7 +1,12 @@
 package com.sipsd.flow.rest.api;
 
-import java.util.List;
-
+import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.service.flowable.IFlowableIdentityService;
+import com.sipsd.flow.service.flowable.IFlowableUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.idm.api.IdmIdentityService;
@@ -10,18 +15,9 @@ import org.flowable.idm.api.User;
 import org.flowable.idm.api.UserQuery;
 import org.flowable.idm.engine.impl.persistence.entity.UserEntityImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.service.flowable.IFlowableIdentityService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
 
 /**
  * @author : chengtg
@@ -39,7 +35,8 @@ public class ApiFlowableUserResource extends BaseResource {
     private IdmIdentityService idmIdentityService;
     @Autowired
     private IFlowableIdentityService flowableIdentityService;
-
+    @Autowired
+    private IFlowableUserService flowableUserService;
     /**
      * 查询用户列表
      *
@@ -107,6 +104,21 @@ public class ApiFlowableUserResource extends BaseResource {
         if (CollectionUtils.isNotEmpty(groupIds)) {
             groupIds.forEach(groupId -> idmIdentityService.createMembership(userId, groupId));
         }
+        return result;
+    }
+
+    /**
+     * 查询用户组
+     *
+     * @param groupIds 组ids
+     * @return
+     */
+    @ApiOperation("查询用户组")
+    @GetMapping("/queryUserListByGroupIds")
+    public Result<String> queryUserListByGroupIds(@RequestParam(value = "groupIds") List<String> groupIds) {
+        Result result = Result.sucess("查询成功");
+        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(groupIds);
+        result.setData(userList);
         return result;
     }
 }

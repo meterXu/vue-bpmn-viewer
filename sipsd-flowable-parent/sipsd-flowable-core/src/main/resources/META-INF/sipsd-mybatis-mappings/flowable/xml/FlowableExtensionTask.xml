@@ -6,25 +6,30 @@
             t3.ID_ as id,
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
-            t2.NAME_ AS formName,
+            t4.NAME_ AS formName,
             t2.TENANT_ID_ AS tenantId,
-            t2.BUSINESS_KEY_ AS businessKey,
+            t4.BUSINESS_KEY_ AS businessKey,
             t2.PROC_INST_ID_ AS processInstanceId,
             t1.CREATE_TIME_ AS startTime,
             t3.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay,
             t3.TASK_MAX_DAY_  as taskMaxDay,
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
-#             t3.END_TIME_ as endTime,
+            t3.END_TIME_ as endTime,
             t3.ASSIGNEE_ as assignee,
-            t3.TASK_REST_TIME_ as restTime,
+            TIMESTAMPDIFF(SECOND,NOW(),t3.END_TIME_) as restTime,
             t3.GROUP_ID_ as groupId,
-            t3.FLOW_TYPE_ as flowType
+            t3.FLOW_TYPE_ as flowType,
+            t3.FROM_KEY_ as fromKey,
+            t3.IS_DB_ as isDb,
+            t3.BUSINESS_INFO_ as businessInfo,
+            '待办' as 'status'
         FROM
             act_ru_task t1
                 LEFT JOIN  act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_ and t1.EXECUTION_ID_ = t2.ID_
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
-        WHERE  t2.PARENT_ID_ is not null and t3.ID_  is not null
+                LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
+        WHERE   t3.ID_  is not null
         <if test="null != processInstanceId and '' != processInstanceId ">
             and t1.PROC_INST_ID_ = #{processInstanceId}
         </if>
@@ -37,6 +42,8 @@
 <!--        </if>-->
     </select>
 
+
+    <!--duration可以取值为act_hi_taskinst表中的duration字段值 不过它是毫秒">-->
     <select id="getAllExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         SELECT DISTINCT
             t3.ID_ as id,
@@ -48,20 +55,26 @@
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
             t1.ASSIGNEE_ as assignee,
-            t3.TASK_REST_TIME_ as restTime,
+            TIMESTAMPDIFF(SECOND,NOW(),t3.END_TIME_) as restTime,
+            TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
             t3.GROUP_ID_ as groupId,
             t1.TENANT_ID_ AS tenantId,
             t1.PROC_INST_ID_ AS processInstanceId,
             t1.END_TIME_ as endTime,
             t3.FLOW_TYPE_ as flowType,
             case when t1.END_TIME_ is null then '待办'
-                else '已办' end  as 'status',
-            t2.NAME_  as formName,
-            t2.BUSINESS_KEY_  as businessKey
+                else '已办' end  as status,
+            case when t1.DELETE_REASON_ is null then '审批'
+                else '驳回' end  as approveType,
+            t4.NAME_  as formName,
+            t4.BUSINESS_KEY_  as businessKey,
+            t3.IS_DB_ as isDb,
+            t3.BUSINESS_INFO_ as businessInfo
         FROM
             act_hi_taskinst t1
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
                 LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
+        LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId}
 
@@ -72,6 +85,42 @@
 <!--        <if test="businessKey != null and businessKey != ''">-->
 <!--            AND t2.BUSINESS_KEY_ = #{businessKey}-->
 <!--        </if>-->
+        order by t1.END_TIME_
+    </select>
+
+
+    <select id="getFinishExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT DISTINCT
+        t3.ID_ as id,
+        t1.ID_ AS taskId,
+        t1.NAME_ AS taskName,
+        t1.START_TIME_ AS startTime,
+        t3.CUSTOM_TASK_MAX_DAY_ as customTaskMaxDay,
+        t3.TASK_MAX_DAY_  as taskMaxDay,
+        t3.TASK_DEF_KEY_  as taskDefinitionKey,
+        t3.PROC_DEF_ID_ as processDefinitionId,
+        t1.ASSIGNEE_ as assignee,
+        TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
+        t3.GROUP_ID_ as groupId,
+        t1.TENANT_ID_ AS tenantId,
+        t1.PROC_INST_ID_ AS processInstanceId,
+        t1.END_TIME_ as endTime,
+        t3.FLOW_TYPE_ as flowType,
+        case when t1.END_TIME_ is null then '待办'
+        else '已办' end  as 'status',
+        case when t1.DELETE_REASON_ is null then '审批'
+             else '驳回' end  as approveType,
+        t4.NAME_  as formName,
+        t4.BUSINESS_KEY_  as businessKey,
+        t3.IS_DB_ as isDb,
+        t3.BUSINESS_INFO_ as businessInfo
+        FROM
+        act_hi_taskinst t1
+        LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+        LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
+        LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
+        WHERE
+        t1.PROC_INST_ID_ = #{processInstanceId} and t1.END_TIME_ is not null
         order by t1.END_TIME_
     </select>
 
@@ -113,17 +162,37 @@
         WHERE PROC_INST_ID_ = #{processInstanceId} and CREATE_TIME_ = #{startTime}
     </select>
 
+    <select id="getParallelNodesByProcessInstanceIdAndTaskId" parameterType="java.lang.String" resultType="java.lang.String">
+        select t2.TASK_DEF_KEY_ from act_ru_extension_task t2 where t2.CREATE_TIME_ = (select t1.CREATE_TIME_ from act_ru_extension_task t1
+        where t1.PROC_INST_ID_ =  #{processInstanceId} and t1.TASK_ID_ =   #{taskId})
+    </select>
+
 
     <update id="updateExtensionCustomTaskById" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         UPDATE  act_ru_extension_task t1
         SET CUSTOM_TASK_MAX_DAY_ = #{customTaskMaxDay},
-            END_TIME_ = #{endTime}
+            END_TIME_ = #{endTime},
+            TASK_REST_TIME_= #{restTime}
+        WHERE
+            t1.ID_ = #{id}
+    </update>
+
+    <update id="updateAssigneeByProcessInstanceIdAndTaskID" parameterType="java.lang.String">
+        UPDATE  act_ru_extension_task t1
+        SET ASSIGNEE_ = #{assignee}
+        WHERE
+            t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
+    </update>
+
+    <update id="updateDbInfoById" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        UPDATE  act_ru_extension_task t1
+        SET IS_DB_ = #{isDb}
         WHERE
             t1.ID_ = #{id}
     </update>
 
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
-        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_,FLOW_TYPE_,CREATE_TIME_)
-         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId},#{flowType},#{startTime});
+        INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_,FLOW_TYPE_,CREATE_TIME_,BUSINESS_INFO_)
+         VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId},#{flowType},#{startTime},#{businessInfo});
     </insert>
 </mapper>

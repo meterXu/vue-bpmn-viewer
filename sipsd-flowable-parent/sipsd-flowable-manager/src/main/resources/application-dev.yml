@@ -1,5 +1,5 @@
 bath:
-    path: http://127.0.0.1:8989/sipsd-flow-modeler
+    path: http://127.0.0.1:9001/sipsd-flow-modeler
 log:
     level: INFO
     path: classpath:applogs\flow
@@ -25,7 +25,7 @@ spring:
 #            url:  jdbc:mysql://115.28.187.78:3306/flowable?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
 #            username: root
 #            password: Admin@1234
-            url: jdbc:mysql://cdb-eqybbrkx.gz.tencentcdb.com:10150/flowable_v2?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+            url: jdbc:mysql://cdb-eqybbrkx.gz.tencentcdb.com:10150/flowable_v4_temp?characterEncoding=UTF-8&useUnicode=true&useSSL=false
             username: root
             password: gao1210886745
             driver-class-name: com.mysql.jdbc.Driver

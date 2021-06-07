@@ -1,16 +1,12 @@
 package com.sipsd.flow.config;
 
-import java.util.List;
-
+import com.google.common.collect.Lists;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import com.google.common.collect.Lists;
-
-import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -23,6 +19,8 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.List;
 
 /**
  * swagger配置项
@@ -57,6 +55,20 @@ public class SwaggerConfiguration implements WebMvcConfigurer {
         //.securitySchemes(Lists.<SecurityScheme>newArrayList(apiKey()));
     }
 
+    //旧版兼容工作流服务接口
+    @Bean(value = "sysOldApi")
+    @Order(value = 2)
+    public Docket defaultOldApi() {
+        ParameterBuilder parameterBuilder = new ParameterBuilder();
+        List<Parameter> parameters = Lists.newArrayList();
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(sysInfo()).groupName("旧版工作流服务接口").select()
+                .apis(RequestHandlerSelectors.basePackage("com.sipsd.flow.rest.v3.api"))
+                //加了ApiOperation注解的类，才生成接口文档
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any()).build().globalOperationParameters(parameters);
+        //.securityContexts(Lists.newArrayList(securityContext(), securityContext()));
+        //.securitySchemes(Lists.<SecurityScheme>newArrayList(apiKey()));
+    }
 
     private ApiInfo sysInfo() {
         return new ApiInfoBuilder().title("swagger-bootstrap-ui-demo RESTful APIs")

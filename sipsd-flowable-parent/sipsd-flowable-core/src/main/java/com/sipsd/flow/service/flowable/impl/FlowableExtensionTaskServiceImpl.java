@@ -41,7 +41,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
 
 	@Override
-	public void saveExtensionTask(String processDefinitionId,String fromKey)
+	public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo)
 	{
 		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
 		Date startTime = new Date();
@@ -109,6 +109,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					taskExtensionVo.setTaskName(task.getName());
 					taskExtensionVo.setFlowType(flowType);
 					taskExtensionVo.setStartTime(startTime);
+					taskExtensionVo.setBusinessInfo(businessInfo);
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
 			}
@@ -179,6 +180,20 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	}
 
 	@Override
+	public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(String processInstanceId, Query query)
+	{
+		PageHelper.startPage(query.getPageNum(), query.getPageSize());
+		Page<TaskExtensionVo> taskExtensionList = flowableExtensionTaskDao.getFinishExtensionTaskByProcessInstanceId(processInstanceId);
+		return new PageModel<>(taskExtensionList);
+	}
+
+	@Override
+	public List<String> getParallelNodesByProcessInstanceIdAndTaskId(String processInstanceId, String taskId)
+	{
+		return flowableExtensionTaskDao.getParallelNodesByProcessInstanceIdAndTaskId(processInstanceId,taskId);
+	}
+
+	@Override
 	public Result<String> updateExtensionCustomTaskById(ExtensionTaskQueryVo params)
 	{
 		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(params.getProcessInstanceId(),params.getTaskId());
@@ -191,8 +206,23 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		taskExtensionVo.setEndTime(endDate);
 		taskExtensionVo.setUpdateTime(new Date());
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
+		Long restTime = DateUtil.diffDateTime(endDate,new Date());
+		taskExtensionVo.setRestTime(restTime);
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
-		return Result.failed("更新成功!");
+		return Result.sucess("更新成功!");
+	}
+
+	@Override
+	public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee)
+	{
+		flowableExtensionTaskDao.updateAssigneeByProcessInstanceIdAndTaskID(processInstanceId,taskId,assignee);
+	}
+
+	@Override
+	public Result<String> updateDbInfoById(TaskExtensionVo params)
+	{
+		flowableExtensionTaskDao.updateDbInfoById(params);
+		return Result.sucess("更新成功!");
 	}
 
 	@Override

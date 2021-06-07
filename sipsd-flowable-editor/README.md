@@ -1,6 +1,10 @@
 # sipsd-flowable-editor
 > flowable流程图在线预览
 
+[演示地址1，流程图](http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=27b7404f-8c82-11eb-a15e-f2326a570310)
+
+[演示地址2，流程实例](http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=c73077db92aa11ebbc94b6a919c0963e)
+
 ![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_2ad2263d402da54f1ad086cbf8430368.png)
 
 可以独立部署该工具，通过url传递不同的实例ID即可查看不同的工作流。同时，我们也提供单独的预览组件`vue-bpmn-viewer`，可以在项目中单独使用该组件。
@@ -61,5 +65,5 @@ url中可使用的参数
 ```
 其中，baseApi是flowable后端地址，instanceId为示例ID。
 
-组件详细用法参考[vue-bpmn-viewer](http://192.168.126.25/git/flowable-dev/flowable_v3/-/blob/master/sipsd-flowable-editor/src/packages/vue-bpmn-viewer/README.md)
+组件详细用法参考[vue-bpmn-viewer](http://192.168.126.25/git/sipsd-open-source/flowable_v3/-/blob/master/sipsd-flowable-editor/src/packages/vue-bpmn-viewer/README.md)
 

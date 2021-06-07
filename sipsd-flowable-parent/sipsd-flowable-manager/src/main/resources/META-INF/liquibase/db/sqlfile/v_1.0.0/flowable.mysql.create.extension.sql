@@ -72,8 +72,11 @@ create table if not exists ACT_RU_EXTENSION_TASK
     ASSIGNEE_            nvarchar(100),
     GROUP_ID_            nvarchar(100),
     FLOW_TYPE_           nvarchar(100),
+    IS_DB_               TINYINT(4) DEFAULT 0,
+    BUSINESS_INFO_       TEXT,
     primary key (ID_),
     KEY ACT_RU_EXTENSION_TASK_PROC_INST (PROC_INST_ID_),
     KEY ACT_RU_EXTENSION_TASK_ASSIGNEE (ASSIGNEE_),
-    KEY ACT_RU_EXTENSION_TASK_GROUP (GROUP_ID_)
+    KEY ACT_RU_EXTENSION_TASK_GROUP (GROUP_ID_),
+    KEY ACT_EXTENSION_TASK_ID (TASK_ID_)
 );

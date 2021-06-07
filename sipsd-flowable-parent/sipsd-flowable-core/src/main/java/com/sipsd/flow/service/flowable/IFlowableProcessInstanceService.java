@@ -1,6 +1,7 @@
 package com.sipsd.flow.service.flowable;
 
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
@@ -10,6 +11,7 @@ import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
 import org.flowable.engine.runtime.ProcessInstance;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -100,4 +102,12 @@ public interface IFlowableProcessInstanceService {
 	Result<Map<String, Object>> formData(String processInstanceId);
 
 	Result<Map<String, Object>> taskFormData(String taskId);
+
+    /**
+     * 获取任务节点
+     *
+     * @param node   查询节点选择
+     * @param taskId 任务id
+     */
+    public List<FlowElementVo> nextFlowNode(String node, String taskId);
 }

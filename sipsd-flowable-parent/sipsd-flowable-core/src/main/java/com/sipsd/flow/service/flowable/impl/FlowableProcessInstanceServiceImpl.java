@@ -3,6 +3,7 @@ package com.sipsd.flow.service.flowable.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -15,20 +16,22 @@ import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;
 import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.constants.BpmnXMLConstants;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
-import org.flowable.bpmn.model.Activity;
-import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.EndEvent;
+import org.flowable.bpmn.model.*;
 import org.flowable.common.engine.impl.util.IoUtil;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.idm.api.User;
+import org.flowable.task.api.Task;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +49,7 @@ import java.util.Map;
  * @description: 流程实例service
  * @date : 2019/11/1314:56
  */
+@Slf4j
 @Service
 public class FlowableProcessInstanceServiceImpl extends BaseProcessService implements IFlowableProcessInstanceService {
 
@@ -59,6 +63,8 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 	private IFlowableTaskService flowableTaskService;
 	@Autowired
 	private IFlowableExtensionTaskService flowableExtensionTaskService;
+	@Autowired
+	private ProcessEngine processEngine;
 
 	@Override
 	public PageModel<ProcessInstanceVo> getPagerModel(ProcessInstanceQueryVo params, Query query) {
@@ -139,7 +145,7 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 			this.addComment(creator, processInstance.getProcessInstanceId(), CommentTypeEnum.TJ.toString(),
 					params.getFormName() + "提交");
 			//保存流程的自定义属性-最大审批天数
-			flowableExtensionTaskService.saveExtensionTask(processInstance.getProcessInstanceId(),processInstance.getActivityId());
+			flowableExtensionTaskService.saveExtensionTask(processInstance.getProcessInstanceId(),processInstance.getActivityId(),params.getBusinessInfo());
 			// 5.TODO 推送消息数据
 
 		} else {
@@ -361,6 +367,73 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 		ret.put("renderedStartForm", renderedStartForm);
 		ret.put("variables", localMap);
 		return Result.ok(ret);
+	}
+
+
+	/**
+	 * 获取任务节点
+	 *
+	 * @param node   查询节点选择
+	 * @param taskId 任务id
+	 */
+	@Override
+	public List<FlowElementVo> nextFlowNode(String node, String taskId) {
+		Task task = processEngine.getTaskService().createTaskQuery().taskId(taskId).singleResult();
+		ExecutionEntity ee = (ExecutionEntity) processEngine.getRuntimeService().createExecutionQuery()
+				.executionId(task.getExecutionId()).singleResult();
+		// 当前审批节点
+		String crruentActivityId = ee.getActivityId();
+		FlowElement FlowElement=null;
+
+		List<FlowElementVo> flowNodeVos=null;
+
+		BpmnModel bpmnModel = processEngine.getRepositoryService().getBpmnModel(task.getProcessDefinitionId());
+		FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(crruentActivityId);
+		// 输出连线
+		List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
+		if(org.springframework.util.CollectionUtils.isEmpty(outFlows)){
+			return flowNodeVos;
+		}
+		flowNodeVos=new ArrayList<>();
+
+		for (SequenceFlow sequenceFlow : outFlows) {
+			FlowElementVo flowElementVo=new FlowElementVo();
+			//当前审批节点
+			if ("now".equals(node)) {
+				FlowElement = sequenceFlow.getSourceFlowElement();
+				log.info("当前节点: id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
+
+				flowElementVo.setFlowNodeName(FlowElement.getName());
+				flowElementVo.setFlowNodeId(FlowElement.getId());
+				if(FlowElement instanceof UserTask)
+				{
+					flowElementVo.setAssignee(((UserTask)FlowElement).getAssignee());
+					flowElementVo.setGroupList(((UserTask)FlowElement).getCandidateGroups());
+				}
+			} else if ("next".equals(node)) {
+				// 下一个审批节点
+				FlowElement = sequenceFlow.getTargetFlowElement();
+				if (FlowElement instanceof UserTask) {
+					log.info("下一节点: id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
+					flowElementVo.setFlowNodeName(FlowElement.getName());
+					flowElementVo.setFlowNodeId(FlowElement.getId());
+					if(FlowElement instanceof UserTask)
+					{
+						flowElementVo.setAssignee(((UserTask)FlowElement).getAssignee());
+						flowElementVo.setGroupList(((UserTask)FlowElement).getCandidateGroups());
+					}
+				}
+				// 如果下个审批节点为结束节点
+				if (FlowElement instanceof EndEvent) {
+					log.info("下一节点为结束节点：id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
+					flowElementVo.setFlowNodeName(FlowElement.getName());
+					flowElementVo.setFlowNodeId(FlowElement.getId());
+				}
+
+			}
+			flowNodeVos.add(flowElementVo);
+		}
+		return flowNodeVos;
 	}
 
 }

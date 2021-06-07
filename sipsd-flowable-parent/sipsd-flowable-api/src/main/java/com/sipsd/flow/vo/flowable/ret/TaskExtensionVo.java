@@ -1,5 +1,6 @@
 package com.sipsd.flow.vo.flowable.ret;
 
+import com.sipsd.flow.validation.JsonValidation;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -136,7 +137,26 @@ public class TaskExtensionVo implements Serializable {
      */
     private String flowType;
 
+    @ApiModelProperty("秒")
+    @Setter
+    @Getter
+    private long duration;
 
+    /**
+     * 是否督办过
+     */
+    private Boolean isDb;
+
+    /**
+     * 审批类型(驳回，跳转，审批)
+     */
+    private String approveType;
+
+    /**
+     * 业务上的附加属性
+     */
+    @JsonValidation
+    private String businessInfo;
     /**
      * 代办或者已办状态
      */
@@ -370,5 +390,35 @@ public class TaskExtensionVo implements Serializable {
     public void setGroupName(String groupName)
     {
         this.groupName = groupName;
+    }
+
+    public Boolean getDb()
+    {
+        return isDb;
+    }
+
+    public void setDb(Boolean db)
+    {
+        isDb = db;
+    }
+
+    public String getBusinessInfo()
+    {
+        return businessInfo;
+    }
+
+    public void setBusinessInfo(String businessInfo)
+    {
+        this.businessInfo = businessInfo;
+    }
+
+    public String getApproveType()
+    {
+        return approveType;
+    }
+
+    public void setApproveType(String approveType)
+    {
+        this.approveType = approveType;
     }
 }

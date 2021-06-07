@@ -1,13 +1,12 @@
 package com.sipsd.flow.vo.flowable.ret;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author : chengtg
@@ -21,6 +20,12 @@ public class TaskVo implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
+    /**
+     * 附加表ID
+     */
+    private String Id;
+
 	/**
      * 任务id
      */
@@ -51,6 +56,16 @@ public class TaskVo implements Serializable {
     private String processInstanceId;
 
     /**
+     * 是否督办过
+     */
+    private Boolean isDb;
+
+    /**
+     * 业务上的附加属性
+     */
+    private String businessInfo;
+
+    /**
      * 开始时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -70,6 +85,21 @@ public class TaskVo implements Serializable {
      * 系统标识
      */
     private String systemSn;
+
+    @ApiModelProperty("秒")
+    @Setter
+    @Getter
+    private Long restTime;
+
+    /**
+     * 节点审批最大天数
+     */
+    private String taskMaxDay;
+
+    /**
+     * 节点审批最大天数
+     */
+    private String customTaskMaxDay;
     
     /**
      * 表单key
@@ -167,5 +197,65 @@ public class TaskVo implements Serializable {
 
     public void setSystemSn(String systemSn) {
         this.systemSn = systemSn;
+    }
+
+    public Long getRestTime()
+    {
+        return restTime;
+    }
+
+    public void setRestTime(Long restTime)
+    {
+        this.restTime = restTime;
+    }
+
+    public String getTaskMaxDay()
+    {
+        return taskMaxDay;
+    }
+
+    public void setTaskMaxDay(String taskMaxDay)
+    {
+        this.taskMaxDay = taskMaxDay;
+    }
+
+    public String getCustomTaskMaxDay()
+    {
+        return customTaskMaxDay;
+    }
+
+    public void setCustomTaskMaxDay(String customTaskMaxDay)
+    {
+        this.customTaskMaxDay = customTaskMaxDay;
+    }
+
+    public String getId()
+    {
+        return Id;
+    }
+
+    public void setId(String id)
+    {
+        Id = id;
+    }
+
+    public Boolean getDb()
+    {
+        return isDb;
+    }
+
+    public void setDb(Boolean db)
+    {
+        isDb = db;
+    }
+
+    public String getBusinessInfo()
+    {
+        return businessInfo;
+    }
+
+    public void setBusinessInfo(String businessInfo)
+    {
+        this.businessInfo = businessInfo;
     }
 }

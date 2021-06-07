@@ -3,17 +3,24 @@
 <mapper namespace="com.sipsd.flow.dao.flowable.IFlowableTaskDao" >
     <select id="getApplyingTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
         SELECT DISTINCT
+            t4.ID_ as id,
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
             t2.NAME_ AS formName,
             t2.TENANT_ID_ AS systemSn,
             t2.BUSINESS_KEY_ AS businessKey,
             t2.PROC_INST_ID_ AS processInstanceId,
-            t1.CREATE_TIME_ AS startTime
+            t1.CREATE_TIME_ AS startTime,
+            t4.CUSTOM_TASK_MAX_DAY_  as customTaskMaxDay,
+            t4.TASK_MAX_DAY_ as taskMaxDay,
+            t4.IS_DB_ as isDb,
+            t4.BUSINESS_INFO_ as businessInfo,
+        TIMESTAMPDIFF(SECOND,NOW(),t4.END_TIME_) as restTime
         FROM
             act_ru_task t1
         INNER JOIN act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_
         LEFT JOIN act_ru_identitylink t3 ON t3.TASK_ID_ = t1.ID_
+        LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
         WHERE
             t2.BUSINESS_KEY_ IS NOT NULL
 
@@ -58,20 +65,25 @@
     </select>
     <select id="getApplyedTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
         SELECT DISTINCT
+            t4.ID_ as id,
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
             t2.FIRST_ AS approver,
             t2.ID_ AS approverId,
+        TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
             t3.NAME_ AS formName,
             t3.BUSINESS_KEY_ AS businessKey,
             t3.PROC_INST_ID_ AS processInstanceId,
             t3.TENANT_ID_ as systemSn,
             t1.START_TIME_ AS startTime,
-            t1.END_TIME_ as endTime
+            t1.END_TIME_ as endTime,
+            t4.IS_DB_ as isDb,
+            t4.BUSINESS_INFO_ as businessInfo,
         FROM
             act_hi_taskinst t1
         LEFT JOIN act_id_user t2 ON t1.ASSIGNEE_ = t2.ID_
         LEFT JOIN act_hi_procinst t3 ON t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+        LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
         WHERE
             t1.END_TIME_ is not null
         AND t1.ASSIGNEE_ = #{userCode}

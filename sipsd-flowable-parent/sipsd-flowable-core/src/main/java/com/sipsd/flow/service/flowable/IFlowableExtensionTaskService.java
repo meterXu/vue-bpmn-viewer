@@ -22,7 +22,7 @@ public interface IFlowableExtensionTaskService
      * @return void
      * @Description 插入自定义属性表
      */
-    public void saveExtensionTask(String processDefinitionId,String fromKey);
+    public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo);
 
     /**
      *
@@ -56,6 +56,23 @@ public interface IFlowableExtensionTaskService
      */
     public PageModel<TaskExtensionVo> getAllExtensionTaskByProcessInstanceId(String processInstanceId,Query query);
 
+    /**
+     * @param processInstanceId
+     * @return com.sipsd.flow.vo.flowable.ret.TaskExtensionVo
+     * @Description 根据流程实例id查询历史自定义任务属性表(已办查询)
+     */
+    public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(String processInstanceId, Query query);
+
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return java.util.List<java.lang.String>
+     * @Description 根据实例ID和任务ID查询当前并联或者串联的节点名称
+     */
+    public List<String> getParallelNodesByProcessInstanceIdAndTaskId(String processInstanceId,String taskId);
+
 
     /**
      * @param params
@@ -63,4 +80,20 @@ public interface IFlowableExtensionTaskService
      * @Description 通过流程实例id来更新最大审批天数值
      */
     public Result<String> updateExtensionCustomTaskById(ExtensionTaskQueryVo params);
+
+    /**
+     *
+     * @param params
+     * @return com.sipsd.cloud.common.core.util.Result<java.lang.String>
+     * @Description
+     */
+    public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee);
+
+    /**
+     *
+     * @param params
+     * @return void
+     * @Description  根据ID来更新督办信息
+     */
+    public Result<String> updateDbInfoById(TaskExtensionVo params);
 }
