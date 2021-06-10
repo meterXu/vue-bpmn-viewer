@@ -383,7 +383,7 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 				.executionId(task.getExecutionId()).singleResult();
 		// 当前审批节点
 		String crruentActivityId = ee.getActivityId();
-		FlowElement FlowElement=null;
+		FlowElement flowElement=null;
 
 		List<FlowElementVo> flowNodeVos=null;
 
@@ -400,34 +400,32 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 			FlowElementVo flowElementVo=new FlowElementVo();
 			//当前审批节点
 			if ("now".equals(node)) {
-				FlowElement = sequenceFlow.getSourceFlowElement();
-				log.info("当前节点: id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
+				flowElement = sequenceFlow.getSourceFlowElement();
+				log.info("当前节点: id=" + flowElement.getId() + ",name=" + flowElement.getName());
 
-				flowElementVo.setFlowNodeName(FlowElement.getName());
-				flowElementVo.setFlowNodeId(FlowElement.getId());
-				if(FlowElement instanceof UserTask)
+				flowElementVo.setFlowNodeName(flowElement.getName());
+				flowElementVo.setFlowNodeId(flowElement.getId());
+				if(flowElement instanceof UserTask)
 				{
-					flowElementVo.setAssignee(((UserTask)FlowElement).getAssignee());
-					flowElementVo.setGroupList(((UserTask)FlowElement).getCandidateGroups());
+					flowElementVo.setAssignee(((UserTask)flowElement).getAssignee());
+					flowElementVo.setGroupList(((UserTask)flowElement).getCandidateGroups());
 				}
+				//TODO 当前是并联节点查询下一个节点的时候有bug需要修复
 			} else if ("next".equals(node)) {
 				// 下一个审批节点
-				FlowElement = sequenceFlow.getTargetFlowElement();
-				if (FlowElement instanceof UserTask) {
-					log.info("下一节点: id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
-					flowElementVo.setFlowNodeName(FlowElement.getName());
-					flowElementVo.setFlowNodeId(FlowElement.getId());
-					if(FlowElement instanceof UserTask)
-					{
-						flowElementVo.setAssignee(((UserTask)FlowElement).getAssignee());
-						flowElementVo.setGroupList(((UserTask)FlowElement).getCandidateGroups());
-					}
+				flowElement = sequenceFlow.getTargetFlowElement();
+				if (flowElement instanceof UserTask) {
+					log.info("下一节点: id=" + flowElement.getId() + ",name=" + flowElement.getName());
+					flowElementVo.setFlowNodeName(flowElement.getName());
+					flowElementVo.setFlowNodeId(flowElement.getId());
+					flowElementVo.setAssignee(((UserTask)flowElement).getAssignee());
+					flowElementVo.setGroupList(((UserTask)flowElement).getCandidateGroups());
 				}
 				// 如果下个审批节点为结束节点
-				if (FlowElement instanceof EndEvent) {
-					log.info("下一节点为结束节点：id=" + FlowElement.getId() + ",name=" + FlowElement.getName());
-					flowElementVo.setFlowNodeName(FlowElement.getName());
-					flowElementVo.setFlowNodeId(FlowElement.getId());
+				if (flowElement instanceof EndEvent) {
+					log.info("下一节点为结束节点：id=" + flowElement.getId() + ",name=" + flowElement.getName());
+					flowElementVo.setFlowNodeName(flowElement.getName());
+					flowElementVo.setFlowNodeId(flowElement.getId());
 				}
 
 			}

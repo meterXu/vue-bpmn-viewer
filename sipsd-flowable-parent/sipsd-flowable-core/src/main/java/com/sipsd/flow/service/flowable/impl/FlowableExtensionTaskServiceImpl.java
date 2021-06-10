@@ -76,6 +76,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				}
 				List<IdentityLink> identityLinks=taskService.getIdentityLinksForTask(task.getId());
 				//只可能是一条(子流程除外)
+				//此处assignee和groupId都有可能是多个
 				if(!CollectionUtils.isEmpty(identityLinks)){
 					assignee = identityLinks.get(0).getUserId();
 					groupId = identityLinks.get(0).getGroupId();
