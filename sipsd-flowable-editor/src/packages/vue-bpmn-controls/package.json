@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-controls",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "vue-bpmn控件库",
   "main": "dist/index.js",
   "scripts": {
@@ -13,12 +13,16 @@
   ],
   "private": false,
   "author": "框架技术研发部",
-  "contributors": [{
-    "name": "isaac"
-  }],
+  "contributors": [
+    {
+      "name": "isaac"
+    }
+  ],
   "license": "MIT",
   "dependencies": {
     "ant-design-vue": "^1.6.3",
+    "moment": "^2.29.1",
+    "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2"
   },
   "devDependencies": {

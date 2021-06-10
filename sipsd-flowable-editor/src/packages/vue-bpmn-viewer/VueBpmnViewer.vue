@@ -102,8 +102,7 @@ export default {
           res.data.data.sort((a,b)=>{
             return a.startTime - b.startTime
           }).forEach(f=>{
-            utils.setTaskMaxDay(f.taskDefinitionKey,f..
-            +'天')
+            utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
             if(f.realName){
               utils.setTaskRealName(f.taskDefinitionKey,f.realName)
             }

@@ -6,8 +6,10 @@
           <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
-            <p>{{item.status}}</p>
-            <p>{{item.approveType}}</p>
+            <p>审批类型：{{item.approveType}}</p>
+            <p>状态：{{item.status}}</p>
+            <p v-if="item.status==='已办'">持续时间：{{xx(item.duration)}}</p>
+            <p v-else>剩余时间：{{xx(item.restTime)}}</p>
           </div>
         </a-timeline-item>
       </a-timeline>
@@ -19,6 +21,8 @@
 
 <script>
 import utils from "../lib/utils";
+import ms from 'pretty-ms'
+import moment from 'moment'
 export default {
   name: "BTimeLine",
   props:['loading','data'],
@@ -34,18 +38,14 @@ export default {
   },
   methods:{
     fmtDate(dt){
-      const t = new Date(dt)
-      let m = t.getMonth()+1
-      if(m<10){m=`0${m}`}
-      let d  = t.getDate()
-      if(d<10){d=`0${d}`}
-      let hh = t.getHours()
-      if(hh<10){hh=`0${hh}`}
-      let mm=t.getMinutes()
-      if(mm<10){mm=`0${mm}`}
-      let ss=t.getSeconds()
-      if(ss<10){ss=`0${ss}`}
-      return `${t.getFullYear()}-${m}-${d} ${hh}:${mm}:${ss}`
+      return moment(dt).format('YYYY-MM-DD hh:mm:ss')
+    },
+    xx(s){
+      return ms(s*1000)
+          .replace('d','天')
+          .replace('h','小时')
+          .replace('m','分')
+          .replace('s','秒')
     },
     handleItemOver(item,taskId){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
