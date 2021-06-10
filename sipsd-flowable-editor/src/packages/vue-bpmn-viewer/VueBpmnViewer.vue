@@ -1,6 +1,6 @@
 <template>
   <div id="bpmn-viewer">
-    <a-spin :spinning="loading||timeLine_loading" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
+    <a-spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
       <vue-bpmn v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="require('./assets/no-bpmn.svg')">
@@ -102,7 +102,8 @@ export default {
           res.data.data.sort((a,b)=>{
             return a.startTime - b.startTime
           }).forEach(f=>{
-            utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+            utils.setTaskMaxDay(f.taskDefinitionKey,f..
+            +'天')
             if(f.realName){
               utils.setTaskRealName(f.taskDefinitionKey,f.realName)
             }
