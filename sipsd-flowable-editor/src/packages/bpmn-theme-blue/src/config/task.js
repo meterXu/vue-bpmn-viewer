@@ -121,19 +121,18 @@ function userObj(options){
     let user = create('g')
     classes(user).add('custom-realName')
     let icon = null
-    // let text = null
-    // if(options.businessObject&&options.businessObject.extensionElements){
-    //     const userInfoLastName = options.businessObject.extensionElements.values.find(c=>c.$type.indexOf('info-lastname')>0)
-    //     if(userInfoLastName){
-    //         text = createConText(userInfoLastName.$body)
-    //         icon=createUserIcon()
-    //     }else{
-    //         text = createUnConText()
-    //     }
-    // }else{
-    //
-    // }
-    let text = createUnConText()
+    let text = null
+    if(options.businessObject&&options.businessObject.extensionElements){
+        const userInfoLastName = options.businessObject.extensionElements.values.find(c=>c.$type.indexOf('info-lastname')>0)
+        if(userInfoLastName){
+            text = createConText(userInfoLastName.$body)
+            icon=createUserIcon()
+        }else{
+            text = createUnConText()
+        }
+    }else{
+         text = createUnConText()
+    }
     append(user,text)
     if(icon){
         append(user,icon)

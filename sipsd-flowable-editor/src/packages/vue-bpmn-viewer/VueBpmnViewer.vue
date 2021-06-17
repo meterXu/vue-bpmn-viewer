@@ -22,8 +22,8 @@
 
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
-import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import bpmnThemeBlue from '../bpmn-theme-blue/index'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls/index'
 import axios from 'axios'
 export default {
   name: "VueBpmnViewer",
@@ -77,9 +77,20 @@ export default {
   watch:{
     'taskData':{
       handler:function (nv){
-        utils.setTaskHighlight(nv.filter(c=>c.status==='已办').map(c=>c.taskDefinitionKey),{color:'#5BC14B',setline: false,shadow: false})
-        utils.setTaskHighlight(nv.filter(c=>c.status==='待办').map(c=>c.taskDefinitionKey),{color:'#f5842c',setline: false,shadow: false})
-        utils.setTaskHighlight(nv.filter(c=>c.approveType==='驳回').map(c=>c.taskDefinitionKey),{color:'#ff0000',setline: false,shadow: false})
+        nv.forEach(c=>{
+          switch (c.status){
+            case '已办':{
+              if(c.approveType === '驳回'){
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false})
+              } else{
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false})
+              }
+            }break;
+            case '待办':{
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: false,shadow: false})
+            }break;
+          }
+        })
       }
     },
     xml(){
