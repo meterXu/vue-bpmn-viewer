@@ -3,7 +3,7 @@
     <a-spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
       <vue-bpmn v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
-        <img :src="require('./assets/no-bpmn.svg')">
+        <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
       </div>
     </a-spin>
     <BTLayout>
@@ -64,10 +64,10 @@ export default {
   computed:{
     xml(){
       this.clearWatermark()
+      utils.clearAllHighLight()
       if(this.type===1 && this.xmlId){
         this.instanceId = null
         this.options = Object.assign(this.options,{timeLine:false})
-        utils.clearAllHighLight()
         return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
       }else if(this.type===2 && this.instanceId){
         return `${this.baseApi}${this.url.instanceUrl}${this.instanceId}`
@@ -81,13 +81,13 @@ export default {
           switch (c.status){
             case '已办':{
               if(c.approveType === '驳回'){
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false})
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: true})
               } else{
                 utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false})
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: false,shadow: false})
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: true,shadow:false })
             }break;
           }
         })
@@ -120,7 +120,7 @@ export default {
             this.taskData.push(f)
           })
           if(this.taskData.filter(c=>c.status==='待办').length===0){
-            utils.setEndHighLight()
+            utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
           }
         }).catch(err=>{
           console.error(err)
