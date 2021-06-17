@@ -3,6 +3,8 @@ import cjs from 'rollup-plugin-commonjs';
 import url from 'rollup-plugin-url'
 import { terser } from 'rollup-plugin-terser'
 import vue from "rollup-plugin-vue";
+import cssnano from 'cssnano';
+import postcss from 'rollup-plugin-postcss'
 function pgl() {
     return [
         cjs(),
@@ -15,6 +17,12 @@ function pgl() {
             include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
             limit: Infinity,
             publicPath: '/assets',
+        }),
+        postcss({
+            plugins: [
+                cssnano(),
+            ],
+            extensions: [ '.css' ],
         }),
         terser()
     ];

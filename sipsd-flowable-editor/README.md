@@ -5,7 +5,16 @@
 
 [演示地址2，流程实例](http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=c73077db92aa11ebbc94b6a919c0963e)
 
-![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_2ad2263d402da54f1ad086cbf8430368.png)
+![联动效果](http://192.168.126.25/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
+
+## 特点
+* 优化默认流程图样式。
+* 增加节点动效，描述不同的流程状态。
+* 增加时间轴侧边栏，显示更多详细信息。
+* 增加时效与持续时间属性。  
+* 增加时间轴与流程图联动效果。
+
+
 
 可以独立部署该工具，通过url传递不同的实例ID即可查看不同的工作流。同时，我们也提供单独的预览组件`vue-bpmn-viewer`，可以在项目中单独使用该组件。
 
