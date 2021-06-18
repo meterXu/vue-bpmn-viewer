@@ -59,7 +59,7 @@ public class WebSocketController
      * @return
      */
     @GetMapping("/sendmsg")
-    @ApiOperation(value = "个人信息推送", notes = "个人信息推送")
+    @ApiOperation(value = "", notes = "个人信息推送")
     public Result sendmsg(String msg, String username)
     {
         //第一个参数 :msg 发送的信息内容
