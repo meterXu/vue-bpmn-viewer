@@ -98,7 +98,8 @@ V4更新内容：
 部署地址：
 后端接口地址：http://192.168.126.25/sipsd-flow-modeler/doc.html
 后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
-前端流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=0da5312e-b6a9-11eb-a362-8af02f3dd3ac
+前端静态流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=4b99159a-bc63-11eb-b2ee-5e2c421612f0
+前端动态流程显示地址:http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=31947db4cf4511eba5465e2c421612f0
 
 
 
