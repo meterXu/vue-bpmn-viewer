@@ -34,7 +34,7 @@ public class WebSocketController
     {
         Result<Integer> result = new Result<Integer>();
         Integer onlineNum = WebSocketServer.getOnlineNum();
-        result.setResult(onlineNum);
+        result.ok(onlineNum);
         return result;
     }
 
@@ -49,7 +49,7 @@ public class WebSocketController
     {
         Result<List<String>> result = new Result<List<String>>();
         List<String> onlineUsers = WebSocketServer.getOnlineUsers();
-        result.setResult(onlineUsers);
+        result.ok(onlineUsers);
         return result;
     }
 
