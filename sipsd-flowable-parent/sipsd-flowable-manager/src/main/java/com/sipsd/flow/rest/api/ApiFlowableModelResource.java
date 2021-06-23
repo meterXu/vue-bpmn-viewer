@@ -211,7 +211,7 @@ public class ApiFlowableModelResource extends BaseResource {
 	}
 
 	/**
-	 * 显示xml
+	 * 通过Id查询model信息
 	 *
 	 * @param id
 	 * @return
@@ -220,6 +220,18 @@ public class ApiFlowableModelResource extends BaseResource {
 	@GetMapping(value = "/queryByModelId/{id}")
 	public Model queryByModelId(@PathVariable String id, HttpServletResponse response) {
 		return modelRepository.get(id);
+	}
+
+	/**
+	 * 通过key查询model信息
+	 *
+	 * @param key
+	 * @return
+	 */
+	@ApiOperation("通过key查询model信息")
+	@GetMapping(value = "/queryByModelKey")
+	public List<Model> queryByModelKey(@RequestParam String key,@RequestParam Integer modelType, HttpServletResponse response) {
+		return modelRepository.findByKeyAndType(key,modelType);
 	}
 
 	@GetMapping(value = "/loadPngByModelId/{modelId}")
