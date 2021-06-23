@@ -25,6 +25,7 @@ import org.flowable.idm.api.User;
 import org.flowable.ui.common.service.exception.BadRequestException;
 import org.flowable.ui.modeler.domain.AbstractModel;
 import org.flowable.ui.modeler.domain.Model;
+import org.flowable.ui.modeler.repository.ModelRepository;
 import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,8 @@ public class ApiFlowableModelResource extends BaseResource {
 	protected ManagementService managementService;
 	@Autowired
 	private FlowableFormService flowableFormService;
+	@Autowired
+	private ModelRepository modelRepository;
 
 	@GetMapping(value = "/page-model")
 	public Result<PageModel<AbstractModel>> pageModel() {
@@ -205,6 +208,18 @@ public class ApiFlowableModelResource extends BaseResource {
 			LOGGER.error("ApiFlowableModelResource-loadXmlByModelId:" + e);
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 显示xml
+	 *
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation("通过Id查询model信息")
+	@GetMapping(value = "/queryByModelId/{id}")
+	public Model queryByModelId(@PathVariable String id, HttpServletResponse response) {
+		return modelRepository.get(id);
 	}
 
 	@GetMapping(value = "/loadPngByModelId/{modelId}")
