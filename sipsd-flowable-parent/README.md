@@ -22,9 +22,9 @@ flowable modeler集成项目
 3.自动建表  
    首次启动的application.yml 中  database-schema-update: true 必须是true ，可以自动创建表。以后可以变成false；     
 4. 访问流程设计器 
-http://127.0.0.1:8989/sipsd-flow-modeler/  
+http://127.0.0.1:9001/sipsd-flow-modeler/  
 5.restful 封装接口说明：  
-http://127.0.0.1:8989/sipsd-flow-modeler/doc.html
+http://127.0.0.1:9001/sipsd-flow-modeler/doc.html
 
 #### 自定义流程用户
 - 创建用户视图
