@@ -332,6 +332,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				node.setNodeId(activityInstance.getActivityId());
 				node.setNodeName(activityInstance.getActivityName());
 				node.setEndTime(activityInstance.getEndTime());
+				node.setUserCode(activityInstance.getAssignee());
 				node.setUserName(activityIdUserNames.get(activityInstance.getActivityId()));
 				backNods.add(node);
 			});
