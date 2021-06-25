@@ -1,6 +1,7 @@
 package com.sipsd.flow.rest.api;
 
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.service.flowable.IFlowableCommentService;
 import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
 import com.sipsd.flow.service.flowable.IFlowableTaskService;
@@ -327,8 +328,8 @@ public class ApiFormDetailReource extends BaseResource {
 	 */
 	@ApiOperation("获取流程所有节点")
 	@GetMapping(value = "/getAllNodeList/{processKey}")
-	public Result<List<FlowNodeVo>> getBackNodesByProcessInstanceId(@PathVariable String processKey) {
-		Result<List<FlowNodeVo>> result = flowableTaskService.getProcessNodeList(processKey);
+	public Result<List<FlowElementVo>> getBackNodesByProcessInstanceId(@PathVariable String processKey) {
+		Result<List<FlowElementVo>> result = flowableTaskService.getProcessNodeList(processKey);
 		result.setMessage("查询返回节点成功");
 		return result;
 

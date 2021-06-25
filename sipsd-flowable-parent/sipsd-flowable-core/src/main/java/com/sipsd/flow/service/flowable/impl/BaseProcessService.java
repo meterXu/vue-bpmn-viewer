@@ -1,23 +1,17 @@
 package com.sipsd.flow.service.flowable.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-
+import com.sipsd.flow.bean.FlowElementVo;
+import com.sipsd.flow.common.UUIDGenerator;
+import com.sipsd.flow.dao.flowable.IHisFlowableActinstDao;
+import com.sipsd.flow.dao.flowable.IRunFlowableActinstDao;
+import com.sipsd.flow.service.flowable.IFlowableCommentService;
+import com.sipsd.flow.vo.flowable.ret.CommentVo;
+import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
-import org.flowable.engine.FormService;
-import org.flowable.engine.HistoryService;
-import org.flowable.engine.IdentityService;
-import org.flowable.engine.ManagementService;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
+import org.flowable.engine.*;
 import org.flowable.engine.impl.persistence.entity.ActivityInstanceEntity;
 import org.flowable.engine.runtime.ActivityInstance;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
@@ -27,12 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.sipsd.flow.common.UUIDGenerator;
-import com.sipsd.flow.dao.flowable.IHisFlowableActinstDao;
-import com.sipsd.flow.dao.flowable.IRunFlowableActinstDao;
-import com.sipsd.flow.service.flowable.IFlowableCommentService;
-import com.sipsd.flow.vo.flowable.ret.CommentVo;
-import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
+import java.util.*;
 
 /**
  * @author : chengtg
@@ -172,7 +161,7 @@ public abstract class BaseProcessService {
         return task;
     }
 
-	public List<FlowNodeVo> getProcessNodes(String modelkey) {
+	public List<FlowElementVo> getProcessNodes(String modelkey) {
 		List<org.flowable.ui.modeler.domain.Model> mdels = modelRepository.findByKeyAndType(modelkey,0);
 		org.flowable.ui.modeler.domain.Model modelData = modelService.getModel(mdels.get(0).getId());
 		// 获取模型
@@ -182,9 +171,9 @@ public abstract class BaseProcessService {
 		// 获取全部的FlowElement（流元素）信息
 		Collection<FlowElement> flowElements = process.getFlowElements();
 		//return flowElements;
-		
-		
-        List<FlowNodeVo> flowNodeVos=null;
+
+        List<String> assigneeList = null;
+        List<FlowElementVo> flowNodeVos=null;
         //使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
            if(CollectionUtils.isEmpty(flowElements)){
             return null;
@@ -192,18 +181,28 @@ public abstract class BaseProcessService {
         flowNodeVos=new ArrayList<>();
         for(FlowElement flowElement:flowElements){
             if(flowElement instanceof  UserTask){
-                FlowNodeVo flowNodeVo=new FlowNodeVo();
-                flowNodeVo.setNodeId(flowElement.getId());
-                flowNodeVo.setNodeName(flowElement.getName());
+                FlowElementVo flowNodeVo=new FlowElementVo();
+                flowNodeVo.setFlowNodeId(flowElement.getId());
+                flowNodeVo.setFlowNodeName(flowElement.getName());
+                flowNodeVo.setGroupList(((UserTask) flowElement).getCandidateGroups());
+                if (StringUtils.isEmpty(((UserTask) flowElement).getAssignee()))
+                {
+                    flowNodeVo.setAssigneeList(((UserTask) flowElement).getCandidateUsers());
+                }
+                else
+                {
+                    assigneeList = new ArrayList<>();
+                    assigneeList.add(((UserTask) flowElement).getAssignee());
+                    flowNodeVo.setAssigneeList(assigneeList);
+                }
                 flowNodeVos.add(flowNodeVo);
             }
-
         }
-        Collections.sort(flowNodeVos, new Comparator<FlowNodeVo>() {
+        Collections.sort(flowNodeVos, new Comparator<FlowElementVo>() {
             @Override
-            public int compare(FlowNodeVo o1, FlowNodeVo o2) {
+            public int compare(FlowElementVo o1, FlowElementVo o2) {
                 //升序
-                return o1.getNodeId().compareTo(o2.getNodeId());
+                return o1.getFlowNodeId().compareTo(o2.getFlowNodeId());
             }
         });
 		return flowNodeVos;
