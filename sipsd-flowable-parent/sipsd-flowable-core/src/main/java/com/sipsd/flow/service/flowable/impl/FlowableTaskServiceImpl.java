@@ -3,6 +3,7 @@ package com.sipsd.flow.service.flowable.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -332,6 +333,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				node.setNodeId(activityInstance.getActivityId());
 				node.setNodeName(activityInstance.getActivityName());
 				node.setEndTime(activityInstance.getEndTime());
+				node.setUserCode(activityInstance.getAssignee());
 				node.setUserName(activityIdUserNames.get(activityInstance.getActivityId()));
 				backNods.add(node);
 			});
@@ -711,8 +713,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 	
 	@Override
-	public Result<List<FlowNodeVo>> getProcessNodeList(String modelkey) {
-		Result<List<FlowNodeVo>> result =  new Result<List<FlowNodeVo>>();
+	public Result<List<FlowElementVo>> getProcessNodeList(String modelkey) {
+		Result<List<FlowElementVo>> result =  new Result<List<FlowElementVo>>();
 		result.setData(getProcessNodes(modelkey));
 		return result;
 	}

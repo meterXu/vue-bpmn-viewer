@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class FlowElementVo extends FlowNodeVo {
 
-    private String assignee;
+    private List<String> assigneeList;
 
     private List<String> groupList;
 }

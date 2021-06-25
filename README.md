@@ -22,9 +22,9 @@ flowable modeler集成项目
 3.自动建表  
    首次启动的application.yml 中  database-schema-update: true 必须是true ，可以自动创建表。以后可以变成false；     
 4. 访问流程设计器 
-http://127.0.0.1:8989/sipsd-flow-modeler/  
+http://192.168.126.25:8989/sipsd-flow-modeler/  
 5.restful 封装接口说明：  
-http://127.0.0.1:8989/sipsd-flow-modeler/doc.html
+http://192.168.126.25:8989/sipsd-flow-modeler/doc.html
 
 #### 自定义流程用户
 - 创建用户视图
@@ -98,7 +98,8 @@ V4更新内容：
 部署地址：
 后端接口地址：http://192.168.126.25/sipsd-flow-modeler/doc.html
 后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
-前端流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=0da5312e-b6a9-11eb-a362-8af02f3dd3ac
+前端静态流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=4b99159a-bc63-11eb-b2ee-5e2c421612f0
+前端动态流程显示地址:http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=31947db4cf4511eba5465e2c421612f0
 
 
 

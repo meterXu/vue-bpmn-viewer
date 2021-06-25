@@ -8,6 +8,7 @@ import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,7 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
      * @param taskId
      * @return
      */
+    @ApiOperation("获取当前以及下一任务节点信息")
     @GetMapping(value = "/nextFlowNode")
     public Result nextFlowNode(@RequestParam String node, @RequestParam String taskId) {
         Result<List<FlowElementVo>> result =new Result<>();
@@ -108,6 +110,4 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
         result.setData(flowElementVoList);
         return result;
     }
-
-
 }

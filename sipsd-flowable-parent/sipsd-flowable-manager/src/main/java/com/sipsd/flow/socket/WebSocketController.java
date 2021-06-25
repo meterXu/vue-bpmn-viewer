@@ -34,7 +34,7 @@ public class WebSocketController
     {
         Result<Integer> result = new Result<Integer>();
         Integer onlineNum = WebSocketServer.getOnlineNum();
-        result.setResult(onlineNum);
+        result.ok(onlineNum);
         return result;
     }
 
@@ -49,7 +49,7 @@ public class WebSocketController
     {
         Result<List<String>> result = new Result<List<String>>();
         List<String> onlineUsers = WebSocketServer.getOnlineUsers();
-        result.setResult(onlineUsers);
+        result.ok(onlineUsers);
         return result;
     }
 
@@ -59,7 +59,7 @@ public class WebSocketController
      * @return
      */
     @GetMapping("/sendmsg")
-    @ApiOperation(value = "个人信息推送", notes = "个人信息推送")
+    @ApiOperation(value = "", notes = "个人信息推送")
     public Result sendmsg(String msg, String username)
     {
         //第一个参数 :msg 发送的信息内容

@@ -1,6 +1,7 @@
 package com.sipsd.flow.service.flowable;
 
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.vo.flowable.*;
@@ -146,7 +147,7 @@ public interface IFlowableTaskService {
      */
     public boolean checkParallelgatewayNode(String taskId) ;
 
-	Result<List<FlowNodeVo>> getProcessNodeList(String modelkey);
+	Result<List<FlowElementVo>> getProcessNodeList(String modelkey);
 
 	TaskVo getTask(FormInfoQueryVo formInfoQueryVo);
 }

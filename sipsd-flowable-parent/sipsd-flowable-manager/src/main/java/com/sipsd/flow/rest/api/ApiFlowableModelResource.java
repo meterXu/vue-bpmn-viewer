@@ -25,6 +25,7 @@ import org.flowable.idm.api.User;
 import org.flowable.ui.common.service.exception.BadRequestException;
 import org.flowable.ui.modeler.domain.AbstractModel;
 import org.flowable.ui.modeler.domain.Model;
+import org.flowable.ui.modeler.repository.ModelRepository;
 import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +67,8 @@ public class ApiFlowableModelResource extends BaseResource {
 	protected ManagementService managementService;
 	@Autowired
 	private FlowableFormService flowableFormService;
+	@Autowired
+	private ModelRepository modelRepository;
 
 	@GetMapping(value = "/page-model")
 	public Result<PageModel<AbstractModel>> pageModel() {
@@ -205,6 +208,30 @@ public class ApiFlowableModelResource extends BaseResource {
 			LOGGER.error("ApiFlowableModelResource-loadXmlByModelId:" + e);
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 通过Id查询model信息
+	 *
+	 * @param id
+	 * @return
+	 */
+	@ApiOperation("通过Id查询model信息")
+	@GetMapping(value = "/queryByModelId/{id}")
+	public Model queryByModelId(@PathVariable String id, HttpServletResponse response) {
+		return modelRepository.get(id);
+	}
+
+	/**
+	 * 通过key查询model信息
+	 *
+	 * @param key
+	 * @return
+	 */
+	@ApiOperation("通过key查询model信息")
+	@GetMapping(value = "/queryByModelKey")
+	public List<Model> queryByModelKey(@RequestParam String key,@RequestParam Integer modelType, HttpServletResponse response) {
+		return modelRepository.findByKeyAndType(key,modelType);
 	}
 
 	@GetMapping(value = "/loadPngByModelId/{modelId}")
