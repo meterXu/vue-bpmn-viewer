@@ -3,6 +3,7 @@ package com.sipsd.flow.service.flowable.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
 import com.sipsd.flow.common.page.PageModel;
@@ -37,10 +38,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : chengtg
@@ -66,6 +64,8 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
     private IFlowableExtensionTaskService flowableExtensionTaskService;
     @Autowired
     private ProcessEngine processEngine;
+    @Autowired
+    private IFlowableUserService flowableUserService;
 
     @Override
     public PageModel<ProcessInstanceVo> getPagerModel(ProcessInstanceQueryVo params, Query query)
@@ -481,7 +481,21 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
                     assigneeList.add(((UserTask) element).getAssignee());
                     flowElementVo.setAssigneeList(assigneeList);
                 }
-                flowElementVo.setGroupList(((UserTask) element).getCandidateGroups());
+                List<String> groupIdList = ((UserTask) flowElement).getCandidateGroups();
+                if(CollectionUtils.isNotEmpty(groupIdList))
+                {
+                    List<AssigneeVo> groupList = new ArrayList<>();
+                    for(String groupId:groupIdList)
+                    {
+                        AssigneeVo  assigneeVo = new AssigneeVo();
+                        assigneeVo.setGroupId(groupId);
+                        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                        assigneeVo.setUserList(userList);
+                        groupList.add(assigneeVo);
+                    }
+                    flowElementVo.setGroupList(groupList);
+                }
+
                 flowNodeVos.add(flowElementVo);
             }
             // 如果下个审批节点为结束节点
