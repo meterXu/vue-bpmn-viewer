@@ -5,6 +5,14 @@
                    :instanceId="instanceId"
                    :xmlId="xmlId"
                    :options="{zoom,timeLine}">
+      <a-button-group>
+        <a-button type="primary">审批</a-button>
+        <a-button type="danger">驳回</a-button>
+      </a-button-group>
+      <a-button-group style="margin-left: 12px">
+        <a-button>确定</a-button>
+        <a-button>关闭</a-button>
+      </a-button-group>
     </VueBpmnViewer>
   </div>
 </template>

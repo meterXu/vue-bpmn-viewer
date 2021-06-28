@@ -20,12 +20,12 @@ name: "BTLayout"
 
 <style scoped>
 .bt-layout-header{
-  position: fixed;
-  top: 0px;
-  right: 0px;
+  position: absolute;
+  top: 6px;
+  right: 20px;
 }
 .bt-layout-right{
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 60px;
   bottom: 60px;

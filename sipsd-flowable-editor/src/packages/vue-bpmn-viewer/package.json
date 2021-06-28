@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.24",
+  "version": "1.0.26",
   "description": "bpmn2.0 流程图预览组件",
   "main": "dist/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "@dpark/bpmn-theme-blue": "^1.0.9",
     "@dpark/vue-bpmn": "^0.3.1",
-    "@dpark/vue-bpmn-controls": "^1.0.17",
+    "@dpark/vue-bpmn-controls": "^1.0.18",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
     "bpmn-theme-blue": "^1.0.7",
@@ -32,10 +32,10 @@
   "devDependencies": {
     "rollup": "^2.44.0",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-url": "^3.0.1",
     "rollup-plugin-vue": "5.1.9",
-    "rollup-plugin-postcss": "^4.0.0",
     "vue-template-compiler": "^2.6.12"
   }
 }

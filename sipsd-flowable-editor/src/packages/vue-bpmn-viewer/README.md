@@ -1,7 +1,7 @@
 # vue-bpmn-viewer 
 > bpmn2.0 流程图预览组件
 
-![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_2ad2263d402da54f1ad086cbf8430368.png)
+![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
 ## 如何使用
 ``` bash
@@ -10,7 +10,8 @@ npm i @dpark/vue-bpmn-viewer --registry http://192.168.126.25/npm
 
 ```vue
 <template>
-  <VueBpmnViewer :baseApi="baseApi"
+  <VueBpmnViewer :type="2"
+                 :baseApi="baseApi"
                  :instanceId="instanceId">
   </VueBpmnViewer>
 </template>
@@ -58,8 +59,9 @@ export default {
 该预览组件支持自定义顶部toolbar
 ```vue
 <template>
-  <VueBpmnViewer :baseApi="baseApi"
-                 :instanceId="instanceId">
+  <VueBpmnViewer :type="1"
+                 :baseApi="baseApi"
+                 :xmlId="xmlId">
     <a-button-group>
       <a-button></a-button>
       <a-button></a-button>
@@ -73,8 +75,9 @@ export default {
 ## timeLine 插槽
 自定义右侧时间轴内容
 ```vue
-<VueBpmnViewer :baseApi="baseApi"
-                   :instanceId="instanceId">
+<VueBpmnViewer :type="2"
+               :baseApi="baseApi"
+               :instanceId="instanceId">
     <template slot="timeLine" slot-scope="{loading,data}">
       {{loading}}
       {{data.length}}
