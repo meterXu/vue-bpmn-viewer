@@ -164,6 +164,7 @@ export default {
   height: 100%;
   background: #F5F5F7;
   cursor: grab;
+  position: relative;
 }
 #bpmn-viewer:active{
   cursor: grabbing;
