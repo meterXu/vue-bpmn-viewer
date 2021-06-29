@@ -70,6 +70,7 @@ public class ApiFlowableModelResource extends BaseResource {
 	@Autowired
 	private ModelRepository modelRepository;
 
+	@ApiOperation("查询model流程列表(最新)")
 	@GetMapping(value = "/page-model")
 	public Result<PageModel<AbstractModel>> pageModel(Query query) {
 		PageHelper.startPage(query.getPageNum(), query.getPageSize());
@@ -84,6 +85,7 @@ public class ApiFlowableModelResource extends BaseResource {
 		return result;
 	}
 
+	@ApiOperation("添加model")
 	@PostMapping(value = "/addModel")
 	public Result<String> addModel(@RequestBody ModelVo params) {
 		Result<String> result = Result.sucess("OK");
@@ -96,6 +98,7 @@ public class ApiFlowableModelResource extends BaseResource {
 		return result;
 	}
 
+	@ApiOperation("导入model")
 	@PostMapping(value = "/import-process-model")
 	public Result<String> importProcessModel(@RequestParam("file") MultipartFile file) {
 		Result<String> result = Result.sucess("OK");
