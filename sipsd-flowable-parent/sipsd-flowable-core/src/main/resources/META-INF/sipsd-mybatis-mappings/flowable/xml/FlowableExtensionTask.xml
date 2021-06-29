@@ -56,7 +56,6 @@
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
             t1.ASSIGNEE_ as assignee,
-            t5.DISPLAY_NAME_ as realName,
             TIMESTAMPDIFF(SECOND,NOW(),t3.END_TIME_) as restTime,
             TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
             t3.GROUP_ID_ as groupId,
@@ -77,7 +76,6 @@
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
                 LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
                 LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
-                LEFT JOIN  act_id_user t5 ON T1.ASSIGNEE_ = t5.ID_
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId}
 

@@ -18,7 +18,6 @@ import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.StartEvent;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.common.engine.api.FlowableObjectNotFoundException;
-import org.flowable.engine.IdentityService;
 import org.flowable.engine.ManagementService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
@@ -43,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author : chengtg
+ * @author : chengtg/gaoqiang
  * @title: : ApiTask
  * @projectName : flowable
  * @description: 模型API
@@ -62,8 +61,8 @@ public class ApiFlowableModelResource extends BaseResource {
 	private RepositoryService repositoryService;
 	@Autowired
 	private FlowProcessDiagramGenerator flowProcessDiagramGenerator;
-	@Autowired
-	private IdentityService identityService;
+//	@Autowired
+//	private IdentityService identityService;
 	@Autowired
 	protected ManagementService managementService;
 	@Autowired
