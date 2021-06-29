@@ -15,7 +15,13 @@ flowable modeler集成项目
 #### 适用场景
  1、需要动态配置工作流程的业务场景；   
  2、流服务编排； 
- 
+
+#### 注意事项
+当前适配mysql5.x数据库如果用高版本8.x数据库请修改以下内容：
+1.maven的mysql版本请选择8.x.x版本 比如<mysql.version>8.0.11</mysql.version>
+2.配置文件中的driver-class-name请设置为com.mysql.cj.jdbc.Driver
+3.url后面需加上&nullCatalogMeansCurrent=true
+
 #### 安装教程
 1.本地创建一个数据库叫sipsd-flow-modeler；   
 2.修改数据库的账号密码；   
