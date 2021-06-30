@@ -1,7 +1,7 @@
 <template>
-  <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0&&uData.length===0)}">
+  <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0)}">
     <a-spin :spinning="loading" tip="加载中...">
-      <a-timeline v-if="data.length>0||uData.length>0">
+      <a-timeline v-if="data.length>0">
         <a-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
           <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>

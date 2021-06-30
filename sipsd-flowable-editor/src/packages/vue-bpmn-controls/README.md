@@ -29,7 +29,7 @@ npm i @dpark/vue-bpmn-controls --registry http://192.168.126.25/npm
     </template>
     <template slot="right">
       <BTZoom v-show="instanceId" :bpmnViewer="bpmnViewer" ref="BTZoom"/>
-      <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.completeTask" :uData="taskData.upcomingTask"/>
+      <BTimeLine v-if="instanceId" :loading="timeLine_loading" :data="taskData.list"/>
     </template>
   </BTLayout>
 </template>

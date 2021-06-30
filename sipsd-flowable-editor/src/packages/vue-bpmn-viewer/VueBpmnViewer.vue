@@ -32,9 +32,11 @@ export default {
     instanceId:{type:String},
     xmlId:{type:String},
     type:{type:Number,required: true},
-    options:{type:Object,default:{
+    options:{type:Object,default(){
+      return {
       zoom:true,
       timeLine:true
+    }
     }}
   },
   components:{
@@ -66,7 +68,6 @@ export default {
       this.clearWatermark()
       utils.clearAllHighLight()
       if(this.type===1 && this.xmlId){
-        this.instanceId = null
         this.options = Object.assign(this.options,{timeLine:false})
         return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
       }else if(this.type===2 && this.instanceId){
@@ -141,7 +142,6 @@ export default {
        },10)
     },
     bpmnLoadError(){
-      this.instanceId=null
       this.loading=false
     },
     clearWatermark(){
