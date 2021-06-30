@@ -21,10 +21,8 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author : 高强
@@ -58,8 +56,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		{
 			for(Task task:waitedTaskList)
 			{
-				String assignee = "";
-				String groupId = "";
+				List<String> assigneeList = new ArrayList<>();
+				List<String> groupIdList = new ArrayList<>();
 				List<ExtensionElement> elementList = getCustomProperty(task.getTaskDefinitionKey(), task.getProcessDefinitionId(), FlowConstant.PROPERTY_USERTASK_TASKMAXDAY);
 				if (!CollectionUtils.isEmpty(elementList))
 				{
@@ -78,8 +76,19 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				//只可能是一条(子流程除外)
 				//此处assignee和groupId都有可能是多个
 				if(!CollectionUtils.isEmpty(identityLinks)){
-					assignee = identityLinks.get(0).getUserId();
-					groupId = identityLinks.get(0).getGroupId();
+					for(IdentityLink identityLink:identityLinks)
+					{
+						if(StringUtils.isNotBlank(identityLink.getUserId()))
+						{
+							assigneeList.add(identityLink.getUserId());
+						}
+						if(StringUtils.isNotBlank(identityLink.getGroupId()))
+						{
+							groupIdList.add(identityLink.getGroupId());
+						}
+
+
+					}
 				}
 
 				//如果是并联请求需要判断是否需要插入-通过流程实例id和taskId来判断
@@ -89,8 +98,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				{
 					TaskExtensionVo taskExtensionVo = new TaskExtensionVo();
 					taskExtensionVo.setTaskId(task.getId());
-					taskExtensionVo.setAssignee(assignee);
-					taskExtensionVo.setGroupId(groupId);
+					taskExtensionVo.setAssignee(assigneeList.stream().collect(Collectors.joining(",")));
+					taskExtensionVo.setGroupId(groupIdList.stream().collect(Collectors.joining(",")));
 					taskExtensionVo.setExecutionId(task.getExecutionId());
 					taskExtensionVo.setProcessDefinitionId(task.getProcessDefinitionId());
 					taskExtensionVo.setProcessInstanceId(task.getProcessInstanceId());

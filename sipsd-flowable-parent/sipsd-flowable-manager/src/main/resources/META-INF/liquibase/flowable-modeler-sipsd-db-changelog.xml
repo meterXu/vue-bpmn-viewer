@@ -154,4 +154,8 @@
     <changeSet id="4" author="flowable">
         <sqlFile path="db/sqlfile/v_1.0.0/flowable.mysql.create.extension.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <changeSet id="5" author="flowable">
+        <sqlFile path="db/sqlfile/v_1.0.0/flowable.mysql.update.extension-1.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>

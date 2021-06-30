@@ -9,8 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FlowElementVo extends FlowNodeVo
-{
-    private List<String> assigneeList;
-    private List<AssigneeVo> groupList;
+public class AssigneeVo{
+    private String groupId;
+    private List<User> userList;
 }

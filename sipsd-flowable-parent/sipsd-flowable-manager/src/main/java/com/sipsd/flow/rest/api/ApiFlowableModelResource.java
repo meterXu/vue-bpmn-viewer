@@ -1,8 +1,10 @@
 package com.sipsd.flow.rest.api;
 
+import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.cmd.DeployModelCmd;
 import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.model.form.FlowableForm;
 import com.sipsd.flow.service.flowable.FlowProcessDiagramGenerator;
 import com.sipsd.flow.service.flowable.IFlowableModelService;
@@ -16,12 +18,10 @@ import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.StartEvent;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.common.engine.api.FlowableObjectNotFoundException;
-import org.flowable.engine.IdentityService;
 import org.flowable.engine.ManagementService;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.DeploymentBuilder;
-import org.flowable.idm.api.User;
 import org.flowable.ui.common.service.exception.BadRequestException;
 import org.flowable.ui.modeler.domain.AbstractModel;
 import org.flowable.ui.modeler.domain.Model;
@@ -42,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author : chengtg
+ * @author : chengtg/gaoqiang
  * @title: : ApiTask
  * @projectName : flowable
  * @description: 模型API
@@ -61,8 +61,8 @@ public class ApiFlowableModelResource extends BaseResource {
 	private RepositoryService repositoryService;
 	@Autowired
 	private FlowProcessDiagramGenerator flowProcessDiagramGenerator;
-	@Autowired
-	private IdentityService identityService;
+//	@Autowired
+//	private IdentityService identityService;
 	@Autowired
 	protected ManagementService managementService;
 	@Autowired
@@ -70,19 +70,22 @@ public class ApiFlowableModelResource extends BaseResource {
 	@Autowired
 	private ModelRepository modelRepository;
 
+	@ApiOperation("查询model流程列表(最新)")
 	@GetMapping(value = "/page-model")
-	public Result<PageModel<AbstractModel>> pageModel() {
+	public Result<PageModel<AbstractModel>> pageModel(Query query) {
+		PageHelper.startPage(query.getPageNum(), query.getPageSize());
 		Result<PageModel<AbstractModel>> result = Result.sucess("OK");
 		List<AbstractModel> datas = modelService.getModelsByModelType(AbstractModel.MODEL_TYPE_BPMN);
 		PageModel<AbstractModel> pm = new PageModel<>(datas.size(), datas);
-		pm.getData().forEach(abstractModel -> {
-			User user = identityService.createUserQuery().userId(abstractModel.getCreatedBy()).singleResult();
-			abstractModel.setCreatedBy(user.getFirstName());
-		});
+//		pm.getData().forEach(abstractModel -> {
+//			User user = identityService.createUserQuery().userId(abstractModel.getCreatedBy()).singleResult();
+//			abstractModel.setCreatedBy(user.getFirstName());
+//		});
 		result.setData(pm);
 		return result;
 	}
 
+	@ApiOperation("添加model")
 	@PostMapping(value = "/addModel")
 	public Result<String> addModel(@RequestBody ModelVo params) {
 		Result<String> result = Result.sucess("OK");
@@ -95,6 +98,7 @@ public class ApiFlowableModelResource extends BaseResource {
 		return result;
 	}
 
+	@ApiOperation("导入model")
 	@PostMapping(value = "/import-process-model")
 	public Result<String> importProcessModel(@RequestParam("file") MultipartFile file) {
 		Result<String> result = Result.sucess("OK");

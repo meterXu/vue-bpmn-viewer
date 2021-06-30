@@ -1,10 +1,12 @@
 package com.sipsd.flow.service.flowable.impl;
 
+import com.sipsd.flow.bean.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.UUIDGenerator;
 import com.sipsd.flow.dao.flowable.IHisFlowableActinstDao;
 import com.sipsd.flow.dao.flowable.IRunFlowableActinstDao;
 import com.sipsd.flow.service.flowable.IFlowableCommentService;
+import com.sipsd.flow.service.flowable.IFlowableUserService;
 import com.sipsd.flow.vo.flowable.ret.CommentVo;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.model.BpmnModel;
@@ -52,7 +54,8 @@ public abstract class BaseProcessService {
     private IRunFlowableActinstDao runFlowableActinstDao;
     @Autowired
     private IHisFlowableActinstDao hisFlowableActinstDao;
-
+    @Autowired
+    private IFlowableUserService flowableUserService;
 
 	@Autowired
 	private ModelService modelService;
@@ -184,7 +187,22 @@ public abstract class BaseProcessService {
                 FlowElementVo flowNodeVo=new FlowElementVo();
                 flowNodeVo.setFlowNodeId(flowElement.getId());
                 flowNodeVo.setFlowNodeName(flowElement.getName());
-                flowNodeVo.setGroupList(((UserTask) flowElement).getCandidateGroups());
+                List<String> groupIdList = ((UserTask) flowElement).getCandidateGroups();
+                if(CollectionUtils.isNotEmpty(groupIdList))
+                {
+                    List<AssigneeVo> groupList = new ArrayList<>();
+                    for(String groupId:groupIdList)
+                    {
+                        AssigneeVo  assigneeVo = new AssigneeVo();
+                        assigneeVo.setGroupId(groupId);
+                        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                        assigneeVo.setUserList(userList);
+                        groupList.add(assigneeVo);
+                    }
+                    flowNodeVo.setGroupList(groupList);
+                }
+
+
                 if (StringUtils.isEmpty(((UserTask) flowElement).getAssignee()))
                 {
                     flowNodeVo.setAssigneeList(((UserTask) flowElement).getCandidateUsers());
