@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "bpmn2.0 流程图预览组件",
   "main": "dist/index.js",
   "scripts": {
@@ -27,6 +27,7 @@
     "bpmn-js": "^8.2.2",
     "bpmn-theme-blue": "^1.0.7",
     "tiny-svg": "^2.2.2",
+    "url-join": "^4.0.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
