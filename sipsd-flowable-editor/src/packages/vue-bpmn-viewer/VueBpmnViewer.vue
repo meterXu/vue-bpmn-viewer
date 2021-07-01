@@ -25,6 +25,7 @@ import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
 import axios from 'axios'
+import urljoin from 'url-join';
 export default {
   name: "VueBpmnViewer",
   props:{
@@ -55,7 +56,7 @@ export default {
       },
       taskData:[],
       url:{
-        xmlUrl:'rest/model/loadXmlByModelId/',
+        xmlUrl:'/rest/model/loadXmlByModelId/',
         instanceUrl:'rest/formdetail/getprocessXml/',
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
@@ -67,11 +68,13 @@ export default {
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
-      if(this.type===1 && this.xmlId){
+      if(this.baseApi){
+        if(this.type===1 && this.xmlId){
         this.options = Object.assign(this.options,{timeLine:false})
-        return `${this.baseApi}${this.url.xmlUrl}${this.xmlId}`
+        return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
       }else if(this.type===2 && this.instanceId){
-        return `${this.baseApi}${this.url.instanceUrl}${this.instanceId}`
+        return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
+      }
       }
     }
   },
@@ -102,7 +105,9 @@ export default {
     getTaskList(){
       if(this.instanceId){
         this.taskData=[]
-        axios.get(this.baseApi+this.url.allExtensionTasks,{
+        axios.get(
+          urljoin(this.baseApi,this.url.allExtensionTasks)
+        ,{
           params:{
             initPageIndex:1,
             pageIndex:1,
