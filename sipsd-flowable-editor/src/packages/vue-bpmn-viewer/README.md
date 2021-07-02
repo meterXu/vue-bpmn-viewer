@@ -71,6 +71,10 @@ export default {
   </VueBpmnViewer>
 </template>
 ```
+## 方法
+|名称|说明|示例|
+|:---:|:---:|:---:|
+|reload|重新加载流程图|`this.$refs.bpmnView.reload()`|
 
 ## timeLine 插槽
 自定义右侧时间轴内容

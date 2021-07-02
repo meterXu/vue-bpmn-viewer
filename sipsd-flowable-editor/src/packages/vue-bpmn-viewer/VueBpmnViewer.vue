@@ -155,6 +155,9 @@ export default {
           document.querySelector('.bjs-powered-by').remove()
         }
       },300)
+    },
+    reload(){
+      this.$refs.bpmnObj.reload()
     }
   },
   mounted() {
