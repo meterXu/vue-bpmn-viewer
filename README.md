@@ -28,9 +28,9 @@ flowable modeler集成项目
 3.自动建表  
    首次启动的application.yml 中  database-schema-update: true 必须是true ，可以自动创建表。以后可以变成false；     
 4. 访问流程设计器 
-http://192.168.126.25:8989/sipsd-flow-modeler/  
+http://192.168.126.25/sipsd-flow-modeler 
 5.restful 封装接口说明：  
-http://192.168.126.25:8989/sipsd-flow-modeler/doc.html
+http://192.168.126.25/sipsd-flow-modeler/doc.html
 
 #### 自定义流程用户
 - 创建用户视图
@@ -41,9 +41,9 @@ http://192.168.126.25:8989/sipsd-flow-modeler/doc.html
 1.更改 act_id_group 表名(作为备份)    
 2.根据自己业务场景一个视图名为act_id_group的视图，其结构同act_id_group表结构
 
-#### 流程接口实例API
+#### 流程接口实例API-V4
 - 地址 
-postman：https://www.getpostman.com/collections/2830462af356ed1164c9
+postman：https://www.postman.com/collections/75533c2653809a48406b
 - 核心API    
 [1] 流程操作
 - [x] 1.流程启动    
@@ -64,8 +64,15 @@ postman：https://www.getpostman.com/collections/2830462af356ed1164c9
 - [x] 2.已办任务  
 - [x] 3.表单详情  
 - [x] 4.我创建的流程
-- [x] 5.审核操作列表  
+- [x] 5.审核操作列表 
 
+[3] 实例ID自定义属性任务查询
+- [x] 1.根据实例ID查询代办任务  
+- [x] 2.根据实例ID查询已办任务  
+- [x] 3.根据实例ID查询全部任务  
+- [x] 4.更新流程节点最大审批天数
+- [x] 5.根据ID更新督办信息 
+......
 #### 流程实例操作
 以户外广告工作流为例  
 1. 导入《户外广告设置审批.bpmn20.xml》文件  
