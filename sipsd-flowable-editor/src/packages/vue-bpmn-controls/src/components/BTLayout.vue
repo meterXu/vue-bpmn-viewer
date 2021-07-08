@@ -28,7 +28,7 @@ name: "BTLayout"
   position: absolute;
   right: 0;
   top: 60px;
-  bottom: 60px;
+  bottom: 26px;
   display: flex;
   align-items: flex-end;
 }

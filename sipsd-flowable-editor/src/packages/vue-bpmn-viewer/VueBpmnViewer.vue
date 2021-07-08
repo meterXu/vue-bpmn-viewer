@@ -178,6 +178,9 @@ export default {
   cursor: grabbing;
 }
 .bpmn-viewer-canvas{
+  /*width: 90%;*/
+  /*height: 95%;*/
+  /*margin: 5% auto 0 auto;*/
   width: 100%;
   height: 100%;
 }

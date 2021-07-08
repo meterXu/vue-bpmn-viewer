@@ -42,8 +42,13 @@ export default {
       this.canvas = this.bpmnViewer.get('canvas')
       let viewbox = this.canvas.viewbox()
       this.canvas.zoom('fit-viewport');
-      this.canvas.scroll({dx:(viewbox.outer.width-viewbox.inner.width)/2-150,dy:150});
-      this.canvas.zoom(1)
+      let dx = 0
+      let dy = 0
+      if(viewbox.outer.width>viewbox.inner.width){
+        dx = (viewbox.outer.width-viewbox.inner.width)/2-150
+        dx = dx<0?0:dx
+      }
+      this.canvas.scroll({dx,dy});
       this.$emit('zoomResetCompleted')
     },
     handleZoomIn(){
