@@ -110,11 +110,11 @@ V4更新内容：
 4.新增根据实例ID来查询已办代办任务，请参考接口列表-自定义属性任务列表
 
 部署地址：
-后端接口地址：http://192.168.126.25/sipsd-flow-modeler/doc.html
-后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
-前端静态流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=4b99159a-bc63-11eb-b2ee-5e2c421612f0
-前端动态流程显示地址:http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=31947db4cf4511eba5465e2c421612f0
-样例地址: http://192.168.126.25/ifp-simple-flowable
+1. 后端接口地址：http://192.168.126.25/sipsd-flow-modeler/doc.html
+2. 后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
+3. 前端静态流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=4b99159a-bc63-11eb-b2ee-5e2c421612f0
+4. 前端动态流程显示地址:http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=31947db4cf4511eba5465e2c421612f0
+5. http://192.168.126.25/ifp-simple-flowable
 
 
 
