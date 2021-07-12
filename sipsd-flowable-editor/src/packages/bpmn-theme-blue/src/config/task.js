@@ -124,9 +124,14 @@ function userObj(options){
     let text = null
     if(options.businessObject&&options.businessObject.extensionElements){
         const userInfoLastName = options.businessObject.extensionElements.values.find(c=>c.$type.indexOf('info-lastname')>0)
+        const assignee = options.businessObject.$attrs["flowable:assignee"]
         if(userInfoLastName){
             text = createConText(userInfoLastName.$body)
             icon=createUserIcon()
+        }else if(assignee){
+            text = createConText(assignee)
+            icon=createUserIcon()
+
         }else{
             text = createUnConText()
         }
