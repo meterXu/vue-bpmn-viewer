@@ -37,8 +37,8 @@ public class TaskBusinessCallListener extends BusinessCallListener implements Ta
         }
         //执行回调
         //TODO 临时处理
-        restUrlStr = "http://127.0.0.1:8989/rest/leave/updateLeaveStatus";
-        paramsStr = "status:1";
+        restUrlStr = "http://192.168.75.5:9001/sipsd-flow-modeler/rest/extension/task/update-extension-tasks";
+        paramsStr = "processInstanceId:1;customTaskMaxDay:5;taskId:3ea43d97e2ae11eb989bacde48001122";
         this.callBack(processInstanceId, restUrlStr, paramsStr);
     }
 }
