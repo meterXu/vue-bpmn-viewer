@@ -4,21 +4,13 @@
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
-                   :options="{zoom,timeLine}">
-      <a-button-group>
-        <a-button type="primary">审批</a-button>
-        <a-button type="danger">驳回</a-button>
-      </a-button-group>
-      <a-button-group style="margin-left: 12px">
-        <a-button>确定</a-button>
-        <a-button>关闭</a-button>
-      </a-button-group>
+                   :options="{zoom,timeLine,center}">
     </VueBpmnViewer>
   </div>
 </template>
 
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import VueBpmnViewer from '../packages/vue-bpmn-viewer'
 export default {
   name: "Viewer",
   components:{
@@ -31,7 +23,8 @@ export default {
       xmlId:null,
       instanceId:null,
       zoom:true,
-      timeLine:true
+      timeLine:true,
+      center:true
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -41,6 +34,7 @@ export default {
     this.baseApi = this.$project_bpmn.variable.baseApi
     this.zoom = (to.query.zoom||'true')==='true'
     this.timeLine = (to.query.timeLine||'true')==='true'
+    this.center = (to.query.center||'true')==='true'
     next()
   },
   mounted() {
@@ -49,6 +43,7 @@ export default {
     this.xmlId = this.$route.query.xmlId
     this.zoom = (this.$route.query.zoom||'true')==='true'
     this.timeLine = (this.$route.query.timeLine||'true')==='true'
+    this.center = (this.$route.query.center||'true')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
   }
 }

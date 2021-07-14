@@ -31,7 +31,7 @@ import utils from "../lib/utils";
 
 export default {
   name: "BTZoom",
-  props:['bpmnViewer'],
+  props:['bpmnViewer','center'],
   data(){
     return {
       bpmnObj:null,
@@ -40,15 +40,17 @@ export default {
   methods:{
     handleZoomReset(){
       this.canvas = this.bpmnViewer.get('canvas')
-      let viewbox = this.canvas.viewbox()
-      this.canvas.zoom('fit-viewport');
-      let dx = 0
-      let dy = 0
-      if(viewbox.outer.width>viewbox.inner.width){
-        dx = (viewbox.outer.width-viewbox.inner.width)/2-150
-        dx = dx<0?0:dx
+      if(this.center){
+        let viewbox = this.canvas.viewbox()
+        this.canvas.zoom('fit-viewport');
+        let dx = 0
+        let dy = 0
+        if(viewbox.outer.width>viewbox.inner.width){
+          dx = (viewbox.outer.width-viewbox.inner.width)/2-150
+          dx = dx<0?0:dx
+        }
+        this.canvas.scroll({dx,dy});
       }
-      this.canvas.scroll({dx,dy});
       this.$emit('zoomResetCompleted')
     },
     handleZoomIn(){
@@ -64,15 +66,15 @@ export default {
   },
   mounted() {
     const that = this
-    // document.getElementsByClassName('vue-bpmn-diagram-container')[0].addEventListener('mousewheel',(event)=>{
-    //   let down = event.wheelDelta?event.wheelDelta<0:event.detail>0;
-    //   if(down){
-    //     that.handleZoomOut()
-    //   }else{
-    //     that.handleZoomIn()
-    //   }
-    //   return false;
-    // })
+    document.getElementsByClassName('vue-bpmn-diagram-container')[0].addEventListener('mousewheel',(event)=>{
+      // let down = event.wheelDelta?event.wheelDelta<0:event.detail>0;
+      // if(down){
+      //   that.handleZoomOut()
+      // }else{
+      //   that.handleZoomIn()
+      // }
+      return false;
+    })
   },
   destroyed() {
     utils.clearAllHighLight()

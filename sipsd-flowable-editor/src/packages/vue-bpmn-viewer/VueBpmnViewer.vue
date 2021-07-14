@@ -11,7 +11,7 @@
         <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="(type===2&&instanceId||type===1&&xmlId)&&options.zoom&&!loading" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTZoom v-show="(type===2&&instanceId||type===1&&xmlId)&&options.zoom&&!loading" :center="options.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <slot name="timeLine" v-if="type===2&&instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData">
           <BTimeLine :loading="timeLine_loading" :data="taskData"/>
         </slot>
@@ -23,7 +23,7 @@
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls/index'
 import axios from 'axios'
 import urljoin from 'url-join';
 export default {
@@ -36,7 +36,8 @@ export default {
     options:{type:Object,default(){
       return {
       zoom:true,
-      timeLine:true
+      timeLine:true,
+      center:true
     }
     }}
   },
