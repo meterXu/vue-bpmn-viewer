@@ -61,7 +61,7 @@
                     )
                 )
             )
-        )
+        )  order by t1.CREATE_TIME_
     </select>
     <select id="getApplyedTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
         SELECT DISTINCT
@@ -95,6 +95,8 @@
         <if test="businessKey != null and businessKey != ''">
             AND t3.BUSINESS_KEY_ = #{businessKey}
         </if>
+
+        order by t1.END_TIME_
     </select>
     
     <select id="getTaskById" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
