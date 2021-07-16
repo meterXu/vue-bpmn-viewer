@@ -124,6 +124,13 @@
 			<version>${flowable.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.flowable/flowable-http -->
+		<dependency>
+			<groupId>org.flowable</groupId>
+			<artifactId>flowable-http</artifactId>
+			<version>6.4.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
