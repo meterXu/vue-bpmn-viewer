@@ -43,7 +43,7 @@
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
 import axios from 'axios'
 import urljoin from 'url-join';
 export default {
