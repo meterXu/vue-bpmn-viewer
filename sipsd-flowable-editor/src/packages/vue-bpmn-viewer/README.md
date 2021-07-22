@@ -39,6 +39,8 @@ export default {
 |:---:|:---:|:---:|
 |baseApi|后端地址|null|
 |xmlId|流程图ID|null|
+|type|流程图显示模式|1|
+|static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:true}|
 
 * 模式2，流程实例显示模式
@@ -47,6 +49,8 @@ export default {
 |:---:|:---:|:---:|
 |baseApi|后端地址|null|
 |instanceId|flowable实例ID|null|
+|type|流程实例显示模式|2|
+|static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:false,center:true}|
 
 ### options

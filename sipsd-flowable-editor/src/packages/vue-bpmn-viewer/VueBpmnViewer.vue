@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn-viewer">
     <a-spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
-      <vue-bpmn v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
+      <vue-bpmn :viewer="static" v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
       </div>
@@ -33,6 +33,7 @@ export default {
     instanceId:{type:String},
     xmlId:{type:String},
     type:{type:Number,required: true},
+    static:{type:Boolean,default: false},
     options:{type:Object,default(){
       return {
       zoom:true,
