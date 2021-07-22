@@ -5,6 +5,26 @@
       <div v-else class="no-bpmn">
         <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
       </div>
+      <div class="legend">
+        <ul class="legend-ul">
+          <li>
+            <i class="legend-icon legend-none"></i>
+            <span>未执行</span>
+          </li>
+          <li>
+            <i class="legend-icon legend-unExec"></i>
+            <span>待审批</span>
+          </li>
+          <li>
+            <i class="legend-icon legend-exec"></i>
+            <span>已审批</span>
+          </li>
+          <li>
+            <i class="legend-icon legend-back"></i>
+            <span>被驳回</span>
+          </li>
+        </ul>
+      </div>
     </a-spin>
     <BTLayout>
       <template slot="head">
@@ -23,7 +43,7 @@
 <script>
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import axios from 'axios'
 import urljoin from 'url-join';
 export default {
@@ -193,6 +213,53 @@ export default {
   display: inline-block;
   margin-top: 100px;
   width: 700px;
+}
+.legend{
+  position: absolute;
+  bottom: 26px;
+  left: 0;
+}
+.legend-ul{
+  list-style: none;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+.legend-ul li{
+  padding-right: 40px;
+}
+.legend-ul li span{
+  display: inline-block;
+  margin-left: 8px;
+}
+.legend-icon{
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #333;
+  vertical-align: sub;
+}
+.legend-none{
+  background: #3296fa;
+  border:1px solid #1a70c5;
+  opacity: 0.8;
+}
+.legend-unExec{
+  background: #f5842c;
+  border:1px solid #d66106;
+  opacity: 0.8;
+}
+.legend-exec{
+  background:#5bc14b;
+  border:1px solid #459838;
+  opacity: 0.8;
+}
+.legend-back{
+  background:#ff0000;
+  border:1px solid #ad0000;
+  opacity: 0.8;
 }
 </style>
 <style>
