@@ -175,16 +175,12 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
     public PageModel<ProcessInstanceVo> getMyProcessInstances(ProcessInstanceQueryVo params, Query query)
     {
         PageHelper.startPage(query.getPageNum(), query.getPageSize());
-        if (StringUtils.isNotBlank(params.getUserCode()))
+        Page<ProcessInstanceVo> myProcesses = flowableProcessInstanceDao.getPagerModel(params);
+        myProcesses.forEach(processInstanceVo ->
         {
-            Page<ProcessInstanceVo> myProcesses = flowableProcessInstanceDao.getPagerModel(params);
-            myProcesses.forEach(processInstanceVo ->
-            {
-                this.setStateApprover(processInstanceVo);
-            });
-            return new PageModel<>(myProcesses);
-        }
-        return null;
+            this.setStateApprover(processInstanceVo);
+        });
+        return new PageModel<>(myProcesses);
     }
 
     @Override

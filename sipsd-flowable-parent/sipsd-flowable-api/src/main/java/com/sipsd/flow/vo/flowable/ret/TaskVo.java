@@ -56,6 +56,11 @@ public class TaskVo implements Serializable {
     private String processInstanceId;
 
     /**
+     * 审批节点key
+     */
+    private String taskDefinitionKey;
+
+    /**
      * 是否督办过
      */
     private Boolean isDb;
@@ -257,5 +262,15 @@ public class TaskVo implements Serializable {
     public void setBusinessInfo(String businessInfo)
     {
         this.businessInfo = businessInfo;
+    }
+
+    public String getTaskDefinitionKey()
+    {
+        return taskDefinitionKey;
+    }
+
+    public void setTaskDefinitionKey(String taskDefinitionKey)
+    {
+        this.taskDefinitionKey = taskDefinitionKey;
     }
 }

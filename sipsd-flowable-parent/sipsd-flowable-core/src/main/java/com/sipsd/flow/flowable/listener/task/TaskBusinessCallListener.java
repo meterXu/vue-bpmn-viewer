@@ -27,18 +27,31 @@ public class TaskBusinessCallListener extends BusinessCallListener implements Ta
 
     @Override
     public void notify(DelegateTask delegateTask) {
-        String processInstanceId = delegateTask.getProcessInstanceId();
+        //当使用create，assignment时这个会调用两次代表当前代办的taskId和即将跳转到的节点的taskId
         String restUrlStr = null, paramsStr = null;
-        if (restUrl != null) {
-            restUrlStr = restUrl.getExpressionText();
+        String processInstanceId = delegateTask.getProcessInstanceId();
+        String taskId = delegateTask.getId();
+        String processInstanceIdVar = delegateTask.getVariable("processInstanceIdVar")==null?"":delegateTask.getVariable("processInstanceIdVar").toString();
+        String taskIdVar = delegateTask.getVariable("taskIdVar")==null?"":delegateTask.getVariable("taskIdVar").toString();
+        restUrlStr =  delegateTask.getVariable("url")==null?"":delegateTask.getVariable("url").toString();
+        paramsStr = delegateTask.getVariable("params")==null?"":delegateTask.getVariable("params").toString();
+
+        if(processInstanceIdVar.equals(processInstanceId) && taskId.equals(taskIdVar))
+        {
+            this.callBack(processInstanceId, restUrlStr, paramsStr);
         }
-        if (params != null) {
-            paramsStr = params.getExpressionText();
-        }
-        //执行回调
-        //TODO 临时处理
-        restUrlStr = "http://127.0.0.1:8989/rest/leave/updateLeaveStatus";
-        paramsStr = "status:1";
-        this.callBack(processInstanceId, restUrlStr, paramsStr);
+
+//        String restUrlStr = null, paramsStr = null;
+//        if (restUrl != null) {
+//            restUrlStr = restUrl.getExpressionText();
+//        }
+//        if (params != null) {
+//            paramsStr = params.getExpressionText();
+//        }
+//        //执行回调
+//        //TODO 临时处理
+//        restUrlStr = "http://192.168.75.5:9001/sipsd-flow-modeler/rest/extension/task/update-extension-tasks";
+//        paramsStr = "processInstanceId:1;customTaskMaxDay:5;taskId:3ea43d97e2ae11eb989bacde48001122";
+//        this.callBack(processInstanceId, restUrlStr, paramsStr);
     }
 }

@@ -6,6 +6,7 @@
             t4.ID_ as id,
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
             t2.NAME_ AS formName,
             t2.TENANT_ID_ AS systemSn,
             t2.BUSINESS_KEY_ AS businessKey,
@@ -33,7 +34,7 @@
         </if>
 
         AND (
-            t1.ASSIGNEE_ = #{userCode}
+            t1.ASSIGNEE_ like CONCAT('%',#{userCode},'%')
             OR (
                 t1.ASSIGNEE_ IN (
                     SELECT
@@ -41,7 +42,8 @@
                     FROM
                         act_id_membership G
                     WHERE
-                        G.user_id_ = #{userCode}
+
+                        G.user_id_   = #{userCode}
                 )
             )
             OR (
@@ -50,7 +52,7 @@
                     OR t1.ASSIGNEE_ = ''
                 )
                 AND (
-                    t3.USER_ID_ = #{userCode}
+                    t3.USER_ID_ like CONCAT('%',#{userCode},'%')
                     OR t3.GROUP_ID_ IN (
                         SELECT
                             g.group_id_
@@ -61,13 +63,14 @@
                     )
                 )
             )
-        )
+        )  order by t1.CREATE_TIME_
     </select>
     <select id="getApplyedTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
         SELECT DISTINCT
             t4.ID_ as id,
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
             t2.FIRST_ AS approver,
             t2.ID_ AS approverId,
         TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
@@ -95,12 +98,15 @@
         <if test="businessKey != null and businessKey != ''">
             AND t3.BUSINESS_KEY_ = #{businessKey}
         </if>
+
+        order by t1.END_TIME_
     </select>
     
     <select id="getTaskById" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
         SELECT DISTINCT
             t1.ID_ AS taskId,
             t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
             t2.FIRST_ AS approver,
             t2.ID_ AS approverId,
             t3.NAME_ AS formName,

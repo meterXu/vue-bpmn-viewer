@@ -46,6 +46,13 @@
 			<artifactId>json-path</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>com.sipsd</groupId>-->
+<!--			<artifactId>dpark-license-spring-boot-starter</artifactId>-->
+<!--			<version>1.0.0</version>-->
+<!--		</dependency>-->
+
 	</dependencies>
 
 	<dependencyManagement>
