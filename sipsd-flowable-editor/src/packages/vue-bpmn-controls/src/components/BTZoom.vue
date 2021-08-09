@@ -49,6 +49,12 @@ export default {
           dx = (viewbox.outer.width-viewbox.inner.width)/2-150
           dx = dx<0?0:dx
         }
+        if(viewbox.inner.height<viewbox.outer.height){
+          dy = (viewbox.outer.height-viewbox.inner.height)/2
+          dy=dy<50?0:dy
+          dy=dy>150?150:dy
+          console.log(dy)
+        }
         this.canvas.scroll({dx,dy});
       }
       this.$emit('zoomResetCompleted')

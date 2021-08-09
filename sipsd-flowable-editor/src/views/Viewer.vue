@@ -4,6 +4,7 @@
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
+                   :static="static"
                    :options="{zoom,timeLine,center}">
     </VueBpmnViewer>
   </div>
@@ -24,7 +25,8 @@ export default {
       instanceId:null,
       zoom:true,
       timeLine:true,
-      center:true
+      center:true,
+      static:false
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -35,6 +37,7 @@ export default {
     this.zoom = (to.query.zoom||'true')==='true'
     this.timeLine = (to.query.timeLine||'true')==='true'
     this.center = (to.query.center||'true')==='true'
+    this.static = (to.query.static||'false')==='true'
     next()
   },
   mounted() {
@@ -44,6 +47,7 @@ export default {
     this.zoom = (this.$route.query.zoom||'true')==='true'
     this.timeLine = (this.$route.query.timeLine||'true')==='true'
     this.center = (this.$route.query.center||'true')==='true'
+    this.static = (this.$route.query.static||'false')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
   }
 }
