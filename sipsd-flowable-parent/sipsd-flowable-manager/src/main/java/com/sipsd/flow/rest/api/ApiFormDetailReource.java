@@ -151,7 +151,7 @@ public class ApiFormDetailReource extends BaseResource {
 	@PostMapping(value = "/turnTask")
 	public Result<String> turnTask(@Validated @RequestBody TurnTaskVo params) {
 		Result<String> result = null;
-		if (StringUtils.isBlank(params.getTurnToUserId())) {
+		if (!StringUtils.isBlank(params.getTurnToUserId())) {
 			// params.setUserCode(this.getLoginUser().getId());
 			// params.setTurnToUserId(userCodes[0]);
 			result = flowableTaskService.turnTask(params);
