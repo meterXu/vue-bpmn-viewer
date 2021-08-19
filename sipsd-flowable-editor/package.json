@@ -8,7 +8,9 @@
     "devProxy": "s2 r proxy",
     "serve": "vue-cli-service serve",
     "proxy": "vue-cli-service serve --mode proxy",
-    "build": "vue-cli-service build",
+    "build": "s2 b",
+    "build:module" : "s2 mod",
+    "package":"vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
