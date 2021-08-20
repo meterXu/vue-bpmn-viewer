@@ -1,10 +1,10 @@
 # bpmn-js 蓝色主题
 
 ## 原始主题
-![](http://192.168.126.25/codimd/uploads/upload_79ad802f162756c08f9d277393647df5.png)
+![](http://192.168.126.25/iplatform/codimd/uploads/upload_79ad802f162756c08f9d277393647df5.png)
 
 ## 蓝色主题
-![](http://192.168.126.25/codimd/uploads/upload_f26b802e9c8e71ba2616dd72d0fb6e40.png)
+![](http://192.168.126.25/iplatform/codimd/uploads/upload_f26b802e9c8e71ba2616dd72d0fb6e40.png)
 
 ## 如何使用
 ``` bash

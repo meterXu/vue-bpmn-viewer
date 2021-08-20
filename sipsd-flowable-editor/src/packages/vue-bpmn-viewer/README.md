@@ -1,7 +1,7 @@
 # vue-bpmn-viewer 
 > bpmn2.0 流程图预览组件
 
-![sipsd-flowable-editor](http://192.168.126.25/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
+![sipsd-flowable-editor](http://192.168.126.25/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
 ## 如何使用
 ``` bash
