@@ -1,21 +1,22 @@
 <template>
-  <vue-bpmn :viewer="true" ref="bpmnObj"  :url="url">
-
-  </vue-bpmn>
+  <div>
+    xxx
+    <vue-bpmn :viewer="true" ref="bpmnObj"  :url="url">
+    </vue-bpmn>
+  </div>
 </template>
 
 <script>
 import {util} from '@dpark/s2-utils'
+import VueBpmn from '@dpark/vue-bpmn';
 export default {
   name: "BpmnViewer",
   data(){
     return {
-      url:""
+      url:"/cbb.xml"
     }
   },
-  created() {
-    this.url = util.getAssetsImg('../assets/cbb.xml')
-  }
+  components:{VueBpmn}
 }
 </script>
 
