@@ -44,8 +44,10 @@
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+// import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import axios from 'axios'
 import urljoin from 'url-join';
+import {LogFv} from '@dpark/logfv-web-vue'
 export default {
   name: "VueBpmnViewer",
   props:{
@@ -184,6 +186,13 @@ export default {
   },
   mounted() {
     this.clearWatermark()
+    LogFv.info(`工作流执行器被使用，使用者地址：${window.location.href}`)
+  },
+  created() {
+    LogFv.initConfig({
+      appId:'vue-bpmn-viewer',
+      appName:'工作流执行器'
+    })
   }
 }
 </script>

@@ -38,7 +38,7 @@ export default {
   },
   methods:{
     fmtDate(dt){
-      return moment(dt).format('YYYY-MM-DD hh:mm:ss')
+      return moment(dt).format('YYYY-MM-DD HH:mm:ss')
     },
     xx(s){
       return ms(s*1000)

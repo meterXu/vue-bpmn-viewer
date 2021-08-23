@@ -11,7 +11,7 @@ const project_bpmn = {
       accessTokenTime: 3600 * 1000
     },
     proxy:{
-      baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
+      baseApi: "http://192.168.126.20/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000
     }
   },
