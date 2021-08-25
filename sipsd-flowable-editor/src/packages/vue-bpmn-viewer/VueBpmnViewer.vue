@@ -44,6 +44,7 @@
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import {util} from '@dpark/s2-utils'
 // import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import axios from 'axios'
 import urljoin from 'url-join';
@@ -182,7 +183,8 @@ export default {
     },
     reload(){
       this.$refs.bpmnObj.reload()
-    }
+    },
+    getAssetsImg:util.getAssetsImg
   },
   mounted() {
     this.clearWatermark()

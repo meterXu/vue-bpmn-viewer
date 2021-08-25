@@ -22,8 +22,9 @@
   "dependencies": {
     "@dpark/bpmn-theme-blue": "^1.0.15",
     "@dpark/logfv-web-vue": "^1.0.18",
+    "@dpark/s2-utils": "^1.0.26",
     "@dpark/vue-bpmn": "^0.3.3",
-    "@dpark/vue-bpmn-controls": "^1.0.23",
+    "@dpark/vue-bpmn-controls": "^1.0.24",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
     "bpmn-theme-blue": "^1.0.7",
