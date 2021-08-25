@@ -1,6 +1,6 @@
 <template>
   <div id="bpmn-viewer">
-    <a-spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
+    <Spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
       <vue-bpmn :viewer="static" v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
@@ -25,7 +25,7 @@
           </li>
         </ul>
       </div>
-    </a-spin>
+    </Spin>
     <BTLayout>
       <template slot="head">
         <slot></slot>
@@ -45,7 +45,7 @@ import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
 import {util} from '@dpark/s2-utils'
-// import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
+import {Spin} from "ant-design-vue";
 import axios from 'axios'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -70,6 +70,7 @@ export default {
     BTLayout,
     BTZoom,
     BTimeLine,
+    Spin
   },
   data(){
     return {

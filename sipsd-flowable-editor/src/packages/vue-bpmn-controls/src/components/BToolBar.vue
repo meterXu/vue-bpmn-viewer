@@ -1,51 +1,53 @@
 <template>
   <div class="bpmn-toolbar-container">
-    <a-button-group>
-      <a-tooltip class="item" placement="bottomLeft">
+    <ButtonGroup>
+      <Tooltip class="item" placement="bottomLeft">
         <template slot="title">
           <span>修改模型属性</span>
         </template>
-        <a-button type="primary" @click="handleEdit"><a-icon type="edit" /></a-button>
-      </a-tooltip>
-      <a-tooltip class="item" placement="bottom">
+        <Button type="primary" @click="handleEdit"><Icon type="edit" /></Button>
+      </Tooltip>
+      <Tooltip class="item" placement="bottom">
         <template slot="title">
           <span>复制这个模型</span>
         </template>
-        <a-button type="primary" @click="handleCopy"><a-icon type="copy" /></a-button>
-      </a-tooltip>
-      <a-tooltip class="item" placement="bottomRight">
+        <Button type="primary" @click="handleCopy"><Icon type="copy" /></Button>
+      </Tooltip>
+      <Tooltip class="item" placement="bottomRight">
         <template slot="title">
           <span>删除这个模型</span>
         </template>
-        <a-button type="primary" @click="handleDelete"><a-icon type="delete" /></a-button>
-      </a-tooltip>
-    </a-button-group>
-    <a-button-group>
-      <a-tooltip class="item" placement="bottom">
+        <Button type="primary" @click="handleDelete"><Icon type="delete" /></Button>
+      </Tooltip>
+    </ButtonGroup>
+    <ButtonGroup>
+      <Tooltip class="item" placement="bottom">
         <template slot="title">
           <span>导出到BPMN2</span>
         </template>
-        <a-button type="primary" @click="handleExport"><a-icon type="download" /></a-button>
-      </a-tooltip>
-    </a-button-group>
-    <a-button-group>
-      <a-button type="primary" @click="handlePush"><a-icon type="check" />发布</a-button>
-      <a-button type="primary" @click="handleViewEdit"><a-icon type="form" />可视化编辑</a-button>
-    </a-button-group>
-    <a-button-group>
-      <a-tooltip class="item" placement="bottomRight">
+        <Button type="primary" @click="handleExport"><Icon type="download" /></Button>
+      </Tooltip>
+    </ButtonGroup>
+    <ButtonGroup>
+      <Button type="primary" @click="handlePush"><Icon type="check" />发布</Button>
+      <Button type="primary" @click="handleViewEdit"><Icon type="form" />可视化编辑</Button>
+    </ButtonGroup>
+    <ButtonGroup>
+      <Tooltip class="item" placement="bottomRight">
         <template slot="title">
           <span>关闭</span>
         </template>
-        <a-button type="primary" @click="handleClose"><a-icon type="close" /></a-button>
-      </a-tooltip>
-    </a-button-group>
+        <Button type="primary" @click="handleClose"><Icon type="close" /></Button>
+      </Tooltip>
+    </ButtonGroup>
   </div>
 </template>
 
 <script>
+import {Tooltip,Button,Icon} from 'ant-design-vue'
 export default {
   name: "BToolBar",
+  components:{Tooltip,Button,Icon},
   methods:{
     handleEdit(){
       this.$emit('edit')
