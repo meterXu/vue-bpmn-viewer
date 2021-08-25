@@ -1,8 +1,8 @@
 <template>
   <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0)}">
-    <a-spin :spinning="loading" tip="加载中...">
-      <a-timeline v-if="data.length>0">
-        <a-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
+    <Spin :spinning="loading" tip="加载中...">
+      <Timeline v-if="data.length>0">
+        <ATimelineItem v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
           <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
@@ -11,10 +11,10 @@
             <p v-if="item.status==='已办'">持续时间：{{xx(item.duration)}}</p>
             <p v-else>剩余时间：{{xx(item.restTime)}}</p>
           </div>
-        </a-timeline-item>
-      </a-timeline>
+        </ATimelineItem>
+      </Timeline>
       <span v-else-if="!loading">无数据</span>
-    </a-spin>
+    </Spin>
 
   </div>
 </template>
@@ -23,9 +23,11 @@
 import utils from "../lib/utils";
 import ms from 'pretty-ms'
 import moment from 'moment'
+import {Spin,Timeline} from "ant-design-vue";
 export default {
   name: "BTimeLine",
   props:['loading','data'],
+  components:{Spin,Timeline},
   data(){
     return {
       oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false},
