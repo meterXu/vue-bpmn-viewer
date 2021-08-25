@@ -1,4 +1,5 @@
 import './src/assets/css/index.css'
+import 'ant-design-vue/dist/antd.css'
 import utils from './src/lib/utils'
 import BTZoom from "./src/components/BTZoom.vue";
 import BTimeLine from "./src/components/BTimeLine.vue";

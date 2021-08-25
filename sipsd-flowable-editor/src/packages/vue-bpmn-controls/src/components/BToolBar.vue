@@ -1,6 +1,6 @@
 <template>
   <div class="bpmn-toolbar-container">
-    <ButtonGroup>
+    <a-button-group>
       <Tooltip class="item" placement="bottomLeft">
         <template slot="title">
           <span>修改模型属性</span>
@@ -19,27 +19,27 @@
         </template>
         <Button type="primary" @click="handleDelete"><Icon type="delete" /></Button>
       </Tooltip>
-    </ButtonGroup>
-    <ButtonGroup>
+    </a-button-group>
+    <a-button-group>
       <Tooltip class="item" placement="bottom">
         <template slot="title">
           <span>导出到BPMN2</span>
         </template>
         <Button type="primary" @click="handleExport"><Icon type="download" /></Button>
       </Tooltip>
-    </ButtonGroup>
-    <ButtonGroup>
+    </a-button-group>
+    <a-button-group>
       <Button type="primary" @click="handlePush"><Icon type="check" />发布</Button>
       <Button type="primary" @click="handleViewEdit"><Icon type="form" />可视化编辑</Button>
-    </ButtonGroup>
-    <ButtonGroup>
+    </a-button-group>
+    <a-button-group>
       <Tooltip class="item" placement="bottomRight">
         <template slot="title">
           <span>关闭</span>
         </template>
         <Button type="primary" @click="handleClose"><Icon type="close" /></Button>
       </Tooltip>
-    </ButtonGroup>
+    </a-button-group>
   </div>
 </template>
 
@@ -47,7 +47,12 @@
 import {Tooltip,Button,Icon} from 'ant-design-vue'
 export default {
   name: "BToolBar",
-  components:{Tooltip,Button,Icon},
+  components:{
+    Tooltip,
+    Button,
+    Icon,
+    [Button.Group.name]:Button.Group
+  },
   methods:{
     handleEdit(){
       this.$emit('edit')

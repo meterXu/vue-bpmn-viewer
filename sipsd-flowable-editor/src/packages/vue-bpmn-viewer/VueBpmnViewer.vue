@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import 'ant-design-vue/dist/antd.css'
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
