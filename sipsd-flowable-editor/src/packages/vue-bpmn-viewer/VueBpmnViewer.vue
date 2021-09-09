@@ -43,9 +43,10 @@
 <script>
 import 'ant-design-vue/dist/antd.css'
 import VueBpmn from '@dpark/vue-bpmn';
-// import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import bpmnThemeBlue from '../bpmn-theme-blue'
+import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
+// import bpmnThemeBlue from '../bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+// import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
 import axios from 'axios'
@@ -113,13 +114,13 @@ export default {
           switch (c.status){
             case '已办':{
               if(c.approveType === '驳回'){
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: true})
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: true,type:3})
               } else{
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false})
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2})
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: true,shadow:false })
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: true,shadow:false,type:1 })
             }break;
           }
         })
