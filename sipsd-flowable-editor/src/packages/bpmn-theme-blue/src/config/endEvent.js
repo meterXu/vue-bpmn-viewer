@@ -20,7 +20,11 @@ export default (options)=>{
         fontSize:'12px',
         fill: "#444"
     })
-    text.innerHTML=options.title||'结束'
+    if(options&&options.businessObject&&options.businessObject.name){
+        text.innerHTML=''
+    }else{
+        text.innerHTML=options.title||'结束'
+    }
     append(g,text)
     append(g,circle)
 

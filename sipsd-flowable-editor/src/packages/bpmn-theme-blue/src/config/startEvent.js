@@ -18,7 +18,11 @@ export default (options)=>{
         'font-size':'12px',
         fill: "#444"
     })
-    text.innerHTML=options.title||'开始'
+    if(options&&options.businessObject&&options.businessObject.name){
+        text.innerHTML=''
+    }else{
+        text.innerHTML=options.title||'开始'
+    }
     append(g,text)
     append(g,circle)
 
