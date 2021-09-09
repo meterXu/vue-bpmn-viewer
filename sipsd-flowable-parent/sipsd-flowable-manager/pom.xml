@@ -211,6 +211,17 @@
 				</includes>
 			</resource>
 			<resource>
+				<!-- BUG  maven 的 resource 插件开启 filtering 功能后，会破坏有二进制内容的文件。关闭filter功能就好了-->
+				<!-- 以下是错误示例-->
+				<!--
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>**/*.ttf</include>
+					<include>**/*.woff</include>
+				</includes>
+			</resource>-->
 				<directory>${project.basedir}/src/main/resources</directory>
 			</resource>
 		</resources>

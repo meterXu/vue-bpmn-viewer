@@ -1,23 +1,30 @@
 package com.sipsd.flow.rest.api;
 
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
+import com.sipsd.flow.service.flowable.IFlowableUserService;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
+import org.flowable.bpmn.model.FlowElement;
+import org.flowable.bpmn.model.UserTask;
+import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.engine.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
- * @author : chengtg
+ * @author : chengtg/gaoqiang
  * @title: : ApiTask
  * @projectName : flowable
  * @description: 流程实例API
@@ -29,6 +36,10 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApiFlowableProcessInstanceResource.class);
     @Autowired
     private IFlowableProcessInstanceService flowableProcessInstanceService;
+    @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
+    private IFlowableUserService flowableUserService;
     /**
      * 分页查询流程定义列表
      *
@@ -108,6 +119,80 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
         Result<List<FlowElementVo>> result =new Result<>();
         List<FlowElementVo> flowElementVoList =  flowableProcessInstanceService.nextFlowNode(node,taskId);
         result.setData(flowElementVoList);
+        return result;
+    }
+
+    /**
+     * 根据流程实例ID获取当前流程所有节点信息
+     * @param processInstanceId
+     * @return
+     */
+    @ApiOperation("根据流程实例ID获取当前流程所有节点信息")
+    @GetMapping(value = "/getAllNodeListByProcessInstanceId")
+    public Result<List<FlowElementVo>> getAllNodeListByProcessInstanceId(@RequestParam String processInstanceId) {
+        Result<List<FlowElementVo>> result = new Result<>();
+        result.setMessage("查询返回节点成功");
+        //获取流程发布Id信息
+        String definitionId = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId();
+        //获取所有节点信息
+        List<org.flowable.bpmn.model.Process> processes = repositoryService.getBpmnModel(definitionId).getProcesses();
+        for(org.flowable.bpmn.model.Process process:processes)
+        {
+            // 获取全部的FlowElement（流元素）信息
+            Collection<FlowElement> flowElements = process.getFlowElements();
+            //return flowElements;
+
+            List<String> assigneeList = null;
+            List<FlowElementVo> flowNodeVos=null;
+            //使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+            if(CollectionUtils.isEmpty(flowElements)){
+                return null;
+            }
+            flowNodeVos=new ArrayList<>();
+            for(FlowElement flowElement:flowElements){
+                if(flowElement instanceof  UserTask){
+                    FlowElementVo flowNodeVo=new FlowElementVo();
+                    flowNodeVo.setFlowNodeId(flowElement.getId());
+                    flowNodeVo.setFlowNodeName(flowElement.getName());
+                    List<String> groupIdList = ((UserTask) flowElement).getCandidateGroups();
+                    if(CollectionUtils.isNotEmpty(groupIdList))
+                    {
+                        List<AssigneeVo> groupList = new ArrayList<>();
+                        for(String groupId:groupIdList)
+                        {
+                            AssigneeVo  assigneeVo = new AssigneeVo();
+                            assigneeVo.setGroupId(groupId);
+                            List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                            assigneeVo.setUserList(userList);
+                            groupList.add(assigneeVo);
+                        }
+                        flowNodeVo.setGroupList(groupList);
+                    }
+
+
+                    if (StringUtils.isEmpty(((UserTask) flowElement).getAssignee()))
+                    {
+                        flowNodeVo.setAssigneeList(((UserTask) flowElement).getCandidateUsers());
+                    }
+                    else
+                    {
+                        assigneeList = new ArrayList<>();
+                        assigneeList.add(((UserTask) flowElement).getAssignee());
+                        flowNodeVo.setAssigneeList(assigneeList);
+                    }
+                    flowNodeVos.add(flowNodeVo);
+                }
+            }
+            Collections.sort(flowNodeVos, new Comparator<FlowElementVo>() {
+                @Override
+                public int compare(FlowElementVo o1, FlowElementVo o2) {
+                    //升序
+                    return o1.getFlowNodeId().compareTo(o2.getFlowNodeId());
+                }
+            });
+            result.setData(flowNodeVos);
+            break;
+        }
         return result;
     }
 }
