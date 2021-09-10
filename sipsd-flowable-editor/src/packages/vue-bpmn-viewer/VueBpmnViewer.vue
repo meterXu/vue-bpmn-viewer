@@ -44,8 +44,8 @@
 import 'ant-design-vue/dist/antd.css'
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-// import bpmnThemeBlue from '../bpmn-theme-blue'
 import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+// import bpmnThemeBlue from '../bpmn-theme-blue'
 // import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
@@ -66,7 +66,8 @@ export default {
       timeLine:true,
       center:true
     }
-    }}
+    }},
+    log:{type:Boolean,default:true}
   },
   components:{
     VueBpmn,
@@ -192,12 +193,24 @@ export default {
   },
   mounted() {
     this.clearWatermark()
-    LogFv.info(`工作流执行器被使用，使用者地址：${window.location.href}`)
+    LogFv.info(JSON.stringify({
+      title:'工作流执行器被使用',
+      url:window.location.href,
+      props:{
+        baseApi:this.baseApi,
+        instanceId:this.instanceId,
+        xmlId:this.xmlId,
+        type:this.type,
+        static:this.static,
+        options:this.options
+      }
+    }))
   },
   created() {
     LogFv.initConfig({
       appId:'vue-bpmn-viewer',
-      appName:'工作流执行器'
+      appName:'工作流执行器',
+      enable:this.log
     })
   }
 }

@@ -42,6 +42,7 @@ export default {
 |type|流程图显示模式|1|
 |static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:true}|
+|log|是否记录使用日志|true|
 
 * 模式2，流程实例显示模式
 
@@ -52,6 +53,7 @@ export default {
 |type|流程实例显示模式|2|
 |static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:false,center:true}|
+|log|是否记录使用日志|true|
 
 ### options
 |名称|说明|默认值|
