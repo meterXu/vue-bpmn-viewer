@@ -43,6 +43,7 @@ export default {
 |static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:true}|
 |log|是否记录使用日志|true|
+|logReportUrl|日志上报地址|http://192.168.126.25/logfv-server/logfv/web/upload|
 
 * 模式2，流程实例显示模式
 
@@ -53,14 +54,15 @@ export default {
 |type|流程实例显示模式|2|
 |static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:false,center:true}|
-|log|是否记录使用日志|true|
+|log|是否记录使用日志|开发环境默认false，部署环境默认true|
+|logReportUrl|日志上报地址|http://192.168.126.25/logfv-server/logfv/web/upload|
 
 ### options
 |名称|说明|默认值|
 |:---:|:---:|:---:|
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴，如果模式为1则强制为false|true|
-|center|是否流程图居中显示|true|
+|center|是否流程图居中显示|开发环境默认false，部署环境默认true|
 ## toolbar 插槽
 该预览组件支持自定义顶部toolbar
 ```vue
