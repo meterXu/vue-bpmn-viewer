@@ -67,7 +67,7 @@ export default {
       center:true
     }
     }},
-    log:{type:Boolean,default:true}
+    log:{type:Boolean,default:null}
   },
   components:{
     VueBpmn,
@@ -207,6 +207,7 @@ export default {
     }))
   },
   created() {
+    this.log = (this.log!==null?this.log:(process.env.NODE_ENV==='production'))
     LogFv.initConfig({
       appId:'vue-bpmn-viewer',
       appName:'工作流执行器',

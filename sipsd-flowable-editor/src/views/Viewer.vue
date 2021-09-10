@@ -5,15 +5,14 @@
                    :instanceId="instanceId"
                    :xmlId="xmlId"
                    :static="static"
-                   :options="{zoom,timeLine,center}"
-                   :log="log">
+                   :options="{zoom,timeLine,center}">
     </VueBpmnViewer>
   </div>
 </template>
 
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
-// import VueBpmnViewer from "../packages/vue-bpmn-viewer/VueBpmnViewer";
+// import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import VueBpmnViewer from "../packages/vue-bpmn-viewer/VueBpmnViewer";
 export default {
   name: "Viewer",
   components:{
@@ -41,7 +40,6 @@ export default {
     this.timeLine = (to.query.timeLine||'true')==='true'
     this.center = (to.query.center||'true')==='true'
     this.static = (to.query.static||'false')==='true'
-    this.log = (to.query.log||'false')==='true'
     next()
   },
   mounted() {
@@ -52,7 +50,6 @@ export default {
     this.timeLine = (this.$route.query.timeLine||'true')==='true'
     this.center = (this.$route.query.center||'true')==='true'
     this.static = (this.$route.query.static||'false')==='true'
-    this.log = (this.$route.query.log||'false')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
   }
 }
