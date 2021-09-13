@@ -44,9 +44,9 @@
 import 'ant-design-vue/dist/antd.css'
 import VueBpmn from '@dpark/vue-bpmn';
 import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+// import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
 // import bpmnThemeBlue from '../bpmn-theme-blue'
-// import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
 import axios from 'axios'

@@ -3,13 +3,18 @@
     <Spin :spinning="loading" tip="加载中...">
       <a-timeline v-if="data.length>0">
         <a-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
-          <div :class="['timeLine-item-over',item.status==='已办'?'timeLine-item-over-ed':'timeLine-item-over-uned']" @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
+          <div :class="['timeLine-item-over',
+              item.status==='已办'?
+            (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
+            :'timeLine-item-over-uned']"
+               @mouseover="handleItemOver(item,item.taskDefinitionKey)"
+               @mouseout="handleItemOut(item.taskDefinitionKey)">
             <p>{{fmtDate(item.startTime)}}</p>
             <p>{{item.taskName}}</p>
             <p>审批类型：{{item.approveType}}</p>
             <p>状态：{{item.status}}</p>
-            <p v-if="item.status==='已办'">持续时间：{{xx(item.duration)}}</p>
-            <p v-else>剩余时间：{{xx(item.restTime)}}</p>
+            <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
+            <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
           </div>
         </a-timeline-item>
       </a-timeline>
@@ -34,7 +39,7 @@ export default {
   },
   data(){
     return {
-      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false},
+      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:true},
       highLight:[
         {color:'#5BC14B',setline:false,user:undefined,shadow:true},
         {color:'#f5842c',setline:false,user:undefined,shadow:true},
@@ -42,11 +47,14 @@ export default {
       ]
     }
   },
+  computed:{
+
+  },
   methods:{
     fmtDate(dt){
       return moment(dt).format('YYYY-MM-DD HH:mm:ss')
     },
-    xx(s){
+    timeFormat(s){
       return ms(s*1000)
           .replace('d','天')
           .replace('h','小时')
@@ -75,7 +83,6 @@ export default {
       }else if(data.status==='待办'){
         return this.highLight[1].color
       }
-
     }
   }
 }
@@ -113,10 +120,17 @@ export default {
   color: #fff;
   border-radius: 5px;
 }
+.timeLine-item-over-turn:hover{
+  background: rgba(255,0,0,0.8);
+  border-radius: 5px;
+}
 .timeLine-item-over-uned:hover{
   background: rgba(245,132,44,0.8);
   color: #fff;
   border-radius: 5px;
+}
+.timeLine-item-over-uned:hover p,.timeLine-item-over-ed:hover p,.timeLine-item-over-turn:hover p{
+  color: #fff;
 }
 
 /* 设置滚动条的样式 */
