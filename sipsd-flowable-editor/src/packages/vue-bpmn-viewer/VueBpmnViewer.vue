@@ -64,7 +64,8 @@ export default {
       return {
       zoom:true,
       timeLine:true,
-      center:true
+      center:true,
+      setline:false
     }
     }},
     log:{type:Boolean,default:null},
@@ -122,7 +123,7 @@ export default {
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: true,shadow:false,type:1 })
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.options.setline,shadow:true,type:1 })
             }break;
           }
         })

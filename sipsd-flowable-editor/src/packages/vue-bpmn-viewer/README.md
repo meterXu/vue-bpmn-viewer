@@ -41,7 +41,7 @@ export default {
 |xmlId|流程图ID|null|
 |type|流程图显示模式|1|
 |static|是否静态不可拖动|false|
-|options|控件配置|{zoom:true,timeLine:true}|
+|options|控件配置|{zoom:true,timeLine:true,setline:false}|
 |log|是否记录使用日志|true|
 |logReportUrl|日志上报地址|http://192.168.126.25/logfv-server/logfv/web/upload|
 
@@ -53,7 +53,7 @@ export default {
 |instanceId|flowable实例ID|null|
 |type|流程实例显示模式|2|
 |static|是否静态不可拖动|false|
-|options|控件配置|{zoom:true,timeLine:false,center:true}|
+|options|控件配置|{zoom:true,timeLine:false,center:true,setline:false}|
 |log|是否记录使用日志|开发环境默认false，部署环境默认true|
 |logReportUrl|日志上报地址|http://192.168.126.25/logfv-server/logfv/web/upload|
 
@@ -62,7 +62,8 @@ export default {
 |:---:|:---:|:---:|
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴，如果模式为1则强制为false|true|
-|center|是否流程图居中显示|开发环境默认false，部署环境默认true|
+|center|是否流程图居中显示|true|
+|setline|是否显示动态线条(实验性功能，待完善)|false|
 ## toolbar 插槽
 该预览组件支持自定义顶部toolbar
 ```vue

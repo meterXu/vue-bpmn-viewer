@@ -17,7 +17,7 @@
   "dependencies": {
     "@dpark/logfv-web-vue": "^1.0.18",
     "@dpark/s2-utils": "^1.0.26",
-    "@dpark/vue-bpmn-viewer": "^1.0.47",
+    "@dpark/vue-bpmn-viewer": "^1.0.48",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",

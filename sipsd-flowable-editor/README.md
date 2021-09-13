@@ -48,12 +48,18 @@ url中可使用的参数
 * instanceId 实例ID
 * zoom 显示缩放控件，默认true
 * timeLine 显示时间轴，默认true
+* static 是否静态不可拖动，默认false
+* center 是否流程图居中显示，默认true
+* setline 是否显示动态线条，默认false
 
 -------
 ### 模式2，流程实例显示模式
 * xmlId 流程图ID，如果使用xmlID则时间轴不显示
 * zoom 显示缩放控件，默认true  
-
+* timeLine 显示时间轴，默认true
+* static 是否静态不可拖动，默认false
+* center 是否流程图居中显示，默认true
+* setline 是否显示动态线条，默认false
 
 部署模式下，请确认好flowable后端地址是否配置正确，配置文件地址：`\biz\bpmn\js\project.[hash].js`，具体配置参考[s2框架](http://192.168.126.25/pldoc/deploy/)
 
