@@ -24,7 +24,7 @@
     "@dpark/logfv-web-vue": "^1.0.20",
     "@dpark/s2-utils": "^1.0.27",
     "@dpark/vue-bpmn": "^0.3.3",
-    "@dpark/vue-bpmn-controls": "^1.0.26",
+    "@dpark/vue-bpmn-controls": "^1.0.27",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
@@ -34,10 +34,10 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "postcss": "^8.2.9",
     "rollup": "^2.44.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-postcss": "^4.0.0",
-    "postcss": "^8.2.9",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-url": "^3.0.1",
     "rollup-plugin-vue": "5.1.9",

@@ -114,6 +114,7 @@ export default {
 .timeLine-item-over{
   padding: 5px 8px;
   transition: background .1s;
+  text-align: left;
 }
 .timeLine-item-over-ed:hover{
   background: rgba(91,193,75,0.8);
