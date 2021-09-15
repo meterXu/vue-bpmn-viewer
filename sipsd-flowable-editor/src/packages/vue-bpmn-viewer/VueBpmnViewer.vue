@@ -209,12 +209,12 @@ export default {
     }))
   },
   created() {
-    this.log = (this.log!==null?this.log:(process.env.NODE_ENV==='production'))
+    let log_enable = (this.log!==null?this.log:(process.env.NODE_ENV==='production'))
     LogFv.initConfig({
       reportUrl:this.logReportUrl,
       appId:'vue-bpmn-viewer',
       appName:'工作流执行器',
-      enable:this.log
+      enable:log_enable
     })
   }
 }

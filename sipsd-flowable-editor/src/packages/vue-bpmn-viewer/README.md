@@ -42,7 +42,7 @@ export default {
 |type|流程图显示模式|1|
 |static|是否静态不可拖动|false|
 |options|控件配置|{zoom:true,timeLine:true,setline:false}|
-|log|是否记录使用日志|true|
+|log|是否记录使用日志|开发环境默认false，部署环境默认true|
 |logReportUrl|日志上报地址|http://192.168.126.25/logfv-server/logfv/web/upload|
 
 * 模式2，流程实例显示模式
