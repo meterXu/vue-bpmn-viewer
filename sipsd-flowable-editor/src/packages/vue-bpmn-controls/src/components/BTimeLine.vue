@@ -39,11 +39,11 @@ export default {
   },
   data(){
     return {
-      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:true},
+      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false,stroke:false},
       highLight:[
-        {color:'#5BC14B',setline:false,user:undefined,shadow:true},
-        {color:'#f5842c',setline:false,user:undefined,shadow:true},
-        {color:'#ff0000',setline:false,user:undefined,shadow:true}
+        {color:'#5BC14B',setline:false,user:undefined,shadow:true,stroke:true},
+        {color:'#f5842c',setline:false,user:undefined,shadow:true,stroke:true},
+        {color:'#ff0000',setline:false,user:undefined,shadow:true,stroke:true}
       ]
     }
   },

@@ -34,9 +34,11 @@ function setSingleTaskHighLight(id,options) {
                            0 0 ${(rgb[2]/255).toFixed(3)} 0 0
                            0 0 0 0.8 0`
                 })
-                attr(rect, {
-                    stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
-                })
+                if(options.stroke){
+                    attr(rect, {
+                        stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
+                    })
+                }
             }
         }
 
@@ -111,7 +113,7 @@ function utils(){
 
     }
 
-    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined,shadow:false}) {
+    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined,shadow:false,stroke:true}) {
         ids.forEach(id => {
             this.clearHighLight(id)
             const xx =setSingleTaskHighLight(id,options)

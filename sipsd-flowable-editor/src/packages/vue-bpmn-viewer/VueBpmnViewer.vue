@@ -41,12 +41,9 @@
 </template>
 
 <script>
-import 'ant-design-vue/dist/antd.css'
 import VueBpmn from '@dpark/vue-bpmn';
-import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
-// import bpmnThemeBlue from '../bpmn-theme-blue'
-// import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
+import bpmnThemeBlue from '../bpmn-theme-blue'
+import {BTimeLine,utils,BTLayout,BTZoom} from '../vue-bpmn-controls'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
 import axios from 'axios'
@@ -117,13 +114,13 @@ export default {
           switch (c.status){
             case '已办':{
               if(c.approveType === '驳回'){
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: true,type:3})
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false,type:3,stroke:true})
               } else{
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2})
+                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2,stroke:true})
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.options.setline,shadow:true,type:1 })
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.options.setline,shadow:false,type:1,stroke:true })
             }break;
           }
         })
@@ -148,6 +145,10 @@ export default {
             processInstanceId:this.instanceId
           }
         }).then(res=>{
+          LogFv.info(JSON.stringify({
+            title: '获取流程详细执行数据成功！',
+            actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
+          }))
           res.data.data.sort((a,b)=>{
             return a.startTime - b.startTime
           }).forEach(f=>{
@@ -161,6 +162,21 @@ export default {
             utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
           }
         }).catch(err=>{
+          LogFv.info(JSON.stringify({
+            title: '获取流程详细执行数据失败！',
+            error:{
+              message:err.message,
+              stack:err.stack
+            },
+            props:{
+              baseApi:this.baseApi,
+              instanceId:this.instanceId,
+              xmlId:this.xmlId,
+              type:this.type,
+              static:this.static,
+              options:this.options
+            }
+          }))
           console.error(err)
         }).finally(()=>{
           this.timeLine_loading=false
@@ -168,6 +184,18 @@ export default {
       }
     },
     bpmnLoadDone(){
+      LogFv.info(JSON.stringify({
+        title:'流程图xml加载成功！',
+        xmlUrl:this.xml,
+        props:{
+          baseApi:this.baseApi,
+          instanceId:this.instanceId,
+          xmlId:this.xmlId,
+          type:this.type,
+          static:this.static,
+          options:this.options
+        }
+      }))
       this.loading=false
       if(this.options.timeLine){
         this.getTaskList()
@@ -178,7 +206,22 @@ export default {
          this.$refs.cBTZoom.handleZoomReset()
        },10)
     },
-    bpmnLoadError(){
+    bpmnLoadError(err){
+      LogFv.info(JSON.stringify({
+        title: '流程图加载失败！',
+        error:{
+          message:err.message,
+          stack:err.stack
+        },
+        props:{
+          baseApi:this.baseApi,
+          instanceId:this.instanceId,
+          xmlId:this.xmlId,
+          type:this.type,
+          static:this.static,
+          options:this.options
+        }
+      }))
       this.loading=false
     },
     clearWatermark(){
@@ -189,6 +232,18 @@ export default {
       },300)
     },
     reload(){
+      LogFv.info(JSON.stringify({
+        title:'执行了组件刷新方法！',
+        xmlUrl:this.xml,
+        props:{
+          baseApi:this.baseApi,
+          instanceId:this.instanceId,
+          xmlId:this.xmlId,
+          type:this.type,
+          static:this.static,
+          options:this.options
+        }
+      }))
       this.$refs.bpmnObj.reload()
     },
     getAssetsImg:util.getAssetsImg
@@ -196,7 +251,7 @@ export default {
   mounted() {
     this.clearWatermark()
     LogFv.info(JSON.stringify({
-      title:'工作流执行器被使用',
+      title:'工作流执行器挂载成功！',
       url:window.location.href,
       props:{
         baseApi:this.baseApi,
