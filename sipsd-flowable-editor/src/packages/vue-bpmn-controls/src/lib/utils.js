@@ -30,9 +30,9 @@ function setSingleTaskHighLight(id,options) {
                 const rgb = hexToRgb(options.color)
                 attr(feColorMatrix, {
                     values: `${(rgb[0]/255).toFixed(3)} 0 0 0 0
-                                 0 ${(rgb[1]/255).toFixed(3)} 0 0 0
-                                 0 0 ${(rgb[2]/255).toFixed(3)} 0 0
-                                 0 0 0 0.8 0`
+                           0 ${(rgb[1]/255).toFixed(3)} 0 0 0
+                           0 0 ${(rgb[2]/255).toFixed(3)} 0 0
+                           0 0 0 0.8 0`
                 })
                 attr(rect, {
                     stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
@@ -77,11 +77,23 @@ function clearSingleTaskHighLight(id) {
 }
 
 function hexToRgb(hex) {
-    return [
-        parseInt('0x' + hex.slice(1, 3)),
-        parseInt('0x' + hex.slice(3, 5)),
-        parseInt('0x' + hex.slice(5, 7))
-    ]
+    if(hex.indexOf('#')===0){
+        let r = parseInt('0x' + hex.slice(1, 3))
+        let g = parseInt('0x' + hex.slice(3, 5))
+        let b = parseInt('0x' + hex.slice(5, 7))
+        return [
+            r,
+            g,
+            b,
+        ]
+    }else{
+        let color = hex.match(/\d+/g)
+        return [
+            color[0],
+            color[1],
+            color[2]
+        ]
+    }
 }
 
 function utils(){
