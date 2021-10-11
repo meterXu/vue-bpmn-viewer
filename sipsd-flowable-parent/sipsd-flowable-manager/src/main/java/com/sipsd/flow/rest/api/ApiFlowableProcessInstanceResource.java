@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.UserTask;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,8 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     private RepositoryService repositoryService;
     @Autowired
     private IFlowableUserService flowableUserService;
+    @Autowired
+    private HistoryService historyService;
     /**
      * 分页查询流程定义列表
      *
@@ -132,8 +135,18 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     public Result<List<FlowElementVo>> getAllNodeListByProcessInstanceId(@RequestParam String processInstanceId) {
         Result<List<FlowElementVo>> result = new Result<>();
         result.setMessage("查询返回节点成功");
-        //获取流程发布Id信息
-        String definitionId = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId();
+        String definitionId = null;
+        //查看是否是已结束的流程
+        Object o = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        if(o==null)
+        {
+            //流程已经结束
+            definitionId = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId();
+        }
+        else {
+            //流程未结束
+            definitionId = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult().getProcessDefinitionId();
+        }
         //获取所有节点信息
         List<org.flowable.bpmn.model.Process> processes = repositoryService.getBpmnModel(definitionId).getProcesses();
         for(org.flowable.bpmn.model.Process process:processes)
