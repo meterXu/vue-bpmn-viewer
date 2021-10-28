@@ -15,9 +15,9 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@dpark/logfv-web-vue": "^1.0.18",
+    "@dpark/logfv-web-vue": "^1.0.21",
     "@dpark/s2-utils": "^1.0.26",
-    "@dpark/vue-bpmn-viewer": "^1.0.49",
+    "@dpark/vue-bpmn-viewer": "^1.0.52",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",

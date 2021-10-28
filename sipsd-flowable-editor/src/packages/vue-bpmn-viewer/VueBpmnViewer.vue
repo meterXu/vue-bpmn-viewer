@@ -77,6 +77,7 @@ export default {
   },
   data(){
     return {
+      logfv:null,
       loading:false,
       bpmnViewer:null,
       timeLine_loading:true,
@@ -145,7 +146,7 @@ export default {
             processInstanceId:this.instanceId
           }
         }).then(res=>{
-          LogFv.info(JSON.stringify({
+          this.logfv.info(JSON.stringify({
             title: '获取流程详细执行数据成功！',
             actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
           }))
@@ -162,7 +163,7 @@ export default {
             utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
           }
         }).catch(err=>{
-          LogFv.info(JSON.stringify({
+          this.logfv.info(JSON.stringify({
             title: '获取流程详细执行数据失败！',
             error:{
               message:err.message,
@@ -184,7 +185,7 @@ export default {
       }
     },
     bpmnLoadDone(){
-      LogFv.info(JSON.stringify({
+      this.logfv.info(JSON.stringify({
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,
         props:{
@@ -207,7 +208,7 @@ export default {
        },10)
     },
     bpmnLoadError(err){
-      LogFv.info(JSON.stringify({
+      this.logfv.info(JSON.stringify({
         title: '流程图加载失败！',
         error:{
           message:err.message,
@@ -232,7 +233,7 @@ export default {
       },300)
     },
     reload(){
-      LogFv.info(JSON.stringify({
+      this.logfv.info(JSON.stringify({
         title:'执行了组件刷新方法！',
         xmlUrl:this.xml,
         props:{
@@ -250,7 +251,7 @@ export default {
   },
   mounted() {
     this.clearWatermark()
-    LogFv.info(JSON.stringify({
+    this.logfv.info(JSON.stringify({
       title:'工作流执行器挂载成功！',
       url:window.location.href,
       props:{
@@ -265,7 +266,7 @@ export default {
   },
   created() {
     let log_enable = (this.log!==null?this.log:(process.env.NODE_ENV==='production'))
-    LogFv.initConfig({
+    this.logfv = new LogFv({
       reportUrl:this.logReportUrl,
       appId:'vue-bpmn-viewer',
       appName:'工作流执行器',
