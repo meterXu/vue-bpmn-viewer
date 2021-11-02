@@ -132,6 +132,15 @@ public interface IFlowableTaskService {
      */
     public PageModel<TaskVo> getApplyedTasks(TaskQueryVo params, Query query);
 
+
+    /**
+     * 查询全部任务列表
+     *
+     * @param params 参数
+     * @return
+     */
+    public PageModel<TaskVo> getAllTasks(TaskQueryVo params, Query query);
+
     /**
      * 通过流程实例id获取流程实例的待办任务审批人列表
      *

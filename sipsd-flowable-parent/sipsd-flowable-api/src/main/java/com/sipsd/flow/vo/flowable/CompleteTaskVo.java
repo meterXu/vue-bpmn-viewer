@@ -1,7 +1,7 @@
 package com.sipsd.flow.vo.flowable;
 
 
-import com.sipsd.flow.validation.JsonValidation;
+import com.sipsd.validation.constraints.JsonValidation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

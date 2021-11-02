@@ -1,6 +1,6 @@
 package com.sipsd.flow.vo.flowable.ret;
 
-import com.sipsd.flow.validation.JsonValidation;
+import com.sipsd.validation.constraints.JsonValidation;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;

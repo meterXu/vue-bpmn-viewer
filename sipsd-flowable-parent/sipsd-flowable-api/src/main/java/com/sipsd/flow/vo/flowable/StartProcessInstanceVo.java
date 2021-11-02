@@ -1,6 +1,7 @@
 package com.sipsd.flow.vo.flowable;
 
-import com.sipsd.flow.validation.JsonValidation;
+
+import com.sipsd.validation.constraints.JsonValidation;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -39,7 +40,7 @@ public class StartProcessInstanceVo implements Serializable {
 	/**
 	 * 业务附加信息
 	 */
-	@JsonValidation
+	@JsonValidation(message = "必须是json格式")
 	private String businessInfo;
 	/**
 	 * 启动流程变量 选填

@@ -77,6 +77,21 @@ public class ApiFlowableTaskResource extends BaseResource {
         return pm;
     }
 
+
+    /**
+     * 获取已办任务列表
+     *
+     * @param params 参数
+     * @param query  查询条件
+     * @return
+     */
+    @ApiOperation("获取全部任务列表(包括已办待办)")
+    @GetMapping(value = "/get-all-tasks")
+    public PageModel<TaskVo> getAllTasks(TaskQueryVo params, Query query) {
+        PageModel<TaskVo> pm = flowableTaskService.getApplyedTasks(params, query);
+        return pm;
+    }
+
     /**
      * 获取已办任务列表
      *

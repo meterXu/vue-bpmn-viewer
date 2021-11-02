@@ -669,6 +669,14 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 
 	@Override
+	public PageModel<TaskVo> getAllTasks(TaskQueryVo params, Query query)
+	{
+		PageHelper.startPage(query.getPageNum(), query.getPageSize());
+		Page<TaskVo> allTasks = flowableTaskDao.getAllTasks(params);
+		return new PageModel<>(allTasks);
+	}
+
+	@Override
 	public List<User> getApprovers(String processInstanceId) {
 		List<User> users = new ArrayList<>();
 		List<Task> list = taskService.createTaskQuery().processInstanceId(processInstanceId).list();

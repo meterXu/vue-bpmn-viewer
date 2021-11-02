@@ -29,6 +29,15 @@ public interface IFlowableTaskDao {
      * @return
      */
     public Page<TaskVo> getApplyedTasks(TaskQueryVo params);
+
+
+    /**
+     * 查询全部任务列表
+     *
+     * @param params 参数
+     * @return
+     */
+    public Page<TaskVo> getAllTasks(TaskQueryVo params);
     
     /**
      * 根据任务ID 查询任务

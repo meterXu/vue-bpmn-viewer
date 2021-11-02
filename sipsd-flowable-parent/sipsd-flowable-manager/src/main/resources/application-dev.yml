@@ -49,9 +49,10 @@ security :
     basic :
         enabled:false
 #License相关配置
-license:
-    subject: license_demo
-    publicAlias: publicCert
-    storePass: public_passwordQAZ2wsx3edc
-    licensePath: /Users/mac/Documents/Apache/license_demo/license.lic
-    public-keys-store-path: /Users/mac/Documents/Apache/license_demo/publicCerts.keystore
+#license:
+#    subject: dpark_license
+#    publicAlias: publicCert
+#    storePass: public_passwordQAZ2wsx3edc
+#    licensePath: /Users/mac/Documents/Apache/license_demo/license.lic
+#    public-keys-store-path: /Users/mac/Documents/Apache/license_demo/publicCerts.keystore
+#    app-id: 123
