@@ -589,6 +589,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				executionVariables.put(userTaskModel.getLoopCharacteristics().getElementVariable(), assignee);
 				//添加多实例
 				runtimeService.addMultiInstanceExecution(task.getTaskDefinitionKey(), task.getProcessInstanceId(), executionVariables);
+
+				flowableExtensionTaskService.saveExtensionTask(task.getProcessInstanceId(), task.getTaskDefinitionKey(), null);
 			}
 
 
