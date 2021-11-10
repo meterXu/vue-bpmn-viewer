@@ -1,5 +1,6 @@
 package com.sipsd.flow.rest.api;
 
+import cn.hutool.core.collection.CollUtil;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.service.flowable.IFlowableCommentService;
@@ -243,6 +244,26 @@ public class ApiFormDetailReource extends BaseResource {
 			result = flowableTaskService.afterAddSignTask(params);
 		} else {
 			result = Result.failed("请选择人员");
+		}
+		return result;
+	}
+
+
+	/**
+	 * 多实例加签
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("多实例加签")
+	@PostMapping(value = "/addMultiInstanceExecution")
+	public Result<String> addMultiInstanceExecution(@Validated @RequestBody AddSignTaskVo params) {
+		Result<String> result = null;
+		List<String> signPersoneds = params.getSignPersoneds();
+		if (CollUtil.isNotEmpty(signPersoneds)) {
+			result = flowableTaskService.addMultiInstanceExecution(params);
+		} else {
+			result = Result.failed("请选择加签人员");
 		}
 		return result;
 	}

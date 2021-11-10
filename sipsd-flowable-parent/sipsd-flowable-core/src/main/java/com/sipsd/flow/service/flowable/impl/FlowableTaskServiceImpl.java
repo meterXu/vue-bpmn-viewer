@@ -1,9 +1,16 @@
 package com.sipsd.flow.service.flowable.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.bean.BpmTaskModelEntity;
 import com.sipsd.flow.bean.FlowElementVo;
+import com.sipsd.flow.bean.ParallelGatwayDTO;
+import com.sipsd.flow.bean.UserTaskModelDTO;
+import com.sipsd.flow.cmd.SaveExecutionCmd;
 import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -11,6 +18,8 @@ import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
+import com.sipsd.flow.exception.SipsdBootException;
+import com.sipsd.flow.service.flowable.BpmProcessService;
 import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
 import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.service.flowable.IFlowableTaskService;
@@ -23,8 +32,15 @@ import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.constants.BpmnXMLConstants;
 import org.flowable.bpmn.model.Process;
 import org.flowable.bpmn.model.*;
+import org.flowable.common.engine.impl.cfg.IdGenerator;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
+import org.flowable.engine.DynamicBpmnService;
+import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.RepositoryService;
+import org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntityImpl;
+import org.flowable.engine.impl.persistence.entity.ExecutionEntityManager;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ActivityInstance;
 import org.flowable.engine.runtime.Execution;
@@ -44,7 +60,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author : chengtg
@@ -66,6 +84,14 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private IFlowableExtensionTaskService flowableExtensionTaskService;
 	@Autowired
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
+	@Autowired
+	private ProcessEngineConfiguration processEngineConfiguration;
+	@Autowired
+	private BpmProcessService bpmProcessService;
+	@Autowired
+	private DynamicBpmnService dynamicBpmnService;
+
+	protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
 
 	@Override
 	public boolean checkParallelgatewayNode(String taskId) {
@@ -98,8 +124,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		}
 		// 1.把当前的节点设置为空
 		Result<String> result = null;
-		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId())
-				.singleResult();
+		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId()).singleResult();
 		// 1.把当前的节点设置为空
 		if (taskEntity != null) {
 			// 2.设置审批人
@@ -108,9 +133,22 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			// 3.添加驳回意见
 			this.addComment(backTaskVo.getTaskId(), backTaskVo.getUserCode(), backTaskVo.getProcessInstanceId(),
 					CommentTypeEnum.BH.toString(), backTaskVo.getMessage());
+
+			BpmTaskModelQuery query = new BpmTaskModelQuery();
+			query.setDefineId(taskEntity.getProcessDefinitionId());
+			UserTaskModelDTO userTaskModelsDTO = bpmProcessService.getUserTaskModelDto(query);
+			List<BpmTaskModelEntity> taskModelEntities = userTaskModelsDTO.getAllUserTaskModels();
+			Map<String, BpmTaskModelEntity> taskModelEntitiesMap = taskModelEntities.stream().collect(
+					Collectors.toMap(BpmTaskModelEntity::getTaskDefKey, a -> a, (k1, k2) -> k1));
+			//要跳转的节点B
+			List<BpmTaskModelEntity> targetNodes = new ArrayList<>(4);
+			//TODO 目标跳转节点为 多个 并且 都是并行网关里的任务节点
+			targetNodes.add(taskModelEntitiesMap.get(backTaskVo.getDistFlowElementId()));
+			// 当前节点A
+			BpmTaskModelEntity currentNode = taskModelEntitiesMap.get(taskEntity.getTaskDefinitionKey());
+
 			// 4.处理提交人节点
-			FlowNode distActivity = flowableBpmnModelService
-					.findFlowNodeByActivityId(taskEntity.getProcessDefinitionId(), backTaskVo.getDistFlowElementId());
+			FlowNode distActivity = flowableBpmnModelService.findFlowNodeByActivityId(taskEntity.getProcessDefinitionId(), backTaskVo.getDistFlowElementId());
 			if (distActivity != null) {
 				if (FlowConstant.FLOW_SUBMITTER.equals(distActivity.getName())) {
 					ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
@@ -121,6 +159,10 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 			// 5.删除节点
 			this.deleteActivity(backTaskVo.getDistFlowElementId(), taskEntity.getProcessInstanceId());
+
+			Map<String, UserTask> allUserTaskMap = getAllUserTaskMap(taskEntity.getProcessDefinitionId());
+			UserTask userTaskModel = allUserTaskMap.get(taskExtensionVo.getTaskDefinitionKey());
+
 			List<String> executionIds = new ArrayList<>();
 			// 6.判断节点是不是子流程内部的节点
 			if (flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
@@ -134,7 +176,38 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
-			} else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+			}
+			//【跳转到并联网关内】判断目标跳转节点B---->目标节点是否存在 && 是否都是并行网关内的节点   TODO 判断多个目标节点，并且 都是并行网关里的节点
+			else if(CollUtil.isNotEmpty(targetNodes) && targetNodes.get(0).getInParallelGateway()){
+				//如果A非并行分支上的任务节点,B是为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+				if (!currentNode.getInParallelGateway()) {
+
+					String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
+					ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
+					// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+					dealParallelGatewayFinishLog(forkGatewayB, taskEntity, targetNodes.size());
+				}
+
+				//目标跳转节点B
+				List<String> targetTaskDefKey = new ArrayList<>();
+				targetTaskDefKey.add(backTaskVo.getDistFlowElementId());
+				//5.执行驳回操作
+				runtimeService.createChangeActivityStateBuilder()
+						.processInstanceId(backTaskVo.getProcessInstanceId())
+						.moveSingleActivityIdToActivityIds(currentTaskDefKey,targetTaskDefKey)
+						.changeState();
+			}
+			// 跳转到会签节点
+			else if(userTaskModel.hasMultiInstanceLoopCharacteristics()){
+
+				List<Execution> executions = runtimeService.createExecutionQuery()
+						.parentId(taskEntity.getProcessInstanceId()).list();
+				executions.forEach(execution -> executionIds.add(execution.getId()));
+				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
+
+			}
+
+			else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
 				//驳回到并联节点
 				List<String> distActivityIds = new ArrayList<>();
 				//查询该节点的其他并联节点
@@ -144,7 +217,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				{
 					distActivityIds.add(extensionVo.getTaskDefinitionKey());
 				}
-
 				//5.执行驳回操作
 				runtimeService.createChangeActivityStateBuilder()
 						.processInstanceId(backTaskVo.getProcessInstanceId())
@@ -187,8 +259,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		}
 
 		Result<String> result = null;
-		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(preBackTaskVo.getTaskId())
-				.singleResult();
+		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(preBackTaskVo.getTaskId()).singleResult();
 		// 1.把当前的节点设置为空
 		if (taskEntity != null) {
 			// 2.设置审批人
@@ -210,6 +281,10 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 			// 5.删除节点
 			this.deleteActivity(taskExtensionVo.getTaskDefinitionKey(), taskEntity.getProcessInstanceId());
+
+			Map<String, UserTask> allUserTaskMap = getAllUserTaskMap(taskEntity.getProcessDefinitionId());
+			UserTask userTaskModel = allUserTaskMap.get(taskExtensionVo.getTaskDefinitionKey());
+
 			List<String> executionIds = new ArrayList<>();
 			// 6.判断节点是不是子流程内部的节点
 			if (flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
@@ -223,7 +298,18 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
-			} else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+			}
+			// 驳回到会签节点
+			else if(userTaskModel.hasMultiInstanceLoopCharacteristics()){
+
+				List<Execution> executions = runtimeService.createExecutionQuery()
+						.parentId(taskEntity.getProcessInstanceId()).list();
+				executions.forEach(execution -> executionIds.add(execution.getId()));
+				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
+
+			}
+			// 驳回到并联网关内节点
+			else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
 				//驳回到并联节点
 				List<String> distActivityIds = new ArrayList<>();
 				//查询该节点的其他并联节点
@@ -233,12 +319,12 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				{
 					distActivityIds.add(extensionVo.getTaskDefinitionKey());
 				}
-
 				//5.执行驳回操作
 				runtimeService.createChangeActivityStateBuilder()
 						.processInstanceId(preBackTaskVo.getProcessInstanceId())
 						.moveSingleActivityIdToActivityIds(currentTaskDefKey,distActivityIds)
 						.changeState();
+
 			}
 			else {
 				// 6.2 普通驳回
@@ -458,6 +544,64 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			result =  Result.failed("不存在任务实例，请确认!");
 		}
 		return result;
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	@Override
+	public Result<String> addMultiInstanceExecution(AddSignTaskVo form) {
+		TaskEntityImpl task = (TaskEntityImpl) taskService.createTaskQuery().taskId(form.getTaskId()).singleResult();
+		List<String> signPersoneds = form.getSignPersoneds();
+		if (task == null) {
+			return  Result.failed("不存在任务实例，请确认!");
+		}else{
+
+			Map<String, UserTask> allUserTaskMap = getAllUserTaskMap(task.getProcessDefinitionId());
+			UserTask userTaskModel = allUserTaskMap.get(task.getTaskDefinitionKey());
+			if (!userTaskModel.hasMultiInstanceLoopCharacteristics()) {
+				return   Result.failed("the task(id=" + form.getTaskId() + ") not a MultiInstance Task");
+			}
+			ArrayList<String> collectionValueList = new ArrayList<>(4);
+			// 重新设置多实例人员集合变量的列表值
+			Map<String, Object> executionVariables = new HashMap<>(4);
+			String collectionKey = StrUtil.replaceChars(
+					StrUtil.replaceChars(
+							StrUtil.replaceChars(
+									userTaskModel.getLoopCharacteristics().getInputDataItem(),
+									"$", ""),
+							"{", ""),
+					"}", "");
+
+			Object collectionValue = runtimeService.getVariable(task.getProcessInstanceId(), collectionKey);
+			if (ObjectUtil.isNotEmpty(collectionValue) && collectionValue instanceof List) {
+				collectionValueList = new ArrayList<>((List<String>) collectionValue);
+				for(String assignee : signPersoneds){
+					if (!collectionValueList.contains(assignee)) {
+						collectionValueList.add(assignee);
+						executionVariables.put(collectionKey, collectionValueList);
+						runtimeService.setVariables(task.getProcessInstanceId(), executionVariables);
+					}
+				}
+			}
+
+			for(String assignee : signPersoneds){
+				// 设置局部变量, 并行实例必须采用该变量设置
+				executionVariables.clear();
+				executionVariables.put(userTaskModel.getLoopCharacteristics().getElementVariable(), assignee);
+				//添加多实例
+				runtimeService.addMultiInstanceExecution(task.getTaskDefinitionKey(), task.getProcessInstanceId(), executionVariables);
+			}
+
+
+			// 并行多实例 Flowabel6.4.2 BUG(加签后 nrOfActiveInstances 没有变化) ，
+			if (!userTaskModel.getLoopCharacteristics().isSequential()) {
+				// 部分控制变量需要修改值
+				Execution execution = runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
+				executionVariables.clear();
+				executionVariables.put(NUMBER_OF_ACTIVE_INSTANCES, collectionValueList.size());
+				runtimeService.setVariables(execution.getParentId(), executionVariables);
+			}
+			return Result.sucess("加签成功");
+		}
 	}
 
 	/**
@@ -783,5 +927,102 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 递归加签（并联审批）的父任务
+	 * @param taskEntity
+	 * @return
+	 */
+	private  String  getParentTaskId(TaskEntity taskEntity){
+		String parentTaskId = taskEntity.getParentTaskId();
+		if(StrUtil.isNotEmpty(parentTaskId)){
+			TaskEntity result = (TaskEntity) taskService.createTaskQuery().taskId(parentTaskId).singleResult();
+			getParentTaskId(result);
+		}
+		return parentTaskId;
+	}
+
+	/**
+	 * B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+	 *
+	 * @param forkGatewayB    B所在的并行网关
+	 * @param task            当然任务
+	 * @param targetNodesSize B的数量
+	 */
+	private void dealParallelGatewayFinishLog(
+			ParallelGatwayDTO forkGatewayB, Task task, int targetNodesSize) {
+		dealParallelGatewayFinishLog(forkGatewayB, task, targetNodesSize, null);
+	}
+
+	/**
+	 * B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+	 *
+	 * @param forkGatewayB             B所在的并行网关
+	 * @param task                     当然任务
+	 * @param targetNodesSize          B的数量
+	 * @param untilParentForkGatewayId b的最上层父并行网关
+	 */
+	private void dealParallelGatewayFinishLog(
+			ParallelGatwayDTO forkGatewayB, Task task, int targetNodesSize, String untilParentForkGatewayId) {
+		int reduceForkSize = forkGatewayB.getForkSize() - targetNodesSize;
+		if (reduceForkSize < 0) {
+			throw new SipsdBootException("目标节点数量不能大于并行网关的总分支数量");
+		}
+		if (reduceForkSize > 0) {
+			for (int i = 0; i < reduceForkSize; i++) {
+				logger.debug("插入目标节点的合并网关 {} 一条分支线上的完成记录", forkGatewayB.getJoinId());
+				insertExecution(forkGatewayB.getJoinId(), task.getProcessInstanceId(), task.getProcessDefinitionId(), task.getTenantId());
+			}
+		}
+
+		// 如果该网关是子网关则，还需要处理父网关信息
+		ParallelGatwayDTO parentParallelGatwayDTO = forkGatewayB.getParentParallelGatwayDTO();
+		while (parentParallelGatwayDTO != null) {
+			if (org.apache.commons.lang3.StringUtils.isNotBlank(untilParentForkGatewayId)
+					&& parentParallelGatwayDTO.getForkId().equals(untilParentForkGatewayId)) {
+				break;
+			}
+
+			for (int i = 0; i < parentParallelGatwayDTO.getForkSize() - 1; i++) {
+				logger.debug("插入目标节点的父合并网关 {} 一条分支线上的完成记录 ", parentParallelGatwayDTO.getJoinId());
+				insertExecution(parentParallelGatwayDTO.getJoinId(), task.getProcessInstanceId(), task.getProcessDefinitionId(), task.getTenantId());
+			}
+			parentParallelGatwayDTO = parentParallelGatwayDTO.getParentParallelGatwayDTO();
+		}
+	}
+	protected void insertExecution(String gatewayId, String processInstanceId, String processDefinitionId, String tenantId) {
+		ExecutionEntityManager executionEntityManager = ((ProcessEngineConfigurationImpl) processEngineConfiguration).getExecutionEntityManager();
+		ExecutionEntity executionEntity = executionEntityManager.create();
+		IdGenerator idGenerator = processEngineConfiguration.getIdGenerator();
+		executionEntity.setId(idGenerator.getNextId());
+		executionEntity.setRevision(0);
+		executionEntity.setProcessInstanceId(processInstanceId);
+
+		executionEntity.setParentId(processInstanceId);
+		executionEntity.setProcessDefinitionId(processDefinitionId);
+
+		executionEntity.setRootProcessInstanceId(processInstanceId);
+		((ExecutionEntityImpl) executionEntity).setActivityId(gatewayId);
+		executionEntity.setActive(false);
+
+		executionEntity.setSuspensionState(1);
+		executionEntity.setTenantId(tenantId);
+
+		executionEntity.setStartTime(new Date());
+		((ExecutionEntityImpl) executionEntity).setCountEnabled(true);
+
+		managementService.executeCommand(new SaveExecutionCmd(executionEntity));
+		//executionEntityManager.insert(executionEntity);
+	}
+
+	private Map<String, UserTask> getAllUserTaskMap(String processDefinitionId) {
+		ProcessDefinition processDefinition = repositoryService
+				.createProcessDefinitionQuery()
+				.processDefinitionId(processDefinitionId).singleResult();
+		BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinition.getId());
+		Process process = bpmnModel.getProcesses().get(0);
+		return process.findFlowElementsOfType(UserTask.class)
+				.stream().collect(Collectors.toMap(UserTask::getId, a -> a, (k1, k2) -> k1));
 	}
 }

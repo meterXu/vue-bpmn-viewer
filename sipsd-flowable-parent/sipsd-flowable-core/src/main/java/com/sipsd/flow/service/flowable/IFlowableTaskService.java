@@ -60,6 +60,16 @@ public interface IFlowableTaskService {
      */
     public Result<String> afterAddSignTask(AddSignTaskVo addSignTaskVo);
 
+
+    /**
+     * 多实例-加签
+     *
+     * @param addSignTaskVo ignore
+     */
+    Result<String> addMultiInstanceExecution(AddSignTaskVo addSignTaskVo);
+
+
+
     /**
      * 任务加签
      *
