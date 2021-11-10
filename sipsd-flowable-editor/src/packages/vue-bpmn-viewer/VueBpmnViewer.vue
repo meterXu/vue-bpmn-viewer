@@ -52,21 +52,23 @@ import {LogFv} from '@dpark/logfv-web-vue'
 export default {
   name: "VueBpmnViewer",
   props:{
-    baseApi:{type:String,required:true},
+    baseApi:{type:String,required:false},
     instanceId:{type:String},
     xmlId:{type:String},
-    type:{type:Number,required: true},
+    type:{type:Number,required: false},
     static:{type:Boolean,default: false},
+    source:{type:String},
+    timeData:{type:Array},
     options:{type:Object,default(){
       return {
       zoom:true,
-      timeLine:true,
+      timeLine:false,
       center:true,
       setline:false
     }
     }},
-    log:{type:Boolean,default:null},
-    logReportUrl:{type:String,default:'http://192.168.126.25/logfv-server/logfv/web/upload'}
+    log:{type:Boolean,default:false},
+    logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
     VueBpmn,
@@ -98,13 +100,21 @@ export default {
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
-      if(this.baseApi){
+      if(this.source){
+        if(/http:|https:/g.test(this.source)){
+          return this.source
+        }else{
+          return this.source
+        }
+      }else if(this.baseApi){
         if(this.type===1 && this.xmlId){
-        this.options = Object.assign(this.options,{timeLine:false})
-        return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
-      }else if(this.type===2 && this.instanceId){
-        return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
-      }
+          this.options = Object.assign(this.options,{timeLine:false})
+          return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
+        }else if(this.type===2 && this.instanceId){
+          return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
+        }
+      }else{
+        return null
       }
     }
   },
@@ -135,53 +145,62 @@ export default {
     getTaskList(){
       if(this.instanceId){
         this.taskData=[]
-        axios.get(
-          urljoin(this.baseApi,this.url.allExtensionTasks)
-        ,{
-          params:{
-            initPageIndex:1,
-            pageIndex:1,
-            pageNum:1,
-            pageSize:99,
-            processInstanceId:this.instanceId
-          }
-        }).then(res=>{
-          this.logfv.info(JSON.stringify({
-            title: '获取流程详细执行数据成功！',
-            actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
-          }))
-          res.data.data.sort((a,b)=>{
-            return a.startTime - b.startTime
-          }).forEach(f=>{
-            utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
-            if(f.realName){
-              utils.setTaskRealName(f.taskDefinitionKey,f.realName)
-            }
-            this.taskData.push(f)
-          })
-          if(this.taskData.filter(c=>c.status==='待办').length===0){
-            utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
-          }
-        }).catch(err=>{
-          this.logfv.info(JSON.stringify({
-            title: '获取流程详细执行数据失败！',
-            error:{
-              message:err.message,
-              stack:err.stack
-            },
-            props:{
-              baseApi:this.baseApi,
-              instanceId:this.instanceId,
-              xmlId:this.xmlId,
-              type:this.type,
-              static:this.static,
-              options:this.options
-            }
-          }))
-          console.error(err)
-        }).finally(()=>{
+        if(this.timeData){
+          this.dealWithTimeData(this.timeData)
           this.timeLine_loading=false
-        })
+        }else{
+          this.getTimeData()
+        }
+      }
+    },
+    getTimeData(){
+      axios.get(urljoin(this.baseApi,this.url.allExtensionTasks),{
+            params:{
+              initPageIndex:1,
+              pageIndex:1,
+              pageNum:1,
+              pageSize:99,
+              processInstanceId:this.instanceId
+            }
+          }).then(res=>{
+        this.logfv.info(JSON.stringify({
+          title: '获取流程详细执行数据成功！',
+          actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
+        }))
+        this.dealWithTimeData(timeRes.data.data)
+      }).catch(err=>{
+        this.logfv.info(JSON.stringify({
+          title: '获取流程详细执行数据失败！',
+          error:{
+            message:err.message,
+            stack:err.stack
+          },
+          props:{
+            baseApi:this.baseApi,
+            instanceId:this.instanceId,
+            xmlId:this.xmlId,
+            type:this.type,
+            static:this.static,
+            options:this.options
+          }
+        }))
+        console.error(err)
+      }).finally(()=>{
+        this.timeLine_loading=false
+      })
+    },
+    dealWithTimeData(timeRes){
+      timeRes.sort((a,b)=>{
+        return a.startTime - b.startTime
+      }).forEach(f=>{
+        utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+        if(f.realName){
+          utils.setTaskRealName(f.taskDefinitionKey,f.realName)
+        }
+        this.taskData.push(f)
+      })
+      if(this.taskData.filter(c=>c.status==='待办').length===0){
+        utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
       }
     },
     bpmnLoadDone(){
@@ -265,12 +284,12 @@ export default {
     }))
   },
   created() {
-    let log_enable = (this.log!==null?this.log:(process.env.NODE_ENV==='production'))
     this.logfv = new LogFv({
       reportUrl:this.logReportUrl,
       appId:'vue-bpmn-viewer',
       appName:'工作流执行器',
-      enable:log_enable
+      objType:2,
+      enable:this.log
     })
   }
 }

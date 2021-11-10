@@ -2,6 +2,7 @@
   "name": "bpmn-viewer",
   "version": "1.0.0",
   "private": false,
+  "license": "MIT",
   "scripts": {
     "pre": "yarn install",
     "dev": "s2 r",

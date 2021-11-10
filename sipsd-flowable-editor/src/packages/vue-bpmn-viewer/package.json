@@ -1,7 +1,7 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.52",
-  "description": "bpmn2.0 流程图预览组件",
+  "version": "1.0.53",
+  "description": "沃壤平台工作流引擎执行器",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
