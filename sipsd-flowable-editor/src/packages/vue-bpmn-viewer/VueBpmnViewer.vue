@@ -31,7 +31,7 @@
         <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="showZoom" :center="options.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTZoom v-show="showZoom" :center="myOptions.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <slot name="timeLine" v-if="showTimeLine" v-bind:loading="timeLine_loading" v-bind:data="taskData">
           <BTimeLine :loading="timeLine_loading" :data="taskData"/>
         </slot>
