@@ -5,7 +5,7 @@
   </VueBpmnViewer>
 </template>
 <script>
-import VueBpmnViewer from "../packages/vue-bpmn-viewer/VueBpmnViewer";
+import VueBpmnViewer from "@dpark/vue-bpmn-viewer";
 export default {
   components:{VueBpmnViewer},
   data(){
