@@ -52,14 +52,23 @@ export default {
   },
   methods:{
     fmtDate(dt){
-      return moment(dt).format('YYYY-MM-DD HH:mm:ss')
+      if(dt){
+        return moment(dt).format('YYYY-MM-DD HH:mm:ss')
+      }else{
+        return '-'
+      }
     },
     timeFormat(s){
-      return ms(s*1000)
-          .replace('d','天')
-          .replace('h','小时')
-          .replace('m','分')
-          .replace('s','秒')
+      if(s){
+        return ms(s*1000)
+            .replace(/ -/g,'')
+            .replace('d','天')
+            .replace('h','小时')
+            .replace('m','分')
+            .replace('s','秒')
+      }else{
+        return '-'
+      }
     },
     handleItemOver(item,taskId){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2

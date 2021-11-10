@@ -102,16 +102,13 @@ export default {
       this.clearWatermark()
       utils.clearAllHighLight()
       if(this.source){
-        if(/http:|https:/g.test(this.source)){
-          return this.source
-        }else{
-          return this.source
-        }
+        return this.source
       }else if(this.baseApi){
         if(this.type===1 && this.xmlId){
           this.myOptions = Object.assign(this.myOptions,{timeLine:false})
           return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
         }else if(this.type===2 && this.instanceId){
+          this.myOptions = Object.assign(this.myOptions,{timeLine:true})
           return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
         }
       }else{
@@ -207,7 +204,7 @@ export default {
             title: '获取流程详细执行数据成功！',
             actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
           }))
-          this.dealWithTimeData(timeRes.data.data)
+          this.dealWithTimeData(res.data.data)
         }).catch(err=>{
           this.logfv.info(JSON.stringify({
             title: '获取流程详细执行数据失败！',
