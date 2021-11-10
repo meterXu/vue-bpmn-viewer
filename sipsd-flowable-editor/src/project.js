@@ -4,15 +4,24 @@ const project_bpmn = {
   variable: {
     development: {
       baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
-      accessTokenTime: 3600 * 1000
+      accessTokenTime: 3600 * 1000,
+      logfv:{
+        enable:false
+      }
     },
     production: {
       baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
-      accessTokenTime: 3600 * 1000
+      accessTokenTime: 3600 * 1000,
+      logfv:{
+        enable:false
+      }
     },
     proxy:{
       baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
-      accessTokenTime: 3600 * 1000
+      accessTokenTime: 3600 * 1000,
+      logfv:{
+        enable:false
+      }
     }
   },
   redirect: {

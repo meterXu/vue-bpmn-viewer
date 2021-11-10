@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn-viewer">
-    <Spin :spinning="(type===1&&loading)||(type===2&&timeLine_loading)" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
-      <vue-bpmn :viewer="static" v-if="(instanceId&&type===2)||(xmlId&&type===1)" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
+    <Spin :spinning="showSpining" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
+      <vue-bpmn :viewer="static" v-if="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
       </div>
@@ -31,8 +31,8 @@
         <slot></slot>
       </template>
       <template slot="right">
-        <BTZoom v-show="(type===2&&instanceId||type===1&&xmlId)&&options.zoom&&!loading" :center="options.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <slot name="timeLine" v-if="type===2&&instanceId&&options.timeLine&&!loading" v-bind:loading="timeLine_loading" v-bind:data="taskData">
+        <BTZoom v-show="showZoom" :center="options.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <slot name="timeLine" v-if="showTimeLine" v-bind:loading="timeLine_loading" v-bind:data="taskData">
           <BTimeLine :loading="timeLine_loading" :data="taskData"/>
         </slot>
       </template>
@@ -59,14 +59,7 @@ export default {
     static:{type:Boolean,default: false},
     source:{type:String},
     timeData:{type:Array},
-    options:{type:Object,default(){
-      return {
-      zoom:true,
-      timeLine:false,
-      center:true,
-      setline:false
-    }
-    }},
+    options:{type:Object},
     log:{type:Boolean,default:false},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
@@ -97,6 +90,14 @@ export default {
     }
   },
   computed:{
+    myOptions(){
+      return Object.assign({
+        zoom:true,
+        timeLine:false,
+        center:true,
+        setline:false
+      },this.options)
+    },
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
@@ -108,13 +109,53 @@ export default {
         }
       }else if(this.baseApi){
         if(this.type===1 && this.xmlId){
-          this.options = Object.assign(this.options,{timeLine:false})
+          this.myOptions = Object.assign(this.myOptions,{timeLine:false})
           return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
         }else if(this.type===2 && this.instanceId){
           return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
         }
       }else{
         return null
+      }
+    },
+    showSpining(){
+      if(this.source){
+        return false
+      }else if(this.baseApi){
+        return  (this.type===1&&this.loading)||(this.type===2&&this.timeLine_loading)
+      }else{
+        return false
+      }
+    },
+    showBpmn(){
+      if(this.source){
+        return true
+      }else if(this.baseApi){
+        return (this.instanceId&&this.type===2)||(this.xmlId&&this.type===1)
+      }else{
+        return false
+      }
+    },
+    showTimeLine(){
+      if(this.myOptions.timeLine&&!this.loading){
+        if(this.timeData){
+          return true
+        }else{
+          return this.type===2&&this.instanceId
+        }
+      }else{
+        return false
+      }
+    },
+    showZoom(){
+      if(this.myOptions.zoom&&!this.loading){
+        if(this.source){
+          return true
+        } else {
+          return  (this.type===2&&this.instanceId)||(this.type===1&&this.xmlId)
+        }
+      }else{
+        return false
       }
     }
   },
@@ -131,7 +172,7 @@ export default {
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.options.setline,shadow:false,type:1,stroke:true })
+              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.myOptions.setline,shadow:false,type:1,stroke:true })
             }break;
           }
         })
@@ -143,51 +184,51 @@ export default {
   },
   methods:{
     getTaskList(){
-      if(this.instanceId){
-        this.taskData=[]
-        if(this.timeData){
-          this.dealWithTimeData(this.timeData)
-          this.timeLine_loading=false
-        }else{
-          this.getTimeData()
-        }
+      this.taskData=[]
+      if(this.timeData){
+        this.dealWithTimeData(this.timeData)
+        this.timeLine_loading=false
+      }else{
+        this.getTimeData()
       }
     },
     getTimeData(){
-      axios.get(urljoin(this.baseApi,this.url.allExtensionTasks),{
-            params:{
-              initPageIndex:1,
-              pageIndex:1,
-              pageNum:1,
-              pageSize:99,
-              processInstanceId:this.instanceId
-            }
-          }).then(res=>{
-        this.logfv.info(JSON.stringify({
-          title: '获取流程详细执行数据成功！',
-          actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
-        }))
-        this.dealWithTimeData(timeRes.data.data)
-      }).catch(err=>{
-        this.logfv.info(JSON.stringify({
-          title: '获取流程详细执行数据失败！',
-          error:{
-            message:err.message,
-            stack:err.stack
-          },
-          props:{
-            baseApi:this.baseApi,
-            instanceId:this.instanceId,
-            xmlId:this.xmlId,
-            type:this.type,
-            static:this.static,
-            options:this.options
+      if(this.instanceId){
+        axios.get(urljoin(this.baseApi,this.url.allExtensionTasks),{
+          params:{
+            initPageIndex:1,
+            pageIndex:1,
+            pageNum:1,
+            pageSize:99,
+            processInstanceId:this.instanceId
           }
-        }))
-        console.error(err)
-      }).finally(()=>{
-        this.timeLine_loading=false
-      })
+        }).then(res=>{
+          this.logfv.info(JSON.stringify({
+            title: '获取流程详细执行数据成功！',
+            actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
+          }))
+          this.dealWithTimeData(timeRes.data.data)
+        }).catch(err=>{
+          this.logfv.info(JSON.stringify({
+            title: '获取流程详细执行数据失败！',
+            error:{
+              message:err.message,
+              stack:err.stack
+            },
+            props:{
+              baseApi:this.baseApi,
+              instanceId:this.instanceId,
+              xmlId:this.xmlId,
+              type:this.type,
+              static:this.static,
+              options:this.myOptions
+            }
+          }))
+          console.error(err)
+        }).finally(()=>{
+          this.timeLine_loading=false
+        })
+      }
     },
     dealWithTimeData(timeRes){
       timeRes.sort((a,b)=>{
@@ -213,11 +254,11 @@ export default {
           xmlId:this.xmlId,
           type:this.type,
           static:this.static,
-          options:this.options
+          options:this.myOptions
         }
       }))
       this.loading=false
-      if(this.options.timeLine){
+      if(this.myOptions.timeLine){
         this.getTaskList()
       }
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
@@ -239,7 +280,7 @@ export default {
           xmlId:this.xmlId,
           type:this.type,
           static:this.static,
-          options:this.options
+          options:this.myOptions
         }
       }))
       this.loading=false
@@ -261,7 +302,7 @@ export default {
           xmlId:this.xmlId,
           type:this.type,
           static:this.static,
-          options:this.options
+          options:this.myOptions
         }
       }))
       this.$refs.bpmnObj.reload()
@@ -279,7 +320,7 @@ export default {
         xmlId:this.xmlId,
         type:this.type,
         static:this.static,
-        options:this.options
+        options:this.myOptions
       }
     }))
   },

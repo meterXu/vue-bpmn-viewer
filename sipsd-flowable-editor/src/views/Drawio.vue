@@ -1,6 +1,5 @@
 <template>
   <div>
-    xxx
     <vue-bpmn :viewer="true" ref="bpmnObj"  :url="url">
     </vue-bpmn>
   </div>
