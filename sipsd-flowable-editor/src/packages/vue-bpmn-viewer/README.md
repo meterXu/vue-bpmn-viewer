@@ -66,7 +66,8 @@ export default {
 <template>
   <VueBpmnViewer :type="2"
                  :baseApi="baseApi"
-                 :instanceId="instanceId">
+                 :instanceId="instanceId"
+                 :options="options">
   </VueBpmnViewer>
 </template>
 <script>
@@ -77,6 +78,9 @@ export default {
     return {
       baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/',
       instanceId:'e6c573bcc99211eba5465e2c421612f0',
+      options:{
+        timeLine:true
+      }
     }
   }
 }
@@ -102,7 +106,7 @@ export default {
 |名称|说明|默认值|
 |:---|:---:|---:|
 |zoom|是否启用缩放控件|true|
-|timeLine|是否启用时间轴，如果type为1则强制为false|false|
+|timeLine|是否启用时间轴|false|
 |center|是否流程图居中显示|true|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
 

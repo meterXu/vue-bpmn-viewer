@@ -86,18 +86,11 @@ export default {
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/'
-      }
+      },
+      myOptions:null
     }
   },
   computed:{
-    myOptions(){
-      return Object.assign({
-        zoom:true,
-        timeLine:false,
-        center:true,
-        setline:false
-      },this.options)
-    },
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
@@ -105,10 +98,8 @@ export default {
         return this.source
       }else if(this.baseApi){
         if(this.type===1 && this.xmlId){
-          this.myOptions = Object.assign(this.myOptions,{timeLine:false})
           return urljoin(this.baseApi,this.url.xmlUrl+this.xmlId)
         }else if(this.type===2 && this.instanceId){
-          this.myOptions = Object.assign(this.myOptions,{timeLine:true})
           return urljoin(this.baseApi,this.url.instanceUrl+this.instanceId)
         }
       }else{
@@ -119,7 +110,7 @@ export default {
       if(this.source){
         return false
       }else if(this.baseApi){
-        return  (this.type===1&&this.loading)||(this.type===2&&this.timeLine_loading)
+        return  this.loading
       }else{
         return false
       }
@@ -322,6 +313,12 @@ export default {
     }))
   },
   created() {
+    this.myOptions = Object.assign({
+      zoom:true,
+      timeLine:false,
+      center:true,
+      setline:false
+    },this.options)
     this.logfv = new LogFv({
       reportUrl:this.logReportUrl,
       appId:'vue-bpmn-viewer',
