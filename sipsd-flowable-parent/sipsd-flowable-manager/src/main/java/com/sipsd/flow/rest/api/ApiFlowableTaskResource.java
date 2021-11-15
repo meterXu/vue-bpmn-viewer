@@ -1,5 +1,7 @@
 package com.sipsd.flow.rest.api;
 
+import com.sipsd.flow.bean.NoticeTask;
+import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -154,4 +156,18 @@ public class ApiFlowableTaskResource extends BaseResource {
         result.setData(flowableTaskService.getTask(params));
         return result;
     }
+
+    /**
+     * 获取抄送任务列表
+     *
+     * @param params 参数
+     * @param query  查询条件
+     * @return
+     */
+    @ApiOperation("获取抄送任务列表")
+    @GetMapping(value = "/getNoticeTasks")
+    public PageModel<NoticeTask> getNoticeTasks(NoticeTaskQuery params, Query query) {
+        return flowableTaskService.getNoticeTasks(params, query);
+    }
+
 }
