@@ -3,9 +3,17 @@
 
 ![sipsd-flowable-editor](http://58.210.9.133/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
+
 ## 安装
+1. 在工程目录下增加.npmrc文件，内容为：
+```yaml=
+registry  = "https://registry.npm.taobao.org"
+@dpark:registry="http://58.210.9.133/iplatform/npm/"
+```
+
+2. 安装组件
 ``` bash
-npm i @dpark/vue-bpmn-viewer --registry http://58.210.9.133/iplatform/npm/
+npm i @dpark/vue-bpmn-viewer
 ```
 
 ## 快速上手

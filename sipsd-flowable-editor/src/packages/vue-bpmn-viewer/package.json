@@ -20,11 +20,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@dpark/bpmn-theme-blue": "^1.0.16",
-    "@dpark/logfv-web-vue": "^1.0.21",
+    "@dpark/logfv-web-vue": "^1.0.23",
     "@dpark/s2-utils": "^1.0.38",
-    "@dpark/vue-bpmn": "^0.3.4",
-    "@dpark/vue-bpmn-controls": "^1.0.29",
     "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",

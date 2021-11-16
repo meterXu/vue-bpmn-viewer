@@ -3,7 +3,7 @@
     <Spin :spinning="showSpining" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
       <vue-bpmn :viewer="static" v-if="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
-        <img :src="getAssetsImg(require('./assets/no-bpmn.svg'))">
+        <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
       </div>
       <div class="legend">
         <ul class="legend-ul">
@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import VueBpmn from '@dpark/vue-bpmn';
-import bpmnThemeBlue from '@dpark/bpmn-theme-blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from '@dpark/vue-bpmn-controls'
+import VueBpmn from './bpmn/VueBpmn';
+import bpmnThemeBlue from './blue'
+import {BTimeLine,utils,BTLayout,BTZoom} from './controls'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
 import axios from 'axios'
