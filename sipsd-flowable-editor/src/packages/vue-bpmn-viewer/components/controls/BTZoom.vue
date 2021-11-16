@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import utils from "../lib/utils";
+import utils from "./lib/utils.js";
 import {Icon} from 'ant-design-vue'
 export default {
   name: "BTZoom",

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import utils from "../lib/utils";
+import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
 import {Spin,Timeline} from "ant-design-vue";

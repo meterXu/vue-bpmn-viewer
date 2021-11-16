@@ -41,9 +41,9 @@
 </template>
 
 <script>
-import VueBpmn from './bpmn/VueBpmn';
-import bpmnThemeBlue from './blue'
-import {BTimeLine,utils,BTLayout,BTZoom} from './controls'
+import VueBpmn from './bpmn/VueBpmn.vue';
+import bpmnThemeBlue from './blue/index.js'
+import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
 import {util} from '@dpark/s2-utils'
 import {Spin} from "ant-design-vue";
 import axios from 'axios'

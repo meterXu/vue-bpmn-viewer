@@ -28,6 +28,7 @@
     "bpmn-theme-blue": "^1.0.7",
     "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2",
+    "moment": "^2.29.1",
     "url-join": "^4.0.1",
     "vue": "^2.6.11"
   },
