@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sipsd.flow.dao.flowable.IFlowableNoticeTaskDao">
+    <sql id="result">
+        select ID_ as id,
+        PROC_DEF_ID_ as procDefId,
+        TASK_DEF_ID_ as taskDefId,
+        TASK_DEF_KEY_ as taskDefKey,
+        PROC_INST_ID_ as procInstId,
+        NAME_ as name,
+        PARENT_TASK_ID_ as parentTaskId,
+        DESCRIPTION_ as description,
+        OWNER_ as owner,
+        ASSIGNEE_ as assignee,
+        CREATE_TIME_ as createTime,
+        PRIORITY_ as priority,
+        FORM_KEY_ as formKey,
+        CATEGORY_ as category,
+        TENANT_ID_ as tenantId,
+        BUSINESS_INFO_ as businessInfo,
+        BUSINESS_KEY_ as businessKey,
+        FORM_NAME_ as  formName
+        from act_hi_notice_task
+    </sql>
+    <insert id="insertNoticeTask" parameterType="com.sipsd.flow.bean.NoticeTask">
+        insert into act_hi_notice_task (ID_, PROC_DEF_ID_,TASK_DEF_ID_,TASK_DEF_KEY_,PROC_INST_ID_,NAME_,PARENT_TASK_ID_,DESCRIPTION_,OWNER_,
+        ASSIGNEE_,CREATE_TIME_,PRIORITY_,FORM_KEY_,CATEGORY_,TENANT_ID_,BUSINESS_INFO_,BUSINESS_KEY_,FORM_NAME_)
+        values (#{id},#{procDefId},#{taskDefId},#{taskDefKey},#{procInstId},#{name},#{parentTaskId},#{description},#{owner},#{assignee},#{createTime},
+        #{priority},#{formKey},#{category},#{tenantId},#{businessInfo},#{businessKey},#{formName})
+    </insert>
+
+    <select id="noticeTaskPage" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.bean.NoticeTask">
+
+        <include refid="result"></include>
+        <where>
+            <if test="userCode != null and userCode != ''">
+                ASSIGNEE_ = #{userCode}
+            </if>
+            <if test="processInstanceId != null and processInstanceId != ''">
+                PROC_INST_ID_ = #{processInstanceId}
+            </if>
+            <if test=" taskId != null and taskId != ''">
+                PARENT_TASK_ID_ = #{taskId}
+            </if>
+        </where>
+        order by CREATE_TIME_ desc
+    </select>
+    <select id="queryById" parameterType="String" resultType="com.sipsd.flow.bean.NoticeTask">
+        <include refid="result"></include>
+        where ID_ = #{taskId}
+    </select>
+    <select id="noticeTaskList" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.bean.NoticeTask">
+        <include refid="result"></include>
+        <where>
+            <if test="userCode != null and userCode != ''">
+                ASSIGNEE_ = #{userCode}
+            </if>
+            <if test="processInstanceId != null and processInstanceId != ''">
+                PROC_INST_ID_ = #{processInstanceId}
+            </if>
+            <if test=" taskId != null and taskId != ''">
+                PARENT_TASK_ID_ = #{taskId}
+            </if>
+        </where>
+        order by CREATE_TIME_ desc
+    </select>
+</mapper>

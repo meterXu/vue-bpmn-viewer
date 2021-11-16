@@ -2,6 +2,7 @@ package com.sipsd.flow.service.flowable;
 
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.bean.FlowElementVo;
+import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.vo.flowable.*;
@@ -144,6 +145,15 @@ public interface IFlowableTaskService {
 
 
     /**
+     * 抄送任务
+     * @param params
+     * @param query
+     * @return
+     */
+    PageModel<NoticeTask> getNoticeTasks(NoticeTaskQuery params, Query query);
+
+
+    /**
      * 查询全部任务列表
      *
      * @param params 参数
@@ -169,4 +179,6 @@ public interface IFlowableTaskService {
 	Result<List<FlowElementVo>> getProcessNodeList(String modelkey);
 
 	TaskVo getTask(FormInfoQueryVo formInfoQueryVo);
+
+
 }

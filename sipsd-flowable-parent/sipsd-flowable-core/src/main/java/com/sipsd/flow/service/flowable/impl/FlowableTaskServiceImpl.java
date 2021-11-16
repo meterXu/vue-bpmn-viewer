@@ -6,10 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.bean.BpmTaskModelEntity;
-import com.sipsd.flow.bean.FlowElementVo;
-import com.sipsd.flow.bean.ParallelGatwayDTO;
-import com.sipsd.flow.bean.UserTaskModelDTO;
+import com.sipsd.flow.bean.*;
 import com.sipsd.flow.cmd.SaveExecutionCmd;
 import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.common.page.PageModel;
@@ -19,10 +16,7 @@ import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.exception.SipsdBootException;
-import com.sipsd.flow.service.flowable.BpmProcessService;
-import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
-import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
+import com.sipsd.flow.service.flowable.*;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
@@ -89,7 +83,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	@Autowired
 	private BpmProcessService bpmProcessService;
 	@Autowired
-	private DynamicBpmnService dynamicBpmnService;
+	private IFlowableNoticeTaskService noticeTaskService;
 
 	protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
 
@@ -812,6 +806,11 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		PageHelper.startPage(query.getPageNum(), query.getPageSize());
 		Page<TaskVo> applyedTasks = flowableTaskDao.getApplyedTasks(params);
 		return new PageModel<>(applyedTasks);
+	}
+
+	@Override
+	public PageModel<NoticeTask> getNoticeTasks(NoticeTaskQuery params, Query query) {
+		return noticeTaskService.getNoticeTasks(params, query);
 	}
 
 	@Override
