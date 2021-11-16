@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import VueBpmnViewer from "@dpark/vue-bpmn-viewer";
+import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
 export default {
   name: "Viewer",
   components:{

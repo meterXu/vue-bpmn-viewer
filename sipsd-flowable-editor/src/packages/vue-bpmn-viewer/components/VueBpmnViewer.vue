@@ -7,21 +7,9 @@
       </div>
       <div class="legend">
         <ul class="legend-ul">
-          <li>
-            <i class="legend-icon legend-none"></i>
-            <span>未执行</span>
-          </li>
-          <li>
-            <i class="legend-icon legend-unExec"></i>
-            <span>待审批</span>
-          </li>
-          <li>
-            <i class="legend-icon legend-exec"></i>
-            <span>已审批</span>
-          </li>
-          <li>
-            <i class="legend-icon legend-back"></i>
-            <span>被驳回</span>
+          <li v-for="item in legend" :key="item.class">
+            <i :class="['legend-icon',item.class]"></i>
+            <span>{{item.text}}</span>
           </li>
         </ul>
       </div>
@@ -87,7 +75,13 @@ export default {
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/'
       },
-      myOptions:null
+      myOptions:null,
+      legend:[
+        {text:"未执行",class:"legend-none"},
+        {text:"待审批",class:"legend-unExec"},
+        {text:"已审批",class:"legend-exec"},
+        {text:"被驳回",class:"legend-back"}
+      ]
     }
   },
   computed:{

@@ -40,22 +40,11 @@
 ...
 ```
 
-
 url中可使用的参数
 * type 显示模式，1：流程图，2：流程实例，默认为1
--------
-### 模式1，流程图显示模式
+* xmlId 流程图ID
 * instanceId 实例ID
 * zoom 显示缩放控件，默认true
-* timeLine 显示时间轴，默认true
-* static 是否静态不可拖动，默认false
-* center 是否流程图居中显示，默认true
-* setline 是否显示动态线条，默认false
-
--------
-### 模式2，流程实例显示模式
-* xmlId 流程图ID，如果使用xmlID则时间轴不显示
-* zoom 显示缩放控件，默认true  
 * timeLine 显示时间轴，默认true
 * static 是否静态不可拖动，默认false
 * center 是否流程图居中显示，默认true
@@ -65,20 +54,21 @@ url中可使用的参数
 
 ## 组件模式
 在项目中单独使用预览组件
+
 ```vue
-    <VueBpmnViewer :baseApi="baseApi"
+    <VueBpmnViewer :type=1 :baseApi="baseApi"
+                   :xmlId="xmlId">
+    </VueBpmnViewer>
+```
+或者
+
+```vue
+    <VueBpmnViewer :type=2 :baseApi="baseApi"
                    :instanceId="instanceId">
     </VueBpmnViewer>
 ```
 
-或者
-
-```vue
-    <VueBpmnViewer :baseApi="baseApi"
-                   :xmlId="xmlId">
-    </VueBpmnViewer>
-```
-其中，baseApi是flowable后端地址，instanceId为示例ID。
+其中，baseApi是flowable后端地址，xmlId是流程图id，instanceId为实例id。
 
 组件详细用法参考[vue-bpmn-viewer](http://192.168.126.25/git/sipsd-open-source/flowable_v3/-/blob/master/sipsd-flowable-editor/src/packages/vue-bpmn-viewer/README.md)
 
