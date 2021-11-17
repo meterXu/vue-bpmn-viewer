@@ -1,6 +1,6 @@
 <template>
   <div id="bpmn-viewer">
-    <Spin :spinning="showSpining" tip="加载中..."  wrapperClassName="bpmn-viewer-canvas">
+    <div ref="bpmn-viewer-canvas" class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="static" v-if="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
         <img :src="getAssetsImg(require('../assets/no-bpmn.svg'))">
@@ -13,7 +13,7 @@
           </li>
         </ul>
       </div>
-    </Spin>
+    </div>
     <BTLayout>
       <template slot="head">
         <slot></slot>
@@ -33,7 +33,7 @@ import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeBlue from './blue/index.js'
 import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
 import {util} from '@dpark/s2-utils'
-import {Spin} from "ant-design-vue";
+import {Loading} from "element-ui";
 import axios from 'axios'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -55,8 +55,7 @@ export default {
     VueBpmn,
     BTLayout,
     BTZoom,
-    BTimeLine,
-    Spin
+    BTimeLine
   },
   data(){
     return {
@@ -64,6 +63,7 @@ export default {
       loading:false,
       bpmnViewer:null,
       timeLine_loading:true,
+      loadingInstance:null,
       bpmnOptions:{
         additionalModules:[bpmnThemeBlue]
       },
@@ -162,6 +162,10 @@ export default {
     },
     xml(){
       this.loading = true
+      this.loadingInstance=Loading.service({
+        target:this.$refs['bpmn-viewer-canvas'],
+        fullscreen:false
+      })
     }
   },
   methods:{
@@ -240,6 +244,7 @@ export default {
         }
       }))
       this.loading=false
+      this.loadingInstance&&this.loadingInstance.close();
       if(this.myOptions.timeLine){
         this.getTaskList()
       }
@@ -266,6 +271,7 @@ export default {
         }
       }))
       this.loading=false
+      this.loadingInstance&&this.loadingInstance.close();
     },
     clearWatermark(){
       setTimeout(()=>{
@@ -336,9 +342,6 @@ export default {
   cursor: grabbing;
 }
 .bpmn-viewer-canvas{
-  /*width: 90%;*/
-  /*height: 95%;*/
-  /*margin: 5% auto 0 auto;*/
   width: 100%;
   height: 100%;
 }

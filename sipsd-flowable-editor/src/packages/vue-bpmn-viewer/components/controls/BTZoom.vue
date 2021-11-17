@@ -3,7 +3,7 @@
     <ul class="io-zoom-reset io-control io-control-list">
       <li>
         <button title="reset zoom" @click="handleZoomReset">
-          <Icon type="redo"/>
+          <Icon class="el-icon-refresh"/>
         </button>
       </li>
       <li>
@@ -11,7 +11,7 @@
       </li>
       <li>
         <button title="zoom in" @click="handleZoomIn">
-          <Icon type="plus"/>
+          <Icon class="el-icon-plus"/>
         </button>
       </li>
       <li>
@@ -19,7 +19,7 @@
       </li>
       <li>
         <button href title="zoom out" @click="handleZoomOut">
-          <Icon type="minus"/>
+          <Icon class="el-icon-minus"/>
         </button>
       </li>
     </ul>
@@ -28,7 +28,7 @@
 
 <script>
 import utils from "./lib/utils.js";
-import {Icon} from 'ant-design-vue'
+import {Icon} from 'element-ui'
 export default {
   name: "BTZoom",
   props: ['bpmnViewer', 'center'],

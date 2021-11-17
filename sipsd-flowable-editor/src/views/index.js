@@ -1,5 +1,4 @@
 import Viewer from './Viewer.vue'
-import Drawio from './Drawio.vue'
 import FlowableViewer from "./FlowableViewer";
 import StaticViewer from "./StaticViewer";
 export default [
@@ -10,14 +9,6 @@ export default [
       title: 'viewer'
     },
     component: Viewer
-  },
-  {
-    path: '/bpmn/drawio',
-    name: 'bpmn-drawio',
-    meta: {
-      title: 'drawio'
-    },
-    component: Drawio
   },
   {
     path: '/bpmn/flowableViewer',
