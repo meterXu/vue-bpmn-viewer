@@ -17,7 +17,7 @@
   "author": "框架技术研发部",
   "contributors": [
     "isaac"
-  ],ll
+  ],
   "license": "MIT",
   "dependencies": {
     "@dpark/logfv-web-vue": "^1.0.23",
