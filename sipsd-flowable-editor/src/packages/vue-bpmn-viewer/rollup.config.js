@@ -32,7 +32,7 @@ export default [
     {
         input: './index.js',
         output: {
-            name: 'vue-bpmn-viewer',
+            name: 'VueBpmnViewer',
             file: `dist/vue-bpmn-viewer.umd.js`,
             format: 'umd'
         },
@@ -42,7 +42,7 @@ export default [
         input: './index.js',
         output: [
             { file: pkg.main, format: 'cjs' },
-            { file: pkg.module, format: 'es' }
+            { file: "dist/index.esm.js", format: 'es' }
         ],
         plugins: pgl()
     }

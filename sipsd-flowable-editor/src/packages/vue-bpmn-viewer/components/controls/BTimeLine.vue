@@ -3,7 +3,7 @@
     <div ref="bpmn-time-line" >
       <el-timeline v-if="data.length>0">
         <el-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
-          <el-card :class="['timeLine-item-over',
+          <div :class="['timeLine-item-over',
               item.status==='已办'?
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
             :'timeLine-item-over-uned']">
@@ -14,7 +14,7 @@
               <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
               <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
             </div>
-          </el-card>
+          </div>
         </el-timeline-item>
       </el-timeline>
       <span v-else-if="!loading">无数据</span>
@@ -116,13 +116,17 @@ export default {
   height: 100%;
   margin-right: 20px;
   padding: 30px 10px 30px 0px;
-  width: 290px;
+  width: 245px;
   background: #fff;
   border-radius: 5px;
   border: 1px solid #E0E0E0;
   box-shadow: 0 2px 2px #0000000d;
   overflow-y: auto;
   transition: height .3s;
+  text-align: left;
+}
+.bpmn-time-line .el-timeline{
+  padding-left: 20px;
 }
 .spin-center{
   display: flex;
