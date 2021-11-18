@@ -1,13 +1,12 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "description": "沃壤平台工作流引擎执行器",
   "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "module": "dist/index.esm.js",
   "keywords": [
     "flowable",
     "view",
@@ -21,14 +20,12 @@
   "license": "MIT",
   "dependencies": {
     "@dpark/logfv-web-vue": "^1.0.23",
-    "@dpark/s2-utils": "^1.0.38",
-    "ant-design-vue": "^1.6.3",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
-    "bpmn-theme-blue": "^1.0.7",
+    "element-ui": "^2.15.6",
+    "moment": "^2.29.1",
     "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2",
-    "moment": "^2.29.1",
     "url-join": "^4.0.1",
     "vue": "^2.6.11"
   },

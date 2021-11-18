@@ -105,8 +105,13 @@ function utils(){
         let completeTask = document.querySelector(`[data-element-id="${id}"]`)
         if(completeTask){
             let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-            let businessObject = Object.assign({},{color:title1.style.fill})
-            return businessObject
+            if(title1){
+                let businessObject = Object.assign({},{color:title1.style.fill})
+                return businessObject
+            }else{
+                return null
+            }
+
         }else{
             return null
         }

@@ -1,25 +1,24 @@
 <template>
   <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0)}">
-    <Spin :spinning="loading" tip="加载中...">
-      <a-timeline v-if="data.length>0">
-        <a-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)">
+    <div ref="bpmn-time-line" >
+      <el-timeline v-if="data.length>0">
+        <el-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
           <div :class="['timeLine-item-over',
               item.status==='已办'?
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
-            :'timeLine-item-over-uned']"
-               @mouseover="handleItemOver(item,item.taskDefinitionKey)"
-               @mouseout="handleItemOut(item.taskDefinitionKey)">
-            <p>{{fmtDate(item.startTime)}}</p>
-            <p>{{item.taskName}}</p>
-            <p>审批类型：{{item.approveType}}</p>
-            <p>状态：{{item.status}}</p>
-            <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
-            <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+            :'timeLine-item-over-uned']">
+            <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
+              <p>{{item.taskName}}</p>
+              <p>审批类型：{{item.approveType}}</p>
+              <p>状态：{{item.status}}</p>
+              <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
+              <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+            </div>
           </div>
-        </a-timeline-item>
-      </a-timeline>
+        </el-timeline-item>
+      </el-timeline>
       <span v-else-if="!loading">无数据</span>
-    </Spin>
+    </div>
 
   </div>
 </template>
@@ -28,17 +27,19 @@
 import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
-import {Spin,Timeline} from "ant-design-vue";
+import {Loading,Timeline,Card,TimelineItem} from "element-ui";
+console.log(Card)
 export default {
   name: "BTimeLine",
   props:['loading','data'],
   components:{
-    Spin,
+    [Card.name]:Card,
     [Timeline.name]:Timeline,
-    [Timeline.Item.name]: Timeline.Item
+    [TimelineItem.name]: TimelineItem
   },
   data(){
     return {
+      loadingInstance:null,
       oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false,stroke:false},
       highLight:[
         {color:'#5BC14B',setline:false,user:undefined,shadow:true,stroke:true},
@@ -47,8 +48,20 @@ export default {
       ]
     }
   },
-  computed:{
-
+  watch:{
+    loading:{
+      handler(nv){
+        if(nv){
+          this.loadingInstance=Loading.service({
+            target:this.$refs['bpmn-time-line'],
+            fullscreen:false
+          })
+        }else{
+          this.loadingInstance&&this.loadingInstance.close()
+        }
+      },
+      immediate:true
+    }
   },
   methods:{
     fmtDate(dt){
@@ -102,7 +115,7 @@ export default {
   z-index: 10;
   height: 100%;
   margin-right: 20px;
-  padding: 30px 30px 30px 30px;
+  padding: 30px 10px 30px 0px;
   width: 245px;
   background: #fff;
   border-radius: 5px;
@@ -110,6 +123,10 @@ export default {
   box-shadow: 0 2px 2px #0000000d;
   overflow-y: auto;
   transition: height .3s;
+  text-align: left;
+}
+.bpmn-time-line .el-timeline{
+  padding-left: 20px;
 }
 .spin-center{
   display: flex;

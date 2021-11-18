@@ -1,23 +1,23 @@
 <template>
   <div class="bpmn-toolbar-container">
     <a-button-group>
-      <Tooltip class="item" placement="bottomLeft">
+      <Tooltip class="item" placement="bottom-start">
         <template slot="title">
           <span>修改模型属性</span>
         </template>
-        <Button type="primary" @click="handleEdit"><Icon type="edit" /></Button>
+        <Button type="primary" @click="handleEdit"><Icon class="el-icon-edit" /></Button>
       </Tooltip>
       <Tooltip class="item" placement="bottom">
         <template slot="title">
           <span>复制这个模型</span>
         </template>
-        <Button type="primary" @click="handleCopy"><Icon type="copy" /></Button>
+        <Button type="primary" @click="handleCopy"><Icon class="el-icon-copy-document" /></Button>
       </Tooltip>
-      <Tooltip class="item" placement="bottomRight">
+      <Tooltip class="item" placement="bottom-end">
         <template slot="title">
           <span>删除这个模型</span>
         </template>
-        <Button type="primary" @click="handleDelete"><Icon type="delete" /></Button>
+        <Button type="primary" @click="handleDelete"><Icon class="el-icon-delete" /></Button>
       </Tooltip>
     </a-button-group>
     <a-button-group>
@@ -25,26 +25,26 @@
         <template slot="title">
           <span>导出到BPMN2</span>
         </template>
-        <Button type="primary" @click="handleExport"><Icon type="download" /></Button>
+        <Button type="primary" @click="handleExport"><Icon class="el-icon-download" /></Button>
       </Tooltip>
     </a-button-group>
     <a-button-group>
-      <Button type="primary" @click="handlePush"><Icon type="check" />发布</Button>
-      <Button type="primary" @click="handleViewEdit"><Icon type="form" />可视化编辑</Button>
+      <Button type="primary" @click="handlePush"><Icon class="el-icon-check" />发布</Button>
+      <Button type="primary" @click="handleViewEdit"><Icon class="el-icon-edit-outline" />可视化编辑</Button>
     </a-button-group>
     <a-button-group>
-      <Tooltip class="item" placement="bottomRight">
+      <Tooltip class="item" placement="bottom-end">
         <template slot="title">
           <span>关闭</span>
         </template>
-        <Button type="primary" @click="handleClose"><Icon type="close" /></Button>
+        <Button type="primary" @click="handleClose"><Icon class="el-icon-close" /></Button>
       </Tooltip>
     </a-button-group>
   </div>
 </template>
 
 <script>
-import {Tooltip,Button,Icon} from 'ant-design-vue'
+import {Tooltip,Button,Icon} from 'element-ui'
 export default {
   name: "BToolBar",
   components:{
