@@ -25,7 +25,6 @@ public class SaveExecutionCmd implements Command<Void>, Serializable {
         if (this.entity == null) {
             throw new SipsdBootException("executionEntity is null");
         } else {
-            System.out.println("执行 SaveExecutionCmd---" + entity.getId());
             CommandContextUtil.getDbSqlSession(commandContext).insert(this.entity);
         }
         return null;
