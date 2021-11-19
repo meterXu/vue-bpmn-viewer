@@ -10,6 +10,7 @@ import com.sipsd.flow.service.flowable.IFlowableUserService;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.flowable.bpmn.model.FlowElement;
@@ -31,6 +32,7 @@ import java.util.*;
  * @description: 流程实例API
  * @date : 2019/11/1321:21
  */
+@Api(tags={"流程实例"})
 @RestController
 @RequestMapping("/rest/processInstance")
 public class ApiFlowableProcessInstanceResource extends BaseResource {

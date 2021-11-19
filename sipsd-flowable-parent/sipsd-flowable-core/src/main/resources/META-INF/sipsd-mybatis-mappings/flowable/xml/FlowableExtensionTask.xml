@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao" >
+    <!--查询待办信息的-->
     <select id="getExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         SELECT DISTINCT
             t3.ID_ as id,
@@ -17,7 +18,11 @@
             t3.PROC_DEF_ID_ as processDefinitionId,
             t3.END_TIME_ as endTime,
             t5.ASSIGNEE_ as assignee,
-            TIMESTAMPDIFF(SECOND,NOW(),t3.END_TIME_) as restTime,
+            if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),
+            t3.END_TIME_),TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_))  as restTime,
+            TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,CURRENT_TIMESTAMP()) as duration,
+            t3.SUSPENSION_TIME_ as suspensionTime,
+            case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
             t3.GROUP_ID_ as groupId,
             t3.FLOW_TYPE_ as flowType,
             t3.FROM_KEY_ as fromKey,
@@ -46,6 +51,7 @@
 
     <!--duration可以取值为act_hi_taskinst表中的duration字段值 不过它是毫秒">-->
     <!--当节点注册时候是候选用户的时候，act_hi_taskinst的assignee是空值bug">-->
+    <!--查询待办已办信息的-->
     <select id="getAllExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         SELECT DISTINCT
             t3.ID_ as id,
@@ -57,7 +63,10 @@
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
             t1.ASSIGNEE_ as assignee,
-            TIMESTAMPDIFF(SECOND,NOW(),t3.END_TIME_) as restTime,
+        if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),
+        t3.END_TIME_),TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_))  as restTime,
+        t3.SUSPENSION_TIME_ as suspensionTime,
+        case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
             TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
             t3.GROUP_ID_ as groupId,
             t1.TENANT_ID_ AS tenantId,
@@ -90,7 +99,7 @@
         order by t1.END_TIME_
     </select>
 
-
+    <!--查询已办信息的-->
     <select id="getFinishExtensionTaskByProcessInstanceId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         SELECT DISTINCT
         t3.ID_ as id,
@@ -197,4 +206,11 @@
         INSERT  act_ru_extension_task(EXECUTION_ID_,PROC_INST_ID_,PROC_DEF_ID_,TASK_DEF_KEY_,TENANT_ID_,TASK_NAME_,TASK_MAX_DAY_,END_TIME_,TASK_ID_,TASK_REST_TIME_,CUSTOM_TASK_MAX_DAY_,FROM_KEY_,ASSIGNEE_,GROUP_ID_,FLOW_TYPE_,CREATE_TIME_,BUSINESS_INFO_)
          VALUES (#{executionId},#{processInstanceId},#{processDefinitionId},#{taskDefinitionKey},#{tenantId},#{taskName},#{taskMaxDay},#{endTime},#{taskId},#{restTime},#{customTaskMaxDay},#{fromKey},#{assignee},#{groupId},#{flowType},#{startTime},#{businessInfo});
     </insert>
+
+    <update id="updateSuspensionStateByProcessInstanceId" parameterType="java.lang.String">
+        UPDATE  act_ru_extension_task t1 SET t1.SUSPENSION_STATE_ = #{state} , t1.SUSPENSION_TIME_ = CURRENT_TIME
+        WHERE t1.PROC_INST_ID_ = #{processInstanceId}
+    </update>
+
+
 </mapper>

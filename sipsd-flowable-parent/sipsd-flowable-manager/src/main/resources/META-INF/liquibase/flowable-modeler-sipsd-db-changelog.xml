@@ -158,4 +158,13 @@
     <changeSet id="5" author="flowable">
         <sqlFile path="db/sqlfile/v_1.0.0/flowable.mysql.update.extension-1.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <!-- 新增挂起/激活 和时间 的两个字段-->
+    <changeSet id="6" author="flowable">
+        <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.extension-2.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
+    <changeSet id="7" author="flowable">
+        <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.extension-2.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>

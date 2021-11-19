@@ -137,6 +137,11 @@ public class TaskExtensionVo implements Serializable {
      */
     private String flowType;
 
+
+
+    /**
+     * 时间执行时长
+     */
     @ApiModelProperty("秒")
     @Setter
     @Getter
@@ -157,6 +162,22 @@ public class TaskExtensionVo implements Serializable {
      */
     @JsonValidation
     private String businessInfo;
+
+    /**
+     * 激活挂起状态
+     */
+    private String suspensionState;
+
+    /**
+     * 挂起/激活 时间
+     */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date  suspensionTime;
+
+
+
+
+
     /**
      * 代办或者已办状态
      */
@@ -420,5 +441,25 @@ public class TaskExtensionVo implements Serializable {
     public void setApproveType(String approveType)
     {
         this.approveType = approveType;
+    }
+
+    public String getSuspensionState()
+    {
+        return suspensionState;
+    }
+
+    public void setSuspensionState(String suspensionState)
+    {
+        this.suspensionState = suspensionState;
+    }
+
+    public Date getSuspensionTime()
+    {
+        return suspensionTime;
+    }
+
+    public void setSuspensionTime(Date suspensionTime)
+    {
+        this.suspensionTime = suspensionTime;
     }
 }

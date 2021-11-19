@@ -1,8 +1,9 @@
 package com.sipsd.flow;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
+import com.sipsd.flow.config.ApplicationConfiguration;
+import com.sipsd.flow.constant.FlowConstant;
+import com.sipsd.flow.servlet.AppDispatcherServletConfiguration;
+import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,11 +15,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.sipsd.flow.config.ApplicationConfiguration;
-import com.sipsd.flow.constant.FlowConstant;
-import com.sipsd.flow.servlet.AppDispatcherServletConfiguration;
-
-import lombok.extern.slf4j.Slf4j;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author : chengtg
@@ -48,7 +46,7 @@ public class FlowManagerApplication {
         String port = env.getProperty("server.port");
         String path = env.getProperty("server.servlet.context-path");
         log.info("\n----------------------------------------------------------\n\t" +
-            "Application Jeecg-Boot is running! Access URLs:\n\t" +
+            "Application flowable is running! Access URLs:\n\t" +
             "Local: \t\thttp://localhost:" + port + path + "/\n\t" +
             "External: \thttp://" + ip + ":" + port + path + "/\n\t" +
             "DOC-UI: \thttp://" + ip + ":" + port + path + "/doc.html\n" +

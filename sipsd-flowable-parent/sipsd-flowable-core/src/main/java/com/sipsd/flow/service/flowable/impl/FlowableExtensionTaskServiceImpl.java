@@ -269,4 +269,11 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		}
 		return null;
 	}
+
+
+	@Override
+	public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state)
+	{
+		flowableExtensionTaskDao.updateSuspensionStateByProcessInstanceId(processInstanceId,state);
+	}
 }

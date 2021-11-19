@@ -25,8 +25,8 @@ spring:
 #            url:  jdbc:mysql://115.28.187.78:3306/flowable?useSSL=false&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
 #            username: root
 #            password: Admin@1234
-            # FIXME 8.x需设置serverTimezone   推荐使用mysql5.7版本-注：请设置mysql表明大小写不敏感
-            url: jdbc:mysql://127.0.0.1:3306/flowable_v4_temp?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT&nullCatalogMeansCurrent=true
+            # FIXME 8.x需设置serverTimezone   推荐使用mysql5.7版本-注：请设置mysql表名大小写不敏感
+            url: jdbc:mysql://192.168.126.47:3306/flowable_v5_temp?characterEncoding=UTF-8&useUnicode=true&useSSL=false
             username: root
             password: 123@abcd
             # FIXME 8.x选择 com.mysql.cj.jdbc.Driver   推荐使用mysql5.7版本

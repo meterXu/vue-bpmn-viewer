@@ -96,4 +96,13 @@ public interface IFlowableExtensionTaskService
      * @Description  根据ID来更新督办信息
      */
     public Result<String> updateDbInfoById(TaskExtensionVo params);
+
+    /**
+     *
+     * @param processDefinitionId
+     * @return void
+     * @Description  通过实例定义ID更新激活/挂起状态
+     */
+    public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state);
+
 }

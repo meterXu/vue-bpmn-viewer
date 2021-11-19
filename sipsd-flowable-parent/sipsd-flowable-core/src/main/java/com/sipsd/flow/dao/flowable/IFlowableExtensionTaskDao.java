@@ -107,4 +107,11 @@ public interface IFlowableExtensionTaskDao
 
     public TaskExtensionVo getExtensionTaskByTaskDefinitionKey(@Param("processInstanceId") String processInstanceId,@Param("taskDefinitionKey") String taskDefinitionKey);
 
+    /**
+     *
+     * @param processInstanceId
+     * @return void
+     * @Description  通过实例ID更新激活/挂起状态
+     */
+    public void updateSuspensionStateByProcessInstanceId(@Param("processInstanceId") String processInstanceId,@Param("state") String state);
 }
