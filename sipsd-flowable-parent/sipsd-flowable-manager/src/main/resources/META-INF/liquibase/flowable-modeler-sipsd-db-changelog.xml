@@ -167,4 +167,8 @@
     <changeSet id="7" author="flowable">
         <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.extension-2.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <changeSet id="8" author="flowable">
+        <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.extension-3.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>
