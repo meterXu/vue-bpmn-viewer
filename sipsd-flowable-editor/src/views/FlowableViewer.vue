@@ -1,9 +1,12 @@
 <template>
-  <VueBpmnViewer :type="2"
+<div style="height: 500px">
+  <VueBpmnViewer ref="vbv" :type="2"
                  :baseApi="baseApi"
                  :instanceId="instanceId"
-                  :options="options">
+                 :options="options">
   </VueBpmnViewer>
+  <button @click="refresh">刷新</button>
+</div>
 </template>
 <script>
 import VueBpmnViewer from "../packages/vue-bpmn-viewer/components/VueBpmnViewer.vue";
@@ -16,6 +19,11 @@ export default {
       options:{
         timeLine:true
       }
+    }
+  },
+  methods:{
+    refresh(){
+      this.$refs.vbv.reload()
     }
   }
 }

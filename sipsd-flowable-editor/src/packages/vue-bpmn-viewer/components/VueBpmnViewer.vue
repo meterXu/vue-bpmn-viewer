@@ -297,6 +297,9 @@ export default {
         }
       }))
       this.$refs.bpmnObj.reload()
+      if(this.myOptions.timeLine){
+        this.getTaskList()
+      }
     }
   },
   mounted() {
