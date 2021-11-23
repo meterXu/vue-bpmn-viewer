@@ -7,6 +7,7 @@
     "pre": "yarn install",
     "dev": "s2 r",
     "devProxy": "s2 r proxy",
+    "mm": "s2 m",
     "serve": "vue-cli-service serve",
     "proxy": "vue-cli-service serve --mode proxy",
     "build": "s2 b",

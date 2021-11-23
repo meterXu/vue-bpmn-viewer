@@ -27,7 +27,7 @@
 import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
-import {Loading,Timeline,Card,TimelineItem} from "element-ui";
+import {Timeline,Card,TimelineItem} from "element-ui";
 export default {
   name: "BTimeLine",
   props:['loading','data'],
@@ -51,12 +51,12 @@ export default {
     loading:{
       handler(nv){
         if(nv){
-          this.loadingInstance=Loading.service({
-            target:this.$refs['bpmn-time-line'],
-            fullscreen:false
-          })
+          // this.loadingInstance=Loading.service({
+          //   target:this.$refs['bpmn-time-line'],
+          //   fullscreen:false
+          // })
         }else{
-          this.loadingInstance&&this.loadingInstance.close()
+          // this.loadingInstance&&this.loadingInstance.close()
         }
       },
       immediate:true
