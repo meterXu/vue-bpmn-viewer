@@ -6,6 +6,7 @@
 import Vue from 'vue'
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import BpmnViewer from "bpmn-js/lib/Viewer"
+import {Loading} from 'element-ui'
 export default {
   name: 'VueBpmn',
   props: {
@@ -23,22 +24,41 @@ export default {
   },
   data: function() {
     return {
-      diagramXML: null
+      diagramXML: null,
+      bpmnReadOnly:null,
+      bpmnFull:null,
+      loadingInstance:null
     };
   },
-  mounted: function () {
-    this.init()
-  },
-  beforeDestroy: function() {
-    this.bpmnViewer.destroy();
+  computed:{
+    bpmnViewer(){
+      Vue.prototype.$bpmnViewer =this.bpmnReadOnly||this.bpmnFull
+      return Vue.prototype.$bpmnViewer
+    }
   },
   watch: {
     url: function(val) {
+      if(this.$refs['container']) {
+        this.loadingInstance = Loading.service({
+          target: this.$refs['container'],
+          fullscreen: false
+        })
+      }
       this.$emit('loading');
       this.fetchDiagram(val);
     },
     diagramXML: function(val) {
-      this.bpmnViewer.importXML(val);
+      if(this.viewer){
+        if(this.bpmnReadOnly){
+          this.bpmnReadOnly.importXML(val);
+          this.bpmnReadOnly.get('canvas').zoom('fit-viewport');
+        }
+      }else{
+        if(this.bpmnFull){
+          this.bpmnFull.importXML(val);
+          this.bpmnFull.get('canvas').zoom('fit-viewport');
+        }
+      }
     }
   },
   methods: {
@@ -49,27 +69,45 @@ export default {
         container: container
       }, this.options)
       if(this.viewer){
-        this.bpmnViewer = new BpmnViewer(_options);
-      }else{
-        this.bpmnViewer = new BpmnJS(_options);
-      }
-      Vue.prototype.$bpmnViewer=this.bpmnViewer
-      this.bpmnViewer.on('import.done', function(event) {
-        let error = event.error;
-        let warnings = event.warnings;
-        if (error) {
-          self.$emit('error', error);
-        } else {
-          self.$emit('shown', warnings);
+        if(!this.bpmnReadOnly){
+          this.bpmnReadOnly = new BpmnViewer(_options);
+          this.bpmnReadOnly.on('import.done', function(event) {
+            let error = event.error;
+            let warnings = event.warnings;
+            if(self.loadingInstance&&self.$refs['container']) {
+              self.loadingInstance.close()
+            }
+            if (error) {
+              self.$emit('error', error);
+            } else {
+              self.$emit('loaded', warnings);
+            }
+          });
         }
-        self.bpmnViewer.get('canvas').zoom('fit-viewport');
-      });
+      }else{
+        if(!this.bpmnFull){
+          this.bpmnFull = new BpmnJS(_options);
+          this.bpmnFull.on('import.done', function(event) {
+            let error = event.error;
+            let warnings = event.warnings;
+            if(self.loadingInstance&&self.$refs['container']) {
+              self.loadingInstance.close()
+            }
+            if (error) {
+              self.$emit('error', error);
+            } else {
+              self.$emit('loaded', warnings);
+            }
+          });
+        }
+      }
       this.fetchDiagram(this.url);
     },
     fetchDiagram: function(url) {
       let self = this;
       if(url){
         if(/^http:\/\/|^https:\/\//g.test(this.url)){
+          //todo loading
           fetch(url)
               .then(function(response) {
                 return response.text();
@@ -79,7 +117,9 @@ export default {
               })
               .catch(function(err) {
                 self.$emit('error', err);
-              });
+              }).finally(()=>{
+                //todo closeloading
+          });
         }else{
           self.diagramXML = url;
         }
@@ -87,6 +127,17 @@ export default {
     },
     reload(){
       this.init()
+    }
+  },
+  mounted: function () {
+    this.init()
+  },
+  beforeDestroy: function() {
+    if(this.bpmnReadOnly){
+      this.bpmnReadOnly.destroy();
+    }
+    if(this.bpmnFull){
+      this.bpmnFull.destroy();
     }
   }
 };

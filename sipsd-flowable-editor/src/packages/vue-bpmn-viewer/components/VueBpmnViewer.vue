@@ -1,9 +1,11 @@
 <template>
   <div id="bpmn-viewer">
     <div class="bpmn-viewer-canvas">
-      <vue-bpmn :viewer="static" v-if="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
-      <div v-else class="no-bpmn">
-      </div>
+      <vue-bpmn :viewer="static" v-show="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml"
+                @loading="bpmnLoading"
+                @loaded="bpmnLoadDone"
+                @error="bpmnLoadError"></vue-bpmn>
+      <div v-show="!showBpmn" class="no-bpmn"></div>
       <div v-if="showBpmn" class="legend">
         <ul class="legend-ul">
           <li v-for="item in legend" :key="item.class">
@@ -90,8 +92,6 @@ export default {
     },
     xml(){
       this.clearWatermark()
-      utils.clearAllHighLight()
-      this.loading = true
       if(this.source){
         return this.source
       }else if(this.baseApi){
@@ -139,7 +139,6 @@ export default {
   watch:{
     'taskData':{
       handler:function (nv){
-        utils.clearAllHighLight()
         nv.forEach(c=>{
           switch (c.status){
             case '已办':{
@@ -159,11 +158,15 @@ export default {
   },
   methods:{
     getTaskList(){
-      if(this.timeData){
-        this.dealWithTimeData(this.timeData)
-        this.timeLine_loading=false
-      }else{
+      if(this.type===2){
         this.getTimeData()
+      }else{
+        if(this.timeData){
+          this.dealWithTimeData(this.timeData)
+        }else{
+          this.dealWithTimeData([])
+        }
+        this.timeLine_loading=false
       }
     },
     getTimeData(){
@@ -206,6 +209,7 @@ export default {
     },
     dealWithTimeData(timeRes){
       this.taskData=[]
+      utils.clearAllHighLight()
       let _timeRes = JSON.parse(JSON.stringify(timeRes))
       _timeRes.sort((a,b)=>{
         return a.startTime - b.startTime
@@ -220,7 +224,11 @@ export default {
         utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
       }
     },
+    bpmnLoading(){
+      this.loading = true
+    },
     bpmnLoadDone(){
+      this.loading = false
       this.logfv.info(JSON.stringify({
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,
@@ -233,7 +241,6 @@ export default {
           options:this.myOptions
         }
       }))
-      this.loading=false
       this.getTaskList()
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
@@ -242,6 +249,7 @@ export default {
        },10)
     },
     bpmnLoadError(err){
+      this.loading = false
       this.logfv.info(JSON.stringify({
         title: '流程图加载失败！',
         error:{
@@ -257,7 +265,6 @@ export default {
           options:this.myOptions
         }
       }))
-      this.loading=false
     },
     clearWatermark(){
       setTimeout(()=>{
@@ -280,7 +287,9 @@ export default {
         }
       }))
       this.$nextTick(()=>{
-        this.$refs.bpmnObj.reload()
+        if(this.$refs.bpmnObj){
+          this.$refs.bpmnObj.reload()
+        }
         this.getTaskList()
       })
     }
