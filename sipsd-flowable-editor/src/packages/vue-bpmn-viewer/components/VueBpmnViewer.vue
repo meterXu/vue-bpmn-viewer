@@ -1,6 +1,6 @@
 <template>
   <div id="bpmn-viewer">
-    <div ref="bpmn-viewer-canvas" class="bpmn-viewer-canvas">
+    <div class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="static" v-if="showBpmn" ref="bpmnObj" :options="bpmnOptions" :url="xml" @shown="bpmnLoadDone" @loading="bpmnLoadDone" @error="bpmnLoadError"></vue-bpmn>
       <div v-else class="no-bpmn">
       </div>
@@ -31,7 +31,6 @@
 import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeBlue from './blue/index.js'
 import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
-import {Loading} from "element-ui";
 import axios from 'axios'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -44,8 +43,8 @@ export default {
     type:{type:Number,required: false},
     static:{type:Boolean,default: false},
     source:{type:String},
-    timeData:{type:Array,default:[]},
-    options:{type:Object,default:{}},
+    timeData:{type:Array},
+    options:{type:Object},
     log:{type:Boolean,default:false},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
@@ -61,7 +60,6 @@ export default {
       loading:false,
       bpmnViewer:null,
       timeLine_loading:true,
-      loadingInstance:null,
       bpmnOptions:{
         additionalModules:[bpmnThemeBlue]
       },
@@ -93,6 +91,7 @@ export default {
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
+      this.loading = true
       if(this.source){
         return this.source
       }else if(this.baseApi){
@@ -103,15 +102,6 @@ export default {
         }
       }else{
         return null
-      }
-    },
-    showSpining(){
-      if(this.source){
-        return false
-      }else if(this.baseApi){
-        return  this.loading
-      }else{
-        return false
       }
     },
     showBpmn(){
@@ -165,18 +155,6 @@ export default {
           }
         })
       }
-    },
-    xml:{
-      handler(nv){
-        if(nv){
-          this.loading = true
-          this.loadingInstance=Loading.service({
-            target:this.$refs['bpmn-viewer-canvas'],
-            fullscreen:false
-          })
-        }
-      },
-      immediate:true
     }
   },
   methods:{
@@ -256,7 +234,6 @@ export default {
         }
       }))
       this.loading=false
-      this.loadingInstance&&this.loadingInstance.close();
       this.getTaskList()
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
@@ -281,7 +258,6 @@ export default {
         }
       }))
       this.loading=false
-      this.loadingInstance&&this.loadingInstance.close();
     },
     clearWatermark(){
       setTimeout(()=>{

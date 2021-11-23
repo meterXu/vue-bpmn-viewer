@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="height: 100%">
   <VueBpmnViewer ref="vbv" :type="2"
                  :baseApi="baseApi"
                  :instanceId="instanceId"
