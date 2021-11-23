@@ -1,11 +1,10 @@
 <template>
-<div style="height: 500px">
+<div>
   <VueBpmnViewer ref="vbv" :type="2"
                  :baseApi="baseApi"
                  :instanceId="instanceId"
                  :options="options">
   </VueBpmnViewer>
-  <button @click="refresh">刷新</button>
 </div>
 </template>
 <script>
