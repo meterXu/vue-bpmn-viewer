@@ -1,5 +1,5 @@
 # @dpark/vue-bpmn-viewer
-> 沃壤平台工作流引擎执行器
+> 沃壤平台工作流引擎执行器组件
 
 ![sipsd-flowable-editor](http://58.210.9.133/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 

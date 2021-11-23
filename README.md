@@ -1,6 +1,6 @@
 # sipsd-flow-modeler
 
-#### 介绍
+## 介绍
 flowable modeler集成项目
 - 利用flowabel6.4.2为基础，进行SpringBoot+Mybatis-plus 整合；  
 - 支持热发布；
@@ -12,17 +12,21 @@ flowable modeler集成项目
 - 进行了常用接口的restFul 封装；  
 - 改造了model的新增和插入，支持外部租户改造；
 
-#### 适用场景
+## 项目结构
+* [前端](sipsd-flowable-editor/README.md)
+* [后端](sipsd-flowable-parent/README.md)
+
+## 适用场景
  1、需要动态配置工作流程的业务场景；   
  2、流服务编排； 
 
-#### 注意事项
+## 注意事项
 当前适配mysql5.x数据库如果用高版本8.x数据库请修改以下内容：
 1. maven的mysql版本请选择8.x.x版本 比如<mysql.version>8.0.11</mysql.version>
 2. 配置文件中的driver-class-name请设置为com.mysql.cj.jdbc.Driver
 3. url后面需加上&nullCatalogMeansCurrent=true
 
-#### 安装教程
+## 安装教程
 1.本地创建一个数据库叫sipsd-flow-modeler；   
 2.修改数据库的账号密码；   
 3.自动建表  
@@ -33,7 +37,7 @@ http://192.168.126.25/sipsd-flow-modeler
 http://192.168.126.25/sipsd-flow-modeler/doc.html
 5. 样例地址： http://192.168.126.25/ifp-simple-flowable
 
-#### 自定义流程用户
+## 自定义流程用户
 - 创建用户视图
 1.更改 act_id_user 表名(作为备份)    
 2.根据自己业务场景一个视图名为act_id_user的视图，其结构同act_id_user表结构  
@@ -42,7 +46,7 @@ http://192.168.126.25/sipsd-flow-modeler/doc.html
 1.更改 act_id_group 表名(作为备份)    
 2.根据自己业务场景一个视图名为act_id_group的视图，其结构同act_id_group表结构
 
-#### 流程接口实例API-V4
+## 流程接口实例API-V4
 - 地址 
 postman：https://www.postman.com/collections/75533c2653809a48406b
 - 核心API    
@@ -74,7 +78,7 @@ postman：https://www.postman.com/collections/75533c2653809a48406b
 - [x] 4.更新流程节点最大审批天数
 - [x] 5.根据ID更新督办信息 
 ......
-#### 流程实例操作
+## 流程实例操作
 以户外广告工作流为例  
 1. 导入《户外广告设置审批.bpmn20.xml》文件  
 2. 点击发布按钮启动工作流
@@ -114,8 +118,7 @@ V4更新内容：
 2. 后端流程注册地址：http://192.168.126.25/sipsd-flow-modeler/#/processes
 3. 前端静态流程显示地址：http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=1&xmlId=4b99159a-bc63-11eb-b2ee-5e2c421612f0
 4. 前端动态流程显示地址:http://192.168.126.25/flowable-editor/#/bpmn/viewer?type=2&instanceId=31947db4cf4511eba5465e2c421612f0
-5. http://192.168.126.25/ifp-simple-flowable
-
+5. [前端执行器DEMO](http://192.168.126.25/flowable-editor/#/bpmn/staticViewer)
 
 
 
