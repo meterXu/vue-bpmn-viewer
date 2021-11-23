@@ -97,7 +97,7 @@ export default {
     }
   },
   created() {
-    this.setPro()
+    // this.setPro()
   }
 }
 </script>

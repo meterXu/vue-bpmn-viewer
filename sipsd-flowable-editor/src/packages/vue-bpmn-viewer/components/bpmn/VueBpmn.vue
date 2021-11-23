@@ -12,7 +12,6 @@ export default {
   props: {
     url: {
       type: String,
-      required: true
     },
     options: {
       type: Object
@@ -38,12 +37,6 @@ export default {
   },
   watch: {
     url: function(val) {
-      if(this.$refs['container']) {
-        this.loadingInstance = Loading.service({
-          target: this.$refs['container'],
-          fullscreen: false
-        })
-      }
       this.$emit('loading');
       this.fetchDiagram(val);
     },
@@ -74,9 +67,6 @@ export default {
           this.bpmnReadOnly.on('import.done', function(event) {
             let error = event.error;
             let warnings = event.warnings;
-            if(self.loadingInstance&&self.$refs['container']) {
-              self.loadingInstance.close()
-            }
             if (error) {
               self.$emit('error', error);
             } else {
@@ -90,9 +80,6 @@ export default {
           this.bpmnFull.on('import.done', function(event) {
             let error = event.error;
             let warnings = event.warnings;
-            if(self.loadingInstance&&self.$refs['container']) {
-              self.loadingInstance.close()
-            }
             if (error) {
               self.$emit('error', error);
             } else {
