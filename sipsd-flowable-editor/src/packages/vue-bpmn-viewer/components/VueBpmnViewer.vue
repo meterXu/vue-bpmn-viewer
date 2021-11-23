@@ -44,8 +44,8 @@ export default {
     type:{type:Number,required: false},
     static:{type:Boolean,default: false},
     source:{type:String},
-    timeData:{type:Array},
-    options:{type:Object},
+    timeData:{type:Array,default:[]},
+    options:{type:Object,default:{}},
     log:{type:Boolean,default:false},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
@@ -73,7 +73,6 @@ export default {
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/'
       },
-      myOptions:null,
       legend:[
         {text:"未执行",class:"legend-none"},
         {text:"待审批",class:"legend-unExec"},
@@ -83,6 +82,14 @@ export default {
     }
   },
   computed:{
+    myOptions(){
+      return Object.assign({
+        zoom:true,
+        timeLine:false,
+        center:true,
+        setline:false
+      },this.options)
+    },
     xml(){
       this.clearWatermark()
       utils.clearAllHighLight()
@@ -142,6 +149,7 @@ export default {
   watch:{
     'taskData':{
       handler:function (nv){
+        utils.clearAllHighLight()
         nv.forEach(c=>{
           switch (c.status){
             case '已办':{
@@ -173,14 +181,11 @@ export default {
   },
   methods:{
     getTaskList(){
-      if(this.myOptions.timeLine){
-        this.taskData=[]
-        if(this.timeData){
-          this.dealWithTimeData(this.timeData)
-          this.timeLine_loading=false
-        }else{
-          this.getTimeData()
-        }
+      if(this.timeData){
+        this.dealWithTimeData(this.timeData)
+        this.timeLine_loading=false
+      }else{
+        this.getTimeData()
       }
     },
     getTimeData(){
@@ -222,6 +227,7 @@ export default {
       }
     },
     dealWithTimeData(timeRes){
+      this.taskData=[]
       let _timeRes = JSON.parse(JSON.stringify(timeRes))
       _timeRes.sort((a,b)=>{
         return a.startTime - b.startTime
@@ -297,8 +303,10 @@ export default {
           options:this.myOptions
         }
       }))
-      this.$refs.bpmnObj.reload()
-      this.getTaskList()
+      this.$nextTick(()=>{
+        this.$refs.bpmnObj.reload()
+        this.getTaskList()
+      })
     }
   },
   mounted() {
@@ -317,12 +325,6 @@ export default {
     }))
   },
   created() {
-    this.myOptions = Object.assign({
-      zoom:true,
-      timeLine:false,
-      center:true,
-      setline:false
-    },this.options)
     this.logfv = new LogFv({
       reportUrl:this.logReportUrl,
       appId:'vue-bpmn-viewer',

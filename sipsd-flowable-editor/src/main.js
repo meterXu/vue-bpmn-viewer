@@ -13,6 +13,17 @@ Vue.use(Vuels,{
 })
 let _staticPer = staticPermission()
 registerApp({routes,permission:_staticPer,store,frameRoutes},function(globaVue,globalRouter, globalStore){
+    if(globaVue.config.errorHandler){
+        let _handler  = globaVue.config.errorHandler
+        globaVue.config.errorHandler = function (err){
+            console.error(err)
+            _handler(err)
+        }
+    }else{
+        globaVue.config.errorHandler=function (err){
+            console.error(err)
+        }
+    }
     globaVue.prototype.$project_bpmn=project
     globaVue.use(elementUI)
 })
