@@ -173,12 +173,14 @@ export default {
   },
   methods:{
     getTaskList(){
-      this.taskData=[]
-      if(this.timeData){
-        this.dealWithTimeData(this.timeData)
-        this.timeLine_loading=false
-      }else{
-        this.getTimeData()
+      if(this.myOptions.timeLine){
+        this.taskData=[]
+        if(this.timeData){
+          this.dealWithTimeData(this.timeData)
+          this.timeLine_loading=false
+        }else{
+          this.getTimeData()
+        }
       }
     },
     getTimeData(){
@@ -220,7 +222,8 @@ export default {
       }
     },
     dealWithTimeData(timeRes){
-      timeRes.sort((a,b)=>{
+      let _timeRes = JSON.parse(JSON.stringify(timeRes))
+      _timeRes.sort((a,b)=>{
         return a.startTime - b.startTime
       }).forEach(f=>{
         utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
@@ -248,9 +251,7 @@ export default {
       }))
       this.loading=false
       this.loadingInstance&&this.loadingInstance.close();
-      if(this.myOptions.timeLine){
-        this.getTaskList()
-      }
+      this.getTaskList()
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
        setTimeout(()=>{
@@ -297,9 +298,7 @@ export default {
         }
       }))
       this.$refs.bpmnObj.reload()
-      if(this.myOptions.timeLine){
-        this.getTaskList()
-      }
+      this.getTaskList()
     }
   },
   mounted() {

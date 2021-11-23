@@ -26,7 +26,7 @@ const project_bpmn = {
   },
   redirect: {
     login: '/bpmn/login',
-    index: '/bpmn/viewer'
+    index: '/bpmn/staticViewer'
   },
   style: {
     theme: 'dark',

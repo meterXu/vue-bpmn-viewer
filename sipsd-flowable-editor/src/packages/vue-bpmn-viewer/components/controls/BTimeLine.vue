@@ -28,7 +28,6 @@ import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
 import {Loading,Timeline,Card,TimelineItem} from "element-ui";
-console.log(Card)
 export default {
   name: "BTimeLine",
   props:['loading','data'],

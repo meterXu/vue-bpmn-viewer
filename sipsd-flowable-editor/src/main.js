@@ -4,6 +4,7 @@ import store from './store'
 import routes,{frameRoutes} from './routes'
 import {registerApp,project} from '@/utils'
 import "@/assets/less/common.less";
+import elementUI from 'element-ui'
 import {staticPermission} from "@/api";
 Vue.use(Vuels,{
     namespace: 'pro__',
@@ -13,4 +14,5 @@ Vue.use(Vuels,{
 let _staticPer = staticPermission()
 registerApp({routes,permission:_staticPer,store,frameRoutes},function(globaVue,globalRouter, globalStore){
     globaVue.prototype.$project_bpmn=project
+    globaVue.use(elementUI)
 })
