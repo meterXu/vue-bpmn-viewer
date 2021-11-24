@@ -1,8 +1,8 @@
 <template>
   <div class="bpmn-time-line" :class="{'spin-center':data.length===0}">
     <div ref="bpmn-time-line" >
-      <el-timeline v-if="data.length>0">
-        <el-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
+      <Timeline v-if="data.length>0">
+        <TimelineItem v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
           <div :class="['timeLine-item-over',
               item.status==='已办'?
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
@@ -15,8 +15,8 @@
               <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
             </div>
           </div>
-        </el-timeline-item>
-      </el-timeline>
+        </TimelineItem>
+      </Timeline>
       <div v-else class="no-data"></div>
     </div>
 
@@ -27,14 +27,13 @@
 import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
-import {Timeline,Card,TimelineItem} from "element-ui";
+import {Timeline,TimelineItem} from "element-ui";
 export default {
   name: "BTimeLine",
   props:['data','bpmnViewer'],
   components:{
-    [Card.name]:Card,
-    [Timeline.name]:Timeline,
-    [TimelineItem.name]: TimelineItem
+    Timeline,
+    TimelineItem
   },
   data(){
     return {

@@ -16,10 +16,11 @@
       </div>
     </div>
     <BTLayout>
-      <template slot="head">
-        <slot></slot>
+      <template v-slot:head>
+        <slot>
+        </slot>
       </template>
-      <template slot="right">
+      <template v-slot:right>
         <BTZoom v-show="myOptions.zoom" :center="myOptions.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <slot name="timeLine" v-if="myOptions.timeLine" v-bind:data="taskData">
           <BTimeLine :data="taskData" :bpmnViewer="bpmnViewer"/>
