@@ -1,5 +1,5 @@
 <template>
-  <div class="bpmn-time-line" :class="{'spin-center':loading||(!loading&&data.length===0)}">
+  <div class="bpmn-time-line" :class="{'spin-center':data.length===0}">
     <div ref="bpmn-time-line" >
       <el-timeline v-if="data.length>0">
         <el-timeline-item v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
@@ -17,7 +17,7 @@
           </div>
         </el-timeline-item>
       </el-timeline>
-      <span v-else-if="!loading">无数据</span>
+      <div v-else class="no-data"></div>
     </div>
 
   </div>
@@ -30,7 +30,7 @@ import moment from 'moment'
 import {Timeline,Card,TimelineItem} from "element-ui";
 export default {
   name: "BTimeLine",
-  props:['loading','data'],
+  props:['data'],
   components:{
     [Card.name]:Card,
     [Timeline.name]:Timeline,
@@ -45,21 +45,6 @@ export default {
         {color:'#f5842c',setline:false,user:undefined,shadow:true,stroke:true},
         {color:'#ff0000',setline:false,user:undefined,shadow:true,stroke:true}
       ]
-    }
-  },
-  watch:{
-    loading:{
-      handler(nv){
-        if(nv){
-          // this.loadingInstance=Loading.service({
-          //   target:this.$refs['bpmn-time-line'],
-          //   fullscreen:false
-          // })
-        }else{
-          // this.loadingInstance&&this.loadingInstance.close()
-        }
-      },
-      immediate:true
     }
   },
   methods:{
@@ -135,6 +120,12 @@ export default {
 }
 .spin-center .ant-spin-nested-loading{
   flex: 1;
+}
+.no-data{
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB0PSIxNjM3NzE4ODg2MzUyIiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiBwLWlkPSI0MzM1IiB3aWR0aD0iNjQwIiBoZWlnaHQ9IjY0MCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIi8+PC9kZWZzPjxwYXRoIGQ9Ik0wIDc1OC4zNTczMzNjMCA4Mi4zNjggMjI5LjIyNjY2NyAxNDkuMTQxMzMzIDUxMiAxNDkuMTQxMzM0czUxMi02Ni43NzMzMzMgNTEyLTE0OS4xNDEzMzRjMC04Mi4zNjgtMjI5LjIyNjY2Ny0xNDkuMTQxMzMzLTUxMi0xNDkuMTQxMzMzcy01MTIgNjYuNzczMzMzLTUxMiAxNDkuMTJ6IiBmaWxsPSIjRTZFNkU2IiBwLWlkPSI0MzM2Ii8+PHBhdGggZD0iTTY3NC40OTYgMzc0LjM1NzMzM3YxMDUuNDUwNjY3YzAgNy42OC02LjIyOTMzMyAxMy45MDkzMzMtMTMuOTA5MzMzIDEzLjkwOTMzM0gzNjMuMTM2YTEzLjkwOTMzMyAxMy45MDkzMzMgMCAwIDEtMTMuOTA5MzMzLTEzLjkwOTMzM3YtMTA1LjQ1MDY2N2ExMy45MDkzMzMgMTMuOTA5MzMzIDAgMCAwLTEzLjkzMDY2Ny0xMy45MDkzMzNIMTI3LjE2OGExMy45MDkzMzMgMTMuOTA5MzMzIDAgMCAwLTEzLjkwOTMzMyAxMy45MDkzMzN2NDQ3LjQ0NTMzNGMwIDcuNjggNi4yMjkzMzMgMTMuOTA5MzMzIDEzLjkwOTMzMyAxMy45MDkzMzNoNzYyLjk4NjY2N2M3LjY4IDAgMTMuOTA5MzMzLTYuMjI5MzMzIDEzLjkwOTMzMy0xMy45MDkzMzNWMzc0LjM1NzMzM2ExMy45MDkzMzMgMTMuOTA5MzMzIDAgMCAwLTEzLjkwOTMzMy0xMy45MDkzMzNINjg4LjQyNjY2N2ExMy45MDkzMzMgMTMuOTA5MzMzIDAgMCAwLTEzLjkzMDY2NyAxMy45MDkzMzN6IiBmaWxsPSIjRjJGMkYyIiBwLWlkPSI0MzM3Ii8+PHBhdGggZD0iTTg5MC4xNTQ2NjcgODQ2Ljg0OEgxMjcuMTY4YTI1LjA0NTMzMyAyNS4wNDUzMzMgMCAwIDEtMjUuMDQ1MzMzLTI1LjA0NTMzM1YzNzQuMzU3MzMzYzAtMTMuODQ1MzMzIDExLjIyMTMzMy0yNS4wNDUzMzMgMjUuMDQ1MzMzLTI1LjA0NTMzM2gyMDguMTI4YzEzLjg0NTMzMyAwIDI1LjA0NTMzMyAxMS4yIDI1LjA0NTMzMyAyNS4wNDUzMzN2MTA1LjQ1MDY2N2MwIDEuNTM2IDEuMjU4NjY3IDIuNzczMzMzIDIuNzczMzM0IDIuNzczMzMzaDI5Ny40NzJhMi40OTYgMi40OTYgMCAwIDAgMi43NzMzMzMtMi43NzMzMzN2LTEwNS40NTA2NjdjMC0xMy44NDUzMzMgMTEuMjIxMzMzLTI1LjA0NTMzMyAyNS4wNjY2NjctMjUuMDQ1MzMzaDIwMS43MjhjMTMuODI0IDAgMjUuMDQ1MzMzIDExLjIgMjUuMDQ1MzMzIDI1LjA0NTMzM3Y0NDcuNDQ1MzM0YzAgMTMuODI0LTExLjIyMTMzMyAyNS4wNDUzMzMtMjUuMDQ1MzMzIDI1LjA0NTMzM3pNMTI3LjE2OCAzNzEuNTYyNjY3YTIuNDk2IDIuNDk2IDAgMCAwLTIuNzczMzMzIDIuNzczMzMzdjQ0Ny40NjY2NjdjMCAxLjUzNiAxLjIzNzMzMyAyLjc3MzMzMyAyLjc3MzMzMyAyLjc3MzMzM2g3NjIuOTg2NjY3YTMuMDUwNjY3IDMuMDUwNjY3IDAgMCAwIDIuNzczMzMzLTIuNzczMzMzVjM3NC4zNTczMzNhMi43NzMzMzMgMi43NzMzMzMgMCAwIDAtMi43NzMzMzMtMi43NzMzMzNINjg4LjQyNjY2N2EyLjc3MzMzMyAyLjc3MzMzMyAwIDAgMC0yLjc3MzMzNCAyLjc3MzMzM3YxMDUuNDUwNjY3YzAgMTMuODQ1MzMzLTExLjIyMTMzMyAyNS4wNDUzMzMtMjUuMDY2NjY2IDI1LjA0NTMzM0gzNjMuMTM2YTI1LjA0NTMzMyAyNS4wNDUzMzMgMCAwIDEtMjUuMDQ1MzMzLTI1LjA0NTMzM3YtMTA1LjQ1MDY2N2EyLjQ5NiAyLjQ5NiAwIDAgMC0yLjc3MzMzNC0yLjc3MzMzM0gxMjcuMTQ2NjY3eiIgZmlsbD0iI0IzQjNCMyIgcC1pZD0iNDMzOCIvPjxwYXRoIGQ9Ik0xMjEuNiAzNzcuMTMwNjY3TDEwNC42MTg2NjcgMzYyLjY2NjY2N2wyMDcuODcyLTI0Ny4xMDRjNC44NjQtNS41NDY2NjcgMTEuODE4NjY3LTguNzQ2NjY3IDE5LjItOC44OTZsMzY2Ljc0MTMzMyAxLjY2NGM3LjU5NDY2NyAwLjA0MjY2NyAxNC43NjI2NjcgMy41MiAxOS40NzczMzMgOS40NzJsMTk0Ljc3MzMzNCAyNDUuMTQxMzMzLTE3LjIzNzMzNCAxMy45MDkzMzMtMTk0Ljc3MzMzMy0yNDUuMTQxMzMzLTM2OC43MDQtMi43NzMzMzNMMTIxLjYgMzc3LjEwOTMzM3oiIGZpbGw9IiNCM0IzQjMiIHAtaWQ9IjQzMzkiLz48L3N2Zz4=");
 }
 .timeLine-item-over{
   padding: 5px 8px;

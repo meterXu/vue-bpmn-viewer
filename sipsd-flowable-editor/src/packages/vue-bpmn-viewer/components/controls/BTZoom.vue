@@ -2,7 +2,7 @@
   <div class="io-zoom-controls">
     <ul class="io-zoom-reset io-control io-control-list">
       <li>
-        <button title="reset zoom" @click="handleZoomReset">
+        <button title="重置" @click="handleZoomReset">
           <Icon class="el-icon-refresh"/>
         </button>
       </li>
@@ -10,7 +10,7 @@
         <hr/>
       </li>
       <li>
-        <button title="zoom in" @click="handleZoomIn">
+        <button title="放大" @click="handleZoomIn">
           <Icon class="el-icon-plus"/>
         </button>
       </li>
@@ -18,7 +18,7 @@
         <hr/>
       </li>
       <li>
-        <button href title="zoom out" @click="handleZoomOut">
+        <button href title="缩小" @click="handleZoomOut">
           <Icon class="el-icon-minus"/>
         </button>
       </li>
@@ -40,33 +40,34 @@ export default {
   components:{Icon},
   methods: {
     handleZoomReset() {
-      this.canvas = this.bpmnViewer.get('canvas')
-      if (this.center) {
-        let viewbox = this.canvas.viewbox()
-        this.canvas.zoom('fit-viewport');
-        let dx = 0
-        let dy = 0
-        if (viewbox.outer.width > viewbox.inner.width) {
-          dx = (viewbox.outer.width - viewbox.inner.width) / 2 - 150
-          dx = dx < 0 ? 0 : dx
+      if(this.bpmnViewer){
+        this.canvas = this.bpmnViewer.get('canvas')
+        if (this.canvas) {
+          if(this.center){
+            this.canvas.zoom('fit-viewport');
+          }
         }
-        if (viewbox.inner.height < viewbox.outer.height) {
-          dy = (viewbox.outer.height - viewbox.inner.height) / 2
-          dy = dy < 50 ? 0 : dy
-          dy = dy > 150 ? 150 : dy
-        }
-        this.canvas.scroll({dx, dy});
       }
       this.$emit('zoomResetCompleted')
     },
     handleZoomIn() {
-      let zoom = this.bpmnViewer.get('canvas').zoom()
-      this.bpmnViewer.get('canvas').zoom(zoom + 0.2);
+      if(this.bpmnViewer){
+        this.canvas = this.bpmnViewer.get('canvas')
+        if(this.canvas){
+          let zoom = this.canvas.zoom()
+          this.canvas.zoom(zoom + 0.2);
+        }
+      }
       this.$emit('zoomInCompleted')
     },
     handleZoomOut() {
-      let zoom = this.bpmnViewer.get('canvas').zoom()
-      this.bpmnViewer.get('canvas').zoom(zoom - 0.2);
+      if(this.bpmnViewer){
+        this.canvas = this.bpmnViewer.get('canvas')
+        if(this.canvas){
+          let zoom = this.canvas.zoom()
+          this.canvas.zoom(zoom - 0.2);
+        }
+      }
       this.$emit('zoomOutCompleted')
     }
   },

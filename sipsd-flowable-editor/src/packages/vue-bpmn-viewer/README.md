@@ -150,8 +150,7 @@ export default {
 <VueBpmnViewer :type="2"
                :baseApi="baseApi"
                :instanceId="instanceId">
-    <template slot="timeLine" slot-scope="{loading,data}">
-      {{loading}}
+    <template slot="timeLine" slot-scope="{data}">
       {{data.length}}
     </template>
 </VueBpmnViewer>

@@ -2,7 +2,7 @@
   <div style="height: 100%;padding: 10px">
     <el-container style="height: 100%">
       <el-aside width="500px">
-        <el-form>
+        <el-form :model="form" ref="form">
           <el-form-item label="type">
             <el-radio-group v-model="form.type">
               <el-radio :label="1">流程图模式</el-radio>
@@ -29,20 +29,42 @@
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="refresh">刷新</el-button>
-            <el-button>清空</el-button>
+            <el-button type="primary" @click="openDialog">弹出框</el-button>
           </el-form-item>
         </el-form>
       </el-aside>
       <el-main>
-        <VueBpmnViewer ref="vbv"
-                       :type="type"
-                       :baseApi="baseApi"
-                       :instanceId="instanceId"
-                       :xmlId="xmlId"
-                       :source="source"
-                       :timeData="timeData"
-                       :options="options">
-        </VueBpmnViewer>
+<!--        <VueBpmnViewer ref="vbv"-->
+<!--                       :type="type"-->
+<!--                       :baseApi="baseApi"-->
+<!--                       :instanceId="instanceId"-->
+<!--                       :xmlId="xmlId"-->
+<!--                       :source="source"-->
+<!--                       :timeData="timeData"-->
+<!--                       :options="options">-->
+<!--        </VueBpmnViewer>-->
+        <el-dialog
+            title="提示"
+            :visible.sync="dialogVisible"
+            width="80%"
+            :before-close="handleClose">
+          <div style="height: 600px">
+            <VueBpmnViewer ref="vbv2"
+                           :type="type"
+                           :baseApi="baseApi"
+                           :instanceId="instanceId"
+                           :xmlId="xmlId"
+                           :source="source"
+                           :timeData="timeData"
+                           :options="options">
+            </VueBpmnViewer>
+          </div>
+          <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+        </el-dialog>
+
       </el-main>
     </el-container>
   </div>
@@ -54,16 +76,17 @@ export default {
   components: {VueBpmnViewer},
   data() {
     return {
+      dialogVisible: false,
       source: null,
       timeData: null,
       options: null,
       type: null,
-      baseApi:null,
-      instanceId:null,
-      xmlId:null,
+      baseApi: null,
+      instanceId: null,
+      xmlId: null,
       form: {
         type: 1,
-        static:true,
+        static: true,
         baseApi: 'http://58.210.9.133/iplatform/sipsd-flow-modeler/',
         instanceId: 'e6c573bcc99211eba5465e2c421612f0',
         xmlId: "4b99159a-bc63-11eb-b2ee-5e2c421612f0",
@@ -94,10 +117,20 @@ export default {
     refresh() {
       this.setPro()
       this.$refs.vbv.reload()
+    },
+    openDialog() {
+      this.dialogVisible = true
+      this.setPro()
+      this.$nextTick(()=>{
+        this.$refs.vbv2.reload()
+      })
+    },
+    handleClose(done) {
+      done();
     }
   },
   created() {
-    // this.setPro()
+    this.setPro()
   }
 }
 </script>

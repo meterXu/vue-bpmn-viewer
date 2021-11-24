@@ -35,25 +35,6 @@ export default {
       return Vue.prototype.$bpmnViewer
     }
   },
-  watch: {
-    url: function(val) {
-      this.$emit('loading');
-      this.fetchDiagram(val);
-    },
-    diagramXML: function(val) {
-      if(this.viewer){
-        if(this.bpmnReadOnly){
-          this.bpmnReadOnly.importXML(val);
-          this.bpmnReadOnly.get('canvas').zoom('fit-viewport');
-        }
-      }else{
-        if(this.bpmnFull){
-          this.bpmnFull.importXML(val);
-          this.bpmnFull.get('canvas').zoom('fit-viewport');
-        }
-      }
-    }
-  },
   methods: {
     init(){
       let container = this.$refs.container;
@@ -88,27 +69,44 @@ export default {
           });
         }
       }
-      this.fetchDiagram(this.url);
+      this.fetchDiagram(this.url).then(xml=>{
+        this.drawXml(xml)
+      });
     },
     fetchDiagram: function(url) {
-      let self = this;
-      if(url){
-        if(/^http:\/\/|^https:\/\//g.test(this.url)){
-          //todo loading
-          fetch(url)
-              .then(function(response) {
-                return response.text();
-              })
-              .then(function(text) {
-                self.diagramXML = text;
-              })
-              .catch(function(err) {
-                self.$emit('error', err);
-              }).finally(()=>{
-                //todo closeloading
-          });
-        }else{
-          self.diagramXML = url;
+      return new Promise((resolve, reject)=>{
+        let self = this;
+        if(url){
+          if(/^http:\/\/|^https:\/\//g.test(this.url)){
+            fetch(url)
+                .then(function(response) {
+                  return response.text();
+                })
+                .then(function(text) {
+                  self.diagramXML = text;
+                  resolve(text)
+                })
+                .catch(function(err) {
+                  reject(err)
+                  self.$emit('error', err);
+                })
+          }else{
+            self.diagramXML = url;
+            resolve(url)
+          }
+        }
+      })
+    },
+    drawXml(xml) {
+      if(this.viewer){
+        if(this.bpmnReadOnly){
+          this.bpmnReadOnly.importXML(xml);
+          this.bpmnReadOnly.get('canvas').zoom('fit-viewport');
+        }
+      }else{
+        if(this.bpmnFull){
+          this.bpmnFull.importXML(xml);
+          this.bpmnFull.get('canvas').zoom('fit-viewport');
         }
       }
     },
