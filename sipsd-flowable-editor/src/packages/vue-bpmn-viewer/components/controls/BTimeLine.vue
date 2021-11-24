@@ -49,8 +49,14 @@ export default {
   methods:{
     fmtDate(dt){
       if(dt){
-        return moment(dt).format('YYYY-MM-DD HH:mm:ss')
-      }else{
+        if(typeof(dt)==='string'){
+          return dt
+        }
+        else if(typeof(dt)==="number"){
+          return moment(dt).format('YYYY-MM-DD HH:mm:ss')
+        }
+      }
+      else{
         return '-'
       }
     },

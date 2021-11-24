@@ -101,12 +101,11 @@ export default {
       if(this.viewer){
         if(this.bpmnReadOnly){
           this.bpmnReadOnly.importXML(xml);
-          this.bpmnReadOnly.get('canvas').zoom('fit-viewport');
+
         }
       }else{
         if(this.bpmnFull){
           this.bpmnFull.importXML(xml);
-          this.bpmnFull.get('canvas').zoom('fit-viewport');
         }
       }
     },

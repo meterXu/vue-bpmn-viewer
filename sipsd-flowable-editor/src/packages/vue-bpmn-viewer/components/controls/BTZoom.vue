@@ -31,7 +31,7 @@ import utils from "./lib/utils.js";
 import {Icon} from 'element-ui'
 export default {
   name: "BTZoom",
-  props: ['bpmnViewer', 'center'],
+  props: ['bpmnViewer', 'fit'],
   data() {
     return {
       bpmnObj: null,
@@ -42,9 +42,12 @@ export default {
     handleZoomReset() {
       if(this.bpmnViewer){
         this.canvas = this.bpmnViewer.get('canvas')
+        window.canvas=this.canvas
         if (this.canvas) {
-          if(this.center){
+          if(this.fit){
             this.canvas.zoom('fit-viewport');
+          }else {
+            this.canvas._viewport.setAttribute("transform","matrix(1,0,0,1,0,0)")
           }
         }
       }

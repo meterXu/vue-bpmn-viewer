@@ -115,7 +115,7 @@ export default {
 |:---|:---:|---:|
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴|false|
-|center|是否流程图居中显示|true|
+|fit|是否流程图全部缩放在画布上，这样做图形可能不能居中|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
 
 **说明**

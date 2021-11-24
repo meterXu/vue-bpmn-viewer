@@ -21,7 +21,7 @@
         </slot>
       </template>
       <template v-slot:right>
-        <BTZoom v-show="myOptions.zoom" :center="myOptions.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTZoom v-show="myOptions.zoom" :fit="myOptions.fit" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <slot name="timeLine" v-if="myOptions.timeLine" v-bind:data="taskData">
           <BTimeLine :data="taskData" :bpmnViewer="bpmnViewer"/>
         </slot>
@@ -86,7 +86,7 @@ export default {
       return Object.assign({
         zoom:true,
         timeLine:false,
-        center:true,
+        fit:false,
         setline:false
       },this.options)
     },
@@ -210,6 +210,14 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
+      let canvas = this.bpmnViewer.get('canvas')
+      if (canvas) {
+        if(this.myOptions.fit){
+          canvas.zoom('fit-viewport');
+        }else{
+          canvas._viewport.setAttribute("transform","matrix(1,0,0,1,0,0)")
+        }
+      }
     },
     bpmnLoadError(err){
       this.logfv.info(JSON.stringify({
