@@ -34,15 +34,15 @@
         </el-form>
       </el-aside>
       <el-main>
-<!--        <VueBpmnViewer ref="vbv"-->
-<!--                       :type="type"-->
-<!--                       :baseApi="baseApi"-->
-<!--                       :instanceId="instanceId"-->
-<!--                       :xmlId="xmlId"-->
-<!--                       :source="source"-->
-<!--                       :timeData="timeData"-->
-<!--                       :options="options">-->
-<!--        </VueBpmnViewer>-->
+        <VueBpmnViewer ref="vbv"
+                       :type="form.type"
+                       :baseApi="form.baseApi"
+                       :instanceId="form.instanceId"
+                       :xmlId="form.xmlId"
+                       :source="form.source"
+                       :timeData="timeData"
+                       :options="options">
+        </VueBpmnViewer>
         <el-dialog
             title="提示"
             :visible.sync="dialogVisible"
@@ -50,11 +50,11 @@
             :before-close="handleClose">
           <div style="height: 600px">
             <VueBpmnViewer ref="vbv2"
-                           :type="type"
-                           :baseApi="baseApi"
-                           :instanceId="instanceId"
-                           :xmlId="xmlId"
-                           :source="source"
+                           :type="form.type"
+                           :baseApi="form.baseApi"
+                           :instanceId="form.instanceId"
+                           :xmlId="form.xmlId"
+                           :source="form.source"
                            :timeData="timeData"
                            :options="options">
             </VueBpmnViewer>
@@ -77,13 +77,8 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      source: null,
       timeData: null,
       options: null,
-      type: null,
-      baseApi: null,
-      instanceId: null,
-      xmlId: null,
       form: {
         type: 1,
         static: true,
@@ -98,11 +93,6 @@ export default {
   },
   methods: {
     setPro() {
-      this.source = this.form.source
-      this.instanceId = this.form.instanceId
-      this.xmlId = this.form.xmlId
-      this.type = this.form.type
-      this.baseApi = this.form.baseApi
       try {
         this.timeData = JSON.parse(this.form.timeData)
       } catch (e) {

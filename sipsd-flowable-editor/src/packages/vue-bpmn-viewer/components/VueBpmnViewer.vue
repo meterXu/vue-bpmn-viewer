@@ -22,7 +22,7 @@
       <template slot="right">
         <BTZoom v-show="myOptions.zoom" :center="myOptions.center" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <slot name="timeLine" v-if="myOptions.timeLine" v-bind:data="taskData">
-          <BTimeLine :data="taskData"/>
+          <BTimeLine :data="taskData" :bpmnViewer="bpmnViewer"/>
         </slot>
       </template>
     </BTLayout>
@@ -107,23 +107,23 @@ export default {
   watch:{
     taskData:{
       handler:function (nv){
-        utils.clearAllHighLight()
+        utils.clearAllHighLight(this.bpmnViewer._container,this.$refs.bpmnObj)
         nv.forEach(c=>{
           switch (c.status){
             case '已办':{
               if(c.approveType === '驳回'){
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false,type:3,stroke:true})
+                utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false,type:3,stroke:true})
               } else{
-                utils.setTaskHighlight([c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2,stroke:true})
+                utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2,stroke:true})
               }
             }break;
             case '待办':{
-              utils.setTaskHighlight([c.taskDefinitionKey],{color:'#f5842c',setline: this.myOptions.setline,shadow:false,type:1,stroke:true })
+              utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#f5842c',setline: this.myOptions.setline,shadow:false,type:1,stroke:true })
             }break;
           }
         })
         if(nv.filter(c=>c.status==='待办').length===0){
-          utils.setEndHighLight({stroke: '#5ac14a', fill: '#53D894'})
+          utils.setEndHighLight(this.bpmnViewer._container,{stroke: '#5ac14a', fill: '#53D894'})
         }
       }
     }
@@ -182,9 +182,9 @@ export default {
       _timeRes.sort((a,b)=>{
         return a.startTime - b.startTime
       }).forEach(f=>{
-        utils.setTaskMaxDay(f.taskDefinitionKey,f.customTaskMaxDay+'天')
+        utils.setTaskMaxDay(this.bpmnViewer._container,f.taskDefinitionKey,f.customTaskMaxDay+'天')
         if(f.realName){
-          utils.setTaskRealName(f.taskDefinitionKey,f.realName)
+          utils.setTaskRealName(this.bpmnViewer._container,f.taskDefinitionKey,f.realName)
         }
         _taskData.push(f)
       })
@@ -193,7 +193,6 @@ export default {
     bpmnLoading(){
     },
     bpmnLoadDone(){
-      console.log('xxx')
       this.logfv.info(JSON.stringify({
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,

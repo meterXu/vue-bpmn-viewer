@@ -30,7 +30,7 @@ import moment from 'moment'
 import {Timeline,Card,TimelineItem} from "element-ui";
 export default {
   name: "BTimeLine",
-  props:['data'],
+  props:['data','bpmnViewer'],
   components:{
     [Card.name]:Card,
     [Timeline.name]:Timeline,
@@ -69,15 +69,15 @@ export default {
     },
     handleItemOver(item,taskId){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
-      const taskObj = utils.getTaskObj(taskId)
-      if(taskObj){
-        this.oldStyle.color=taskObj.color
+      const taskObj = utils.getTaskObj(this.bpmnViewer._container,taskId)
+      if(taskObj.length>0){
+        this.oldStyle.color=taskObj[taskObj.length-1].color
       }
-      utils.setTaskHighlight([taskId],this.highLight[type-1])
+      utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.highLight[type-1])
     },
     handleItemOut(taskId){
-      utils.clearHighLight(taskId)
-      utils.setTaskHighlight([taskId],this.oldStyle)
+      utils.clearHighLight(this.bpmnViewer._container,taskId)
+      utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.oldStyle)
     },
     getTimeLineColor(data){
       if(data.status==='已办'){

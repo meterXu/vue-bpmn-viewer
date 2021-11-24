@@ -88,7 +88,7 @@ export default {
 
   },
   destroyed() {
-    utils.clearAllHighLight()
+    utils.clearAllHighLight(this.bpmnViewer._container)
   }
 }
 </script>

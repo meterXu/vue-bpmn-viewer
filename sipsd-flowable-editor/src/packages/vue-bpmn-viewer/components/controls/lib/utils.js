@@ -1,80 +1,84 @@
 import {attr, classes} from "tiny-svg";
 
-function setSingleTaskHighLight(id,options) {
+function setSingleTaskHighLight(container,id,options) {
     if (id) {
-        let completeTask = document.querySelector(`[data-element-id="${id}"]`)
-        if(completeTask){
-            let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
-            let rect = completeTask.querySelector('.djs-visual rect')
-            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-            let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
-            let user = completeTask.querySelectorAll('.djs-visual text')[1]
-            if(options.user){
-                user.innerHTML=options.user
-            }else {
-                attr(user,{
-                    fill:'#cdcdcd'
-                })
-            }
-            if(title1){
-                attr(title1, {
-                    fill: options.color,
-                })
-            }
-            if(title2){
-                attr(title2, {
-                    fill:options.color,
-                })
-            }
-            if (options.shadow&&feColorMatrix && rect) {
-                const rgb = hexToRgb(options.color)
-                attr(feColorMatrix, {
-                    values: `${(rgb[0]/255).toFixed(3)} 0 0 0 0
+        let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+        if(completeTasks.length>0){
+            completeTasks.forEach(completeTask=>{
+                let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
+                let rect = completeTask.querySelector('.djs-visual rect')
+                let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+                let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
+                let user = completeTask.querySelectorAll('.djs-visual text')[1]
+                if(options.user){
+                    user.innerHTML=options.user
+                }else {
+                    attr(user,{
+                        fill:'#cdcdcd'
+                    })
+                }
+                if(title1){
+                    attr(title1, {
+                        fill: options.color,
+                    })
+                }
+                if(title2){
+                    attr(title2, {
+                        fill:options.color,
+                    })
+                }
+                if (options.shadow&&feColorMatrix && rect) {
+                    const rgb = hexToRgb(options.color)
+                    attr(feColorMatrix, {
+                        values: `${(rgb[0]/255).toFixed(3)} 0 0 0 0
                            0 ${(rgb[1]/255).toFixed(3)} 0 0 0
                            0 0 ${(rgb[2]/255).toFixed(3)} 0 0
                            0 0 0 0.8 0`
-                })
-                if(options.stroke){
-                    attr(rect, {
-                        stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
                     })
+                    if(options.stroke){
+                        attr(rect, {
+                            stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
+                        })
+                    }
                 }
-            }
+            })
         }
 
     }
 }
 
-function clearSingleTaskHighLight(id) {
-    let completeTask = document.querySelector(`[data-element-id="${id}"]`)
-    if(completeTask){
-        let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
-        let rect = completeTask.querySelector('.djs-visual rect')
-        let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-        let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
-        if (rect) {
-            attr(rect, {
-                stroke: '#ececec',
-            })
-        }
-        if (title1) {
-            attr(title1, {
-                fill: "#3296fa",
-            })
-        }
-        if (title2) {
-            attr(title2, {
-                fill: "#3296fa",
-            })
-        }
-        if (feColorMatrix) {
-            attr(feColorMatrix, {
-                values: `0 0 0 0 0
+function clearSingleTaskHighLight(container,id) {
+    let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+    if(completeTasks.length>0){
+        completeTasks.forEach(completeTask=>{
+            let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
+            let rect = completeTask.querySelector('.djs-visual rect')
+            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+            let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
+            if (rect) {
+                attr(rect, {
+                    stroke: '#ececec',
+                })
+            }
+            if (title1) {
+                attr(title1, {
+                    fill: "#3296fa",
+                })
+            }
+            if (title2) {
+                attr(title2, {
+                    fill: "#3296fa",
+                })
+            }
+            if (feColorMatrix) {
+                attr(feColorMatrix, {
+                    values: `0 0 0 0 0
               0 0 0 0 0
               0 0 0 0 0
               0 0 0 0.1 0`
-            })
-        }
+                })
+            }
+        })
     }
 }
 
@@ -101,38 +105,36 @@ function hexToRgb(hex) {
 function utils(){
     let taskHighlightTimer = {}
 
-    this.getTaskObj=function (id){
-        let completeTask = document.querySelector(`[data-element-id="${id}"]`)
-        if(completeTask){
-            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-            if(title1){
-                let businessObject = Object.assign({},{color:title1.style.fill})
-                return businessObject
-            }else{
-                return null
-            }
-
-        }else{
-            return null
+    this.getTaskObj=function (container,id){
+        let res = []
+        let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+        if(completeTasks.length>0){
+            completeTasks.forEach(completeTask=>{
+                let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+                if(title1){
+                    let businessObject = Object.assign({},{color:title1.style.fill})
+                    res.push(businessObject)
+                }
+            })
         }
-
+        return res
     }
 
-    this.setTaskHighlight=function(ids,options={color:'#5BC14B',setline:false,user:undefined,shadow:false,stroke:true}) {
+    this.setTaskHighlight=function(container,ids,options={color:'#5BC14B',setline:false,user:undefined,shadow:false,stroke:true}) {
         ids.forEach(id => {
-            this.clearHighLight(id)
-            const xx =setSingleTaskHighLight(id,options)
+            this.clearHighLight(container,id)
+            const xx =setSingleTaskHighLight(container,id,options)
             if(xx){
                 taskHighlightTimer[id]=xx
             }
             if(options.setline){
-                this.setFlowHighLight(id,options)
+                this.setFlowHighLight(container,id,options)
             }
         })
     }
 
-    this.setFlowHighLight=function(id,options={color:'#5BC14B'}) {
-        let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
+    this.setFlowHighLight=function(container,id,options={color:'#5BC14B'}) {
+        let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if (paths) {
             paths.forEach(c=>{
                 let path = c.querySelector('path')
@@ -146,8 +148,8 @@ function utils(){
 
     }
 
-    this.clearAllFlowHighLight=function() {
-        let paths = document.querySelectorAll('.djs-connection path')
+    this.clearAllFlowHighLight=function(container) {
+        let paths = container.querySelectorAll('.djs-connection path')
         paths.forEach(c => {
             attr(c,{
                 stroke:'#ccc'
@@ -156,8 +158,8 @@ function utils(){
         })
     }
 
-    this.clearFlowHighLight=function(id){
-        let paths = document.querySelectorAll(`[data-targetRef-id="${id}"]`)
+    this.clearFlowHighLight=function(container,id){
+        let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
         if(paths){
             paths.forEach(c => {
                 attr(c,{
@@ -168,17 +170,17 @@ function utils(){
         }
     }
 
-    this.setAllHighLight=function() {
-        this.clearAllHighLight()
-        let tasks = document.querySelectorAll('.djs-shape')
+    this.setAllHighLight=function(container) {
+        this.clearAllHighLight(container)
+        let tasks = container.querySelectorAll('.djs-shape')
         tasks.forEach(c => {
-            setSingleTaskHighLight(c.getAttribute('data-element-id'))
+            setSingleTaskHighLight(container,c.getAttribute('data-element-id'))
         })
-        this.setEndHighLight()
+        this.setEndHighLight(container)
     }
 
-    this.setEndHighLight=function(color = {stroke: '#db4744', fill: '#FD706D'},setline=false) {
-        let endEvents = document.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
+    this.setEndHighLight=function(container,color = {stroke: '#db4744', fill: '#FD706D'},setline=false) {
+        let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
         if(endEvents.length>0){
             endEvents.forEach(c=>{
                 let circle = c.querySelector('circle')
@@ -187,44 +189,44 @@ function utils(){
                     fill: color.fill,
                 })
                 if(setline){
-                    this.setFlowHighLight(c.getAttribute('data-element-id'))
+                    this.setFlowHighLight(container,c.getAttribute('data-element-id'))
                 }
             })
         }
     }
 
-    this.clearAllHighLight=function() {
+    this.clearAllHighLight=function(container) {
         if(taskHighlightTimer){
             Object.keys(taskHighlightTimer).forEach(key => {
                 window.clearInterval(taskHighlightTimer[key])
             })
         }
         taskHighlightTimer = {}
-        let tasks = document.querySelectorAll('[data-element-type="bpmn:userTask"]')
+        let tasks = container.querySelectorAll('[data-element-type="bpmn:userTask"]')
         tasks.forEach(c => {
-            clearSingleTaskHighLight(c.getAttribute('data-element-id'))
+            clearSingleTaskHighLight(container,c.getAttribute('data-element-id'))
         })
-        this.setEndHighLight({stroke: '#aaa', fill: '#d1d1d1'})
-        this.clearAllFlowHighLight()
+        this.setEndHighLight(container,{stroke: '#aaa', fill: '#d1d1d1'})
+        this.clearAllFlowHighLight(container)
     }
 
-    this.clearHighLight=function(id) {
+    this.clearHighLight=function(container,id) {
         if(taskHighlightTimer){
             window.clearInterval(taskHighlightTimer[id])
         }
-        clearSingleTaskHighLight(id)
-        this.clearFlowHighLight(id)
+        clearSingleTaskHighLight(container,id)
+        this.clearFlowHighLight(container,id)
     }
 
-    this.setTaskMaxDay=function(id,day){
-        let text = document.querySelector(`[data-element-id="${id}"] .custom-max-day text`)
+    this.setTaskMaxDay=function(container,id,day){
+        let text = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .custom-max-day text`)
         if(text){
             text.innerHTML = day
         }
     }
 
-    this.setTaskRealName=function(id,day){
-        let text = document.querySelector(`[data-element-id="${id}"] .custom-realName text`)
+    this.setTaskRealName=function(container,id,day){
+        let text = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .custom-realName text`)
         if(text){
             text.innerHTML = day
         }
