@@ -36,7 +36,8 @@ public interface IFlowableProcessDefinitionService {
      *
      * @param processDefinitionId 流程定义id
      * @param suspensionState     状态1挂起 2激活
+     * @param suspensionState     状态1延长时间 2不需要延长时间
      */
-    public Result suspendOrActivateProcessDefinitionById(String processDefinitionId, int suspensionState);
+    public Result suspendOrActivateProcessDefinitionById(String processDefinitionId, int suspensionState,int overtime);
 
 }

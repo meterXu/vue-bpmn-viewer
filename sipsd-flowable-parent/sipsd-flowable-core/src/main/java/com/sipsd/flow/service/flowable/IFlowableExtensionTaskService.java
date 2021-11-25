@@ -106,10 +106,21 @@ public interface IFlowableExtensionTaskService
 
     /**
      *
-     * @param processDefinitionId
+     * @param processInstanceId 实例ID
+     * @param state 激活/挂起状态
+     * @param overtime 是否延长时间
      * @return void
      * @Description  通过实例定义ID更新激活/挂起状态
      */
-    public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state);
+    public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state,String overtime);
+
+    /**
+     *
+     * @param processInstanceId 实例ID
+     * @param state 激活/挂起状态
+     * @return void
+     * @Description  激活时更新结束时间-原本的结束时间+当前时间-挂起时间
+     */
+    public void updateEndTimeByProcessInstanceId(String processInstanceId,String state);
 
 }

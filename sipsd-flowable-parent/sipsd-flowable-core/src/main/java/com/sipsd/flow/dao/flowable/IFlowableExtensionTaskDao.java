@@ -113,5 +113,15 @@ public interface IFlowableExtensionTaskDao
      * @return void
      * @Description  通过实例ID更新激活/挂起状态
      */
-    public void updateSuspensionStateByProcessInstanceId(@Param("processInstanceId") String processInstanceId,@Param("state") String state);
+    public void updateSuspensionStateByProcessInstanceId(@Param("processInstanceId") String processInstanceId,@Param("state") String state,@Param("overtime") String overtime);
+
+    /**
+     *
+     * @param processInstanceId 实例ID
+     * @param state 激活/挂起状态
+     * @return void
+     * @Description  激活时更新结束时间-原本的结束时间+当前时间-挂起时间
+     */
+    public void updateEndTimeByProcessInstanceId(@Param("processInstanceId") String processInstanceId,@Param("state") String state);
+
 }
