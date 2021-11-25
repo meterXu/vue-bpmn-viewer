@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.68",
+  "version": "1.0.70",
   "description": "沃壤平台工作流引擎执行器",
   "main": "dist/index.js",
   "scripts": {
@@ -22,7 +22,6 @@
     "@dpark/logfv-web-vue": "^1.0.23",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
-    "element-ui": "^2.15.6",
     "moment": "^2.29.1",
     "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2",

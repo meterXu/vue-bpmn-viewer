@@ -1,22 +1,29 @@
 <template>
   <div class="bpmn-time-line" :class="{'spin-center':data.length===0}">
     <div ref="bpmn-time-line" >
-      <Timeline v-if="data.length>0">
-        <TimelineItem v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)" placement="top">
-          <div :class="['timeLine-item-over',
+      <div class="timeline" v-if="data.length>0">
+        <div class="timeline-item" v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)">
+          <div class="timeline-item__tail"></div>
+          <div class="timeline-item__node" :style="{'background-color': getTimeLineColor(item)}"></div>
+          <div class="timeline-item__wrapper">
+            <div class="timeline-item__timestamp">
+              2021-06-10 10:23:53
+            </div>
+            <div :class="['timeLine-item-over',
               item.status==='已办'?
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
             :'timeLine-item-over-uned']">
-            <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
-              <p>{{item.taskName}}</p>
-              <p>审批类型：{{item.approveType}}</p>
-              <p>状态：{{item.status}}</p>
-              <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
-              <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+              <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
+                <p>{{item.taskName}}</p>
+                <p>审批类型：{{item.approveType}}</p>
+                <p>状态：{{item.status}}</p>
+                <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
+                <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+              </div>
             </div>
           </div>
-        </TimelineItem>
-      </Timeline>
+        </div>
+      </div>
       <div v-else class="no-data"></div>
     </div>
 
@@ -27,14 +34,9 @@
 import utils from "./lib/utils.js";
 import ms from 'pretty-ms'
 import moment from 'moment'
-import {Timeline,TimelineItem} from "element-ui";
 export default {
   name: "BTimeLine",
   props:['data','bpmnViewer'],
-  components:{
-    Timeline,
-    TimelineItem
-  },
   data(){
     return {
       loadingInstance:null,
@@ -173,5 +175,46 @@ export default {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(94, 94, 94, 0.3);
+}
+.timeline{
+  position: relative;
+  padding-left:20px
+}
+.timeline-item{
+  position: relative;
+  padding-bottom:20px
+}
+.timeline-item__tail{
+  position: absolute;
+  left: 4px;
+  height: 100%;
+  border-left: 2px solid #e4e7ed;
+}
+.timeline-item__node{
+  left: -1px;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.timeline-item__wrapper{
+  position: relative;
+  padding-left: 28px;
+  top: -3px;
+  box-sizing: border-box;
+}
+.timeline-item__timestamp{
+  margin-bottom: 8px;
+  padding-top: 4px;
+  color: #909399;
+  line-height: 1;
+  font-size: 13px;
 }
 </style>

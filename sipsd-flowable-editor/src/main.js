@@ -4,6 +4,7 @@ import store from './store'
 import routes,{frameRoutes} from './routes'
 import {registerApp,project} from '@/utils'
 import "@/assets/less/common.less";
+import 'element-ui/lib/theme-chalk/index.css'
 import elementUI from 'element-ui'
 import {staticPermission} from "@/api";
 Vue.use(Vuels,{
