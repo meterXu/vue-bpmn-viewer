@@ -10,7 +10,6 @@ import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.service.flowable.IFlowableProcessDefinitionService;
 import com.sipsd.flow.vo.flowable.ProcessDefinitionQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessDefinitionVo;
-import org.flowable.engine.RepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,10 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class FlowableProcessDefinitionServiceImpl extends BaseProcessService implements IFlowableProcessDefinitionService {
-
-	@Autowired
-	private RepositoryService repositoryService;
-
     @Autowired
     private IFlowableProcessDefinitionDao flowableProcessDefinitionDao;
 
@@ -48,22 +43,28 @@ public class FlowableProcessDefinitionServiceImpl extends BaseProcessService imp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result suspendOrActivateProcessDefinitionById(String processInstanceId,int suspensionState) {
+    public Result suspendOrActivateProcessDefinitionById(String processInstanceId,int suspensionState,int overtime) {
         Result result = null;
         if (suspensionState == 2){
 //            repositoryService.suspendProcessDefinitionById(processDefinitionId, true, null);
             runtimeService.suspendProcessInstanceById(processInstanceId);
+            //1-需要延长时间 2-不需要
+            flowableExtensionTaskService.updateSuspensionStateByProcessInstanceId(processInstanceId,String.valueOf(suspensionState),String.valueOf(overtime));
             result = Result.sucess("挂起成功");
         }else if(suspensionState == 1){
 //            repositoryService.activateProcessDefinitionById(processDefinitionId, true, null);
             runtimeService.activateProcessInstanceById(processInstanceId);
+            //1-需要延长时间 2-不需要
+            //停止/恢复时间-更新act_ru_extension_task表  TODO 当前附加表所有的数据都会更新，实际上只用更新正在运行的任务即可-可以新增历史附加表来实现
+            flowableExtensionTaskService.updateSuspensionStateByProcessInstanceId(processInstanceId,String.valueOf(suspensionState),String.valueOf(suspensionState));
+            //更新激活时候的的结束时间
+            flowableExtensionTaskService.updateEndTimeByProcessInstanceId(processInstanceId,"2");
             result = Result.sucess("激活成功");
         }
         else {
             return Result.failed("请输入正确的状态：1-激活 2-挂起");
         }
-        //停止/恢复时间-更新act_ru_extension_task表  TODO 当前附加表所有的数据都会更新，实际上只用更新正在运行的任务即可-可以新增历史附加表来实现
-        flowableExtensionTaskService.updateSuspensionStateByProcessInstanceId(processInstanceId,String.valueOf(suspensionState));
+
         return result;
     }
 

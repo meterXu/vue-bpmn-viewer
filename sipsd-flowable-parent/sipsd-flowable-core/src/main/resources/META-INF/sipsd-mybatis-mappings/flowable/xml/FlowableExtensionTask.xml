@@ -16,13 +16,19 @@
             t3.TASK_MAX_DAY_  as taskMaxDay,
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
-            t3.END_TIME_ as endTime,
+        <!-- 如果是挂起状态需要实时更改结束时间-->
+            if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2,
+            date_add(t3.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t3.SUSPENSION_TIME_, NOW())  SECOND),t3.END_TIME_ )  as endTime,
             t5.ASSIGNEE_ as assignee,
-            if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),
-            t3.END_TIME_),TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_))  as restTime,
-            TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,CURRENT_TIMESTAMP()) as duration,
+        <!-- 剩余时间-->
+            if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_)
+            ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t3.END_TIME_))  as restTime,
+        <!-- 持续时间-->
+            if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,CURRENT_TIMESTAMP()),
+            TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,t3.SUSPENSION_TIME_))  as duration,
             t3.SUSPENSION_TIME_ as suspensionTime,
             case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
+            case  t3.OVER_TIME when 1 then '正常' else '延长' end as overtime,
             t3.GROUP_ID_ as groupId,
             t3.FLOW_TYPE_ as flowType,
             t3.FROM_KEY_ as fromKey,
@@ -63,11 +69,20 @@
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
             t1.ASSIGNEE_ as assignee,
-        if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),
-        t3.END_TIME_),TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_))  as restTime,
-        t3.SUSPENSION_TIME_ as suspensionTime,
-        case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
-            TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
+        <!-- 剩余时间-->
+        if(t1.END_TIME_ is not null,0, if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_)
+        ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t3.END_TIME_)))     as restTime,
+        <!-- 如果是挂起状态需要实时更改结束时间-->
+            if(t1.END_TIME_ is not null,t1.END_TIME_,if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2,
+            date_add(t3.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t3.SUSPENSION_TIME_, NOW())  SECOND),t3.END_TIME_ ))  as endTime,
+            t3.SUSPENSION_TIME_ as suspensionTime,
+            case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
+
+        <!-- 持续时间-->
+            if(t1.END_TIME_ is not null,TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_),
+            if(t3.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,t1.START_TIME_,CURRENT_TIMESTAMP()),
+            TIMESTAMPDIFF(SECOND,t1.START_TIME_,t3.SUSPENSION_TIME_))) as duration,
+
             t3.GROUP_ID_ as groupId,
             t1.TENANT_ID_ AS tenantId,
             t1.PROC_INST_ID_ AS processInstanceId,
@@ -111,6 +126,7 @@
         t3.TASK_DEF_KEY_  as taskDefinitionKey,
         t3.PROC_DEF_ID_ as processDefinitionId,
         t1.ASSIGNEE_ as assignee,
+        0 as restTime,
         TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
         t3.GROUP_ID_ as groupId,
         t1.TENANT_ID_ AS tenantId,
@@ -208,9 +224,12 @@
     </insert>
 
     <update id="updateSuspensionStateByProcessInstanceId" parameterType="java.lang.String">
-        UPDATE  act_ru_extension_task t1 SET t1.SUSPENSION_STATE_ = #{state} , t1.SUSPENSION_TIME_ = CURRENT_TIME
+        UPDATE  act_ru_extension_task t1 SET t1.SUSPENSION_STATE_ = #{state} , t1.SUSPENSION_TIME_ = CURRENT_TIME,t1.OVER_TIME = #{overtime}
         WHERE t1.PROC_INST_ID_ = #{processInstanceId}
     </update>
 
-
+    <update id="updateEndTimeByProcessInstanceId" parameterType="java.lang.String">
+        UPDATE  act_ru_extension_task t1 SET t1.END_TIME_ =  date_add(t1.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t1.SUSPENSION_TIME_, NOW())  SECOND)
+        WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.SUSPENSION_STATE_ = #{state}
+    </update>
 </mapper>

@@ -22,3 +22,10 @@ CREATE TABLE IF NOT EXISTS ACT_HI_NOTICE_TASK
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci;
+
+ALTER TABLE act_ru_extension_task
+    ADD COLUMN SUSPENSION_STATE_ int(11) DEFAULT 1;
+ALTER TABLE act_ru_extension_task
+    ADD COLUMN SUSPENSION_TIME_ datetime DEFAULT NULL;
+ALTER TABLE act_ru_extension_task
+    ADD COLUMN OVER_TIME int(11) DEFAULT 1;

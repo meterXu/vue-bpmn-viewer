@@ -87,8 +87,6 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						{
 							groupIdList.add(identityLink.getGroupId());
 						}
-
-
 					}
 				}
 
@@ -320,8 +318,14 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 
 
 	@Override
-	public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state)
+	public void updateSuspensionStateByProcessInstanceId(String processInstanceId,String state,String overtime)
 	{
-		flowableExtensionTaskDao.updateSuspensionStateByProcessInstanceId(processInstanceId,state);
+		flowableExtensionTaskDao.updateSuspensionStateByProcessInstanceId(processInstanceId,state,overtime);
+	}
+
+	@Override
+	public void updateEndTimeByProcessInstanceId(String processInstanceId, String state)
+	{
+		flowableExtensionTaskDao.updateEndTimeByProcessInstanceId(processInstanceId,state);
 	}
 }

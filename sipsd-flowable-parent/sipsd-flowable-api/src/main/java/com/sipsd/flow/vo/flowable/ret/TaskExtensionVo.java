@@ -169,6 +169,11 @@ public class TaskExtensionVo implements Serializable {
     private String suspensionState;
 
     /**
+     * 是否延长时间
+     */
+    private String overtime;
+
+    /**
      * 挂起/激活 时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -461,5 +466,15 @@ public class TaskExtensionVo implements Serializable {
     public void setSuspensionTime(Date suspensionTime)
     {
         this.suspensionTime = suspensionTime;
+    }
+
+    public String getOvertime()
+    {
+        return overtime;
+    }
+
+    public void setOvertime(String overtime)
+    {
+        this.overtime = overtime;
     }
 }
