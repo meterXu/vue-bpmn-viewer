@@ -33,6 +33,13 @@ public interface IFlowableExtensionTaskService
     public void saveBackExtensionTask(String processDefinitionId);
 
     /**
+     *并行网关内的串行任务节点跳转插入自定义属性表
+     * @param processInstanceId
+     * @param taskDefKey
+     */
+    public void saveBackExtensionTaskForJump(String processInstanceId,String taskDefKey);
+
+    /**
      * @param processInstanceId
      * @return com.sipsd.flow.vo.flowable.ret.TaskExtensionVo
      * @Description 根据流程实例id查询自定义任务属性表
