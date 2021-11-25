@@ -6,7 +6,6 @@
 import Vue from 'vue'
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
 import BpmnViewer from "bpmn-js/lib/Viewer"
-import {Loading} from 'element-ui'
 export default {
   name: 'VueBpmn',
   props: {
