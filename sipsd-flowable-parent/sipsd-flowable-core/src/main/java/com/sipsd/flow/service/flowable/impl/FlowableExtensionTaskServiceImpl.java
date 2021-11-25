@@ -1,5 +1,6 @@
 package com.sipsd.flow.service.flowable.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
@@ -122,6 +123,53 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					taskExtensionVo.setBusinessInfo(businessInfo);
 					flowableExtensionTaskDao.insertExtensionTask(taskExtensionVo);
 				}
+			}
+		}
+	}
+
+	@Override
+	public void saveBackExtensionTaskForJump(String processInstanceId,String taskDefKey)
+	{
+		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
+		Date startTime = new Date();
+		String flowType = FlowConstant.FLOW_SEQUENTIAL;
+		List<Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
+		waitedTaskList = waitedTaskList.stream().filter(p -> StrUtil.equals(p.getTaskDefinitionKey(), taskDefKey)).collect(Collectors.toList());
+		//TODO 对于加签的情况驳回的时候无法判断
+		if(waitedTaskList.size()>1)
+		{
+			flowType = FlowConstant.FLOW_PARALLEL;
+		}
+		if (!CollectionUtils.isEmpty(waitedTaskList))
+		{
+			for(Task task:waitedTaskList)
+			{
+				//查询驳回之后的代办节点的前审批节点
+				TaskExtensionVo taskExtensionVo =  flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(processInstanceId,task.getTaskDefinitionKey());
+				TaskExtensionVo vo = new TaskExtensionVo();
+				vo.setTaskId(task.getId());
+				vo.setAssignee(taskExtensionVo.getAssignee());
+				vo.setGroupId(taskExtensionVo.getGroupId());
+				vo.setExecutionId(task.getExecutionId());
+				vo.setProcessDefinitionId(task.getProcessDefinitionId());
+				vo.setProcessInstanceId(task.getProcessInstanceId());
+				vo.setFromKey(taskExtensionVo.getFromKey());
+				vo.setTaskMaxDay(taskExtensionVo.getTaskMaxDay());
+				vo.setCustomTaskMaxDay(taskExtensionVo.getCustomTaskMaxDay());
+				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
+				if(StringUtils.isNotEmpty(taskMaxDay))
+				{
+					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					//算出剩余处理时间
+					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
+					vo.setRestTime(restTime);
+				}
+				vo.setTaskDefinitionKey(task.getTaskDefinitionKey());
+				vo.setTenantId(task.getTenantId());
+				vo.setTaskName(task.getName());
+				vo.setFlowType(flowType);
+				vo.setStartTime(startTime);
+				flowableExtensionTaskDao.insertExtensionTask(vo);
 			}
 		}
 	}

@@ -15,6 +15,7 @@ import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
+import com.sipsd.flow.enm.flowable.GatewayJumpTypeEnum;
 import com.sipsd.flow.exception.SipsdBootException;
 import com.sipsd.flow.service.flowable.*;
 import com.sipsd.flow.vo.flowable.*;
@@ -44,6 +45,7 @@ import org.flowable.identitylink.api.IdentityLinkType;
 import org.flowable.idm.api.User;
 import org.flowable.task.api.DelegationState;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.flowable.task.service.impl.persistence.entity.TaskEntityImpl;
@@ -53,6 +55,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.NotBlank;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -108,41 +111,59 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	@Override
 	@Transactional(rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 	public Result<String> jumpToStepTask(BackTaskVo backTaskVo) {
-		//获取当前的节点名称
-		TaskExtensionVo taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskId(backTaskVo.getProcessInstanceId(),backTaskVo.getTaskId());
-		String currentTaskDefKey = taskExtensionVo.getTaskDefinitionKey();
-		taskExtensionVo = flowableExtensionTaskDao.getExtensionTaskByTaskDefinitionKey(backTaskVo.getProcessInstanceId(),backTaskVo.getDistFlowElementId());
-		if(taskExtensionVo == null)
-		{
-			return Result.failed("无法找到跳转的审批节点的信息");
+		// 1.获取任务实例
+		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().processInstanceId(backTaskVo.getProcessInstanceId()).taskId(backTaskVo.getTaskId()).singleResult();
+		if(taskEntity == null){
+			return Result.failed("不存在任务实例,请确认!");
 		}
-		// 1.把当前的节点设置为空
-		Result<String> result = null;
-		TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(backTaskVo.getTaskId()).singleResult();
-		// 1.把当前的节点设置为空
-		if (taskEntity != null) {
-			// 2.设置审批人
-			taskEntity.setAssignee(backTaskVo.getUserCode());
-			taskService.saveTask(taskEntity);
-			// 3.添加驳回意见
-			this.addComment(backTaskVo.getTaskId(), backTaskVo.getUserCode(), backTaskVo.getProcessInstanceId(),
-					CommentTypeEnum.BH.toString(), backTaskVo.getMessage());
 
-			BpmTaskModelQuery query = new BpmTaskModelQuery();
-			query.setDefineId(taskEntity.getProcessDefinitionId());
-			UserTaskModelDTO userTaskModelsDTO = bpmProcessService.getUserTaskModelDto(query);
-			List<BpmTaskModelEntity> taskModelEntities = userTaskModelsDTO.getAllUserTaskModels();
-			Map<String, BpmTaskModelEntity> taskModelEntitiesMap = taskModelEntities.stream().collect(
-					Collectors.toMap(BpmTaskModelEntity::getTaskDefKey, a -> a, (k1, k2) -> k1));
-			//要跳转的节点B
-			List<BpmTaskModelEntity> targetNodes = new ArrayList<>(4);
-			//TODO 目标跳转节点为 多个 并且 都是并行网关里的任务节点
-			targetNodes.add(taskModelEntitiesMap.get(backTaskVo.getDistFlowElementId()));
-			// 当前节点A
-			BpmTaskModelEntity currentNode = taskModelEntitiesMap.get(taskEntity.getTaskDefinitionKey());
+		String distFlowElementId = backTaskVo.getDistFlowElementId();
+		String[] split = distFlowElementId.split(",");
+		List<String> distList = Arrays.asList(split);
 
-			// 4.处理提交人节点
-			FlowNode distActivity = flowableBpmnModelService.findFlowNodeByActivityId(taskEntity.getProcessDefinitionId(), backTaskVo.getDistFlowElementId());
+		BpmTaskModelQuery query = new BpmTaskModelQuery();
+		query.setDefineId(taskEntity.getProcessDefinitionId());
+		UserTaskModelDTO userTaskModelsDTO = bpmProcessService.getUserTaskModelDto(query);
+		List<BpmTaskModelEntity> taskModelEntities = userTaskModelsDTO.getAllUserTaskModels();
+		Map<String, BpmTaskModelEntity> taskModelEntitiesMap = taskModelEntities.stream().collect(
+				Collectors.toMap(BpmTaskModelEntity::getTaskDefKey, a -> a, (k1, k2) -> k1));
+
+		// 当前节点A
+		BpmTaskModelEntity currentNode = taskModelEntitiesMap.get(taskEntity.getTaskDefinitionKey());
+
+		//要跳转的节点B
+		List<BpmTaskModelEntity> targetNodes = new ArrayList<>(4);
+		for(String dist : distList){
+			BpmTaskModelEntity bpmTaskModelEntity = taskModelEntitiesMap.get(dist);
+			if(bpmTaskModelEntity != null){
+				targetNodes.add(bpmTaskModelEntity);
+			}
+		}
+
+		if (currentNode == null || CollUtil.isEmpty(targetNodes)) {
+		  	return 	Result.failed("当前节点或目标节点不存在");
+		}
+
+		// （1）如果B有多个节点
+		//        必须为同一个并行网关内的任务节点（网关开始、合并节点必须一致）
+		//        必须不是同一条流程线上的任务节点
+		checkjumpTargetNodes(targetNodes);
+
+		// 2.设置审批人
+		taskEntity.setAssignee(backTaskVo.getUserCode());
+		taskService.saveTask(taskEntity);
+		// 3.添加驳回意见
+		this.addComment(backTaskVo.getTaskId(), backTaskVo.getUserCode(), backTaskVo.getProcessInstanceId(),
+				CommentTypeEnum.BH.toString(), backTaskVo.getMessage());
+
+
+		for(BpmTaskModelEntity entity : targetNodes){
+			// 4.删除节点
+			String taskDefKey = entity.getTaskDefKey();
+			this.deleteActivity(taskDefKey, taskEntity.getProcessInstanceId());
+			// 5.如果跳转到---提交人节点
+				//设置本次全局变量信息
+			FlowNode distActivity = flowableBpmnModelService.findFlowNodeByActivityId(taskEntity.getProcessDefinitionId(), taskDefKey);
 			if (distActivity != null) {
 				if (FlowConstant.FLOW_SUBMITTER.equals(distActivity.getName())) {
 					ProcessInstance processInstance = runtimeService.createProcessInstanceQuery()
@@ -151,18 +172,16 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 							processInstance.getStartUserId());
 				}
 			}
-			// 5.删除节点
-			this.deleteActivity(backTaskVo.getDistFlowElementId(), taskEntity.getProcessInstanceId());
+		}
 
-			Map<String, UserTask> allUserTaskMap = getAllUserTaskMap(taskEntity.getProcessDefinitionId());
-			UserTask userTaskModel = allUserTaskMap.get(taskExtensionVo.getTaskDefinitionKey());
 
-			List<String> executionIds = new ArrayList<>();
-			// 6.判断节点是不是子流程内部的节点
+
+		if(targetNodes.size() == 1){
 			if (flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
-					backTaskVo.getDistFlowElementId())
+					targetNodes.get(0).getTaskDefKey())
 					&& flowableBpmnModelService.checkActivitySubprocessByActivityId(taskEntity.getProcessDefinitionId(),
 					taskEntity.getTaskDefinitionKey())) {
+				List<String> executionIds = new ArrayList<>();
 				// 6.1 子流程内部驳回
 				Execution executionTask = runtimeService.createExecutionQuery().executionId(taskEntity.getExecutionId())
 						.singleResult();
@@ -170,69 +189,69 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				List<Execution> executions = runtimeService.createExecutionQuery().parentId(parentId).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
-			}
-			//【跳转到并联网关内】判断目标跳转节点B---->目标节点是否存在 && 是否都是并行网关内的节点   TODO 判断多个目标节点，并且 都是并行网关里的节点
-			else if(CollUtil.isNotEmpty(targetNodes) && targetNodes.get(0).getInParallelGateway()){
-				//如果A非并行分支上的任务节点,B是为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
-				if (!currentNode.getInParallelGateway()) {
 
-					String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
-					ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
-					// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
-					dealParallelGatewayFinishLog(forkGatewayB, taskEntity, targetNodes.size());
-				}
-
-				//目标跳转节点B
-				List<String> targetTaskDefKey = new ArrayList<>();
-				targetTaskDefKey.add(backTaskVo.getDistFlowElementId());
-				//5.执行驳回操作
-				runtimeService.createChangeActivityStateBuilder()
-						.processInstanceId(backTaskVo.getProcessInstanceId())
-						.moveSingleActivityIdToActivityIds(currentTaskDefKey,targetTaskDefKey)
-						.changeState();
+				//TODO 跳转只能跳转到以前审批过的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
+				flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
+				return Result.sucess("跳转成功!");
 			}
-			// 跳转到会签节点
-			else if(userTaskModel.hasMultiInstanceLoopCharacteristics()){
-
-				List<Execution> executions = runtimeService.createExecutionQuery()
-						.parentId(taskEntity.getProcessInstanceId()).list();
-				executions.forEach(execution -> executionIds.add(execution.getId()));
-				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
-
-			}
-
-			else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
-				//驳回到并联节点
-				List<String> distActivityIds = new ArrayList<>();
-				//查询该节点的其他并联节点
-				List<TaskExtensionVo> parallelTask =  flowableExtensionTaskService.getExtensionTaskByStartTime(backTaskVo.getProcessInstanceId(),
-						DateUtil.getDateTime(taskExtensionVo.getStartTime()));
-				for(TaskExtensionVo extensionVo:parallelTask)
-				{
-					distActivityIds.add(extensionVo.getTaskDefinitionKey());
-				}
-				//5.执行驳回操作
-				runtimeService.createChangeActivityStateBuilder()
-						.processInstanceId(backTaskVo.getProcessInstanceId())
-						.moveSingleActivityIdToActivityIds(currentTaskDefKey,distActivityIds)
-						.changeState();
-			}
-			else {
-				// 6.2 普通驳回
-				List<Execution> executions = runtimeService.createExecutionQuery()
-						.parentId(taskEntity.getProcessInstanceId()).list();
-				executions.forEach(execution -> executionIds.add(execution.getId()));
-				this.moveExecutionsToSingleActivityId(executionIds, backTaskVo.getDistFlowElementId());
-			}
-			//保存流程的自定义属性-最大审批天数
-			//TODO 跳转只能跳转到以前审批过的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
-			flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
-			result = Result.sucess("跳转成功!");
-		} else {
-			result = Result.failed("不存在任务实例,请确认!");
 		}
-		return result;
-	}
+
+
+
+		// （2）如果A和B为同一条顺序流程线上（其中包含了A/B都是非并行网关上的节点 或都为并行网关中同一条流程线上的节点），则可以直接跳转
+		if (targetNodes.size() == 1 && currentNode.getParallelGatewayForkRef().equals(targetNodes.get(0).getParallelGatewayForkRef())) {
+
+			List<String> executionIds = new ArrayList<>();
+			List<Execution> executions = runtimeService.createExecutionQuery()
+					.parentId(taskEntity.getProcessInstanceId()).list();
+
+			String taskDefKey = targetNodes.get(0).getTaskDefKey();
+
+			//如果A/B并行网关中同一条流程线上
+			if(targetNodes.get(0).getInParallelGateway() && currentNode.getInParallelGateway()){
+				List<String> collect = executions.stream().filter(p -> StrUtil.equals(p.getActivityId(), currentNode.getTaskDefKey())).map(Execution::getId).collect(Collectors.toList());
+				executionIds.addAll(collect);
+				this.moveExecutionsToSingleActivityId(executionIds,taskDefKey);
+				flowableExtensionTaskService.saveBackExtensionTaskForJump(backTaskVo.getProcessInstanceId(),taskDefKey);
+			}else{
+				executions.forEach(execution -> executionIds.add(execution.getId()));
+				this.moveExecutionsToSingleActivityId(executionIds, taskDefKey);
+				flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
+
+			}
+			return Result.sucess("跳转成功!");
+
+
+		}
+		//跳转目标节点B 的任务节点编码
+		distList = targetNodes.stream().map(BpmTaskMinModelEntity::getTaskDefKey).collect(Collectors.toList());
+
+		//（3）如果A非并行分支上的任务节点
+		//    则根据以上判定，B一定是为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+		if (!currentNode.getInParallelGateway()) {
+			String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
+			ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
+			// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+			dealParallelGatewayFinishLog(forkGatewayB, taskEntity, targetNodes.size());
+			// 跳转
+			runtimeService.createChangeActivityStateBuilder().processInstanceId(
+					taskEntity.getProcessInstanceId())
+					.moveSingleActivityIdToActivityIds(taskEntity.getTaskDefinitionKey(), distList)
+					.changeState();
+
+		} else {
+			//（4）如果A是并行分支上的任务节点
+			//   4.1 从外向里面跳转（父并网关 》子并网关）
+			//    B是为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+			//   4.2 从里向外面跳转 （子并网关 》父并网关 【或】 非并行网关上的节点 【或】 其他非父子关系的并行网关节点）
+			//    需要清除本任务节点并行网关上（包括父网关）所有的其他未完成的用户任务
+			//    B如果是为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+			gatewayJump(userTaskModelsDTO, targetNodes, currentNode, taskEntity, distList);
+
+		}
+		//TODO 跳转只能跳转到以前审批过的节点，如果跳转到后面的节点无法知道当前节点是审批还是未审批(需要讨论)
+		flowableExtensionTaskService.saveBackExtensionTask(backTaskVo.getProcessInstanceId());
+		return Result.sucess("跳转成功!");	}
 
 
 	@Override
@@ -543,7 +562,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	@Override
 	public Result<String> addMultiInstanceExecution(AddSignTaskVo form) {
-		TaskEntityImpl task = (TaskEntityImpl) taskService.createTaskQuery().taskId(form.getTaskId()).singleResult();
+		TaskEntityImpl task = (TaskEntityImpl) taskService.createTaskQuery().taskId(form.getTaskId()).processInstanceId(form.getProcessInstanceId()).singleResult();
 		List<String> signPersoneds = form.getSignPersoneds();
 		if (task == null) {
 			return  Result.failed("不存在任务实例，请确认!");
@@ -736,7 +755,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		Result<String> result = Result.sucess( "审批成功");
 		if (StringUtils.isNotBlank(params.getProcessInstanceId()) && StringUtils.isNotBlank(params.getTaskId())) {
 			// 1.查看当前任务是存在
-			TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(params.getTaskId())
+			TaskEntity taskEntity = (TaskEntity) taskService.createTaskQuery().taskId(params.getTaskId()).processInstanceId(params.getProcessInstanceId())
 					.singleResult();
 			if (taskEntity != null) {
 				String taskId = params.getTaskId();
@@ -1025,5 +1044,290 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		Process process = bpmnModel.getProcesses().get(0);
 		return process.findFlowElementsOfType(UserTask.class)
 				.stream().collect(Collectors.toMap(UserTask::getId, a -> a, (k1, k2) -> k1));
+	}
+
+	/**
+	 * （1）如果B有多个节点
+	 * 必须为同一个并行网关内的任务节点（网关开始、合并节点必须一致）
+	 * 必须不是同一条流程线上的任务节点
+	 *
+	 * @param targetNodes 要跳转到的目标节点集合
+	 */
+	private void checkjumpTargetNodes(List<BpmTaskModelEntity> targetNodes) {
+		if (targetNodes.size() < 2) {
+			return;
+		}
+		//判断节点
+		for(int i=0;i<targetNodes.size()-1;i++){
+			BpmTaskModelEntity item1 = targetNodes.get(i);
+			BpmTaskModelEntity item2 = targetNodes.get(i + 1);
+			if (!item1.getInParallelGateway() || !item2.getInParallelGateway()) {
+				throw new SipsdBootException("目标节点非并行网关中的节点");
+			}
+			if(!StrUtil.equals(item1.getForkParallelGatewayId(),item2.getForkParallelGatewayId()) ||
+					!StrUtil.equals(item1.getJoinParallelGatewayId(),item2.getJoinParallelGatewayId() )){
+				throw new SipsdBootException("目标节点不是同一个并行网关");
+			}
+			if(StrUtil.equals(item1.getParallelGatewayForkRef(),item2.getParallelGatewayForkRef())){
+				throw new SipsdBootException("目标节点不能在同一条业务线上");
+			}
+		}
+
+	}
+
+	private void gatewayJump(UserTaskModelDTO userTaskModelsDTO, List<BpmTaskModelEntity> targetNodes, BpmTaskModelEntity currentNode, Task task, List<String> distList) {
+		// A是并行分支上的任务节点，获得跳转类别
+		GatewayJumpTypeEnum gatewayJumpFlag = getGatewayJumpFlag(
+				currentNode, targetNodes.get(0), userTaskModelsDTO.getAllForkGatewayMap());
+
+		if (gatewayJumpFlag.equals(GatewayJumpTypeEnum.TO_IN_CHILD)) {
+			String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
+			ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
+			// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+			dealParallelGatewayFinishLog(forkGatewayB, task, targetNodes.size(), currentNode.getForkParallelGatewayId());
+			runtimeService.createChangeActivityStateBuilder().processInstanceId(task.getProcessInstanceId())
+					.moveSingleActivityIdToActivityIds(task.getTaskDefinitionKey(), distList)
+					.changeState();
+		} else if (gatewayJumpFlag.equals(GatewayJumpTypeEnum.TO_OUT_NO_PARALLEL)) {
+			// B非并行网关上的节点,则只可能有一个, 因此只能全部终结现有的任务，跳转到B点
+			List<String> executionIds = new ArrayList<>();
+			List<Execution> executions = runtimeService.createExecutionQuery()
+					.parentId(task.getProcessInstanceId()).list();
+			executions.forEach(execution -> executionIds.add(execution.getId()));
+			this.moveExecutionsToSingleActivityId(executionIds,distList.get(0));
+
+		} else if (gatewayJumpFlag.equals(GatewayJumpTypeEnum.TO_OUT_PARENT)) {
+			//获取本 targetTaskDefineKey 所在的并行网关中，下游所有用户任务，查找直到targetTaskDefineKey的合并网关位置
+			Set<String> taskKeys = new HashSet<>(4);
+			targetNodes.forEach(item -> taskKeys.addAll(getMyNextFlowForkGatewayTaskKeys(item, userTaskModelsDTO.getProcess())));
+			// 跳转
+			moveActivityIdToOtherParallelGateway(taskKeys, task, distList);
+		} else if (gatewayJumpFlag.equals(GatewayJumpTypeEnum.TO_OUT_OTHER_PARALLEL)) {
+			// 获取本并行网关上的全部任务
+			Set<String> taskKeys = getMyOtherForkGatewayTaskKeys(
+					currentNode, userTaskModelsDTO.getAllForkGatewayMap());
+
+			String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
+			ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
+			// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
+			dealParallelGatewayFinishLog(forkGatewayB, task, targetNodes.size());
+			// 跳转
+			moveActivityIdToOtherParallelGateway(taskKeys, task, distList);
+		} else {
+			throw new SipsdBootException("暂不支持这样的流程跳转");
+		}
+	}
+
+	/**
+	 * 如果A是并行分支上的任务节点，获得跳转类别
+	 *
+	 * @param currentNode       当前节点
+	 * @param targetNode        其中一个目标节点
+	 * @param allForkGatewayMap 所有的（不分父子网关）并行网关
+	 * @return 一共4中情况
+	 * 1 从外向里面跳转（父并网关 》子并网关）
+	 * 2 从里向外面跳转 B为非并行行网关上的节点
+	 * 3 从里向外面跳转 B为父并行网关上的节点
+	 * 4 从里向外面跳转 B为其他独立并行网关上的节点
+	 */
+	private GatewayJumpTypeEnum getGatewayJumpFlag(
+			BpmTaskModelEntity currentNode,
+			BpmTaskModelEntity targetNode,
+			Map<String, ParallelGatwayDTO> allForkGatewayMap) {
+
+		if (!targetNode.getInParallelGateway()) {
+			return GatewayJumpTypeEnum.TO_OUT_NO_PARALLEL;
+		} else {
+			if (currentNode.getChildForkParallelGatewayIds().contains(targetNode.getForkParallelGatewayId())) {
+				return GatewayJumpTypeEnum.TO_IN_CHILD;
+			} else if (targetNode.getChildForkParallelGatewayIds().contains(currentNode.getForkParallelGatewayId())) {
+				return GatewayJumpTypeEnum.TO_OUT_PARENT;
+			} else if (targetNode.getForkParallelGatewayId().equals(currentNode.getForkParallelGatewayId())) {
+				logger.info("相同网关中的节点不可进行跳转操作，currentNode={} targetNode={}", currentNode.getTaskDefKey(), targetNode.getTaskDefKey());
+				return GatewayJumpTypeEnum.NO_SUPPORT_JUMP;
+			} else {
+				// B为其他并行网关上的节点
+				ParallelGatwayDTO currentTopPgw = allForkGatewayMap.get(currentNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
+				while (currentTopPgw.getParentParallelGatwayDTO() != null) {
+					currentTopPgw = currentTopPgw.getParentParallelGatwayDTO();
+				}
+				ParallelGatwayDTO targetTopPgw = allForkGatewayMap.get(targetNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
+				while (targetTopPgw.getParentParallelGatwayDTO() != null) {
+					targetTopPgw = targetTopPgw.getParentParallelGatwayDTO();
+				}
+
+				if (currentTopPgw.getForkId().equals(targetTopPgw.getForkId())) {
+					logger.info("相同顶级父并行网关下的节点不可进行跳转操作，currentNode={} targetNode={}", currentNode.getTaskDefKey(), targetNode.getTaskDefKey());
+					return GatewayJumpTypeEnum.NO_SUPPORT_JUMP;
+				}
+
+				return GatewayJumpTypeEnum.TO_OUT_OTHER_PARALLEL;
+			}
+		}
+	}
+	/**
+	 * 获取本 targetTaskDefineKey 所在的并行网关中，下游所有用户任务，查找直到targetTaskDefineKey的合并网关位置
+	 *
+	 * @param targetTask 要查找的节点id
+	 * @param process    所在Process
+	 * @return Set<String>
+	 */
+	private Set<String> getMyNextFlowForkGatewayTaskKeys(BpmTaskModelEntity targetTask, Process process) {
+		Set<String> taskKeys = new HashSet<>(4);
+		FlowElement flowElement = process.getFlowElementMap().get(targetTask.getTaskDefKey());
+		loopOutcomingFlows(((FlowNode) flowElement).getOutgoingFlows(),
+				taskKeys, process.getFlowElementMap(), targetTask.getJoinParallelGatewayId());
+		return taskKeys;
+	}
+	/**
+	 * 递归获取某个节点后面的所有相关节点
+	 *
+	 * @param outcomingFlows 相邻来源节点引用集合
+	 * @param taskKeys       最后输出的 List结果集
+	 * @param flowElementMap Process # getFlowElementMap()
+	 */
+	private void loopOutcomingFlows(
+			List<SequenceFlow> outcomingFlows,
+			Set<String> taskKeys,
+			Map<String, FlowElement> flowElementMap,
+			String limitFlowId) {
+		if (org.springframework.util.CollectionUtils.isEmpty(outcomingFlows)) {
+			return;
+		}
+
+		for (SequenceFlow item : outcomingFlows) {
+			if (org.apache.commons.lang3.StringUtils.isNotBlank(limitFlowId) && item.getId().equals(limitFlowId)) {
+				break;
+			}
+			FlowElement flowElement = flowElementMap.get(item.getTargetRef());
+			if (flowElement instanceof FlowNode) {
+				if (flowElement instanceof UserTask) {
+					UserTask task = (UserTask) flowElement;
+					taskKeys.add(task.getId());
+				}
+
+				loopOutcomingFlows(
+						((FlowNode) flowElement).getOutgoingFlows(),
+						taskKeys,
+						flowElementMap,
+						limitFlowId);
+			}
+		}
+	}
+	/**
+	 * 跳转其他并行网关上的用户任务.
+	 *
+	 * @param otherUserTaskKeys   本并行网关上的其他在运行的全部任务
+	 * @param currentTask         当前并行网关上用户任务
+	 * @param targetTaskDefineKes 跳转的目标节点
+	 */
+	private void moveActivityIdToOtherParallelGateway(
+			Set<String> otherUserTaskKeys,
+			Task currentTask,
+			List<String> targetTaskDefineKes) {
+		if (targetTaskDefineKes.size() == 1) {
+			otherUserTaskKeys.add(currentTask.getTaskDefinitionKey());
+			runtimeService.createChangeActivityStateBuilder().processInstanceId(currentTask.getProcessInstanceId())
+					.moveActivityIdsToSingleActivityId(new ArrayList<>(otherUserTaskKeys), targetTaskDefineKes.get(0))
+					.changeState();
+		} else {
+			// 删除本并行网关上的其他在运行的全部任务
+			deleteMyRelateTask(otherUserTaskKeys, currentTask);
+			runtimeService.createChangeActivityStateBuilder().processInstanceId(currentTask.getProcessInstanceId())
+					.moveSingleActivityIdToActivityIds(currentTask.getTaskDefinitionKey(), targetTaskDefineKes)
+					.changeState();
+		}
+	}
+	/**
+	 * 并行网关跳转时，本节点之外的并行网关上的节点任务需要删除
+	 *
+	 * @param deleteTaskKeys 本并行网关上的其他任务节点key
+	 * @param currentTask    当前要准备跳转的任务
+	 */
+	private void deleteMyRelateTask(Set<String> deleteTaskKeys, Task currentTask) {
+		deleteTaskKeys.remove(currentTask.getTaskDefinitionKey());
+		TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(currentTask.getProcessInstanceId());
+		taskQuery.or();
+		deleteTaskKeys.forEach(taskQuery::taskDefinitionKey);
+		taskQuery.endOr();
+		List<Task> runningTasks = taskQuery.list();
+		if (runningTasks != null) {
+			runningTasks.forEach(item -> deleteExecutionByTaskId(item.getId()));
+		}
+	}
+	/**
+	 * 场景一、由于多实例（串行）减签操作有异常数据产生，所以该方法用于删除部分异常数据，flowable BUG
+	 * 场景二、并行网关中的任务跳转到其他并行网关中，需要先删除一些本网关其他任务，然后跳转
+	 *
+	 * @param taskId 并行网关上的任务id 或 多实例任务id
+	 */
+	protected void deleteExecutionByTaskId(String taskId) {
+		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+		if (task == null) {
+			return;
+		}
+		String executionId = task.getExecutionId();
+		logger.info("删除executionId=" + executionId);
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_hi_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
+
+		deleteExecutionById(executionId);
+
+	}
+	/**
+	 * 场景一、由于多实例（串行）减签操作有异常数据产生，所以该方法用于删除部分异常数据，flowable BUG
+	 * 场景二、并行网关中的任务跳转到其他并行网关中，需要先删除一些本网关其他任务，然后跳转
+	 *
+	 * @param executionId 并行网关上的任务对应的executionId
+	 */
+	protected void deleteExecutionById(String executionId) {
+		logger.info("删除executionId=" + executionId);
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_hi_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_hi_taskinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_hi_varinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_suspended_job  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_deadletter_job  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_timer_job  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_task  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_variable  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+		runtimeService.createNativeExecutionQuery().sql(
+				"DELETE FROM act_ru_execution  WHERE ID_ = '" + executionId + "'").list();
+	}
+
+	/**
+	 * 本节点所在的全部相关网(包括父子并行网关)内的任务定义的key，除了本节点之外
+	 *
+	 * @param currentNode       ignore
+	 * @param allForkGatewayMap ignore
+	 * @return Set<String>
+	 */
+	private Set<String> getMyOtherForkGatewayTaskKeys(BpmTaskModelEntity currentNode, Map<String, ParallelGatwayDTO> allForkGatewayMap) {
+		Set<String> taskKeys = new HashSet<>(4);
+		if (!currentNode.getInParallelGateway()) {
+			return taskKeys;
+		}
+		// 所有子网关内的用户keys
+		currentNode.getChildForkParallelGatewayIds().forEach(item -> taskKeys.addAll(allForkGatewayMap.get(item).getUserTaskModels().keySet()));
+		// 所有并行网关内的用户keys
+		ParallelGatwayDTO parallelGatwayDTO = allForkGatewayMap.get(currentNode.getForkParallelGatewayId());
+		ParallelGatwayDTO parentParallelGatwayDTO = parallelGatwayDTO.getParentParallelGatwayDTO();
+		while (parentParallelGatwayDTO != null) {
+			taskKeys.addAll(parentParallelGatwayDTO.getUserTaskModels().keySet());
+			parentParallelGatwayDTO = parentParallelGatwayDTO.getParentParallelGatwayDTO();
+		}
+
+		return taskKeys;
 	}
 }
