@@ -1,11 +1,11 @@
 <template>
   <div id="bpmn">
-    <VueBpmnViewer :baseApi="baseApi"
+    <VueBpmnViewer ref="bpmnObj" :baseApi="baseApi"
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
                    :static="static"
-                   :options="{zoom,timeLine,center,setline}">
+                   :options="{zoom,timeLine,fit,setline}">
     </VueBpmnViewer>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
       zoom:true,
       timeLine:true,
       setline:false,
-      center:true,
+      fit:false,
       static:false,
       log:false
     }
@@ -39,8 +39,11 @@ export default {
     this.zoom = (to.query.zoom||'true')==='true'
     this.timeLine = (to.query.timeLine||'true')==='true'
     this.setline = (to.query.setline||'false')==='true'
-    this.center = (to.query.center||'true')==='true'
+    this.fit = (to.query.fit||'false')==='true'
     this.static = (to.query.static||'false')==='true'
+    if(this.$refs.bpmnObj){
+      this.$refs.bpmnObj.reload()
+    }
     next()
   },
   mounted() {
@@ -49,10 +52,13 @@ export default {
     this.xmlId = this.$route.query.xmlId
     this.zoom = (this.$route.query.zoom||'true')==='true'
     this.timeLine = (this.$route.query.timeLine||'true')==='true'
-    this.center = (this.$route.query.center||'true')==='true'
+    this.fit = (this.$route.query.fit||'false')==='true'
     this.static = (this.$route.query.static||'false')==='true'
     this.setline = (this.$route.query.setline||'false')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
+    if(this.$refs.bpmnObj){
+      this.$refs.bpmnObj.reload()
+    }
   }
 }
 
