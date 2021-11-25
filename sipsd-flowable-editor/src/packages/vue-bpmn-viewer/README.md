@@ -144,14 +144,3 @@ export default {
   </VueBpmnViewer>
 </template>
 ```
-
-自定义右侧时间轴
-```vue
-<VueBpmnViewer :type="2"
-               :baseApi="baseApi"
-               :instanceId="instanceId">
-    <template slot="timeLine" slot-scope="{data}">
-      {{data.length}}
-    </template>
-</VueBpmnViewer>
-```
