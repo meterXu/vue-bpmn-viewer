@@ -57,6 +57,7 @@ public class TransactionConfig {
         properties.setProperty("sync*", "PROPAGATION_REQUIRED,-Exception");
         properties.setProperty("review*", "PROPAGATION_REQUIRED,-Exception");
         properties.setProperty("copy*", "PROPAGATION_REQUIRED,-Exception");
+        properties.setProperty("test*", "PROPAGATION_REQUIRED,-Exception");
 
         /*************************   flowable   **************************/
         properties.setProperty("query*", "PROPAGATION_REQUIRED,-Exception,readOnly");
