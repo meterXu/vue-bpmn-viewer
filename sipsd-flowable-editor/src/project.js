@@ -10,7 +10,7 @@ const project_bpmn = {
       }
     },
     production: {
-      baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
+      baseApi: "http://58.210.9.133/iplatform/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000,
       logfv:{
         enable:false

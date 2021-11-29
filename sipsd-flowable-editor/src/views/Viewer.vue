@@ -41,6 +41,9 @@ export default {
     this.setline = (to.query.setline||'false')==='true'
     this.fit = (to.query.fit||'false')==='true'
     this.static = (to.query.static||'false')==='true'
+    if(this.type===1){
+      this.timeLine = false
+    }
     if(this.$refs.bpmnObj){
       this.$refs.bpmnObj.reload()
     }
@@ -56,6 +59,9 @@ export default {
     this.static = (this.$route.query.static||'false')==='true'
     this.setline = (this.$route.query.setline||'false')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
+    if(this.type===1){
+      this.timeLine = false
+    }
     if(this.$refs.bpmnObj){
       this.$refs.bpmnObj.reload()
     }
