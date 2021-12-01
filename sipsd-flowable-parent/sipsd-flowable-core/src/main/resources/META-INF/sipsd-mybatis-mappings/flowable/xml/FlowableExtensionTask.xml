@@ -237,11 +237,11 @@
             t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </update>
 
-    <update id="updateDbInfoById" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+    <update id="updateSupervisionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         UPDATE  act_ru_extension_task t1
         SET IS_DB_ = #{isDb}
         WHERE
-            t1.ID_ = #{id}
+            t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </update>
 
     <insert id="insertExtensionTask" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">

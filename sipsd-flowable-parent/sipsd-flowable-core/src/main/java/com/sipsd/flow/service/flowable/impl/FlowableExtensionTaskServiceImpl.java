@@ -275,9 +275,9 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	}
 
 	@Override
-	public Result<String> updateDbInfoById(TaskExtensionVo params)
+	public Result<String> updateSupervisionTask(TaskExtensionVo params)
 	{
-		flowableExtensionTaskDao.updateDbInfoById(params);
+		flowableExtensionTaskDao.updateSupervisionTask(params);
 		return Result.sucess("更新成功!");
 	}
 

@@ -452,7 +452,6 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
             {
                 flowElement = sequenceFlow.getSourceFlowElement();
                 log.info("当前节点: id=" + flowElement.getId() + ",name=" + flowElement.getName());
-                //TODO 当前是并联节点查询下一个节点的时候有bug需要修复
             }
             else if ("next".equals(node))
             {
@@ -477,7 +476,7 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
                     assigneeList.add(((UserTask) element).getAssignee());
                     flowElementVo.setAssigneeList(assigneeList);
                 }
-                List<String> groupIdList = ((UserTask) flowElement).getCandidateGroups();
+                List<String> groupIdList = ((UserTask) element).getCandidateGroups();
                 if(CollectionUtils.isNotEmpty(groupIdList))
                 {
                     List<AssigneeVo> groupList = new ArrayList<>();

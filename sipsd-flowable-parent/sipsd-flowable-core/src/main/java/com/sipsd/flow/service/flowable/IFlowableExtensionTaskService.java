@@ -100,9 +100,9 @@ public interface IFlowableExtensionTaskService
      *
      * @param params
      * @return void
-     * @Description  根据ID来更新督办信息
+     * @Description  根据流程ID和任务ID来更新督办信息
      */
-    public Result<String> updateDbInfoById(TaskExtensionVo params);
+    public Result<String> updateSupervisionTask(TaskExtensionVo params);
 
     /**
      *
