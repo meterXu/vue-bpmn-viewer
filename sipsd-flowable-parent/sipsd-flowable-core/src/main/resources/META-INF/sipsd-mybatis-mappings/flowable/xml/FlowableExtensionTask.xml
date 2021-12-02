@@ -137,7 +137,7 @@
                 LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
                 LEFT JOIN act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
         WHERE
-            t1.PROC_INST_ID_ = #{processInstanceId}
+            t1.PROC_INST_ID_ = #{processInstanceId} and (t1.DELETE_REASON_ is null or t1.DELETE_REASON_ != 'MI_END')
     </select>
 
     <!--查询已办信息的-->
@@ -173,7 +173,9 @@
         LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
         LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
         WHERE
-        t1.PROC_INST_ID_ = #{processInstanceId} and t1.END_TIME_ is not null
+        <!--MI_END指的是这条记录是会签的，比如两个人会签，只要一个人通过就可以，那么另外一条就不让他显示了-->
+        <!--TODO 任务其实分为原始审批人是谁-owner，转办过后会变成assignee当前审批人是谁，这个是通过act_hi_taskinst中的parent_task_id字段有无赖判断的-->
+        t1.PROC_INST_ID_ = #{processInstanceId} and t1.END_TIME_ is not null and (t1.DELETE_REASON_ is null or t1.DELETE_REASON_ != 'MI_END')
         order by t1.END_TIME_
     </select>
 
