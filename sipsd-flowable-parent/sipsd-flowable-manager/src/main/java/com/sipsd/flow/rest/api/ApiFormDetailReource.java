@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -216,15 +215,17 @@ public class ApiFormDetailReource extends BaseResource {
 	 */
 	@ApiOperation("向前加签")
 	@PostMapping(value = "/beforeAddSignTask")
-	public Result<String> beforeAddSignTask(@Validated @RequestBody AddSignTaskVo params, String[] userCodes) {
+	public Result<String> beforeAddSignTask(@Validated @RequestBody AddSignTaskVo params) {
 		Result<String> result = null;
-		if (userCodes != null && userCodes.length > 0) {
-			// params.setUserCode(this.getLoginUser().getId());
-			params.setSignPersoneds(Arrays.asList(userCodes));
-			result = flowableTaskService.beforeAddSignTask(params);
-		} else {
-			result = Result.failed("请选择人员");
-		}
+//		if (userCodes != null && userCodes.length > 0) {
+//			// params.setUserCode(this.getLoginUser().getId());
+//			params.setSignPersoneds(Arrays.asList(userCodes));
+//			result = flowableTaskService.beforeAddSignTask(params);
+//		} else {
+//			result = Result.failed("请选择人员");
+//		}
+
+		result = flowableTaskService.beforeAddSignTask(params);
 		return result;
 	}
 
@@ -236,15 +237,16 @@ public class ApiFormDetailReource extends BaseResource {
 	 */
 	@ApiOperation("向后加签")
 	@PostMapping(value = "/afterAddSignTask")
-	public Result<String> afterAddSignTask(@Validated @RequestBody AddSignTaskVo params, String[] userCodes) {
+	public Result<String> afterAddSignTask(@Validated @RequestBody AddSignTaskVo params) {
 		Result<String> result = null;
-		if (userCodes != null && userCodes.length > 0) {
-			// params.setUserCode(this.getLoginUser().getId());
-			params.setSignPersoneds(Arrays.asList(userCodes));
-			result = flowableTaskService.afterAddSignTask(params);
-		} else {
-			result = Result.failed("请选择人员");
-		}
+//		if (userCodes != null && userCodes.length > 0) {
+//			// params.setUserCode(this.getLoginUser().getId());
+//			params.setSignPersoneds(Arrays.asList(userCodes));
+//			result = flowableTaskService.afterAddSignTask(params);
+//		} else {
+//			result = Result.failed("请选择人员");
+//		}
+		result = flowableTaskService.afterAddSignTask(params);
 		return result;
 	}
 

@@ -75,14 +75,14 @@ public class ApiFlowableExtensionTaskResource extends BaseResource {
     }
 
     /**
-     * 通过流程实例id来更新最大审批天数值
+     * 根据流程ID和任务ID来更新督办信息
      *
      * @param params 参数
      * @return
      */
-    @ApiOperation("根据ID来更新督办信息")
-    @PostMapping(value = "/updateDbInfoById")
-    public Result<String> updateDbInfoById(@RequestBody TaskExtensionVo params) {
-        return flowableExtensionTaskService.updateDbInfoById(params);
+    @ApiOperation("根据流程ID和任务ID来更新督办信息")
+    @PostMapping(value = "/update-supervision-task")
+    public Result<String> updateSupervisionTask(@RequestBody TaskExtensionVo params) {
+        return flowableExtensionTaskService.updateSupervisionTask(params);
     }
 }

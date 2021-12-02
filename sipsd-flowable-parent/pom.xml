@@ -85,5 +85,4 @@
 			<url>http://dev.dpark.com.cn/maven/repository/maven-releases//</url>
 		</repository>
 	</distributionManagement>
-
 </project>

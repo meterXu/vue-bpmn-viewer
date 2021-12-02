@@ -84,9 +84,9 @@ public interface IFlowableExtensionTaskDao
      *
      * @param params
      * @return void
-     * @Description 根据ID来更新督办信息
+     * @Description 根据流程ID和任务ID来更新督办信息
      */
-    public void updateDbInfoById(TaskExtensionVo params);
+    public void updateSupervisionTask(TaskExtensionVo params);
 
     /**
      * @param params

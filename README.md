@@ -1,5 +1,8 @@
 # sipsd-flow-modeler
 
+## 工作流详细技术文档地址(域账号登录)-沃壤赋能平台->帮助文档->工作流
+http://58.210.9.133/iplatform/geekdoc
+
 ## 介绍
 flowable modeler集成项目
 - 利用flowabel6.4.2为基础，进行SpringBoot+Mybatis-plus 整合；  

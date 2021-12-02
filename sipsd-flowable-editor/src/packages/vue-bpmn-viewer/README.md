@@ -105,7 +105,7 @@ export default {
 |instanceId|flowable实例ID，配合baseApi使用|null|
 |type|流程图显示模式|1：流程图，2：流程实例，配合baseApi使用|
 |static|是否静态不可拖动|false|
-|timeData|时间轴数据|false|
+|timeData|时间轴数据，此数据会替换接口获得的数据|null|
 |options|控件配置|{zoom:true,timeLine:false,center:true,setline:false}|
 |log|是否记录使用日志|false|
 |logReportUrl|日志上报地址|http://58.210.9.133/iplatform/logfv-server/logfv/web/upload|
