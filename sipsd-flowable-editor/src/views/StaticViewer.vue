@@ -70,7 +70,7 @@
   </div>
 </template>
 <script>
-import VueBpmnViewer from "../packages/vue-bpmn-viewer/components/VueBpmnViewer.vue";
+import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
 
 export default {
   components: {VueBpmnViewer},

@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.69",
+  "version": "1.0.70",
   "description": "沃壤平台工作流引擎执行器",
   "main": "dist/index.js",
   "scripts": {
@@ -19,9 +19,13 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@dpark/icon": "^1.0.19",
     "@dpark/logfv-web-vue": "^1.0.23",
+    "@highlightjs/vue-plugin": "^2.1.0",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
+    "element-ui": "^2.15.6",
+    "highlight.js": "^11.3.1",
     "moment": "^2.29.1",
     "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2",
