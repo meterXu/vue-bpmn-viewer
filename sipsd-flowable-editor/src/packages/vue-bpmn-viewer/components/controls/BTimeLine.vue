@@ -14,7 +14,7 @@
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
             :'timeLine-item-over-uned']">
               <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
-                <slot>
+                <slot v-bind:item="item">
                   <p>{{item.taskName}}</p>
                   <p>审批类型：{{item.approveType}}</p>
                   <p>状态：{{item.status}}</p>

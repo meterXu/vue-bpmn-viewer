@@ -23,7 +23,9 @@
       <template v-slot:right>
         <BTZoom v-show="myOptions.zoom" :fit="myOptions.fit" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
         <BTimeLine v-if="myOptions.timeLine" :data="taskData" :bpmnViewer="bpmnViewer">
-          <slot name="time"></slot>
+          <template v-slot="slotProps">
+            <slot name="time" v-bind:item="slotProps.item"></slot>
+          </template>
         </BTimeLine>
       </template>
     </BTLayout>
