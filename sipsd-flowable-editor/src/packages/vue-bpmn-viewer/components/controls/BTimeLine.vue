@@ -14,11 +14,13 @@
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
             :'timeLine-item-over-uned']">
               <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
-                <p>{{item.taskName}}</p>
-                <p>审批类型：{{item.approveType}}</p>
-                <p>状态：{{item.status}}</p>
-                <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
-                <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+                <slot>
+                  <p>{{item.taskName}}</p>
+                  <p>审批类型：{{item.approveType}}</p>
+                  <p>状态：{{item.status}}</p>
+                  <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
+                  <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+                </slot>
               </div>
             </div>
           </div>

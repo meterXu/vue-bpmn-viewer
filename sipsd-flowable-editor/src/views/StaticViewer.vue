@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100%;padding: 10px">
     <el-container style="height: 100%">
-      <el-aside width="500px">
+      <el-aside width="300px">
         <el-form :model="form" ref="form">
           <el-form-item label="type">
             <el-radio-group v-model="form.type">
@@ -42,6 +42,9 @@
                        :source="form.source"
                        :timeData="timeData"
                        :options="options">
+          <template v-slot:time>
+            aaaaaxxxx
+          </template>
         </VueBpmnViewer>
         <el-dialog
             title="提示"

@@ -1,5 +1,9 @@
 <template>
   <div class="process">
+    <div style="margin-bottom: 20px">
+      baseAPI：<el-input v-model="baseApi"></el-input>
+    </div>
+
     <ProcessTest :baseApi="baseApi"></ProcessTest>
   </div>
 </template>
@@ -11,7 +15,7 @@ export default {
   components: {ProcessTest},
   data() {
     return {
-      baseApi:'http://192.168.75.13:9001/sipsd-flow-modeler/tool/testProcess'
+      baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/tool/testProcess'
     }
   }
 }
