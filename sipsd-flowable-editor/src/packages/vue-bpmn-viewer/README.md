@@ -117,6 +117,8 @@ export default {
 |timeLine|是否启用时间轴|false|
 |fit|流程图是否全部缩放在画布上|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
+|zoomScroll|是否滚动缩放|false|
+|track|是否追踪显示|false|
 
 **说明**
 1. 组件可以纯前端使用，也可以配合沃壤平台工作流引擎进行使用

@@ -7,7 +7,6 @@
 <script>
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import BpmnViewer from "bpmn-js/lib/Viewer"
-
 export default {
   name: 'VueBpmn',
   props: {
@@ -33,8 +32,8 @@ export default {
     init(){
       let self = this;
       let _options = Object.assign({
-        container: this.$refs.graphics
-      }, this.options)
+        container: this.$refs.graphics,
+      },this.options)
       if(!this.bpmnViewer) {
         if(this.viewer){
           this.bpmnViewer = new BpmnViewer(_options);

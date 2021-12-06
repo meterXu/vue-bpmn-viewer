@@ -41,6 +41,7 @@ import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
 import axios from 'axios'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
+import zoomScroll from './controls/lib/zoomScroll'
 export default {
   name: "VueBpmnViewer",
   props:{
@@ -63,12 +64,13 @@ export default {
   },
   data(){
     return {
-      xxxx:true,
       logfv:null,
       showBpmn:false,
       bpmnViewer:null,
       bpmnOptions:{
-        additionalModules:[bpmnThemeBlue]
+        additionalModules:[
+            bpmnThemeBlue
+        ]
       },
       colors:{
         blue:['#3296fa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#d1d1d1','#aaa','#444'],
@@ -97,10 +99,21 @@ export default {
         timeLine:false,
         fit:false,
         setline:false,
-        theme:'blue',
+        scrollZoom:false,
+        theme:'blue'
       },this.options)
       if(!_option.colors){
         _option.colors = this.colors[_option.theme]
+      }
+      if(_option.scrollZoom){
+        this.bpmnOptions.additionalModules=[
+          bpmnThemeBlue,
+          zoomScroll
+        ]
+      }else{
+        this.bpmnOptions.additionalModules=[
+          bpmnThemeBlue
+        ]
       }
       return _option;
     },
