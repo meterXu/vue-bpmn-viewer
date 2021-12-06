@@ -3,6 +3,7 @@ package com.sipsd.flow.rest.api;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
 import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.exception.SipsdBootException;
 import com.sipsd.flow.service.flowable.IFlowableTestProcessService;
 import com.sipsd.flow.vo.flowable.TestProcessIntsanceVo;
 import io.swagger.annotations.Api;
@@ -41,11 +42,15 @@ public class ApiFlowableTestProcessResource {
             return result;
         }catch (Exception e){
             String message = e.getMessage();
-            JSONArray objects = JSONUtil.parseArray(message);
-            List<String> list = JSONUtil.toList(objects, String.class);
             result.setCode(Result.FAIL);
             result.setSuccess(false);
-            result.setData(list);
+            result.setMessage(message);
+            if(e instanceof SipsdBootException){
+                result.setMessage("操作失败");
+                JSONArray objects = JSONUtil.parseArray(message);
+                List<String> list = JSONUtil.toList(objects, String.class);
+                result.setData(list);
+            }
             return result;
         }
 
