@@ -23,7 +23,7 @@
         </slot>
       </template>
       <template v-slot:right>
-        <BTZoom :options="myOptions"  :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTZoom :options="myOptions"  :bpmnViewer="bpmnViewer" @zoomReset="zoomReset" ref="cBTZoom"/>
         <BTimeLine :options="myOptions" :data="taskData" :bpmnViewer="bpmnViewer">
           <template v-slot="slotProps">
             <slot name="time" v-bind:item="slotProps.item"></slot>
@@ -187,9 +187,16 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       await this.getTaskList()
-      //todo
-      utils.setView(this.bpmnViewer,this.myOptions,this.taskData[this.taskData.length-1].taskDefinitionKey)
+      this.toCenter()
       this.$emit('loaded')
+    },
+    toCenter(){
+      if(this.taskData&&this.taskData.length>0){
+        utils.setView(this.bpmnViewer,this.myOptions,this.taskData[this.taskData.length-1].taskDefinitionKey)
+      }else {
+        utils.setView(this.bpmnViewer,this.myOptions,"")
+      }
+
     },
     bpmnLoadError(err){
       utils.error({ title: '流程图加载失败！',
@@ -223,6 +230,9 @@ export default {
     },
     handleViewChange(event){
       this.$emit('viewChange',event)
+    },
+    zoomReset(){
+      this.toCenter()
     }
   },
   mounted() {

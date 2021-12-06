@@ -240,16 +240,17 @@ function utils() {
         }
     }
 
-    this.setCenter = function (canvas) {
+    this.setCenter = function (canvas,options,offset={x:0,y:0}) {
         let vbox = canvas.viewbox(),
             outer = vbox.outer,
             inner = vbox.inner,
             newScale = 1,
             newViewbox;
         let _y = (inner.height / 2 - outer.height / newScale / 2)
+        let _x = (inner.width / 2 - (outer.width - options.timeLine?265:0-options.zoom?44:0) / newScale / 2)
         newViewbox = {
-            x: inner.x + (inner.width / 2 - (outer.width - 306) / newScale / 2),
-            y: (_y > 0 ? -20 : inner.y + _y),
+            x: (_x > 0 ? -20 : inner.x+_x)-offset.x,
+            y: (_y > 0 ? -20 : inner.y+_y)-offset.y,
             width: outer.width / newScale,
             height: outer.height / newScale
         };
@@ -329,8 +330,8 @@ function utils() {
     this.setView = function (bpmnViewer, options,key) {
         if (bpmnViewer) {
             let canvas = bpmnViewer.get('canvas')
-            if(options.track){
-                this.track()
+            if(options.track&&key){
+                this.track(bpmnViewer,canvas,options,key)
             }
             // 居中
             else if (options.fit) {
@@ -339,18 +340,17 @@ function utils() {
             } else {
                 //缩放比例为1
                 if (canvas) {
-                    this.setCenter(canvas)
+                    this.setCenter(canvas,options)
                 }
             }
         }
     }
-    this.track=function(bpmnViewer,key){
+    this.track=function(bpmnViewer,canvas,options,key){
         const _container =bpmnViewer._container
-        let canvas = bpmnViewer.get('canvas')
         const taskObjs = this.getTaskObj(_container,key)
         if(taskObjs.length>0){
             let xx =taskObjs[taskObjs.length-1].el.viewportElement
-            canvas.scroll({dx:1000,dy:1000})
+            this.setCenter(canvas,options,{x:0,y:0})
         }
 
     }
