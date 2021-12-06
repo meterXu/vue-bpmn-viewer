@@ -98,7 +98,7 @@ export default {
 ## 属性
 
 |名称|说明|默认值|
-|:---|:---:|:---|
+|:---|:---|:---|
 |source|流程图xml地址或者xml字符串|null|
 |baseApi|工作流引擎后端地址，如果配置了source，则该属性不生效|null|
 |xmlId|流程图ID，配合baseApi使用|null|
@@ -112,10 +112,10 @@ export default {
 
 ### options
 |名称|说明|默认值|
-|:---|:---:|---:|
+|:---|:---|:---|
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴|false|
-|fit|是否流程图全部缩放在画布上，这样做图形可能不能居中|false|
+|fit|流程图是否全部缩放在画布上|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
 
 **说明**
@@ -126,8 +126,17 @@ export default {
 
 ## 方法
 |名称|说明|示例|
-|:---:|:---:|:---:|
+|:---|:---|:---|
 |reload|重新加载流程图|`this.$refs.bpmnView.reload()`|
+
+## 事件
+|名称|说明|参数|
+|:---|:---|:---|
+|click|元素点击事件|	Function(event,shape,taskData)|
+|viewChange|画布变化事件|	Function(event)|
+|loading|流程图加载中|	Function()|
+|loaded|流程图加载完成|	Function()|
+|loadError|流程图加载失败|	Function(err)|
 
 ## 插槽
 1. 自定义时间轴

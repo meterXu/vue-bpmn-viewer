@@ -257,7 +257,7 @@ export default {
           options:this.myOptions
         }
       }))
-      this.$emit('loadError')
+      this.$emit('loadError',err)
     },
     clearWatermark(){
       if(document.querySelector('.bjs-powered-by')){
