@@ -1,5 +1,7 @@
 <template>
-  <div ref="container" class="vue-bpmn-diagram-container"></div>
+  <div class="vue-bpmn-dpark-container">
+    <div ref="graphics" class="vue-bpmn-dpark-graphics"></div>
+  </div>
 </template>
 
 <script>
@@ -29,10 +31,9 @@ export default {
   },
   methods: {
     init(){
-      let container = this.$refs.container;
       let self = this;
       let _options = Object.assign({
-        container: container
+        container: this.$refs.graphics
       }, this.options)
       if(!this.bpmnViewer) {
         if(this.viewer){
@@ -40,17 +41,17 @@ export default {
         }else{
           this.bpmnViewer  = new BpmnJS(_options);
         }
+        this.bpmnViewer.on('import.done', function(event) {
+          let error = event.error;
+          let warnings = event.warnings;
+          if (error) {
+            self.$emit('error', error);
+          } else {
+            self.$emit('loaded', warnings);
+            self.addEventBusListener()
+          }
+        });
       }
-      this.bpmnViewer.on('import.done', function(event) {
-        let error = event.error;
-        let warnings = event.warnings;
-        if (error) {
-          self.$emit('error', error);
-        } else {
-          self.$emit('loaded', warnings);
-          self.addEventBusListener()
-        }
-      });
       this.fetchDiagram(this.url).then(xml=>{
         this.drawXml(xml)
       });
@@ -106,22 +107,27 @@ export default {
       }
     },
     reload(){
+      this.destroy()
       this.init()
+    },
+    destroy(){
+      if(this.bpmnViewer){
+        this.bpmnViewer.destroy();
+        this.bpmnViewer = null
+      }
     }
   },
   mounted: function () {
     this.init()
   },
-  beforeDestroy: function() {
-    if(this.bpmnViewer){
-      this.bpmnViewer.destroy();
-    }
+  beforeDestroy() {
+   this.destroy()
   }
 };
 </script>
 
 <style scoped>
-.vue-bpmn-diagram-container {
+.vue-bpmn-dpark-container,.vue-bpmn-dpark-graphics {
   height: 100%;
   width: 100%;
 }

@@ -23,8 +23,8 @@
         </slot>
       </template>
       <template v-slot:right>
-        <BTZoom v-show="myOptions.zoom" :fit="myOptions.fit" :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
-        <BTimeLine v-if="myOptions.timeLine" :data="taskData" :bpmnViewer="bpmnViewer">
+        <BTZoom :options="myOptions"  :bpmnViewer="bpmnViewer" ref="cBTZoom"/>
+        <BTimeLine :options="myOptions" :data="taskData" :bpmnViewer="bpmnViewer">
           <template v-slot="slotProps">
             <slot name="time" v-bind:item="slotProps.item"></slot>
           </template>
@@ -63,6 +63,7 @@ export default {
   },
   data(){
     return {
+      xxxx:true,
       logfv:null,
       showBpmn:false,
       bpmnViewer:null,
@@ -104,7 +105,6 @@ export default {
       return _option;
     },
     xml(){
-      this.clearWatermark()
       if(this.source){
         return this.source
       }else if(this.baseApi){
@@ -205,6 +205,7 @@ export default {
       this.taskData = _taskData
     },
     bpmnLoading(){
+      this.$emit('loading')
     },
     bpmnLoadDone(){
       this.logfv.info(JSON.stringify({
@@ -223,17 +224,21 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
-      // 居中
-      if(this.myOptions.fit){
-        // 完全显示
-        canvas.zoom('fit-viewport',true);
-      }else{
-        //缩放比例为1
+      if(this.bpmnViewer){
         let canvas = this.bpmnViewer.get('canvas')
-        if(canvas){
-          utils.setCenter(canvas)
+        // 居中
+        if(this.myOptions.fit){
+          // 完全显示
+          canvas.zoom('fit-viewport',true);
+        }else{
+          //缩放比例为1
+          if(canvas){
+            utils.setCenter(canvas)
+          }
         }
       }
+      this.clearWatermark()
+      this.$emit('loaded')
     },
     bpmnLoadError(err){
       this.logfv.info(JSON.stringify({
@@ -251,13 +256,12 @@ export default {
           options:this.myOptions
         }
       }))
+      this.$emit('loadError')
     },
     clearWatermark(){
-      setTimeout(()=>{
-        if(document.querySelector('.bjs-powered-by')){
-          document.querySelector('.bjs-powered-by').remove()
-        }
-      },300)
+      if(document.querySelector('.bjs-powered-by')){
+        document.querySelector('.bjs-powered-by').remove()
+      }
     },
     reload(){
       this.logfv.info(JSON.stringify({
@@ -272,21 +276,18 @@ export default {
           options:this.myOptions
         }
       }))
-      this.$nextTick(()=>{
-        if(this.$refs.bpmnObj){
-          this.$refs.bpmnObj.reload()
-        }
-      })
+      if(this.$refs.bpmnObj){
+        this.$refs.bpmnObj.reload()
+      }
     },
     handleClick(obj){
-      this.$emit('click',shape)
+      this.$emit('click',obj)
     },
     handleViewChange(event){
       this.$emit('viewChange',event)
     }
   },
   mounted() {
-    this.clearWatermark()
     this.logfv.info(JSON.stringify({
       title:'工作流执行器挂载成功！',
       url:window.location.href,

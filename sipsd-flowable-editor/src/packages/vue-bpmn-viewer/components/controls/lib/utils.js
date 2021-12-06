@@ -238,9 +238,10 @@ function utils(){
             inner = vbox.inner,
             newScale =1,
             newViewbox;
+        let _y = (inner.height / 2 - outer.height / newScale / 2)
         newViewbox = {
             x: inner.x + (inner.width / 2 - (outer.width-306) / newScale / 2 ),
-            y: inner.y + (inner.height / 2 - outer.height / newScale / 2),
+            y: (_y>0?-20:inner.y + _y),
             width: outer.width / newScale,
             height: outer.height / newScale
         };

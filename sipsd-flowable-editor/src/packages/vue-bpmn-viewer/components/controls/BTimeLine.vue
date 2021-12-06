@@ -1,5 +1,5 @@
 <template>
-  <div class="bpmn-time-line" :class="{'spin-center':data.length===0}">
+  <div class="bpmn-time-line" :class="{'spin-center':data.length===0}" v-if="options.timeLine">
     <div ref="bpmn-time-line" >
       <div class="timeline" v-if="data.length>0">
         <div class="timeline-item" v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)">
@@ -28,7 +28,6 @@
       </div>
       <div v-else class="no-data"></div>
     </div>
-
   </div>
 </template>
 
@@ -38,7 +37,7 @@ import ms from 'pretty-ms'
 import moment from 'moment'
 export default {
   name: "BTimeLine",
-  props:['data','bpmnViewer'],
+  props:['data','bpmnViewer','options'],
   data(){
     return {
       loadingInstance:null,

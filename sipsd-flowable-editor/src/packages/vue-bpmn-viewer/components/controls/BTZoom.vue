@@ -1,5 +1,5 @@
 <template>
-  <div class="io-zoom-controls">
+  <div class="io-zoom-controls" v-if="options.zoom">
     <ul class="io-zoom-reset io-control io-control-list">
       <li @click="handleZoomReset">
         <div class="icon icon-refresh" />
@@ -24,7 +24,7 @@
 import utils from "./lib/utils.js";
 export default {
   name: "BTZoom",
-  props: ['bpmnViewer', 'fit'],
+  props: ['bpmnViewer', 'options'],
   data() {
     return {
       bpmnObj: null,
@@ -35,7 +35,7 @@ export default {
       if(this.bpmnViewer){
         this.canvas = this.bpmnViewer.get('canvas')
         if (this.canvas) {
-          if(this.fit){
+          if(this.options.fit){
             this.canvas.zoom('fit-viewport',true);
           }else {
             utils.setCenter(this.canvas)
@@ -60,21 +60,6 @@ export default {
           this.canvas.zoom(zoom - 0.2);
         }
       }
-    }
-  },
-  mounted() {
-    const that = this
-    let container = document.getElementsByClassName('vue-bpmn-diagram-container')[0]
-    if (container) {
-      addEventListener('mousewheel', (event) => {
-        // let down = event.wheelDelta?event.wheelDelta<0:event.detail>0;
-        // if(down){
-        //   that.handleZoomOut()
-        // }else{
-        //   that.handleZoomIn()
-        // }
-        return false;
-      })
     }
   },
   destroyed() {
