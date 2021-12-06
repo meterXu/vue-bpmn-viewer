@@ -1,4 +1,6 @@
 import {attr, classes} from "tiny-svg";
+import axios from "axios";
+import urljoin from "url-join";
 
 function setSingleTaskHighLight(container,id,options) {
     if (id) {
@@ -247,6 +249,26 @@ function utils(){
         };
         canvas.viewbox(newViewbox);
     }
+    this.taskSyncHighLight=function (container,bpmnObj,nv,options){
+        this.clearAllHighLight(container,bpmnObj)
+        nv.forEach(c=>{
+            switch (c.status){
+                case '已办':{
+                    if(c.approveType === '驳回'){
+                        this.setTaskHighlight(container,[c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false,type:3,stroke:true})
+                    } else{
+                        this.setTaskHighlight(container,[c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2,stroke:true})
+                    }
+                }break;
+                case '待办':{
+                    this.setTaskHighlight(container,[c.taskDefinitionKey],{color:'#f5842c',setline: options.setline,shadow:false,type:1,stroke:true })
+                }break;
+            }
+        })
+        if(nv.filter(c=>c.status==='待办').length===0){
+            this.setEndHighLight(container,{stroke: '#5ac14a', fill: '#53D894'})
+        }
+    }
     this.clearWatermark=function(){
         if(document.querySelector('.bjs-powered-by')){
             document.querySelector('.bjs-powered-by').remove()
@@ -266,15 +288,42 @@ function utils(){
         })
         return  _taskData
     }
+    this.getTimeData=function (url,instanceId){
+        return axios.get(url,{
+            params:{
+                initPageIndex:1,
+                pageIndex:1,
+                pageNum:1,
+                pageSize:99,
+                processInstanceId:instanceId
+            }
+        })
+
+    }
+    this.setView=function(bpmnViewer,options){
+        if(bpmnViewer){
+            let canvas = bpmnViewer.get('canvas')
+            // 居中
+            if(options.fit){
+                // 完全显示
+                canvas.zoom('fit-viewport',true);
+            }else{
+                //缩放比例为1
+                if(canvas){
+                    this.setCenter(canvas)
+                }
+            }
+        }
+    }
     this.log=function(data,obj){
         obj.logfv.info(JSON.stringify(Object.assign({
-            props:{
-                baseApi:obj.baseApi,
-                instanceId:obj.instanceId,
-                xmlId:obj.xmlId,
-                type:obj.type,
-                static:obj.static,
-                options:obj.myOptions}
+                props:{
+                    baseApi:obj.baseApi,
+                    instanceId:obj.instanceId,
+                    xmlId:obj.xmlId,
+                    type:obj.type,
+                    static:obj.static,
+                    options:obj.myOptions}
             },data)
         ))
     }

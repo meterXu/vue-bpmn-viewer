@@ -32,16 +32,7 @@ export default {
   },
   methods: {
     handleZoomReset() {
-      if(this.bpmnViewer){
-        this.canvas = this.bpmnViewer.get('canvas')
-        if (this.canvas) {
-          if(this.options.fit){
-            this.canvas.zoom('fit-viewport',true);
-          }else {
-            utils.setCenter(this.canvas)
-          }
-        }
-      }
+      utils.setView(this.bpmnViewer,this.options)
     },
     handleZoomIn() {
       if(this.bpmnViewer){

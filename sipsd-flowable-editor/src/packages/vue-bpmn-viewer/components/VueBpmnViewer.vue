@@ -134,24 +134,7 @@ export default {
   watch:{
     taskData:{
       handler:function (nv){
-        utils.clearAllHighLight(this.bpmnViewer._container,this.$refs.bpmnObj)
-        nv.forEach(c=>{
-          switch (c.status){
-            case '已办':{
-              if(c.approveType === '驳回'){
-                utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#ff0000',setline: false,shadow: false,type:3,stroke:true})
-              } else{
-                utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#5BC14B',setline: false,shadow: false,type:2,stroke:true})
-              }
-            }break;
-            case '待办':{
-              utils.setTaskHighlight(this.bpmnViewer._container,[c.taskDefinitionKey],{color:'#f5842c',setline: this.myOptions.setline,shadow:false,type:1,stroke:true })
-            }break;
-          }
-        })
-        if(nv.filter(c=>c.status==='待办').length===0){
-          utils.setEndHighLight(this.bpmnViewer._container,{stroke: '#5ac14a', fill: '#53D894'})
-        }
+        utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions)
       }
     }
   },
@@ -169,15 +152,7 @@ export default {
     },
     getTimeData(){
       if(this.instanceId){
-        axios.get(urljoin(this.baseApi,this.url.allExtensionTasks),{
-          params:{
-            initPageIndex:1,
-            pageIndex:1,
-            pageNum:1,
-            pageSize:99,
-            processInstanceId:this.instanceId
-          }
-        }).then(res=>{
+        utils.getTimeData(urljoin(this.baseApi,this.url.allExtensionTasks),this.instanceId).then(res=>{
           this.logfv.info(JSON.stringify({
             title: '获取流程详细执行数据成功！',
             actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
@@ -203,24 +178,12 @@ export default {
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,
       },this)
+      utils.clearWatermark()
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
-      if(this.bpmnViewer){
-        let canvas = this.bpmnViewer.get('canvas')
-        // 居中
-        if(this.myOptions.fit){
-          // 完全显示
-          canvas.zoom('fit-viewport',true);
-        }else{
-          //缩放比例为1
-          if(canvas){
-            utils.setCenter(canvas)
-          }
-        }
-      }
-      utils.clearWatermark()
+      utils.setView(this.bpmnViewer,this.myOptions)
       this.$emit('loaded')
     },
     bpmnLoadError(err){
