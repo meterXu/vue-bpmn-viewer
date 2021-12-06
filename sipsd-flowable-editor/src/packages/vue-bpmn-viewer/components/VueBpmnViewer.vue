@@ -237,7 +237,6 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
-      console.log(this.myOptions.fit)
       if(this.bpmnViewer){
         let canvas = this.bpmnViewer.get('canvas')
         // 居中
@@ -251,7 +250,7 @@ export default {
           }
         }
       }
-      this.clearWatermark()
+      utils.clearWatermark()
       this.$emit('loaded')
     },
     bpmnLoadError(err){
@@ -271,11 +270,6 @@ export default {
         }
       }))
       this.$emit('loadError',err)
-    },
-    clearWatermark(){
-      if(document.querySelector('.bjs-powered-by')){
-        document.querySelector('.bjs-powered-by').remove()
-      }
     },
     reload(){
       this.logfv.info(JSON.stringify({

@@ -247,6 +247,11 @@ function utils(){
         };
         canvas.viewbox(newViewbox);
     }
+    this.clearWatermark=function(){
+        if(document.querySelector('.bjs-powered-by')){
+            document.querySelector('.bjs-powered-by').remove()
+        }
+    }
 }
 
 export default new utils()
