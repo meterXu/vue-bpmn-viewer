@@ -252,6 +252,44 @@ function utils(){
             document.querySelector('.bjs-powered-by').remove()
         }
     }
+    this.dealWithTimeData=function(container,timeRes){
+        let _taskData=[]
+        let _timeRes = JSON.parse(JSON.stringify(timeRes))
+        _timeRes.sort((a,b)=>{
+            return a.startTime - b.startTime
+        }).forEach(f=>{
+            this.setTaskMaxDay(container,f.taskDefinitionKey,f.customTaskMaxDay+'天')
+            if(f.realName){
+                this.setTaskRealName(container,f.taskDefinitionKey,f.realName)
+            }
+            _taskData.push(f)
+        })
+        return  _taskData
+    }
+    this.log=function(data,obj){
+        obj.logfv.info(JSON.stringify(Object.assign({
+            props:{
+                baseApi:obj.baseApi,
+                instanceId:obj.instanceId,
+                xmlId:obj.xmlId,
+                type:obj.type,
+                static:obj.static,
+                options:obj.myOptions}
+            },data)
+        ))
+    }
+    this.error=function(data,obj){
+        obj.logfv.error(JSON.stringify(Object.assign({
+                props:{
+                    baseApi:obj.baseApi,
+                    instanceId:obj.instanceId,
+                    xmlId:obj.xmlId,
+                    type:obj.type,
+                    static:obj.static,
+                    options:obj.myOptions}
+            },data)
+        ))
+    }
 }
 
 export default new utils()

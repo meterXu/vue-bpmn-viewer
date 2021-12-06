@@ -158,12 +158,12 @@ export default {
   methods:{
     getTaskList(){
       if(this.timeData){
-        this.dealWithTimeData(this.timeData)
+        this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,this.timeData)
       }else{
         if(this.type===2){
           this.getTimeData()
         }else{
-          this.dealWithTimeData([])
+          this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,[])
         }
       }
     },
@@ -182,57 +182,27 @@ export default {
             title: '获取流程详细执行数据成功！',
             actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
           }))
-          this.dealWithTimeData(res.data.data)
+          this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
         }).catch(err=>{
-          this.logfv.info(JSON.stringify({
+          utils.error({
             title: '获取流程详细执行数据失败！',
             error:{
               message:err.message,
               stack:err.stack
             },
-            props:{
-              baseApi:this.baseApi,
-              instanceId:this.instanceId,
-              xmlId:this.xmlId,
-              type:this.type,
-              static:this.static,
-              options:this.myOptions
-            }
-          }))
+          },this)
           console.error(err)
         })
       }
-    },
-    dealWithTimeData(timeRes){
-      let _taskData=[]
-      let _timeRes = JSON.parse(JSON.stringify(timeRes))
-      _timeRes.sort((a,b)=>{
-        return a.startTime - b.startTime
-      }).forEach(f=>{
-        utils.setTaskMaxDay(this.bpmnViewer._container,f.taskDefinitionKey,f.customTaskMaxDay+'天')
-        if(f.realName){
-          utils.setTaskRealName(this.bpmnViewer._container,f.taskDefinitionKey,f.realName)
-        }
-        _taskData.push(f)
-      })
-      this.taskData = _taskData
     },
     bpmnLoading(){
       this.$emit('loading')
     },
     bpmnLoadDone(){
-      this.logfv.info(JSON.stringify({
+      utils.log({
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,
-        props:{
-          baseApi:this.baseApi,
-          instanceId:this.instanceId,
-          xmlId:this.xmlId,
-          type:this.type,
-          static:this.static,
-          options:this.myOptions
-        }
-      }))
+      },this)
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
@@ -254,36 +224,18 @@ export default {
       this.$emit('loaded')
     },
     bpmnLoadError(err){
-      this.logfv.info(JSON.stringify({
-        title: '流程图加载失败！',
+      utils.error({ title: '流程图加载失败！',
         error:{
           message:err.message,
           stack:err.stack
-        },
-        props:{
-          baseApi:this.baseApi,
-          instanceId:this.instanceId,
-          xmlId:this.xmlId,
-          type:this.type,
-          static:this.static,
-          options:this.myOptions
-        }
-      }))
+        },},this)
       this.$emit('loadError',err)
     },
     reload(){
-      this.logfv.info(JSON.stringify({
+      utils.log({
         title:'执行了组件刷新方法！',
         xmlUrl:this.xml,
-        props:{
-          baseApi:this.baseApi,
-          instanceId:this.instanceId,
-          xmlId:this.xmlId,
-          type:this.type,
-          static:this.static,
-          options:this.myOptions
-        }
-      }))
+      },this)
       this.$nextTick(()=>{
         if(this.$refs.bpmnObj){
           this.$refs.bpmnObj.reload()
@@ -306,18 +258,10 @@ export default {
     }
   },
   mounted() {
-    this.logfv.info(JSON.stringify({
+    utils.log({
       title:'工作流执行器挂载成功！',
       url:window.location.href,
-      props:{
-        baseApi:this.baseApi,
-        instanceId:this.instanceId,
-        xmlId:this.xmlId,
-        type:this.type,
-        static:this.static,
-        options:this.myOptions
-      }
-    }))
+    },this)
   },
   created() {
     this.logfv = new LogFv({
