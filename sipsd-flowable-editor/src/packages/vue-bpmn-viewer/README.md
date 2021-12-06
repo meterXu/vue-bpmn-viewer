@@ -130,7 +130,43 @@ export default {
 |reload|重新加载流程图|`this.$refs.bpmnView.reload()`|
 
 ## 插槽
-自定义顶部工具栏
+1. 自定义时间轴
+
+```vue
+<VueBpmnViewer :type="2"
+               :baseApi="baseApi"
+               :instanceId="instanceId">
+  <template v-slot:time="slotProps">
+      <p>{{slotProps.item.taskName}}</p>
+      <p>审批类型：{{slotProps.item.approveType}}</p>
+      <p>状态：{{slotProps.item.status}}</p>
+      <p v-if="slotProps.item.status==='已办'">持续时间：{{timeFormat(slotProps.item.duration)}}</p>
+      <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>
+      <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
+  </template>
+</VueBpmnViewer>
+<script>
+import ms from 'pretty-ms'
+export default {
+  methods:{
+    timeFormat(s){
+      if(s){
+        return ms(s*1000)
+            .replace(/ -/g,'')
+            .replace('d','天')
+            .replace('h','小时')
+            .replace('m','分')
+            .replace('s','秒')
+      }else{
+        return '-'
+      }
+    }
+  }
+}
+</script>
+```
+2. 自定义顶部工具栏
+
 ```vue
 <template>
   <VueBpmnViewer :type="1"
