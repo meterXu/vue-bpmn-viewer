@@ -224,6 +224,7 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
+      console.log(this.myOptions.fit)
       if(this.bpmnViewer){
         let canvas = this.bpmnViewer.get('canvas')
         // 居中
@@ -276,11 +277,21 @@ export default {
           options:this.myOptions
         }
       }))
-      if(this.$refs.bpmnObj){
-        this.$refs.bpmnObj.reload()
-      }
+      this.$nextTick(()=>{
+        if(this.$refs.bpmnObj){
+          this.$refs.bpmnObj.reload()
+        }
+      })
     },
     handleClick(obj){
+      if(this.taskData){
+        let _task=this.taskData.find(c=>c.taskDefinitionKey===obj.shape.id)
+        if(_task){
+          obj.taskData=_task
+        }else{
+          obj.taskData = null
+        }
+      }
       this.$emit('click',obj)
     },
     handleViewChange(event){

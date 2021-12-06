@@ -107,8 +107,11 @@ export default {
       }
     },
     reload(){
-      this.destroy()
-      this.init()
+      if(this.bpmnViewer){
+        this.$emit('loaded', null);
+      }else{
+        this.init()
+      }
     },
     destroy(){
       if(this.bpmnViewer){
