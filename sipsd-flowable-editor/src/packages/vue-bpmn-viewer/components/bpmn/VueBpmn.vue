@@ -3,9 +3,9 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.production.min.js';
+import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import BpmnViewer from "bpmn-js/lib/Viewer"
+
 export default {
   name: 'VueBpmn',
   props: {
@@ -23,16 +23,9 @@ export default {
   data: function() {
     return {
       diagramXML: null,
-      bpmnReadOnly:null,
-      bpmnFull:null,
+      bpmnViewer:null,
       loadingInstance:null
     };
-  },
-  computed:{
-    bpmnViewer(){
-      Vue.prototype.$bpmnViewer =this.bpmnReadOnly||this.bpmnFull
-      return Vue.prototype.$bpmnViewer
-    }
   },
   methods: {
     init(){
@@ -41,33 +34,23 @@ export default {
       let _options = Object.assign({
         container: container
       }, this.options)
-      if(this.viewer){
-        if(!this.bpmnReadOnly){
-          this.bpmnReadOnly = new BpmnViewer(_options);
-          this.bpmnReadOnly.on('import.done', function(event) {
-            let error = event.error;
-            let warnings = event.warnings;
-            if (error) {
-              self.$emit('error', error);
-            } else {
-              self.$emit('loaded', warnings);
-            }
-          });
-        }
-      }else{
-        if(!this.bpmnFull){
-          this.bpmnFull = new BpmnJS(_options);
-          this.bpmnFull.on('import.done', function(event) {
-            let error = event.error;
-            let warnings = event.warnings;
-            if (error) {
-              self.$emit('error', error);
-            } else {
-              self.$emit('loaded', warnings);
-            }
-          });
+      if(!this.bpmnViewer) {
+        if(this.viewer){
+          this.bpmnViewer = new BpmnViewer(_options);
+        }else{
+          this.bpmnViewer  = new BpmnJS(_options);
         }
       }
+      this.bpmnViewer.on('import.done', function(event) {
+        let error = event.error;
+        let warnings = event.warnings;
+        if (error) {
+          self.$emit('error', error);
+        } else {
+          self.$emit('loaded', warnings);
+          self.addEventBusListener()
+        }
+      });
       this.fetchDiagram(this.url).then(xml=>{
         this.drawXml(xml)
       });
@@ -96,16 +79,30 @@ export default {
         }
       })
     },
-    drawXml(xml) {
-      if(this.viewer){
-        if(this.bpmnReadOnly){
-          this.bpmnReadOnly.importXML(xml);
+    addEventBusListener(){
+      let that = this
+      let eventBus = null
+      const eventTypes = ['element.click','canvas.viewbox.changed']
+      if(this.bpmnViewer) {
+        eventBus = this.bpmnViewer.get('eventBus')
+        eventTypes.forEach(function(eventType) {
+          eventBus.on(eventType, function(e) {
+            if(eventType==='element.click'){
+              let elementRegistry = that.bpmnViewer.get('elementRegistry')
+              if (!e || e.element.type == 'bpmn:Process') return
+              let shape = elementRegistry.get(e.element.id)
+              that.$emit('click',{event:e.originalEvent,shape})
+            }else{
+              that.$emit('viewChange',{event:e})
+            }
 
-        }
-      }else{
-        if(this.bpmnFull){
-          this.bpmnFull.importXML(xml);
-        }
+          })
+        })
+      }
+    },
+    drawXml(xml) {
+      if(this.bpmnViewer){
+        this.bpmnViewer.importXML(xml)
       }
     },
     reload(){
@@ -116,11 +113,8 @@ export default {
     this.init()
   },
   beforeDestroy: function() {
-    if(this.bpmnReadOnly){
-      this.bpmnReadOnly.destroy();
-    }
-    if(this.bpmnFull){
-      this.bpmnFull.destroy();
+    if(this.bpmnViewer){
+      this.bpmnViewer.destroy();
     }
   }
 };

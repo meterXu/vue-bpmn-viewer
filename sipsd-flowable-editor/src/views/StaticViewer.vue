@@ -41,7 +41,9 @@
                        :xmlId="form.xmlId"
                        :source="form.source"
                        :timeData="timeData"
-                       :options="options">
+                       :options="options"
+                       @click="handleClick"
+                       @viewChange="handleViewChange">
           <template v-slot:time="slotProps">
             <p>{{slotProps.item.taskName}}</p>
             <p>审批类型：{{slotProps.item.approveType}}</p>
@@ -100,6 +102,12 @@ export default {
     }
   },
   methods: {
+    handleClick(obj){
+      console.log(obj)
+    },
+    handleViewChange(event){
+      console.log(event)
+    },
     timeFormat(s){
       if(s){
         return ms(s*1000)

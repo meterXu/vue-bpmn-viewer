@@ -4,7 +4,9 @@
       <vue-bpmn :viewer="static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
                 @loaded="bpmnLoadDone"
-                @error="bpmnLoadError"></vue-bpmn>
+                @error="bpmnLoadError"
+                @click="handleClick"
+                @viewChange="handleViewChange"></vue-bpmn>
       <div v-if="!showBpmn" class="no-bpmn"></div>
       <div v-if="showBpmn" class="legend">
         <ul class="legend-ul">
@@ -221,12 +223,15 @@ export default {
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
       this.getTaskList()
-      let canvas = this.bpmnViewer.get('canvas')
-      if (canvas) {
-        if(this.myOptions.fit){
-          canvas.zoom('fit-viewport');
-        }else{
-          canvas._viewport.setAttribute("transform","matrix(1,0,0,1,0,0)")
+      // 居中
+      if(this.myOptions.fit){
+        // 完全显示
+        canvas.zoom('fit-viewport',true);
+      }else{
+        //缩放比例为1
+        let canvas = this.bpmnViewer.get('canvas')
+        if(canvas){
+          utils.setCenter(canvas)
         }
       }
     },
@@ -272,7 +277,12 @@ export default {
           this.$refs.bpmnObj.reload()
         }
       })
-
+    },
+    handleClick(obj){
+      this.$emit('click',shape)
+    },
+    handleViewChange(event){
+      this.$emit('viewChange',event)
     }
   },
   mounted() {

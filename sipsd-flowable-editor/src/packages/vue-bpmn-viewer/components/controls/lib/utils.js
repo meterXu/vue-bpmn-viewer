@@ -231,6 +231,21 @@ function utils(){
             text.innerHTML = day
         }
     }
+
+    this.setCenter=function(canvas) {
+        let vbox = canvas.viewbox(),
+            outer = vbox.outer,
+            inner = vbox.inner,
+            newScale =1,
+            newViewbox;
+        newViewbox = {
+            x: inner.x + (inner.width / 2 - (outer.width-306) / newScale / 2 ),
+            y: inner.y + (inner.height / 2 - outer.height / newScale / 2),
+            width: outer.width / newScale,
+            height: outer.height / newScale
+        };
+        canvas.viewbox(newViewbox);
+    }
 }
 
 export default new utils()

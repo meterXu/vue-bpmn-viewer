@@ -133,6 +133,7 @@ export default {
 1. 自定义时间轴
 
 ```vue
+// slotProps.item 为时间轴每项的数据对象
 <VueBpmnViewer :type="2"
                :baseApi="baseApi"
                :instanceId="instanceId">
