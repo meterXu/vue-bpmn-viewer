@@ -139,41 +139,45 @@ export default {
     }
   },
   methods:{
-    getTaskList(){
+    async getTaskList(){
       if(this.timeData){
         this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,this.timeData)
       }else{
         if(this.type===2){
-          this.getTimeData()
+          this.taskData = await this.getTimeData()
         }else{
           this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,[])
         }
       }
     },
     getTimeData(){
-      if(this.instanceId){
-        utils.getTimeData(urljoin(this.baseApi,this.url.allExtensionTasks),this.instanceId).then(res=>{
-          this.logfv.info(JSON.stringify({
-            title: '获取流程详细执行数据成功！',
-            actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
-          }))
-          this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
-        }).catch(err=>{
-          utils.error({
-            title: '获取流程详细执行数据失败！',
-            error:{
-              message:err.message,
-              stack:err.stack
-            },
-          },this)
-          console.error(err)
-        })
-      }
+      return new Promise((resolve,reject)=>{
+        if(this.instanceId){
+          utils.getTimeData(urljoin(this.baseApi,this.url.allExtensionTasks),this.instanceId).then(res=>{
+            this.logfv.info(JSON.stringify({
+              title: '获取流程详细执行数据成功！',
+              actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
+            }))
+            this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
+            resolve(this.taskData)
+          }).catch(err=>{
+            utils.error({
+              title: '获取流程详细执行数据失败！',
+              error:{
+                message:err.message,
+                stack:err.stack
+              },
+            },this)
+            console.error(err)
+            reject(err)
+          })
+        }
+      })
     },
     bpmnLoading(){
       this.$emit('loading')
     },
-    bpmnLoadDone(){
+    async bpmnLoadDone(){
       utils.log({
         title:'流程图xml加载成功！',
         xmlUrl:this.xml,
@@ -182,8 +186,9 @@ export default {
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      this.getTaskList()
-      utils.setView(this.bpmnViewer,this.myOptions)
+      await this.getTaskList()
+      //todo
+      utils.setView(this.bpmnViewer,this.myOptions,this.taskData[this.taskData.length-1].taskDefinitionKey)
       this.$emit('loaded')
     },
     bpmnLoadError(err){

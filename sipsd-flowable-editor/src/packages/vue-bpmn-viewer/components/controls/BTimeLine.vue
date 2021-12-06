@@ -77,9 +77,9 @@ export default {
     },
     handleItemOver(item,taskId){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
-      const taskObj = utils.getTaskObj(this.bpmnViewer._container,taskId)
-      if(taskObj.length>0){
-        this.oldStyle.color=taskObj[taskObj.length-1].color
+      const taskObjs = utils.getTaskObj(this.bpmnViewer._container,taskId)
+      if(taskObjs.length>0){
+        this.oldStyle.color=taskObjs[taskObjs.length-1].color
       }
       utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.highLight[type-1])
     },
