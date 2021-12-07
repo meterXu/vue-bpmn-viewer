@@ -1,7 +1,5 @@
 <template>
-  <div class="vue-bpmn-dpark-container">
-    <div ref="graphics" class="vue-bpmn-dpark-graphics"></div>
-  </div>
+  <div ref="graphics" class="vue-bpmn-graphics"></div>
 </template>
 
 <script>
@@ -129,8 +127,14 @@ export default {
 </script>
 
 <style scoped>
-.vue-bpmn-dpark-container,.vue-bpmn-dpark-graphics {
+.vue-bpmn-graphics {
   height: 100%;
   width: 100%;
+}
+</style>
+<style>
+.dpark-bpmn-viewer .djs-overlay-container{
+  transition: transform 2s;
+
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="bpmn-viewer">
+  <div class="dpark-bpmn-viewer">
     <div class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
@@ -253,14 +253,14 @@ export default {
 </script>
 
 <style scoped>
-#bpmn-viewer{
+.dpark-bpmn-viewer{
   width: 100%;
   height: 100%;
   background: #F5F5F7;
   cursor: grab;
   position: relative;
 }
-#bpmn-viewer:active{
+.dpark-bbpmn-viewer:active{
   cursor: grabbing;
 }
 .bpmn-viewer-canvas{
