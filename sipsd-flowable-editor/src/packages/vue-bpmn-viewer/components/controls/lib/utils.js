@@ -244,12 +244,21 @@ function utils() {
             newViewbox;
         let _y = (inner.height / 2 - outer.height / newScale / 2)
         let _x = (inner.width / 2 - (outer.width - (options.timeLine?265:0)-(options.zoom?44:0)) / newScale / 2)
-        newViewbox = {
-            x: (_x > 0 ? -20 : inner.x+_x)-offset.x,
-            y: (_y > 0 ? -20 : inner.y+_y)-offset.y,
-            width: outer.width / newScale,
-            height: outer.height / newScale
-        };
+        if(options.focus){
+            newViewbox = {
+                x: inner.x+_x-offset.x,
+                y:  inner.y+_y-offset.y,
+                width: outer.width / newScale,
+                height: outer.height / newScale
+            };
+        }else{
+            newViewbox = {
+                x: (_x > 0 ? -20 : inner.x+_x)-offset.x,
+                y: (_y > 0 ? -20 : inner.y+_y)-offset.y,
+                width: outer.width / newScale,
+                height: outer.height / newScale
+            };
+        }
         canvas.viewbox(newViewbox);
     }
     this.taskSyncHighLight = function (container, bpmnObj, nv, options) {
@@ -351,6 +360,8 @@ function utils() {
         const taskObj = this.getTaskObj(_container,key)
         if(taskObj){
             let matrix =taskObj.container.transform.baseVal[0].matrix
+            let width = taskObj.container.getBBox().width
+            let height = taskObj.container.getBBox().height
             let x = canvas.viewbox().inner.width/2 - matrix.e
             let y = canvas.viewbox().inner.height/2 - matrix.f
             this.setCenter(canvas,options,{x,y})

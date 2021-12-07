@@ -196,6 +196,7 @@ export default {
         if(lastData.status!=='已办'&&this.myOptions.focus){
           this.selectKey = lastData.taskDefinitionKey
           utils.setView(this.bpmnViewer,this.options,this.selectKey)
+
         }
 
       }
