@@ -10,8 +10,8 @@ export default (options)=>{
         r:options.width/2,
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
-        fill:'#d1d1d1',
-        stroke:'#aaa'
+        fill:'#aaa',
+        stroke:'#8f8f8f'
         // filter:"url(#f1)"
     })
     let text = create('text',{

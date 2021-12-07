@@ -210,7 +210,7 @@ function utils() {
         tasks.forEach(c => {
             clearSingleTaskHighLight(container, c.getAttribute('data-element-id'))
         })
-        this.setEndHighLight(container, {stroke: '#aaa', fill: '#d1d1d1'})
+        this.setEndHighLight(container, {stroke: '#8f8f8f', fill: '#aaa'})
         this.clearAllFlowHighLight(container)
     }
 
