@@ -13,7 +13,9 @@
               item.status==='已办'?
             (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
             :'timeLine-item-over-uned']">
-              <div @mouseover="handleItemOver(item,item.taskDefinitionKey)" @mouseout="handleItemOut(item.taskDefinitionKey)">
+              <div @mouseover="handleItemOver(item,item.taskDefinitionKey)"
+                   @mouseout="handleItemOut(item.taskDefinitionKey)"
+                   @click="handleClick(item.taskDefinitionKey)">
                 <slot v-bind:item="item">
                   <p>{{item.taskName}}</p>
                   <p>审批类型：{{item.approveType}}</p>
@@ -77,15 +79,18 @@ export default {
     },
     handleItemOver(item,taskId){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
-      const taskObjs = utils.getTaskObj(this.bpmnViewer._container,taskId)
-      if(taskObjs.length>0){
-        this.oldStyle.color=taskObjs[taskObjs.length-1].color
+      const taskObj = utils.getTaskObj(this.bpmnViewer._container,taskId)
+      if(taskObj){
+        this.oldStyle.color=taskObj.color
       }
       utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.highLight[type-1])
     },
     handleItemOut(taskId){
       utils.clearHighLight(this.bpmnViewer._container,taskId)
       utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.oldStyle)
+    },
+    handleClick(taskId){
+      utils.track(this.bpmnViewer,this.bpmnViewer.get('canvas'),this.options,taskId)
     },
     getTimeLineColor(data){
       if(data.status==='已办'){

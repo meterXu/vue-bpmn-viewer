@@ -1,6 +1,5 @@
 import {attr, classes} from "tiny-svg";
 import axios from "axios";
-import urljoin from "url-join";
 
 function setSingleTaskHighLight(container, id, options) {
     if (id) {
@@ -106,20 +105,17 @@ function hexToRgb(hex) {
 
 function utils() {
     let taskHighlightTimer = {}
-
     this.getTaskObj = function (container, id) {
-        let res = []
-        let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
-        if (completeTasks.length > 0) {
-            completeTasks.forEach(completeTask => {
-                let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-                if (title1) {
-                    let businessObject = Object.assign({el:completeTask}, {color: title1.style.fill})
-                    res.push(businessObject)
-                }
-            })
+        let completeTask = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+        let task_container = container.querySelector(`[class="djs-element djs-shape"][data-element-id="${id}"]`)
+        if(completeTask){
+            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+            if (title1) {
+                let businessObject = Object.assign({container:task_container}, {color: title1.style.fill})
+                return businessObject
+            }
         }
-        return res
+        return null
     }
 
     this.setTaskHighlight = function (container, ids, options = {
@@ -247,7 +243,7 @@ function utils() {
             newScale = 1,
             newViewbox;
         let _y = (inner.height / 2 - outer.height / newScale / 2)
-        let _x = (inner.width / 2 - (outer.width - options.timeLine?265:0-options.zoom?44:0) / newScale / 2)
+        let _x = (inner.width / 2 - (outer.width - (options.timeLine?265:0)-(options.zoom?44:0)) / newScale / 2)
         newViewbox = {
             x: (_x > 0 ? -20 : inner.x+_x)-offset.x,
             y: (_y > 0 ? -20 : inner.y+_y)-offset.y,
@@ -347,12 +343,15 @@ function utils() {
     }
     this.track=function(bpmnViewer,canvas,options,key){
         const _container =bpmnViewer._container
-        const taskObjs = this.getTaskObj(_container,key)
-        if(taskObjs.length>0){
-            let xx =taskObjs[taskObjs.length-1].el.viewportElement
-            this.setCenter(canvas,options,{x:0,y:0})
+        const taskObj = this.getTaskObj(_container,key)
+        if(taskObj){
+            let matrix =taskObj.container.transform.baseVal[0].matrix
+            let x = canvas.viewbox().inner.width/2 - matrix.e
+            let y = canvas.viewbox().inner.height/2 - matrix.f
+            this.setCenter(canvas,options,{x:x,y:y})
+        }else{
+            this.setCenter(canvas,options)
         }
-
     }
     this.log = function (data, obj) {
         obj.logfv.info(JSON.stringify(Object.assign({
