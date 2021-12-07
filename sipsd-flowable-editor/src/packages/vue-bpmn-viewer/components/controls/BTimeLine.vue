@@ -41,11 +41,11 @@ export default {
     return {
       selectId:null,
       loadingInstance:null,
-      oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false,stroke:false},
+      oldStyle:{color:null,setline:false,user:null,shadow:false,stroke:false},
       highLight:[
-        {color:'#5BC14B',setline:false,user:undefined,shadow:true,stroke:true},
-        {color:'#f5842c',setline:false,user:undefined,shadow:true,stroke:true},
-        {color:'#ff0000',setline:false,user:undefined,shadow:true,stroke:true}
+        {color:'#5BC14B',setline:false,user:null,shadow:true,stroke:true},
+        {color:'#f5842c',setline:false,user:null,shadow:true,stroke:true},
+        {color:'#ff0000',setline:false,user:null,shadow:true,stroke:true}
       ]
     }
   },

@@ -72,8 +72,8 @@ export default {
         ]
       },
       colors:{
-        blue:['#3296fa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#d1d1d1','#aaa','#444'],
-        classic:['#3296fa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#d1d1d1','#aaa','#444']
+        blue:['#aaaaaa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#d1d1d1','#aaa','#444'],
+        classic:['#aaaaaa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#d1d1d1','#aaa','#444']
       },
       taskData:[],
       url:{
@@ -308,8 +308,8 @@ export default {
   vertical-align: sub;
 }
 .legend-none{
-  background: #3296fa;
-  border:1px solid #1a70c5;
+  background: #aaa;
+  border:1px solid #8f8f8f;
   opacity: 0.8;
 }
 .legend-unExec{

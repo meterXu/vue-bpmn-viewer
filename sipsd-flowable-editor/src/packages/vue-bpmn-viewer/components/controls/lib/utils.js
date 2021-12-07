@@ -63,12 +63,12 @@ function clearSingleTaskHighLight(container, id) {
             }
             if (title1) {
                 attr(title1, {
-                    fill: "#3296fa",
+                    fill: "#aaa",
                 })
             }
             if (title2) {
                 attr(title2, {
-                    fill: "#3296fa",
+                    fill: "#aaa",
                 })
             }
             if (feColorMatrix) {

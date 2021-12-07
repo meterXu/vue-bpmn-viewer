@@ -79,7 +79,7 @@ export default (options)=>{
         y:1,
         width:options.width-1,
         height:24,
-        fill: "#3296fa",
+        fill: "#aaaaaa",
         rx:4,
         ry:4
     }))
@@ -88,7 +88,7 @@ export default (options)=>{
         y:5,
         width:options.width-1,
         height:20,
-        fill: "#3296fa",
+        fill: "#aaaaaa",
         rx:0,
         ry:0
     }))

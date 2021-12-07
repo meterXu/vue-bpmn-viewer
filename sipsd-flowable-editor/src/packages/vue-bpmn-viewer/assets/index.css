@@ -2,7 +2,7 @@
     cursor: pointer;
 }
 .d-userTask:hover{
-    stroke: #3296fa !important;
+    stroke: #aaa !important;
 }
 .highlight-custom-path{
     stroke-dasharray:6;
