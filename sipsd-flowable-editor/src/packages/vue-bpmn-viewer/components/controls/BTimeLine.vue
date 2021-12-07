@@ -52,6 +52,7 @@ export default {
   watch:{
     timeData:{
       handler(nv){
+        this.selectId=null
         if(nv&&nv.length>0){
           let lastData=nv[nv.length-1]
           if(lastData.status!=='已办'){
