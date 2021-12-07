@@ -61,18 +61,20 @@ export default {
   methods:{
     highLightClass(item){
       let cls = ['timeLine-item-over']
-      if(item.status==='已办'){
-        if(item.approveType==='驳回'){
-          cls.push('timeLine-item-over-turn')
-        }else{
-          cls.push('timeLine-item-over-ed')
+      if(item){
+        if(item.status==='已办'){
+          if(item.approveType==='驳回'){
+            cls.push('timeLine-item-over-turn')
+          }else{
+            cls.push('timeLine-item-over-ed')
+          }
         }
-      }
-      else{
-        cls.push('timeLine-item-over-uned')
-      }
-      if(this.selectItem.id === item.id){
-        cls.push(cls[1].replace('over','active'))
+        else{
+          cls.push('timeLine-item-over-uned')
+        }
+        if(this.selectItem&&this.selectItem.id === item.id){
+          cls.push(cls[1].replace('over','active'))
+        }
       }
       return cls
     },
