@@ -23,8 +23,8 @@
         </slot>
       </template>
       <template v-slot:right>
-        <BTZoom :options="myOptions"  :bpmnViewer="bpmnViewer" @zoomReset="zoomReset" ref="cBTZoom"/>
-        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer">
+        <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey"/>
+        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer" @timeDataLoaded="timeDataLoaded">
           <template v-slot="slotProps">
             <slot name="time" v-bind:item="slotProps.item"></slot>
           </template>
@@ -63,6 +63,7 @@ export default {
   },
   data(){
     return {
+      selectKey:null,
       logfv:null,
       showBpmn:false,
       bpmnViewer:null,
@@ -185,12 +186,9 @@ export default {
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      this.toCenter()
+      utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
       this.$emit('loaded')
-    },
-    toCenter(){
-      utils.setView(this.bpmnViewer,this.myOptions)
     },
     bpmnLoadError(err){
       utils.error({ title: '流程图加载失败！',
@@ -225,8 +223,8 @@ export default {
     handleViewChange(event){
       this.$emit('viewChange',event)
     },
-    zoomReset(){
-      this.toCenter()
+    timeDataLoaded(selectKey){
+      this.selectKey = selectKey
     }
   },
   mounted() {

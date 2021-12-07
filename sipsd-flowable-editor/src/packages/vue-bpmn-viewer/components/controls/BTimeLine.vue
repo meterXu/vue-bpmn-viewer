@@ -61,6 +61,9 @@ export default {
               this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
             })
           }
+          this.$emit('timeDataLoaded',lastData.taskDefinitionKey)
+        }else{
+          this.$emit('timeDataLoaded',null)
         }
       },
       immediate:true,
