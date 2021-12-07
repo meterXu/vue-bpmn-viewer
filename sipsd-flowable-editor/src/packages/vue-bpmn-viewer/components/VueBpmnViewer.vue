@@ -1,7 +1,7 @@
 <template>
   <div id="bpmn-viewer">
     <div class="bpmn-viewer-canvas">
-      <vue-bpmn :viewer="static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
+      <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
                 @loaded="bpmnLoadDone"
                 @error="bpmnLoadError"
@@ -24,7 +24,10 @@
       </template>
       <template v-slot:right>
         <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey"/>
-        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer" @timeDataLoaded="timeDataLoaded">
+        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer"
+                   @timeDataLoaded="timeDataLoaded"
+                   @itemClick="itemClick"
+        >
           <template v-slot="slotProps">
             <slot name="time" v-bind:item="slotProps.item"></slot>
           </template>
@@ -48,11 +51,9 @@ export default {
     instanceId:{type:String},
     xmlId:{type:String},
     type:{type:Number,required: false},
-    static:{type:Boolean,default: false},
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
-    log:{type:Boolean,default:false},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
@@ -100,7 +101,10 @@ export default {
         fit:false,
         setline:false,
         scrollZoom:false,
-        theme:'blue'
+        static:false,
+        log:false,
+        track:false,
+        trackFocus:false
       },this.options)
       if(!_option.colors){
         _option.colors = this.colors[_option.theme]
@@ -225,6 +229,9 @@ export default {
     },
     timeDataLoaded(selectKey){
       this.selectKey = selectKey
+    },
+    itemClick(item){
+      this.$emit('timeItemClick',item)
     }
   },
   mounted() {
@@ -239,7 +246,7 @@ export default {
       appId:'vue-bpmn-viewer',
       appName:'工作流执行器',
       objType:2,
-      enable:this.log
+      enable:this.myOptions.log
     })
   }
 }

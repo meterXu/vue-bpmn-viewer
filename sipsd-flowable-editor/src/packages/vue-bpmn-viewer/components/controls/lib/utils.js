@@ -326,7 +326,7 @@ function utils() {
     this.setView = function (bpmnViewer, options,key) {
         if (bpmnViewer) {
             let canvas = bpmnViewer.get('canvas')
-            if(options.track&&key){
+            if(options.focus&&key){
                 this.track(bpmnViewer,canvas,options,key)
             }
             // 居中

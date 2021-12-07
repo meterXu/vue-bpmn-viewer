@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     handleZoomReset() {
-      utils.track(this.bpmnViewer,this.bpmnViewer.get('canvas'),this.options,this.selectKey)
+      utils.setView(this.bpmnViewer,this.options,this.selectKey)
     },
     handleZoomIn() {
       if(this.bpmnViewer){

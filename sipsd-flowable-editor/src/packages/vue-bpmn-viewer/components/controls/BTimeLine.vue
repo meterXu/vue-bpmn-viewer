@@ -56,12 +56,14 @@ export default {
         if(nv&&nv.length>0){
           let lastData=nv[nv.length-1]
           if(lastData.status!=='已办'){
-            this.handleClick(lastData)
-            this.$nextTick(()=>{
-              this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
-            })
+            if(this.options.focus){
+              this.handleClick(lastData)
+              this.$nextTick(()=>{
+                this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
+              })
+              this.$emit('timeDataLoaded',lastData.taskDefinitionKey)
+            }
           }
-          this.$emit('timeDataLoaded',lastData.taskDefinitionKey)
         }else{
           this.$emit('timeDataLoaded',null)
         }
@@ -126,8 +128,11 @@ export default {
       utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.oldStyle)
     },
     handleClick(item){
-      this.selectId = item.id
-      utils.track(this.bpmnViewer,this.bpmnViewer.get('canvas'),this.options,item.taskDefinitionKey)
+      if(this.options.track){
+        this.selectId = item.id
+      }
+      utils.setView(this.bpmnViewer,this.options,item.taskDefinitionKey)
+      this.$emit('itemClick',item)
     },
     getTimeLineColor(obj){
       if(obj.status==='已办'){

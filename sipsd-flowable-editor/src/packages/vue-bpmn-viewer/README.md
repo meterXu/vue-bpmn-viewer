@@ -104,10 +104,8 @@ export default {
 |xmlId|流程图ID，配合baseApi使用|null|
 |instanceId|flowable实例ID，配合baseApi使用|null|
 |type|流程图显示模式|1：流程图，2：流程实例，配合baseApi使用|
-|static|是否静态不可拖动|false|
 |timeData|时间轴数据，此数据会替换接口获得的数据|null|
 |options|控件配置|{zoom:true,timeLine:false,center:true,setline:false}|
-|log|是否记录使用日志|false|
 |logReportUrl|日志上报地址|http://58.210.9.133/iplatform/logfv-server/logfv/web/upload|
 
 ### options
@@ -116,9 +114,12 @@ export default {
 |zoom|是否启用缩放控件|true|
 |timeLine|是否启用时间轴|false|
 |fit|流程图是否全部缩放在画布上|false|
+|static|是否静态不可拖动|false|
+|log|是否记录使用日志|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
 |zoomScroll|是否滚动缩放|false|
-|track|是否追踪显示|false|
+|track|是否追踪高亮|false|
+|focus|是否聚焦居中|false|
 
 **说明**
 1. 组件可以纯前端使用，也可以配合沃壤平台工作流引擎进行使用
@@ -135,6 +136,7 @@ export default {
 |名称|说明|参数|
 |:---|:---|:---|
 |click|元素点击事件|	Function(event,shape,taskData)|
+|timeItemClick|时间轴数据项点击事件|Function(taskData)|
 |viewChange|画布变化事件|	Function(event)|
 |loading|流程图加载中|	Function()|
 |loaded|流程图加载完成|	Function()|
