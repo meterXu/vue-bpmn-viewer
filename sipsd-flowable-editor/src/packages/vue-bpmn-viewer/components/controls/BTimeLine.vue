@@ -55,17 +55,14 @@ export default {
         this.selectId=null
         if(nv&&nv.length>0){
           let lastData=nv[nv.length-1]
-          if(lastData.status!=='已办'){
-            if(this.options.focus){
-              this.handleClick(lastData)
-              this.$nextTick(()=>{
-                this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
-              })
-              this.$emit('timeDataLoaded',lastData.taskDefinitionKey)
+          if(lastData.status!=='已办'&&this.options.focus&&this.$refs['bpmn-time-line']){
+            this.$nextTick(()=>{
+              this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
+            })
+            if(this.options.track){
+              this.selectId = lastData.id
             }
           }
-        }else{
-          this.$emit('timeDataLoaded',null)
         }
       },
       immediate:true,

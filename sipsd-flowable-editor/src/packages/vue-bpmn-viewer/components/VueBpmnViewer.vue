@@ -25,7 +25,6 @@
       <template v-slot:right>
         <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey"/>
         <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer"
-                   @timeDataLoaded="timeDataLoaded"
                    @itemClick="itemClick"
         >
           <template v-slot="slotProps">
@@ -192,6 +191,14 @@ export default {
       window.bpmnViewer =  this.bpmnViewer
       utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
+      if(this.taskData&&this.taskData){
+        let lastData = this.taskData[this.taskData.length-1]
+        if(lastData.status!=='已办'&&this.myOptions.focus){
+          this.selectKey = lastData.taskDefinitionKey
+          utils.setView(this.bpmnViewer,this.options,this.selectKey)
+        }
+
+      }
       this.$emit('loaded')
     },
     bpmnLoadError(err){
@@ -226,9 +233,6 @@ export default {
     },
     handleViewChange(event){
       this.$emit('viewChange',event)
-    },
-    timeDataLoaded(selectKey){
-      this.selectKey = selectKey
     },
     itemClick(item){
       this.$emit('timeItemClick',item)
@@ -334,8 +338,11 @@ export default {
 }
 </style>
 <style>
-.bpmn-viewer-canvas .ant-spin-container{
+.dpark-bbpmn-viewer .bpmn-viewer-canvas{
   width: 100% !important;
   height: 100% !important;
+}
+.dpark-bpmn-viewer .smooth .viewport{
+  transition: transform 0.8s;
 }
 </style>

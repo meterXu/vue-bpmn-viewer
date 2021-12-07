@@ -132,9 +132,3 @@ export default {
   width: 100%;
 }
 </style>
-<style>
-.dpark-bpmn-viewer .djs-overlay-container{
-  transition: transform 2s;
-
-}
-</style>

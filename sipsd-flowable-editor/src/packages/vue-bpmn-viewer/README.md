@@ -118,8 +118,8 @@ export default {
 |log|是否记录使用日志|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
 |zoomScroll|是否滚动缩放|false|
-|track|是否追踪高亮|false|
-|focus|是否聚焦居中|false|
+|track|时间轴和流程图是否追踪高亮|false|
+|focus|流程图是否聚焦居中|false|
 
 **说明**
 1. 组件可以纯前端使用，也可以配合沃壤平台工作流引擎进行使用

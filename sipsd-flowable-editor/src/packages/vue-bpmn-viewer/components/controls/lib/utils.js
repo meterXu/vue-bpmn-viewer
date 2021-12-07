@@ -325,9 +325,10 @@ function utils() {
     }
     this.setView = function (bpmnViewer, options,key) {
         if (bpmnViewer) {
+            bpmnViewer._container.classList.add('smooth')
             let canvas = bpmnViewer.get('canvas')
             if(options.focus&&key){
-                this.track(bpmnViewer,canvas,options,key)
+                this.focus(bpmnViewer,canvas,options,key)
             }
             // 居中
             else if (options.fit) {
@@ -339,9 +340,13 @@ function utils() {
                     this.setCenter(canvas,options)
                 }
             }
+            setTimeout(()=>{
+                bpmnViewer._container.classList.remove('smooth')
+            },1000)
+
         }
     }
-    this.track=function(bpmnViewer,canvas,options,key){
+    this.focus=function(bpmnViewer,canvas,options,key){
         const _container =bpmnViewer._container
         const taskObj = this.getTaskObj(_container,key)
         if(taskObj){
