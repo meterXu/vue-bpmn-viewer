@@ -33,6 +33,7 @@ export default {
   methods: {
     handleZoomReset() {
       utils.setView(this.bpmnViewer,this.options,this.selectKey)
+      this.$emit('zoomReset')
     },
     handleZoomIn() {
       if(this.bpmnViewer){

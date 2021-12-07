@@ -23,8 +23,8 @@
         </slot>
       </template>
       <template v-slot:right>
-        <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey"/>
-        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer"
+        <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" @zoomReset="zoomReset"/>
+        <BTimeLine ref="cBTimeLine" :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer"
                    @itemClick="itemClick"
         >
           <template v-slot="slotProps">
@@ -236,6 +236,9 @@ export default {
     },
     itemClick(item){
       this.$emit('timeItemClick',item)
+    },
+    zoomReset(){
+      this.$refs.cBTimeLine.scrollMove()
     }
   },
   mounted() {

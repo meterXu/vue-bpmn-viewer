@@ -39,7 +39,7 @@ export default {
   props:['timeData','bpmnViewer','options'],
   data(){
     return {
-      selectId:null,
+      selectItem:null,
       loadingInstance:null,
       oldStyle:{color:null,setline:false,user:null,shadow:false,stroke:false},
       highLight:[
@@ -51,19 +51,8 @@ export default {
   },
   watch:{
     timeData:{
-      handler(nv){
-        this.selectId=null
-        if(nv&&nv.length>0){
-          let lastData=nv[nv.length-1]
-          if(lastData.status!=='已办'&&this.options.focus&&this.$refs['bpmn-time-line']){
-            this.$nextTick(()=>{
-              this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
-            })
-            if(this.options.track){
-              this.selectId = lastData.id
-            }
-          }
-        }
+      handler(){
+        this.scrollMove()
       },
       immediate:true,
       deep:true
@@ -82,7 +71,7 @@ export default {
       else{
         cls.push('timeLine-item-over-uned')
       }
-      if(this.selectId === item.id){
+      if(this.selectItem.id === item.id){
         cls.push(cls[1].replace('over','active'))
       }
       return cls
@@ -116,17 +105,17 @@ export default {
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
       const taskObj = utils.getTaskObj(this.bpmnViewer._container,item.taskDefinitionKey)
       if(taskObj){
-        this.oldStyle.color=taskObj.color
+        item.oldStyle = Object.assign({},this.oldStyle,{color:taskObj.color})
       }
       utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.highLight[type-1])
     },
     handleItemOut(item){
       utils.clearHighLight(this.bpmnViewer._container,item.taskDefinitionKey)
-      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.oldStyle)
+      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],item.oldStyle)
     },
     handleClick(item){
       if(this.options.track){
-        this.selectId = item.id
+        this.selectItem = item
       }
       utils.setView(this.bpmnViewer,this.options,item.taskDefinitionKey)
       this.$emit('itemClick',item)
@@ -140,6 +129,21 @@ export default {
         }
       }else if(obj.status==='待办'){
         return this.highLight[1].color
+      }
+    },
+    scrollMove(){
+      this.selectItem=null
+      if(this.timeData&&this.timeData.length>0){
+        let lastData=this.timeData[this.timeData.length-1]
+        if(lastData.status!=='已办'&&this.options.focus&&this.$refs['bpmn-time-line']){
+          this.$nextTick(()=>{
+            this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
+          })
+          if(this.options.track){
+            this.selectItem = lastData
+            this.handleItemOver(lastData)
+          }
+        }
       }
     }
   }
