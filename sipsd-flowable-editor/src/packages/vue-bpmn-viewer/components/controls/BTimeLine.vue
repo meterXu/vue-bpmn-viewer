@@ -1,21 +1,18 @@
 <template>
-  <div class="bpmn-time-line" :class="{'spin-center':data.length===0}" v-if="options.timeLine">
-    <div ref="bpmn-time-line" >
-      <div class="timeline" v-if="data.length>0">
-        <div class="timeline-item" v-for="item in data" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)">
+  <div ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':timeData.length===0}" v-if="options.timeLine">
+    <div>
+      <div class="timeline" v-if="timeData.length>0">
+        <div class="timeline-item" v-for="item in timeData" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)">
           <div class="timeline-item__tail"></div>
           <div class="timeline-item__node" :style="{'background-color': getTimeLineColor(item)}"></div>
           <div class="timeline-item__wrapper">
             <div class="timeline-item__timestamp">
               2021-06-10 10:23:53
             </div>
-            <div :class="['timeLine-item-over',
-              item.status==='已办'?
-            (item.approveType==='驳回'?'timeLine-item-over-turn':'timeLine-item-over-ed')
-            :'timeLine-item-over-uned']">
-              <div @mouseover="handleItemOver(item,item.taskDefinitionKey)"
-                   @mouseout="handleItemOut(item.taskDefinitionKey)"
-                   @click="handleClick(item.taskDefinitionKey)">
+            <div :class="highLightClass(item)">
+              <div @mouseover="handleItemOver(item)"
+                   @mouseout="handleItemOut(item)"
+                   @click="handleClick(item)">
                 <slot v-bind:item="item">
                   <p>{{item.taskName}}</p>
                   <p>审批类型：{{item.approveType}}</p>
@@ -39,9 +36,10 @@ import ms from 'pretty-ms'
 import moment from 'moment'
 export default {
   name: "BTimeLine",
-  props:['data','bpmnViewer','options'],
+  props:['timeData','bpmnViewer','options'],
   data(){
     return {
+      selectId:null,
       loadingInstance:null,
       oldStyle:{color:'#3296fa',setline:false,user:undefined,shadow:false,stroke:false},
       highLight:[
@@ -51,7 +49,41 @@ export default {
       ]
     }
   },
+  watch:{
+    timeData:{
+      handler(nv){
+        if(nv&&nv.length>0){
+          let lastData=nv[nv.length-1]
+          if(lastData.status!=='已办'){
+            this.handleClick(lastData)
+            this.$nextTick(()=>{
+              this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
+            })
+          }
+        }
+      },
+      immediate:true,
+      deep:true
+    }
+  },
   methods:{
+    highLightClass(item){
+      let cls = ['timeLine-item-over']
+      if(item.status==='已办'){
+        if(item.approveType==='驳回'){
+          cls.push('timeLine-item-over-turn')
+        }else{
+          cls.push('timeLine-item-over-ed')
+        }
+      }
+      else{
+        cls.push('timeLine-item-over-uned')
+      }
+      if(this.selectId === item.id){
+        cls.push(cls[1].replace('over','active'))
+      }
+      return cls
+    },
     fmtDate(dt){
       if(dt){
         if(typeof(dt)==='string'){
@@ -77,29 +109,30 @@ export default {
         return '-'
       }
     },
-    handleItemOver(item,taskId){
+    handleItemOver(item){
       const type = item.status==='已办'?(item.approveType==='审批'?1:3):2
-      const taskObj = utils.getTaskObj(this.bpmnViewer._container,taskId)
+      const taskObj = utils.getTaskObj(this.bpmnViewer._container,item.taskDefinitionKey)
       if(taskObj){
         this.oldStyle.color=taskObj.color
       }
-      utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.highLight[type-1])
+      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.highLight[type-1])
     },
-    handleItemOut(taskId){
-      utils.clearHighLight(this.bpmnViewer._container,taskId)
-      utils.setTaskHighlight(this.bpmnViewer._container,[taskId],this.oldStyle)
+    handleItemOut(item){
+      utils.clearHighLight(this.bpmnViewer._container,item.taskDefinitionKey)
+      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.oldStyle)
     },
-    handleClick(taskId){
-      utils.track(this.bpmnViewer,this.bpmnViewer.get('canvas'),this.options,taskId)
+    handleClick(item){
+      this.selectId = item.id
+      utils.track(this.bpmnViewer,this.bpmnViewer.get('canvas'),this.options,item.taskDefinitionKey)
     },
-    getTimeLineColor(data){
-      if(data.status==='已办'){
-        if(data.approveType==='审批'){
+    getTimeLineColor(obj){
+      if(obj.status==='已办'){
+        if(obj.approveType==='审批'){
           return this.highLight[0].color
-        }else if(data.approveType==='驳回'){
+        }else if(obj.approveType==='驳回'){
           return this.highLight[2].color
         }
-      }else if(data.status==='待办'){
+      }else if(obj.status==='待办'){
         return this.highLight[1].color
       }
     }
@@ -144,21 +177,27 @@ export default {
   padding: 5px 8px;
   transition: background .1s;
   text-align: left;
+  border-radius: 5px;
 }
 .timeLine-item-over-ed:hover{
   background: rgba(91,193,75,0.8);
-  color: #fff;
-  border-radius: 5px;
+}
+.timeLine-item-active-ed{
+  background: rgba(91,193,75,0.8);
 }
 .timeLine-item-over-turn:hover{
   background: rgba(255,0,0,0.8);
-  border-radius: 5px;
+}
+.timeLine-item-active-turn{
+  background: rgba(255,0,0,0.8);
 }
 .timeLine-item-over-uned:hover{
   background: rgba(245,132,44,0.8);
-  color: #fff;
-  border-radius: 5px;
 }
+.timeLine-item-active-uned{
+  background: rgba(245,132,44,0.8);
+}
+.timeLine-item-active-ed,.timeLine-item-active-turn,.timeLine-item-active-uned,
 .timeLine-item-over-uned:hover p,.timeLine-item-over-ed:hover p,.timeLine-item-over-turn:hover p{
   color: #fff;
 }

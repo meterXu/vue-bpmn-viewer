@@ -24,7 +24,7 @@
       </template>
       <template v-slot:right>
         <BTZoom :options="myOptions"  :bpmnViewer="bpmnViewer" @zoomReset="zoomReset" ref="cBTZoom"/>
-        <BTimeLine :options="myOptions" :data="taskData" :bpmnViewer="bpmnViewer">
+        <BTimeLine :options="myOptions" :timeData="taskData" :bpmnViewer="bpmnViewer">
           <template v-slot="slotProps">
             <slot name="time" v-bind:item="slotProps.item"></slot>
           </template>
@@ -38,7 +38,6 @@
 import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeBlue from './blue/index.js'
 import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
-import axios from 'axios'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
 import zoomScroll from './controls/lib/zoomScroll'
@@ -186,17 +185,12 @@ export default {
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      await this.getTaskList()
       this.toCenter()
+      await this.getTaskList()
       this.$emit('loaded')
     },
     toCenter(){
-      if(this.taskData&&this.taskData.length>0){
-        utils.setView(this.bpmnViewer,this.myOptions,this.taskData[this.taskData.length-1].taskDefinitionKey)
-      }else {
-        utils.setView(this.bpmnViewer,this.myOptions,"")
-      }
-
+      utils.setView(this.bpmnViewer,this.myOptions)
     },
     bpmnLoadError(err){
       utils.error({ title: '流程图加载失败！',

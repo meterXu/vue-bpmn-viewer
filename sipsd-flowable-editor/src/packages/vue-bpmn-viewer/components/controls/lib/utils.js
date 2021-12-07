@@ -348,7 +348,7 @@ function utils() {
             let matrix =taskObj.container.transform.baseVal[0].matrix
             let x = canvas.viewbox().inner.width/2 - matrix.e
             let y = canvas.viewbox().inner.height/2 - matrix.f
-            this.setCenter(canvas,options,{x:x,y:y})
+            this.setCenter(canvas,options,{x,y})
         }else{
             this.setCenter(canvas,options)
         }
