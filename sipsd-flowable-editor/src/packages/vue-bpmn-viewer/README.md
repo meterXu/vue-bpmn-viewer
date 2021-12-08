@@ -1,5 +1,5 @@
 # @dpark/vue-bpmn-viewer
-> 沃壤平台工作流引擎执行器组件
+> 沃壤工作流引擎执行器
 
 ![sipsd-flowable-editor](http://58.210.9.133/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
@@ -154,27 +154,12 @@ export default {
       <p>{{slotProps.item.taskName}}</p>
       <p>审批类型：{{slotProps.item.approveType}}</p>
       <p>状态：{{slotProps.item.status}}</p>
-      <p v-if="slotProps.item.status==='已办'">持续时间：{{timeFormat(slotProps.item.duration)}}</p>
-      <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>
       <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
   </template>
 </VueBpmnViewer>
 <script>
-import ms from 'pretty-ms'
 export default {
   methods:{
-    timeFormat(s){
-      if(s){
-        return ms(s*1000)
-            .replace(/ -/g,'')
-            .replace('d','天')
-            .replace('h','小时')
-            .replace('m','分')
-            .replace('s','秒')
-      }else{
-        return '-'
-      }
-    }
   }
 }
 </script>
