@@ -2,12 +2,12 @@
   <div ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':timeData.length===0}" v-if="options.timeLine">
     <div>
       <div class="timeline" v-if="timeData.length>0">
-        <div class="timeline-item" v-for="item in timeData" :key="item.id" :color="getTimeLineColor(item)" :timestamp="fmtDate(item.startTime)">
+        <div class="timeline-item" v-for="item in timeData" :key="item.id" :color="getTimeLineColor(item)">
           <div class="timeline-item__tail"></div>
           <div class="timeline-item__node" :style="{'background-color': getTimeLineColor(item)}"></div>
           <div class="timeline-item__wrapper">
             <div class="timeline-item__timestamp">
-              2021-06-10 10:23:53
+              {{fmtDate(item.startTime)}}
             </div>
             <div :class="highLightClass(item)">
               <div @mouseover="handleItemOver(item)"
