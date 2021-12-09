@@ -23,10 +23,9 @@
           </FormItem>
         </Col>
       </Row>
-
     </FormItem>
-    <FormItem label="">
-      <pre><code class="language-javascript" v-html="desc" style="min-height: 200px;max-height: 400px;"></code></pre>
+    <FormItem label="调用结果">
+       <pre><code class="language-json" v-html="desc" style="min-height: 200px;max-height: 400px;"></code></pre>
     </FormItem>
     <FormItem class="testBtn">
       <Button type="primary" @click="submitForm('ruleForm')">测试</Button>
@@ -36,20 +35,19 @@
 
 <script>
 import 'highlight.js/lib/common';
-import 'highlight.js/styles/atom-one-light.css';
+import 'highlight.js/styles/agate.css';
 import hljs from 'highlight.js/lib/core';
 import axios from "axios";
-import { Input,Button,Form,FormItem,Col,Row } from 'element-ui';
+import json from 'highlight.js/lib/languages/json.js'
+import { Input,Button,Form,FormItem,Col,Row,Collapse,CollapseItem } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
-
-
-
+hljs.registerLanguage('json', json);
 export default {
   name: "VueProcessTestTool",
   props:{
     baseApi:{type:String,required:false},
   },
-  components: {Input,Button,Form,FormItem,Col,Row},
+  components: {Input,Button,Form,FormItem,Col,Row,Collapse,CollapseItem},
   data() {
     return {
       loading: false,
@@ -68,9 +66,6 @@ export default {
         ],
       }
     };
-  },
-  mounted() {
-    hljs.highlightAll()
   },
   methods: {
     submitForm(formName) {
@@ -94,6 +89,9 @@ export default {
           axios.post(this.baseApi,parmas).then(res=>{
             if(res.data) {
               this.desc = JSON.stringify(res.data,null, 2)
+              this.$nextTick(()=>{
+                hljs.highlightAll()
+              })
             }
           }).catch(err=>{
             this.$message.error(err)
@@ -107,11 +105,14 @@ export default {
       this.variableArr.push({VariableName:'', variableNum:'',key: Date.now()})
     },
     removeVariable(item) {
-      var index = this.variableArr.indexOf(item)
+      let index = this.variableArr.indexOf(item)
       if (index !== -1) {
         this.variableArr.splice(index, 1)
       }
     }
+  },
+  mounted() {
+    hljs.highlightAll()
   }
 }
 </script>

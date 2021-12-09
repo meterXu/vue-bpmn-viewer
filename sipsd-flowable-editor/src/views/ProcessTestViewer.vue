@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       form:{
-        baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/tool/testProcess'
+        baseApi:'http://192.168.75.13:9001/sipsd-flow-modeler/tool/testProcess'
       }
     }
   }
