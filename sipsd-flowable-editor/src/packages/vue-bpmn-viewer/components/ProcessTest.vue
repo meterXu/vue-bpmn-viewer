@@ -38,7 +38,6 @@
 import 'highlight.js/lib/common';
 import 'highlight.js/styles/atom-one-light.css';
 import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript.js';
 import axios from "axios";
 import { Input,Button,Form,FormItem,Col,Row } from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css'
@@ -79,38 +78,28 @@ export default {
         if (valid) {
           this.loading = true
           let variable = {}
-          let isVariableName = false
-          this.variableArr.filter(i=>{
+          this.variableArr.map(i=>{
             if (i.VariableName) {
-              variable[i.VariableName]=i.variableNum.split(',')
-            } else {
-              this.$message.error('变量名称不能为空')
-              isVariableName = true
-              return false;
-
+              if(i.variableNum.indexOf('{')>=0 || i.variableNum.indexOf('[')>=0){
+                variable[i.VariableName]=JSON.parse(i.variableNum)
+              }else {
+                variable[i.VariableName]=i.variableNum
+              }
             }
           })
-          if(isVariableName) {
-            this.loading = false
-            return false;
-          }
           let parmas = Object.assign({
             systemSn: 'flow',
             variables: variable
           },this.ruleForm)
           axios.post(this.baseApi,parmas).then(res=>{
-            if(res.data.data) {
-              this.desc = JSON.stringify(res.data.data,null, 2)
-            } else {
-              this.$message.error(res.data.message)
+            if(res.data) {
+              this.desc = JSON.stringify(res.data,null, 2)
             }
-            this.loading = false
           }).catch(err=>{
-            this.loading = false
             this.$message.error(err)
+          }).finally(()=>{
+            this.loading = false
           })
-        } else {
-          return false;
         }
       });
     },

@@ -1,10 +1,19 @@
 <template>
-  <div class="process">
-    <div style="margin-bottom: 20px">
-      baseAPI：<el-input v-model="baseApi"></el-input>
-    </div>
-
-    <ProcessTest :baseApi="baseApi"></ProcessTest>
+  <div style="height: 100%;padding: 10px">
+    <el-container style="height: 100%">
+      <el-aside width="300px">
+        <el-form :model="form" ref="form">
+          <el-form-item label="baseApi">
+            <el-input type="textarea" :rows="4" v-model="form.baseApi"></el-input>
+          </el-form-item>
+        </el-form>
+      </el-aside>
+      <el-main class="my-main">
+        <div class="container">
+          <ProcessTest :baseApi="form.baseApi"></ProcessTest>
+        </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -15,15 +24,16 @@ export default {
   components: {ProcessTest},
   data() {
     return {
-      baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/tool/testProcess'
+      form:{
+        baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/tool/testProcess'
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.process {
-  width: 600px;
-  margin: 20px auto;
+.container{
+  border-left: 1px solid #e0e0e0;
 }
 </style>
