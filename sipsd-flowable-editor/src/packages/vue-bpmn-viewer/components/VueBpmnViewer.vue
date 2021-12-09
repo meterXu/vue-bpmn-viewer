@@ -203,7 +203,7 @@ export default {
       window.bpmnViewer =  this.bpmnViewer
       utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
-      if(this.taskData&&this.taskData){
+      if(this.taskData&&this.taskData.length>0){
         let lastData = this.taskData[this.taskData.length-1]
         if(lastData.status!=='已办'&&this.myOptions.focus){
           this.selectKey = lastData.taskDefinitionKey

@@ -1,11 +1,11 @@
 <template>
   <div id="bpmn">
-    <VueBpmnViewer ref="bpmnObj" :baseApi="baseApi"
+    <VueBpmnViewer ref="bpmnObj"
+                   :baseApi="baseApi"
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
-                   :static="static"
-                   :options="{zoom,timeLine,fit,setline}">
+                   :options="{zoom,timeLine,fit,setline,static}">
     </VueBpmnViewer>
   </div>
 </template>
@@ -31,25 +31,8 @@ export default {
       log:false
     }
   },
-  beforeRouteUpdate(to, from, next) {
-    this.type = parseInt(to.query.type)
-    this.instanceId = to.query.instanceId
-    this.xmlId = to.query.xmlId
+  created() {
     this.baseApi = this.$project_bpmn.variable.baseApi
-    this.zoom = (to.query.zoom||'true')==='true'
-    this.timeLine = (to.query.timeLine||'true')==='true'
-    this.setline = (to.query.setline||'false')==='true'
-    this.fit = (to.query.fit||'false')==='true'
-    this.static = (to.query.static||'false')==='true'
-    if(this.type===1){
-      this.timeLine = false
-    }
-    if(this.$refs.bpmnObj){
-      this.$refs.bpmnObj.reload()
-    }
-    next()
-  },
-  mounted() {
     this.type = parseInt(this.$route.query.type)
     this.instanceId = this.$route.query.instanceId
     this.xmlId = this.$route.query.xmlId
@@ -61,9 +44,6 @@ export default {
     this.baseApi = this.$project_bpmn.variable.baseApi
     if(this.type===1){
       this.timeLine = false
-    }
-    if(this.$refs.bpmnObj){
-      this.$refs.bpmnObj.reload()
     }
   }
 }

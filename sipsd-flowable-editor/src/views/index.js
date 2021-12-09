@@ -1,5 +1,4 @@
 import Viewer from './Viewer.vue'
-import FlowableViewer from "./FlowableViewer";
 import StaticViewer from "./StaticViewer";
 import ProcessTestViewer from "./ProcessTestViewer";
 export default [
@@ -10,14 +9,6 @@ export default [
       title: 'viewer'
     },
     component: Viewer
-  },
-  {
-    path: '/bpmn/flowableViewer',
-    name: 'bpmn-flowableViewer',
-    meta: {
-      title: 'flowableViewer'
-    },
-    component: FlowableViewer
   },
   {
     path: '/bpmn/staticViewer',
