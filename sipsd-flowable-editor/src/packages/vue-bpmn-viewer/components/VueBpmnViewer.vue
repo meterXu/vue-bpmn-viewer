@@ -38,7 +38,7 @@
 
 <script>
 import VueBpmn from './bpmn/VueBpmn.vue';
-import bpmnThemeBlue from './blue/index.js'
+import bpmnThemeBlue from './styl/default/index.js'
 import {BTimeLine,utils,BTLayout,BTZoom} from './controls/index.js'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -53,6 +53,7 @@ export default {
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
+    styl:{type:Object,default(){return {theme:null,stylMap:null}}},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
@@ -119,6 +120,17 @@ export default {
         ]
       }
       return _option;
+    },
+    myStyl(){
+      let _styl =  {
+        theme:'default',
+        stylMap:{
+          default:bpmnThemeBlue
+        }
+      }
+      _styl.theme = this.styl.theme||_styl.theme
+      _styl.stylMap = Object.assign(_styl.stylMap,this.styl.stylMap)
+      return _styl
     },
     xml(){
       if(this.source){
