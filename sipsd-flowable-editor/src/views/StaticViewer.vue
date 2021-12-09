@@ -125,7 +125,7 @@ export default {
         //     "          \"status\": \"已办\"\n" +
         //     "        }\n" +
         //     "      ]",
-        options: '{"zoom":true,"timeLine":true,"fit":false,"setline":false,"scrollZoom":true,"static":false,"track":true,"focus":true}'
+        options: '{"zoom":true,"timeLine":true,"fit":false,"setline":false,"scrollZoom":true,"static":false,"track":true,"focus":true,"log":false}'
       }
     }
   },
