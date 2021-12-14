@@ -69,9 +69,7 @@ export default {
       showBpmn:false,
       bpmnViewer:null,
       bpmnOptions:{
-        additionalModules:[
-            bpmnThemeBlue
-        ]
+        additionalModules:[]
       },
       colors:{
         blue:['#aaaaaa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#8f8f8f','#aaa','#444'],
@@ -111,12 +109,12 @@ export default {
       }
       if(_option.scrollZoom){
         this.bpmnOptions.additionalModules=[
-          bpmnThemeBlue,
+          this.myStyl.stylMap[this.myStyl.theme],
           zoomScroll
         ]
       }else{
         this.bpmnOptions.additionalModules=[
-          bpmnThemeBlue
+          this.myStyl.stylMap[this.myStyl.theme],
         ]
       }
       return _option;
