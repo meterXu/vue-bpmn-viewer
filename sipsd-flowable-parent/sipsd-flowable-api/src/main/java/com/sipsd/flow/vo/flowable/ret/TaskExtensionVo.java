@@ -174,6 +174,11 @@ public class TaskExtensionVo implements Serializable {
     private String overtime;
 
     /**
+     * 审批意见
+     */
+    private String comment;
+
+    /**
      * 挂起/激活 时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -476,5 +481,15 @@ public class TaskExtensionVo implements Serializable {
     public void setOvertime(String overtime)
     {
         this.overtime = overtime;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
     }
 }
