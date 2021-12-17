@@ -110,6 +110,11 @@ public class TaskVo implements Serializable {
      * 审批意见
      */
     private String comment;
+
+    /**
+     * 用户名称
+     */
+    private String realName;
     
     /**
      * 表单key
@@ -287,5 +292,15 @@ public class TaskVo implements Serializable {
     public void setComment(String comment)
     {
         this.comment = comment;
+    }
+
+    public String getRealName()
+    {
+        return realName;
+    }
+
+    public void setRealName(String realName)
+    {
+        this.realName = realName;
     }
 }

@@ -16,10 +16,11 @@
             t3.TASK_MAX_DAY_  as taskMaxDay,
             t3.TASK_DEF_KEY_  as taskDefinitionKey,
             t3.PROC_DEF_ID_ as processDefinitionId,
+            t5.DISPLAY_NAME_ as realName,
         <!-- 如果是挂起状态需要实时更改结束时间-->
             if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2,
             date_add(t3.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t3.SUSPENSION_TIME_, NOW())  SECOND),t3.END_TIME_ )  as endTime,
-            t5.ASSIGNEE_ as assignee,
+            t1.ASSIGNEE_ as assignee,
         <!-- 剩余时间-->
             if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_)
             ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t3.END_TIME_))  as restTime,
@@ -40,7 +41,7 @@
                 LEFT JOIN  act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_ and t1.EXECUTION_ID_ = t2.ID_
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
                 LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
-                LEFT JOIN  act_ru_task t5 ON t2.ID_ = t5.EXECUTION_ID_
+                LEFT JOIN  act_id_user t5 ON t1.ASSIGNEE_ = t5.ID_
         WHERE   t3.ID_  is not null
         <if test="null != processInstanceId and '' != processInstanceId ">
             and t1.PROC_INST_ID_ = #{processInstanceId}
@@ -69,6 +70,7 @@
             t3.TASK_DEF_KEY_ AS taskDefinitionKey,
             t3.PROC_DEF_ID_ AS processDefinitionId,
             t1.ASSIGNEE_ AS assignee,
+            t6.DISPLAY_NAME_ as realName,
             IF
                 (
                     t1.END_TIME_ IS NOT NULL,
@@ -138,6 +140,7 @@
                 LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
                 LEFT JOIN act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
                 LEFT JOIN act_hi_comment t5 ON T1.ID_ = t5.TASK_ID_ and t1.PROC_INST_ID_ = t5.PROC_INST_ID_
+                LEFT JOIN  act_id_user t6 ON t1.ASSIGNEE_ = t6.ID_
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId} and (t1.DELETE_REASON_ is null or t1.DELETE_REASON_ != 'MI_END')
     </select>
@@ -154,6 +157,7 @@
         t3.TASK_DEF_KEY_  as taskDefinitionKey,
         t3.PROC_DEF_ID_ as processDefinitionId,
         t1.ASSIGNEE_ as assignee,
+        t6.DISPLAY_NAME_ as realName,
         0 as restTime,
         TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
         t3.GROUP_ID_ as groupId,
@@ -176,6 +180,7 @@
         LEFT JOIN act_hi_procinst t2 ON t3.PROC_INST_ID_ = t2.PROC_INST_ID_
         LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
         LEFT JOIN act_hi_comment t5 ON T1.ID_ = t5.TASK_ID_ and t1.PROC_INST_ID_ = t5.PROC_INST_ID_
+        LEFT JOIN  act_id_user t6 ON t1.ASSIGNEE_ = t6.ID_
         WHERE
         <!--MI_END指的是这条记录是会签的，比如两个人会签，只要一个人通过就可以，那么另外一条就不让他显示了-->
         <!--TODO 任务其实分为原始审批人是谁-owner，转办过后会变成assignee当前审批人是谁，这个是通过act_hi_taskinst中的parent_task_id字段有无赖判断的-->
