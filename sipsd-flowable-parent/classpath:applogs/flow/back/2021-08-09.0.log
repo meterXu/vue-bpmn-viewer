@@ -1,0 +1,595 @@
+2021-08-09 08:46:47.015 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration - Bootstraping jasypt-string-boot auto configuration in context: application-1
+2021-08-09 08:46:47.017 [main] INFO  com.sipsd.flow.FlowManagerApplication - The following profiles are active: dev
+2021-08-09 08:46:49.009 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=7691943b-24ce-3fa5-9e12-92fda818e0f2
+2021-08-09 08:46:49.028 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-08-09 08:46:49.047 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application-dev.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.048 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.049 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.049 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:46:49.106 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure$$EnhancerBySpringCGLIB$$460c5f9c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.107 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2021-08-09 08:46:49.158 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-08-09 08:46:49.168 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.172 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration' of type [com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.195 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'statFilter' of type [com.alibaba.druid.filter.stat.StatFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.230 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-08-09 08:46:49.230 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-08-09 08:46:49.520 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2021-08-09 08:46:49.521 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.525 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$$EnhancerBySpringCGLIB$$c0d46534] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.533 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.535 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.535 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration$$EnhancerBySpringCGLIB$$d9610299] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.547 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.datasource.DataSourceTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.548 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionConfig' of type [com.sipsd.flow.config.TransactionConfig$$EnhancerBySpringCGLIB$$4b730ad3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.600 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$c50e3264] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.612 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$2c606a2a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.636 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.639 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@3be369fc' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.640 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$e9e2d516] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.646 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration' of type [org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration$$EnhancerBySpringCGLIB$$4e6eae28] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.655 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'flowable.common.app-org.flowable.ui.common.properties.FlowableCommonAppProperties' of type [org.flowable.ui.common.properties.FlowableCommonAppProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.657 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.660 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$f37ed2c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.663 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.664 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:49.681 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$487a6d27] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:46:50.077 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9001 (http)
+2021-08-09 08:46:50.106 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-08-09 08:46:50.107 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-08-09 08:46:50.282 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring embedded WebApplicationContext
+2021-08-09 08:46:50.282 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3241 ms
+2021-08-09 08:46:50.471 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 08:46:50.471 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 08:46:50.482 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@7957aa57
+2021-08-09 08:46:50.763 [main] INFO  o.f.s.b.f.FormEngineAutoConfiguration$$EnhancerBySpringCGLIB$$f6f5247d - No deployment resources were found for autodeployment
+2021-08-09 08:46:51.110 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Found 2 Engine Configurators in total:
+2021-08-09 08:46:51.118 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:46:51.118 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:46:51.118 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:46:51.155 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:46:52.165 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:46:52.236 [main] INFO  org.flowable.idm.engine.impl.IdmEngineImpl - IdmEngine default created
+2021-08-09 08:46:52.237 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:46:53.069 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 08:46:53.075 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 08:46:53.077 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 08:46:53.095 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 08:46:53.997 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 08:46:53.998 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 08:46:53.999 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 08:46:53.999 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 08:46:54.014 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 08:46:54.015 [main] INFO  org.flowable.form.engine.impl.FormEngineImpl - FormEngine default created
+2021-08-09 08:46:54.051 [main] INFO  org.flowable.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2021-08-09 08:46:54.055 [main] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 08:46:54.056 [Thread-63] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
+2021-08-09 08:46:54.056 [Thread-62] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2021-08-09 08:46:54.056 [Thread-61] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2021-08-09 08:46:54.090 [main] INFO  org.flowable.engine.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
+2021-08-09 08:46:54.800 [main] INFO  o.s.b.a.endpoint.web.ServletEndpointRegistrar - Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2021-08-09 08:47:15.937 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 08:47:15.937 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 08:47:15.975 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 08:47:15.975 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 08:47:16.592 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 21 endpoint(s) beneath base path '/actuator'
+2021-08-09 08:47:16.987 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 08:47:16.989 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 08:47:16.989 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 08:47:16.991 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 08:47:17.009 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 08:47:17.010 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 08:47:17.011 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 08:47:17.011 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 08:47:17.016 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 08:47:17.044 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-08-09 08:47:17.093 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 08:47:17.093 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 08:47:17.278 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2021-08-09 08:47:17.993 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2021-08-09 08:47:18.294 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-08-09 08:47:18.314 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 2 custom documentation plugin(s)
+2021-08-09 08:47:18.389 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 08:47:18.612 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 08:47:18.689 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 08:47:18.689 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: addUserGroupUsingPOST_1
+2021-08-09 08:47:18.690 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: deleteUsingPOST_1
+2021-08-09 08:47:18.694 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getPagerModelUsingGET_1
+2021-08-09 08:47:18.704 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: saveUsingPOST_1
+2021-08-09 08:47:18.716 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 08:47:18.717 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 08:47:18.747 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getBackNodesByProcessInstanceIdUsingGET_1
+2021-08-09 08:47:18.802 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 08:47:18.816 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramUsingGET_1
+2021-08-09 08:47:18.844 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramByModelKeyUsingGET_1
+2021-08-09 08:47:18.928 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'Flowable IDM App API Servlet'
+2021-08-09 08:47:18.928 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'Flowable IDM App API Servlet'
+2021-08-09 08:47:19.082 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 154 ms
+2021-08-09 08:47:19.083 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9001 (http) with context path '/sipsd-flow-modeler'
+2021-08-09 08:47:19.087 [main] INFO  com.sipsd.flow.FlowManagerApplication - Started FlowManagerApplication in 53.71 seconds (JVM running for 60.586)
+2021-08-09 08:47:19.656 [RMI TCP Connection(14)-192.168.75.5] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 08:47:19.657 [RMI TCP Connection(14)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-08-09 08:47:19.677 [RMI TCP Connection(14)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 20 ms
+2021-08-09 08:47:24.104 [main] INFO  com.sipsd.flow.FlowManagerApplication - 
+----------------------------------------------------------
+	Application Jeecg-Boot is running! Access URLs:
+	Local: 		http://localhost:9001/sipsd-flow-modeler/
+	External: 	http://192.168.75.5:9001/sipsd-flow-modeler/
+	DOC-UI: 	http://192.168.75.5:9001/sipsd-flow-modeler/doc.html
+----------------------------------------------------------
+2021-08-09 08:54:00.739 [http-nio-9001-exec-1] ERROR com.sipsd.flow.exception.SipsdBootExceptionHandler - Required request body is missing: public com.sipsd.cloud.common.core.util.Result<java.lang.String> com.sipsd.flow.rest.api.ApiFormDetailReource.turnTask(com.sipsd.flow.vo.flowable.TurnTaskVo)
+org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.sipsd.cloud.common.core.util.Result<java.lang.String> com.sipsd.flow.rest.api.ApiFormDetailReource.turnTask(com.sipsd.flow.vo.flowable.TurnTaskVo)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.readWithMessageConverters(RequestResponseBodyMethodProcessor.java:160)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor.resolveArgument(RequestResponseBodyMethodProcessor.java:130)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:126)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:167)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:134)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:104)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:892)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:797)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1039)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:908)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:660)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:96)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at com.alibaba.druid.support.http.WebStatFilter.doFilter(WebStatFilter.java:123)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.web.trace.servlet.HttpTraceFilter.doFilterInternal(HttpTraceFilter.java:88)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.filterAndRecordMetrics(WebMvcMetricsFilter.java:114)
+	at org.springframework.boot.actuate.metrics.web.servlet.WebMvcMetricsFilter.doFilterInternal(WebMvcMetricsFilter.java:104)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:109)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:853)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1587)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+2021-08-09 08:56:53.533 [Thread-116] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-08-09 08:56:53.549 [Thread-116] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 08:56:53.549 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-08-09 08:56:53.549 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-08-09 08:56:53.549 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-08-09 08:56:53.555 [Thread-116] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2021-08-09 08:57:24.018 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration - Bootstraping jasypt-string-boot auto configuration in context: application-1
+2021-08-09 08:57:24.019 [main] INFO  com.sipsd.flow.FlowManagerApplication - The following profiles are active: dev
+2021-08-09 08:57:25.543 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=7691943b-24ce-3fa5-9e12-92fda818e0f2
+2021-08-09 08:57:25.557 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-08-09 08:57:25.573 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-08-09 08:57:25.573 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:57:25.573 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:57:25.573 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.573 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.574 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 08:57:25.574 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application-dev.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.574 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.574 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.574 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 08:57:25.618 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure$$EnhancerBySpringCGLIB$$c0ae4e39] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.620 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2021-08-09 08:57:25.661 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-08-09 08:57:25.669 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.672 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration' of type [com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.691 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'statFilter' of type [com.alibaba.druid.filter.stat.StatFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.720 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-08-09 08:57:25.720 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-08-09 08:57:25.950 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2021-08-09 08:57:25.950 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.953 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$$EnhancerBySpringCGLIB$$3b7653d1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.959 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.960 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.960 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration$$EnhancerBySpringCGLIB$$5402f136] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.970 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.datasource.DataSourceTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:25.971 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionConfig' of type [com.sipsd.flow.config.TransactionConfig$$EnhancerBySpringCGLIB$$c614f970] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.013 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$3fb02101] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.025 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$a70258c7] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.042 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.044 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@71f4aeb6' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.045 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$6484c3b3] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.050 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration' of type [org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration$$EnhancerBySpringCGLIB$$c9109cc5] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.057 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'flowable.common.app-org.flowable.ui.common.properties.FlowableCommonAppProperties' of type [org.flowable.ui.common.properties.FlowableCommonAppProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.059 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.062 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$89d9dbc9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.064 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.065 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.079 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$c31c5bc4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 08:57:26.389 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9001 (http)
+2021-08-09 08:57:26.411 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-08-09 08:57:26.411 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-08-09 08:57:26.539 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring embedded WebApplicationContext
+2021-08-09 08:57:26.539 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2501 ms
+2021-08-09 08:57:26.714 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 08:57:26.714 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 08:57:26.723 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@4a7e469d
+2021-08-09 08:57:26.990 [main] INFO  o.f.s.b.f.FormEngineAutoConfiguration$$EnhancerBySpringCGLIB$$7197131a - No deployment resources were found for autodeployment
+2021-08-09 08:57:27.279 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Found 2 Engine Configurators in total:
+2021-08-09 08:57:27.279 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:57:27.279 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:57:27.280 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:57:27.300 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:57:28.044 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 08:57:28.085 [main] INFO  org.flowable.idm.engine.impl.IdmEngineImpl - IdmEngine default created
+2021-08-09 08:57:28.086 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 08:57:28.645 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 08:57:28.647 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 08:57:28.648 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 08:57:28.655 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 08:57:29.447 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 08:57:29.448 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 08:57:29.448 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 08:57:29.449 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 08:57:29.461 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 08:57:29.462 [main] INFO  org.flowable.form.engine.impl.FormEngineImpl - FormEngine default created
+2021-08-09 08:57:29.492 [main] INFO  org.flowable.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2021-08-09 08:57:29.495 [main] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 08:57:29.496 [Thread-58] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2021-08-09 08:57:29.496 [Thread-59] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
+2021-08-09 08:57:29.496 [Thread-57] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2021-08-09 08:57:29.522 [main] INFO  org.flowable.engine.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
+2021-08-09 08:57:30.084 [main] INFO  o.s.b.a.endpoint.web.ServletEndpointRegistrar - Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2021-08-09 08:57:51.022 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 08:57:51.022 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 08:57:51.057 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 08:57:51.057 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 08:57:51.467 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 21 endpoint(s) beneath base path '/actuator'
+2021-08-09 08:57:51.689 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 08:57:51.690 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 08:57:51.690 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 08:57:51.692 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 08:57:51.708 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 08:57:51.709 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 08:57:51.709 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 08:57:51.709 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 08:57:51.713 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 08:57:51.733 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-08-09 08:57:51.771 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 08:57:51.771 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 08:57:51.912 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2021-08-09 08:57:52.481 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2021-08-09 08:57:52.730 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-08-09 08:57:52.743 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 2 custom documentation plugin(s)
+2021-08-09 08:57:52.808 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 08:57:53.003 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 08:57:53.082 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 08:57:53.083 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: addUserGroupUsingPOST_1
+2021-08-09 08:57:53.084 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: deleteUsingPOST_1
+2021-08-09 08:57:53.087 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getPagerModelUsingGET_1
+2021-08-09 08:57:53.099 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: saveUsingPOST_1
+2021-08-09 08:57:53.111 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 08:57:53.113 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 08:57:53.142 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getBackNodesByProcessInstanceIdUsingGET_1
+2021-08-09 08:57:53.196 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 08:57:53.210 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramUsingGET_1
+2021-08-09 08:57:53.228 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramByModelKeyUsingGET_1
+2021-08-09 08:57:53.285 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'Flowable IDM App API Servlet'
+2021-08-09 08:57:53.285 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'Flowable IDM App API Servlet'
+2021-08-09 08:57:53.400 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 114 ms
+2021-08-09 08:57:53.401 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9001 (http) with context path '/sipsd-flow-modeler'
+2021-08-09 08:57:53.405 [main] INFO  com.sipsd.flow.FlowManagerApplication - Started FlowManagerApplication in 50.79 seconds (JVM running for 56.484)
+2021-08-09 08:57:53.924 [RMI TCP Connection(14)-192.168.75.5] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 08:57:53.924 [RMI TCP Connection(14)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-08-09 08:57:53.940 [RMI TCP Connection(14)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 16 ms
+2021-08-09 08:57:58.423 [main] INFO  com.sipsd.flow.FlowManagerApplication - 
+----------------------------------------------------------
+	Application Jeecg-Boot is running! Access URLs:
+	Local: 		http://localhost:9001/sipsd-flow-modeler/
+	External: 	http://192.168.75.5:9001/sipsd-flow-modeler/
+	DOC-UI: 	http://192.168.75.5:9001/sipsd-flow-modeler/doc.html
+----------------------------------------------------------
+2021-08-09 09:05:25.841 [Thread-110] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-08-09 09:05:25.851 [Thread-110] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 09:05:25.851 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-08-09 09:05:25.851 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-08-09 09:05:25.853 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-08-09 09:05:25.858 [Thread-110] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2021-08-09 09:05:55.623 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration - Bootstraping jasypt-string-boot auto configuration in context: application-1
+2021-08-09 09:05:55.623 [main] INFO  com.sipsd.flow.FlowManagerApplication - The following profiles are active: dev
+2021-08-09 09:05:57.127 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=7691943b-24ce-3fa5-9e12-92fda818e0f2
+2021-08-09 09:05:57.142 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application-dev.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.158 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.159 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.159 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:05:57.204 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure$$EnhancerBySpringCGLIB$$41642cc2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.206 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2021-08-09 09:05:57.248 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-08-09 09:05:57.256 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.259 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration' of type [com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.278 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'statFilter' of type [com.alibaba.druid.filter.stat.StatFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.307 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-08-09 09:05:57.307 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-08-09 09:05:57.549 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2021-08-09 09:05:57.549 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.553 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$$EnhancerBySpringCGLIB$$bc2c325a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.559 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.561 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.561 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration$$EnhancerBySpringCGLIB$$d4b8cfbf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.570 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.datasource.DataSourceTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.571 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionConfig' of type [com.sipsd.flow.config.TransactionConfig$$EnhancerBySpringCGLIB$$46cad7f9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.609 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$c065ff8a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.620 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$27b83750] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.638 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.640 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4cd51e4e' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.644 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$e53aa23c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.649 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration' of type [org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration$$EnhancerBySpringCGLIB$$49c67b4e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.656 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'flowable.common.app-org.flowable.ui.common.properties.FlowableCommonAppProperties' of type [org.flowable.ui.common.properties.FlowableCommonAppProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.657 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.660 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$a8fba52] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.662 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.663 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.677 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$43d23a4d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:05:57.981 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9001 (http)
+2021-08-09 09:05:58.003 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-08-09 09:05:58.003 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-08-09 09:05:58.138 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring embedded WebApplicationContext
+2021-08-09 09:05:58.138 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2495 ms
+2021-08-09 09:05:58.311 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 09:05:58.312 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 09:05:58.320 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@15549dd7
+2021-08-09 09:05:58.574 [main] INFO  o.f.s.b.f.FormEngineAutoConfiguration$$EnhancerBySpringCGLIB$$f24cf1a3 - No deployment resources were found for autodeployment
+2021-08-09 09:05:58.856 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Found 2 Engine Configurators in total:
+2021-08-09 09:05:58.857 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:05:58.857 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:05:58.857 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:05:58.878 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:05:59.617 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:05:59.657 [main] INFO  org.flowable.idm.engine.impl.IdmEngineImpl - IdmEngine default created
+2021-08-09 09:05:59.658 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:06:00.211 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 09:06:00.213 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 09:06:00.214 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 09:06:00.221 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 09:06:00.992 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 09:06:00.993 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 09:06:00.994 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 09:06:00.994 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 09:06:01.006 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 09:06:01.007 [main] INFO  org.flowable.form.engine.impl.FormEngineImpl - FormEngine default created
+2021-08-09 09:06:01.037 [main] INFO  org.flowable.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2021-08-09 09:06:01.040 [main] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 09:06:01.041 [Thread-59] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2021-08-09 09:06:01.041 [Thread-60] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2021-08-09 09:06:01.042 [Thread-61] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
+2021-08-09 09:06:01.066 [main] INFO  org.flowable.engine.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
+2021-08-09 09:06:01.631 [main] INFO  o.s.b.a.endpoint.web.ServletEndpointRegistrar - Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2021-08-09 09:06:22.648 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 09:06:22.648 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 09:06:22.695 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 09:06:22.695 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 09:06:23.122 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 21 endpoint(s) beneath base path '/actuator'
+2021-08-09 09:06:23.365 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 09:06:23.365 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 09:06:23.366 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 09:06:23.368 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 09:06:23.384 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 09:06:23.384 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 09:06:23.384 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 09:06:23.385 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 09:06:23.389 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 09:06:23.411 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-08-09 09:06:23.452 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 09:06:23.452 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 09:06:23.610 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2021-08-09 09:06:24.164 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2021-08-09 09:06:24.403 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-08-09 09:06:24.414 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 2 custom documentation plugin(s)
+2021-08-09 09:06:24.473 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 09:06:24.659 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 09:06:24.738 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 09:06:24.738 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: addUserGroupUsingPOST_1
+2021-08-09 09:06:24.739 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: deleteUsingPOST_1
+2021-08-09 09:06:24.743 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getPagerModelUsingGET_1
+2021-08-09 09:06:24.754 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: saveUsingPOST_1
+2021-08-09 09:06:24.764 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 09:06:24.766 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 09:06:24.794 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getBackNodesByProcessInstanceIdUsingGET_1
+2021-08-09 09:06:24.848 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 09:06:24.860 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramUsingGET_1
+2021-08-09 09:06:24.877 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramByModelKeyUsingGET_1
+2021-08-09 09:06:24.937 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'Flowable IDM App API Servlet'
+2021-08-09 09:06:24.937 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'Flowable IDM App API Servlet'
+2021-08-09 09:06:25.048 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 111 ms
+2021-08-09 09:06:25.049 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9001 (http) with context path '/sipsd-flow-modeler'
+2021-08-09 09:06:25.052 [main] INFO  com.sipsd.flow.FlowManagerApplication - Started FlowManagerApplication in 51.796 seconds (JVM running for 57.479)
+2021-08-09 09:06:25.569 [RMI TCP Connection(11)-192.168.75.5] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 09:06:25.569 [RMI TCP Connection(11)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-08-09 09:06:25.583 [RMI TCP Connection(11)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 14 ms
+2021-08-09 09:06:30.067 [main] INFO  com.sipsd.flow.FlowManagerApplication - 
+----------------------------------------------------------
+	Application Jeecg-Boot is running! Access URLs:
+	Local: 		http://localhost:9001/sipsd-flow-modeler/
+	External: 	http://192.168.75.5:9001/sipsd-flow-modeler/
+	DOC-UI: 	http://192.168.75.5:9001/sipsd-flow-modeler/doc.html
+----------------------------------------------------------
+2021-08-09 09:13:02.758 [Thread-112] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-08-09 09:13:02.769 [Thread-112] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 09:13:02.770 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-08-09 09:13:02.770 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-08-09 09:13:02.770 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-08-09 09:13:02.775 [Thread-112] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2021-08-09 09:13:31.428 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration - Bootstraping jasypt-string-boot auto configuration in context: application-1
+2021-08-09 09:13:31.429 [main] INFO  com.sipsd.flow.FlowManagerApplication - The following profiles are active: dev
+2021-08-09 09:13:33.049 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=7691943b-24ce-3fa5-9e12-92fda818e0f2
+2021-08-09 09:13:33.066 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.085 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-08-09 09:13:33.086 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application-dev.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.086 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.086 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.086 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-08-09 09:13:33.135 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure$$EnhancerBySpringCGLIB$$6fba289d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.137 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2021-08-09 09:13:33.184 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-08-09 09:13:33.194 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.198 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration' of type [com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.219 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'statFilter' of type [com.alibaba.druid.filter.stat.StatFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.248 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-08-09 09:13:33.248 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-08-09 09:13:33.472 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2021-08-09 09:13:33.472 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.476 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$$EnhancerBySpringCGLIB$$ea822e35] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.482 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.483 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.484 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration$$EnhancerBySpringCGLIB$$30ecb9a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.492 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.datasource.DataSourceTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.493 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionConfig' of type [com.sipsd.flow.config.TransactionConfig$$EnhancerBySpringCGLIB$$7520d3d4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.529 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$eebbfb65] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.540 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$560e332b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.559 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.561 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@7e451790' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.566 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$13909e17] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.574 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration' of type [org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration$$EnhancerBySpringCGLIB$$781c7729] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.588 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'flowable.common.app-org.flowable.ui.common.properties.FlowableCommonAppProperties' of type [org.flowable.ui.common.properties.FlowableCommonAppProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.591 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.594 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$38e5b62d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.597 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.599 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.624 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$72283628] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-08-09 09:13:33.970 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9001 (http)
+2021-08-09 09:13:33.992 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-08-09 09:13:33.993 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-08-09 09:13:34.147 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring embedded WebApplicationContext
+2021-08-09 09:13:34.148 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2701 ms
+2021-08-09 09:13:34.337 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 09:13:34.337 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 09:13:34.347 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@1e75af65
+2021-08-09 09:13:34.622 [main] INFO  o.f.s.b.f.FormEngineAutoConfiguration$$EnhancerBySpringCGLIB$$20a2ed7e - No deployment resources were found for autodeployment
+2021-08-09 09:13:34.931 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Found 2 Engine Configurators in total:
+2021-08-09 09:13:34.931 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:13:34.931 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:13:34.931 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:13:34.955 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:13:35.720 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-08-09 09:13:35.762 [main] INFO  org.flowable.idm.engine.impl.IdmEngineImpl - IdmEngine default created
+2021-08-09 09:13:35.762 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-08-09 09:13:36.332 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 09:13:36.334 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK
+2021-08-09 09:13:36.335 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 09:13:36.342 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 09:13:37.120 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 09:13:37.120 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 09:13:37.121 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.ACT_FO_DATABASECHANGELOG
+2021-08-09 09:13:37.121 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.ACT_FO_DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 09:13:37.134 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 09:13:37.135 [main] INFO  org.flowable.form.engine.impl.FormEngineImpl - FormEngine default created
+2021-08-09 09:13:37.166 [main] INFO  org.flowable.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2021-08-09 09:13:37.170 [main] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 09:13:37.170 [Thread-58] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2021-08-09 09:13:37.171 [Thread-60] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
+2021-08-09 09:13:37.171 [Thread-59] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2021-08-09 09:13:37.197 [main] INFO  org.flowable.engine.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
+2021-08-09 09:13:37.744 [main] INFO  o.s.b.a.endpoint.web.ServletEndpointRegistrar - Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2021-08-09 09:13:58.712 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 09:13:58.712 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 09:13:58.758 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-08-09 09:13:58.758 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-08-09 09:13:59.175 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 21 endpoint(s) beneath base path '/actuator'
+2021-08-09 09:13:59.411 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 09:13:59.411 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOGLOCK
+2021-08-09 09:13:59.412 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_v4_temp.DATABASECHANGELOGLOCK WHERE ID=1
+2021-08-09 09:13:59.414 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-08-09 09:13:59.429 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_v4_temp.DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-08-09 09:13:59.430 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 09:13:59.430 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_v4_temp.DATABASECHANGELOG
+2021-08-09 09:13:59.430 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_v4_temp.DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-08-09 09:13:59.434 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-08-09 09:13:59.457 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-08-09 09:13:59.499 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-08-09 09:13:59.499 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-08-09 09:13:59.651 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2021-08-09 09:14:00.210 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2021-08-09 09:14:00.444 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-08-09 09:14:00.456 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 2 custom documentation plugin(s)
+2021-08-09 09:14:00.515 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 09:14:00.688 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 09:14:00.760 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-08-09 09:14:00.761 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: addUserGroupUsingPOST_1
+2021-08-09 09:14:00.762 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: deleteUsingPOST_1
+2021-08-09 09:14:00.765 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getPagerModelUsingGET_1
+2021-08-09 09:14:00.775 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: saveUsingPOST_1
+2021-08-09 09:14:00.784 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 09:14:00.786 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-08-09 09:14:00.812 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getBackNodesByProcessInstanceIdUsingGET_1
+2021-08-09 09:14:00.859 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-08-09 09:14:00.871 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramUsingGET_1
+2021-08-09 09:14:00.888 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramByModelKeyUsingGET_1
+2021-08-09 09:14:00.945 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'Flowable IDM App API Servlet'
+2021-08-09 09:14:00.945 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'Flowable IDM App API Servlet'
+2021-08-09 09:14:01.058 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 113 ms
+2021-08-09 09:14:01.059 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9001 (http) with context path '/sipsd-flow-modeler'
+2021-08-09 09:14:01.062 [main] INFO  com.sipsd.flow.FlowManagerApplication - Started FlowManagerApplication in 51.136 seconds (JVM running for 56.852)
+2021-08-09 09:14:01.121 [RMI TCP Connection(15)-192.168.75.5] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-08-09 09:14:01.121 [RMI TCP Connection(15)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-08-09 09:14:01.133 [RMI TCP Connection(15)-192.168.75.5] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 12 ms
+2021-08-09 09:14:06.078 [main] INFO  com.sipsd.flow.FlowManagerApplication - 
+----------------------------------------------------------
+	Application Jeecg-Boot is running! Access URLs:
+	Local: 		http://localhost:9001/sipsd-flow-modeler/
+	External: 	http://192.168.75.5:9001/sipsd-flow-modeler/
+	DOC-UI: 	http://192.168.75.5:9001/sipsd-flow-modeler/doc.html
+----------------------------------------------------------
+2021-08-09 09:20:45.208 [Thread-110] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-08-09 09:20:45.220 [Thread-110] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-08-09 09:20:45.220 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-08-09 09:20:45.220 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-08-09 09:20:45.220 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-08-09 09:20:45.226 [Thread-110] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

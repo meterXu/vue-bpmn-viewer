@@ -9,6 +9,7 @@ import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
+import com.sipsd.flow.service.flowable.IFlowableCalendarService;
 import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.vo.flowable.ExtensionTaskQueryVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
@@ -20,6 +21,7 @@ import org.flowable.editor.language.json.converter.util.CollectionUtils;
 import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,6 +40,11 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 
 	@Autowired
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
+	@Autowired
+	private IFlowableCalendarService flowableCalendarService;
+
+	@Value("${sipsd.flowable.calendar:true}")
+	private boolean ifHoliday;
 
 	@Override
 	public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo)
@@ -108,7 +115,13 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						//算出结束日期
 						taskExtensionVo.setTaskMaxDay(elementText);
 						taskExtensionVo.setCustomTaskMaxDay(elementText);
-						taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(elementText)));
+						taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+						//需要考虑节假日的日期来算出结束时间
+						if(ifHoliday)
+						{
+							Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+							taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+						}
 						//算出剩余处理时间
 						Long restTime = DateUtil.diffDateTime(taskExtensionVo.getEndTime(),new Date());
 						taskExtensionVo.setRestTime(restTime);
@@ -158,6 +171,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				if(StringUtils.isNotEmpty(taskMaxDay))
 				{
 					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					//需要考虑节假日的日期来算出结束时间
+					if(ifHoliday)
+					{
+						Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+					}
 					//算出剩余处理时间
 					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
 					vo.setRestTime(restTime);
@@ -204,8 +223,13 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
 				if(StringUtils.isNotEmpty(taskMaxDay))
 				{
-					//TODO 需要考虑节假日的日期来算出结束时间
 					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					//需要考虑节假日的日期来算出结束时间
+					if(ifHoliday)
+					{
+						Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+					}
 					//算出剩余处理时间
 					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
 					vo.setRestTime(restTime);

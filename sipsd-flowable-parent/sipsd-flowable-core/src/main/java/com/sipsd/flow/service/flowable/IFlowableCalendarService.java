@@ -152,4 +152,12 @@ public interface IFlowableCalendarService extends IService<ActDeCalendar>
 	 * @Description 返回日期之间的总天数
 	 */
 	public Integer totalDay(String startDateCode, String endDateCode);
+
+	/**
+	 *
+	 * @param maxday
+	 * @return java.lang.Integer
+	 * @Description 排除节假日获取真正的间隔天数
+	 */
+	public Integer totalMaxDay(Integer maxday);
 }

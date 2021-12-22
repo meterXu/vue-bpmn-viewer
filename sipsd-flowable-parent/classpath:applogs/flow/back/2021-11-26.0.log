@@ -1,0 +1,1288 @@
+2021-11-26 00:03:35.502 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,646,824 milliseconds ago.  The last packet sent successfully to the server was 3,596,975 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 00:03:35.542 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,646,824 milliseconds ago.  The last packet sent successfully to the server was 3,596,975 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,646,824 milliseconds ago.  The last packet sent successfully to the server was 3,596,975 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,646,824 milliseconds ago.  The last packet sent successfully to the server was 3,596,975 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 00:03:36.468 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,948 milliseconds ago.  The last packet sent successfully to the server was 3,598,162 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 00:03:36.471 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,948 milliseconds ago.  The last packet sent successfully to the server was 3,598,162 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,948 milliseconds ago.  The last packet sent successfully to the server was 3,598,162 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,948 milliseconds ago.  The last packet sent successfully to the server was 3,598,162 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 01:04:24.179 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,019 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 01:04:24.184 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,019 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,019 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,019 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 01:04:24.366 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,637,812 milliseconds ago.  The last packet sent successfully to the server was 3,597,024 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 01:04:24.368 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,637,812 milliseconds ago.  The last packet sent successfully to the server was 3,597,024 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,637,812 milliseconds ago.  The last packet sent successfully to the server was 3,597,024 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,637,812 milliseconds ago.  The last packet sent successfully to the server was 3,597,024 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 02:05:13.448 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,489 milliseconds ago.  The last packet sent successfully to the server was 3,598,059 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 02:05:13.457 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,489 milliseconds ago.  The last packet sent successfully to the server was 3,598,059 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,489 milliseconds ago.  The last packet sent successfully to the server was 3,598,059 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,598,489 milliseconds ago.  The last packet sent successfully to the server was 3,598,059 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 03:06:01.308 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,744 milliseconds ago.  The last packet sent successfully to the server was 3,596,962 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 03:06:01.316 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,744 milliseconds ago.  The last packet sent successfully to the server was 3,596,962 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,744 milliseconds ago.  The last packet sent successfully to the server was 3,596,962 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,744 milliseconds ago.  The last packet sent successfully to the server was 3,596,962 milliseconds ago.
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 03:06:01.503 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,643,890 milliseconds ago.  The last packet sent successfully to the server was 3,596,930 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 03:06:01.507 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,643,890 milliseconds ago.  The last packet sent successfully to the server was 3,596,930 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,643,890 milliseconds ago.  The last packet sent successfully to the server was 3,596,930 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,643,890 milliseconds ago.  The last packet sent successfully to the server was 3,596,930 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 04:06:50.086 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,964 milliseconds ago.  The last packet sent successfully to the server was 3,597,104 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 04:06:50.091 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,964 milliseconds ago.  The last packet sent successfully to the server was 3,597,104 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,964 milliseconds ago.  The last packet sent successfully to the server was 3,597,104 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,964 milliseconds ago.  The last packet sent successfully to the server was 3,597,104 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 04:06:50.234 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,634,820 milliseconds ago.  The last packet sent successfully to the server was 3,597,110 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 04:06:50.235 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,634,820 milliseconds ago.  The last packet sent successfully to the server was 3,597,110 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,634,820 milliseconds ago.  The last packet sent successfully to the server was 3,597,110 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,634,820 milliseconds ago.  The last packet sent successfully to the server was 3,597,110 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 05:07:38.205 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,348 milliseconds ago.  The last packet sent successfully to the server was 3,597,099 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 05:07:38.207 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,348 milliseconds ago.  The last packet sent successfully to the server was 3,597,099 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,348 milliseconds ago.  The last packet sent successfully to the server was 3,597,099 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,348 milliseconds ago.  The last packet sent successfully to the server was 3,597,099 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 06:08:25.414 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,705 milliseconds ago.  The last packet sent successfully to the server was 3,595,888 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 06:08:25.417 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,705 milliseconds ago.  The last packet sent successfully to the server was 3,595,888 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,705 milliseconds ago.  The last packet sent successfully to the server was 3,595,888 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,705 milliseconds ago.  The last packet sent successfully to the server was 3,595,888 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 06:08:25.607 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,638,703 milliseconds ago.  The last packet sent successfully to the server was 3,595,893 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 06:08:25.610 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,638,703 milliseconds ago.  The last packet sent successfully to the server was 3,595,893 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,638,703 milliseconds ago.  The last packet sent successfully to the server was 3,595,893 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,638,703 milliseconds ago.  The last packet sent successfully to the server was 3,595,893 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 07:09:14.105 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,085 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 07:09:14.107 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,085 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,085 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,597,844 milliseconds ago.  The last packet sent successfully to the server was 3,597,085 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 08:10:01.471 [flowable-bpmn-acquire-timer-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,717 milliseconds ago.  The last packet sent successfully to the server was 3,595,908 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 08:10:01.473 [flowable-bpmn-acquire-timer-jobs] ERROR o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - exception during timer job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,717 milliseconds ago.  The last packet sent successfully to the server was 3,595,908 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,717 milliseconds ago.  The last packet sent successfully to the server was 3,595,908 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireTimerJobsRunnable.run(AcquireTimerJobsRunnable.java:58)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 3,596,717 milliseconds ago.  The last packet sent successfully to the server was 3,595,908 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 8 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 20 common frames omitted
+2021-11-26 08:29:51.300 [flowable-bpmn-acquire-async-jobs] ERROR com.alibaba.druid.pool.DruidDataSource - discard connection
+com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1,138,784 milliseconds ago.  The last packet sent successfully to the server was 1,137,968 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 08:29:51.316 [flowable-bpmn-acquire-async-jobs] ERROR o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - exception for engine bpmn during async job acquisition: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1,138,784 milliseconds ago.  The last packet sent successfully to the server was 1,137,968 milliseconds ago.
+org.springframework.transaction.CannotCreateTransactionException: Could not open JDBC Connection for transaction; nested exception is com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1,138,784 milliseconds ago.  The last packet sent successfully to the server was 1,137,968 milliseconds ago.
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:305)
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:378)
+	at org.springframework.transaction.support.TransactionTemplate.execute(TransactionTemplate.java:137)
+	at org.flowable.common.spring.SpringTransactionInterceptor.execute(SpringTransactionInterceptor.java:56)
+	at org.flowable.common.engine.impl.interceptor.LogInterceptor.execute(LogInterceptor.java:30)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:56)
+	at org.flowable.common.engine.impl.cfg.CommandExecutorImpl.execute(CommandExecutorImpl.java:51)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.acquireAndExecuteJobs(AcquireAsyncJobsDueRunnable.java:84)
+	at org.flowable.job.service.impl.asyncexecutor.AcquireAsyncJobsDueRunnable.run(AcquireAsyncJobsDueRunnable.java:62)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.CommunicationsException: Communications link failure
+
+The last packet successfully received from the server was 1,138,784 milliseconds ago.  The last packet sent successfully to the server was 1,137,968 milliseconds ago.
+	at sun.reflect.GeneratedConstructorAccessor155.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:404)
+	at com.mysql.jdbc.SQLError.createCommunicationsException(SQLError.java:988)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3552)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3452)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3893)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2526)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2673)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2545)
+	at com.mysql.jdbc.ConnectionImpl.setAutoCommit(ConnectionImpl.java:4842)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:738)
+	at com.alibaba.druid.filter.FilterAdapter.connection_setAutoCommit(FilterAdapter.java:985)
+	at com.alibaba.druid.filter.FilterChainImpl.connection_setAutoCommit(FilterChainImpl.java:733)
+	at com.alibaba.druid.proxy.jdbc.ConnectionProxyImpl.setAutoCommit(ConnectionProxyImpl.java:430)
+	at com.alibaba.druid.pool.DruidPooledConnection.setAutoCommit(DruidPooledConnection.java:712)
+	at org.springframework.jdbc.datasource.DataSourceTransactionManager.doBegin(DataSourceTransactionManager.java:283)
+	... 9 common frames omitted
+Caused by: java.io.EOFException: Can not read response from server. Expected to read 4 bytes, read 0 bytes before connection was unexpectedly lost.
+	at com.mysql.jdbc.MysqlIO.readFully(MysqlIO.java:3004)
+	at com.mysql.jdbc.MysqlIO.reuseAndReadPacket(MysqlIO.java:3462)
+	... 21 common frames omitted
+2021-11-26 09:01:50.270 [Thread-111] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-11-26 09:01:50.349 [Thread-111] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-11-26 09:01:50.351 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-11-26 09:01:50.351 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-11-26 09:01:50.354 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-11-26 09:01:50.389 [Thread-111] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2021-11-26 09:02:20.381 [main] INFO  c.u.j.c.EnableEncryptablePropertiesConfiguration - Bootstraping jasypt-string-boot auto configuration in context: application-1
+2021-11-26 09:02:20.382 [main] INFO  com.sipsd.flow.FlowManagerApplication - The following profiles are active: dev
+2021-11-26 09:02:21.977 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=610b235d-e001-3320-a9cd-a08b84a64feb
+2021-11-26 09:02:21.993 [main] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+2021-11-26 09:02:22.009 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application-dev.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource applicationConfig: [classpath:/application.yml] [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.010 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.011 [main] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource defaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2021-11-26 09:02:22.055 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure$$EnhancerBySpringCGLIB$$731c5fcc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.057 [main] INFO  c.a.d.s.b.a.DruidDataSourceAutoConfigure - Init DruidDataSource
+2021-11-26 09:02:22.102 [main] INFO  c.u.j.filter.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2021-11-26 09:02:22.111 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.datasource-org.springframework.boot.autoconfigure.jdbc.DataSourceProperties' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.115 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration' of type [com.alibaba.druid.spring.boot.autoconfigure.stat.DruidFilterConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.134 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'statFilter' of type [com.alibaba.druid.filter.stat.StatFilter] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.164 [main] INFO  c.u.j.resolver.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2021-11-26 09:02:22.164 [main] INFO  c.u.j.detector.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2021-11-26 09:02:22.450 [main] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2021-11-26 09:02:22.450 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'dataSource' of type [com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceWrapper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.454 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration' of type [org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration$$EnhancerBySpringCGLIB$$ede46564] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.461 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties' of type [org.springframework.boot.autoconfigure.transaction.TransactionProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.462 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'platformTransactionManagerCustomizers' of type [org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.463 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration' of type [org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration$DataSourceTransactionManagerConfiguration$$EnhancerBySpringCGLIB$$67102c9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.473 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionManager' of type [org.springframework.jdbc.datasource.DataSourceTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.474 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'transactionConfig' of type [com.sipsd.flow.config.TransactionConfig$$EnhancerBySpringCGLIB$$78830b03] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.516 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$f21e3294] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.528 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$59706a5a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.548 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.550 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@42734b71' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.555 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$16f2d546] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.560 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration' of type [org.flowable.ui.common.properties.FlowableRemoteIdmAutoConfiguration$$EnhancerBySpringCGLIB$$7b7eae58] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.567 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'flowable.common.app-org.flowable.ui.common.properties.FlowableCommonAppProperties' of type [org.flowable.ui.common.properties.FlowableCommonAppProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.569 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'grantedAuthorityDefaults' of type [org.springframework.security.config.core.GrantedAuthorityDefaults] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.572 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$3c47ed5c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.574 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.575 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.589 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$758a6d57] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-11-26 09:02:22.911 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9001 (http)
+2021-11-26 09:02:22.933 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2021-11-26 09:02:22.933 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.21]
+2021-11-26 09:02:23.069 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring embedded WebApplicationContext
+2021-11-26 09:02:23.069 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2664 ms
+2021-11-26 09:02:23.242 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-11-26 09:02:23.242 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-11-26 09:02:23.251 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@2acbe46d
+2021-11-26 09:02:23.526 [main] INFO  o.f.s.b.f.FormEngineAutoConfiguration$$EnhancerBySpringCGLIB$$240524ad - No deployment resources were found for autodeployment
+2021-11-26 09:02:23.785 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Found 2 Engine Configurators in total:
+2021-11-26 09:02:23.785 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-11-26 09:02:23.785 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-11-26 09:02:23.785 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-11-26 09:02:23.807 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing beforeInit() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-11-26 09:02:24.583 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.idm.spring.configurator.SpringIdmEngineConfigurator (priority:100000)
+2021-11-26 09:02:24.628 [main] INFO  org.flowable.idm.engine.impl.IdmEngineImpl - IdmEngine default created
+2021-11-26 09:02:24.629 [main] INFO  o.flowable.spring.SpringProcessEngineConfiguration - Executing configure() of class org.flowable.form.spring.configurator.SpringFormEngineConfigurator (priority:300000)
+2021-11-26 09:02:25.220 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.ACT_FO_DATABASECHANGELOGLOCK
+2021-11-26 09:02:25.223 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.ACT_FO_DATABASECHANGELOGLOCK
+2021-11-26 09:02:25.224 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_test.ACT_FO_DATABASECHANGELOGLOCK WHERE ID=1
+2021-11-26 09:02:25.234 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-11-26 09:02:26.053 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_test.ACT_FO_DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-11-26 09:02:26.054 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.ACT_FO_DATABASECHANGELOG
+2021-11-26 09:02:26.055 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_test.ACT_FO_DATABASECHANGELOG
+2021-11-26 09:02:26.055 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_test.ACT_FO_DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-11-26 09:02:26.071 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-11-26 09:02:26.073 [main] INFO  org.flowable.form.engine.impl.FormEngineImpl - FormEngine default created
+2021-11-26 09:02:26.105 [main] INFO  org.flowable.engine.impl.ProcessEngineImpl - ProcessEngine default created
+2021-11-26 09:02:26.109 [main] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Starting up the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-11-26 09:02:26.109 [Thread-59] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - starting to acquire async jobs due
+2021-11-26 09:02:26.109 [Thread-58] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - starting to acquire async jobs due
+2021-11-26 09:02:26.110 [Thread-60] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - starting to reset expired jobs for engine bpmn
+2021-11-26 09:02:26.135 [main] INFO  org.flowable.engine.impl.cmd.ValidateV5EntitiesCmd - Total of v5 deployments found: 0
+2021-11-26 09:02:26.720 [main] INFO  o.s.b.a.endpoint.web.ServletEndpointRegistrar - Registered '/actuator/jolokia' to jolokia-actuator-endpoint
+2021-11-26 09:02:47.751 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-11-26 09:02:47.751 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-11-26 09:02:47.790 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie max-age set to 2678400 seconds
+2021-11-26 09:02:47.790 [main] INFO  o.f.u.i.s.CustomPersistentRememberMeServices - Cookie refresh age set to 86400 seconds
+2021-11-26 09:02:48.218 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 21 endpoint(s) beneath base path '/actuator'
+2021-11-26 09:02:48.459 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.DATABASECHANGELOGLOCK
+2021-11-26 09:02:48.460 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.DATABASECHANGELOGLOCK
+2021-11-26 09:02:48.461 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT `LOCKED` FROM flowable_test.DATABASECHANGELOGLOCK WHERE ID=1
+2021-11-26 09:02:48.464 [main] INFO  liquibase.lockservice.StandardLockService - Successfully acquired change log lock
+2021-11-26 09:02:48.481 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT MD5SUM FROM flowable_test.DATABASECHANGELOG WHERE MD5SUM IS NOT NULL LIMIT 1
+2021-11-26 09:02:48.482 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT COUNT(*) FROM flowable_test.DATABASECHANGELOG
+2021-11-26 09:02:48.483 [main] INFO  l.changelog.StandardChangeLogHistoryService - Reading from flowable_test.DATABASECHANGELOG
+2021-11-26 09:02:48.483 [main] INFO  liquibase.executor.jvm.JdbcExecutor - SELECT * FROM flowable_test.DATABASECHANGELOG ORDER BY DATEEXECUTED ASC, ORDEREXECUTED ASC
+2021-11-26 09:02:48.490 [main] INFO  liquibase.lockservice.StandardLockService - Successfully released change log lock
+2021-11-26 09:02:48.513 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2021-11-26 09:02:48.556 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2021-11-26 09:02:48.556 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2021-11-26 09:02:48.718 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2021-11-26 09:02:49.287 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Initializing ExecutorService 'taskScheduler'
+2021-11-26 09:02:49.557 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Context refreshed
+2021-11-26 09:02:49.570 [main] INFO  s.d.s.web.plugins.DocumentationPluginsBootstrapper - Found 2 custom documentation plugin(s)
+2021-11-26 09:02:49.641 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-11-26 09:02:49.833 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-11-26 09:02:49.926 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.util.List<java.lang.String>
+2021-11-26 09:02:49.927 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: addUserGroupUsingPOST_1
+2021-11-26 09:02:49.928 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: deleteUsingPOST_1
+2021-11-26 09:02:49.931 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getPagerModelUsingGET_1
+2021-11-26 09:02:49.941 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: saveUsingPOST_1
+2021-11-26 09:02:49.951 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-11-26 09:02:49.952 [main] WARN  s.d.s.w.readers.parameter.ParameterDataTypeReader - Trying to infer dataType java.lang.String[]
+2021-11-26 09:02:49.975 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: getBackNodesByProcessInstanceIdUsingGET_1
+2021-11-26 09:02:50.023 [main] INFO  s.d.spring.web.scanners.ApiListingReferenceScanner - Scanning for api listing references
+2021-11-26 09:02:50.037 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramUsingGET_1
+2021-11-26 09:02:50.055 [main] INFO  s.d.s.w.r.operation.CachingOperationNameGenerator - Generating unique operation named: genProcessDiagramByModelKeyUsingGET_1
+2021-11-26 09:02:50.114 [main] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'Flowable IDM App API Servlet'
+2021-11-26 09:02:50.115 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'Flowable IDM App API Servlet'
+2021-11-26 09:02:50.226 [main] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 111 ms
+2021-11-26 09:02:50.227 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9001 (http) with context path '/sipsd-flow-modeler'
+2021-11-26 09:02:50.230 [main] INFO  com.sipsd.flow.FlowManagerApplication - Started FlowManagerApplication in 51.364 seconds (JVM running for 57.073)
+2021-11-26 09:02:50.582 [RMI TCP Connection(1)-192.168.77.1] INFO  o.a.c.c.C.[.[localhost].[/sipsd-flow-modeler] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-11-26 09:02:50.582 [RMI TCP Connection(1)-192.168.77.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2021-11-26 09:02:50.596 [RMI TCP Connection(1)-192.168.77.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 14 ms
+2021-11-26 09:02:55.244 [main] INFO  com.sipsd.flow.FlowManagerApplication - 
+----------------------------------------------------------
+	Application flowable is running! Access URLs:
+	Local: 		http://localhost:9001/sipsd-flow-modeler/
+	External: 	http://192.168.77.1:9001/sipsd-flow-modeler/
+	DOC-UI: 	http://192.168.77.1:9001/sipsd-flow-modeler/doc.html
+----------------------------------------------------------
+2021-11-26 09:07:08.733 [Thread-111] INFO  o.s.scheduling.concurrent.ThreadPoolTaskScheduler - Shutting down ExecutorService 'taskScheduler'
+2021-11-26 09:07:08.755 [Thread-111] INFO  o.f.j.s.impl.asyncexecutor.AbstractAsyncExecutor - Shutting down the async job executor [org.flowable.spring.job.service.SpringAsyncExecutor].
+2021-11-26 09:07:08.755 [flowable-bpmn-acquire-timer-jobs] INFO  o.f.j.s.i.asyncexecutor.AcquireTimerJobsRunnable - stopped async job due acquisition
+2021-11-26 09:07:08.755 [flowable-bpmn-acquire-async-jobs] INFO  o.f.j.s.i.a.AcquireAsyncJobsDueRunnable - stopped async job due acquisition for engine bpmn
+2021-11-26 09:07:08.756 [flowable-bpmn-reset-expired-jobs] INFO  o.f.j.s.i.asyncexecutor.ResetExpiredJobsRunnable - stopped resetting expired jobs for engine bpmn
+2021-11-26 09:07:08.771 [Thread-111] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed

@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.dao.flowable.IFlowableCalendarMapper;
 import com.sipsd.flow.service.flowable.IFlowableCalendarService;
-import com.sipsd.flow.util.holiday.LunarInfo;
 import com.sipsd.flow.vo.flowable.holiday.ActDeCalendar;
 import com.sipsd.flow.vo.flowable.holiday.SysCalendarVo;
 import com.sipsd.flow.vo.flowable.holiday.SysStatutoryHolidayVo;
@@ -72,16 +72,16 @@ public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMa
 	@Override
 	public Boolean isHoliday(Date datetime)
 	{
-		SimpleDateFormat df = new SimpleDateFormat("HH");
-		String str = df.format(datetime);
-		String result = "";
-		int a = Integer.parseInt(str);
-		if (a > 0 && a < 12) {
-			result = "上午";
-		}
-		else {
-			result = "下午";
-		}
+//		SimpleDateFormat df = new SimpleDateFormat("HH");
+//		String str = df.format(datetime);
+//		String result = "";
+//		int a = Integer.parseInt(str);
+//		if (a > 0 && a < 12) {
+//			result = "上午";
+//		}
+//		else {
+//			result = "下午";
+//		}
 		SimpleDateFormat chineseDateFormat = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
 		String dateCode = chineseDateFormat.format(datetime);
 		LambdaQueryWrapper<ActDeCalendar> wrapper = new LambdaQueryWrapper<>();
@@ -96,11 +96,11 @@ public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMa
 			return true;
 		}
 		//是否是周末
-		int day = LunarInfo.getDayOfWeek(datetime);
-		if(day==5 || day==6)
-		{
-			return true;
-		}
+//		int day = LunarInfo.getDayOfWeek(datetime);
+//		if(day==5 || day==6)
+//		{
+//			return true;
+//		}
 
 		return false;
 	}
@@ -202,5 +202,19 @@ public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMa
 	public Integer totalDay(String startDateCode, String endDateCode)
 	{
 		return baseMapper.totalDay(startDateCode,endDateCode);
+	}
+
+	@Override
+	public Integer totalMaxDay(Integer maxday)
+	{
+		for(int i = 0;i<maxday;i++)
+		{
+			boolean result = isHoliday(DateUtil.addDate(new Date(),i+1));
+			if(result)
+			{
+				maxday++;
+			}
+		}
+		return maxday;
 	}
 }
