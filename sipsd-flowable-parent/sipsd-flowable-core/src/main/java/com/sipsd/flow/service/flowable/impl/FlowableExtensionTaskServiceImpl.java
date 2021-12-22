@@ -204,6 +204,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
 				if(StringUtils.isNotEmpty(taskMaxDay))
 				{
+					//TODO 需要考虑节假日的日期来算出结束时间
 					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
 					//算出剩余处理时间
 					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
