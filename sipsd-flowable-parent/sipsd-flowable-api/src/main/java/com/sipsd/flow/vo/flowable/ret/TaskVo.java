@@ -105,6 +105,16 @@ public class TaskVo implements Serializable {
      * 节点审批最大天数
      */
     private String customTaskMaxDay;
+
+    /**
+     * 审批意见
+     */
+    private String comment;
+
+    /**
+     * 用户名称
+     */
+    private String realName;
     
     /**
      * 表单key
@@ -272,5 +282,25 @@ public class TaskVo implements Serializable {
     public void setTaskDefinitionKey(String taskDefinitionKey)
     {
         this.taskDefinitionKey = taskDefinitionKey;
+    }
+
+    public String getComment()
+    {
+        return comment;
+    }
+
+    public void setComment(String comment)
+    {
+        this.comment = comment;
+    }
+
+    public String getRealName()
+    {
+        return realName;
+    }
+
+    public void setRealName(String realName)
+    {
+        this.realName = realName;
     }
 }

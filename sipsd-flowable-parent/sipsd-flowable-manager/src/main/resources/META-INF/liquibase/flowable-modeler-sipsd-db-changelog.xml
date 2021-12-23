@@ -163,4 +163,9 @@
     <changeSet id="6" author="flowable">
         <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.extension-2.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <!-- 新增挂起/激活 和时间 的两个字段 && 新增表抄送表-->
+    <changeSet id="7" author="flowable">
+        <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.holiday.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>
