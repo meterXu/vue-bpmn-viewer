@@ -71,10 +71,6 @@ export default {
       bpmnOptions:{
         additionalModules:[]
       },
-      colors:{
-        blue:['#aaaaaa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#8f8f8f','#aaa','#444'],
-        classic:['#aaaaaa','#53c3d8','#ffd7d7','#f88062','#2c3e50','#bfbfbf','#2c3e50','#5BC14B','#53D894','#f5842c','#ff0000','#ececec','#fff','#ccc','#000','#9399B2','#B0B8D5','#81869D','#8f8f8f','#aaa','#444']
-      },
       taskData:[],
       url:{
         xmlUrl:'/rest/model/loadXmlByModelId/',
@@ -104,9 +100,6 @@ export default {
         track:false,
         trackFocus:false
       },this.options)
-      if(!_option.colors){
-        _option.colors = this.colors[_option.theme]
-      }
       if(_option.scrollZoom){
         this.bpmnOptions.additionalModules=[
           this.myStyl.stylMap[this.myStyl.theme],

@@ -12,5 +12,6 @@ export default {
         clearEndHighLight:null,
         clearHighLight:null,
         clearFlowHighLight:null
-    }
+    },
+    'color':["","","",""]
 }
