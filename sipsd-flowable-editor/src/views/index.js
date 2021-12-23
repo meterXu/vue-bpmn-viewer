@@ -1,6 +1,5 @@
 import Viewer from './Viewer.vue'
 import StaticViewer from "./StaticViewer";
-import ProcessTestViewer from "./ProcessTestViewer";
 export default [
   {
     path: '/bpmn/viewer',
@@ -17,14 +16,5 @@ export default [
       title: 'saticViewer'
     },
     component: StaticViewer
-  }
-  ,
-  {
-    path: '/bpmn/processTestViewer',
-    name: 'bpmn-processTestViewer',
-    meta: {
-      title: 'processTestViewer'
-    },
-    component: ProcessTestViewer
   }
 ]
