@@ -293,7 +293,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		}
 		taskExtensionVo.setUpdateTime(new Date());
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
-		Long restTime = DateUtil.diffDateTime(endDate,new Date());
+		Long restTime = DateUtil.diffDateTime(taskExtensionVo.getEndTime(),new Date());
 		taskExtensionVo.setRestTime(restTime);
 		flowableExtensionTaskDao.updateExtensionCustomTaskById(taskExtensionVo);
 		return Result.sucess("更新成功!");
