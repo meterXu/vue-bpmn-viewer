@@ -120,7 +120,11 @@ export default {
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
-      _styl.stylMap = Object.assign(_styl.stylMap,this.styl.stylMap)
+      if(this.styl.stylMap){
+        Object.keys(this.styl.stylMap).forEach(key=>{
+          _styl.stylMap[key]=Object.assign(_styl.stylMap[key]||{},this.styl.stylMap[key])
+        })
+      }
       return _styl
     },
     xml(){
