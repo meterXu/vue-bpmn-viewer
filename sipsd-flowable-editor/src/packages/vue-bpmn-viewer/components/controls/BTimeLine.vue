@@ -1,32 +1,30 @@
 <template>
-  <div ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':timeData.length===0}" v-if="options.timeLine">
-    <div>
-      <div class="timeline" v-if="timeData.length>0">
-        <div class="timeline-item" v-for="item in timeData" :key="item.id" :color="getTimeLineColor(item)">
-          <div class="timeline-item__tail"></div>
-          <div class="timeline-item__node" :style="{'background-color': getTimeLineColor(item)}"></div>
-          <div class="timeline-item__wrapper">
-            <div class="timeline-item__timestamp">
-              {{fmtDate(item.startTime)}}
-            </div>
-            <div :class="highLightClass(item)">
-              <div @mouseover="handleItemOver(item)"
-                   @mouseout="handleItemOut(item)"
-                   @click="handleClick(item)">
-                <slot v-bind:item="item">
-                  <p>{{item.taskName}}</p>
-                  <p>审批类型：{{item.approveType}}</p>
-                  <p>状态：{{item.status}}</p>
-                  <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
-                  <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
-                </slot>
-              </div>
+  <div ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':taskData&&taskData.length===0}" v-if="options.timeLine">
+    <div class="timeline" v-if="taskData&&taskData.length>0">
+      <div class="timeline-item" v-for="item in taskData" :key="item.id" :color="getTimeLineColor(item)">
+        <div class="timeline-item__tail"></div>
+        <div class="timeline-item__node" :style="{'background-color': getTimeLineColor(item)}"></div>
+        <div class="timeline-item__wrapper">
+          <div class="timeline-item__timestamp">
+            {{fmtDate(item.startTime)}}
+          </div>
+          <div :class="highLightClass(item)">
+            <div @mouseover="handleItemOver(item)"
+                 @mouseout="handleItemOut(item)"
+                 @click="handleClick(item)">
+              <slot v-bind:item="item">
+                <p>{{item.taskName}}</p>
+                <p>审批类型：{{item.approveType}}</p>
+                <p>状态：{{item.status}}</p>
+                <p v-if="item.status==='已办'">持续时间：{{timeFormat(item.duration)}}</p>
+                <p v-else>剩余时间：{{timeFormat(item.restTime)}}</p>
+              </slot>
             </div>
           </div>
         </div>
       </div>
-      <div v-else class="no-data"></div>
     </div>
+    <div v-else class="no-data"></div>
   </div>
 </template>
 
@@ -36,7 +34,7 @@ import ms from 'pretty-ms'
 import moment from 'moment'
 export default {
   name: "BTimeLine",
-  props:['timeData','bpmnViewer','options'],
+  props:['taskData','bpmnViewer','options'],
   data(){
     return {
       selectItem:null,
@@ -50,7 +48,7 @@ export default {
     }
   },
   watch:{
-    timeData:{
+    taskData:{
       handler(){
         this.scrollMove()
       },
@@ -135,8 +133,8 @@ export default {
     },
     scrollMove(){
       this.selectItem=null
-      if(this.timeData&&this.timeData.length>0){
-        let lastData=this.timeData[this.timeData.length-1]
+      if(this.taskData&&this.taskData.length>0){
+        let lastData=this.taskData[this.taskData.length-1]
         if(lastData.status!=='已办'&&this.options.focus&&this.$refs['bpmn-time-line']){
           this.$nextTick(()=>{
             this.$refs['bpmn-time-line'].scrollTop = this.$refs['bpmn-time-line'].scrollHeight
