@@ -15,7 +15,7 @@
     animation-timing-function:linear;
 }
 
-.dpark-bpmn-viewer[data-theme='default'] @keyframes complete {
+@keyframes complete {
     0%{
         stroke-dashoffset:0;
         stroke-width: 3;
@@ -30,7 +30,7 @@
         stroke-width: 3;
     }
 }
-.dpark-bpmn-viewer[data-theme='default'] @keyframes spin {
+@keyframes spin {
     0% {
         transform: rotate(0deg);
     }
