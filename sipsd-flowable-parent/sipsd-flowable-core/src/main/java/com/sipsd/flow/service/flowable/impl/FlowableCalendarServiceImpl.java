@@ -205,7 +205,7 @@ public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMa
 	}
 
 	@Override
-	public Integer totalMaxDay(Integer maxday)
+	public Integer totalMaxDay(Date date,Integer maxday)
 	{
 		for(int i = 0;i<maxday;i++)
 		{

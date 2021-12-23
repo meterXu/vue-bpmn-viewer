@@ -159,5 +159,5 @@ public interface IFlowableCalendarService extends IService<ActDeCalendar>
 	 * @return java.lang.Integer
 	 * @Description 排除节假日获取真正的间隔天数
 	 */
-	public Integer totalMaxDay(Integer maxday);
+	public Integer totalMaxDay(Date date,Integer maxday);
 }

@@ -119,7 +119,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						//需要考虑节假日的日期来算出结束时间
 						if(ifHoliday)
 						{
-							Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+							Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
 							taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
 						}
 						//算出剩余处理时间
@@ -174,7 +174,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					//需要考虑节假日的日期来算出结束时间
 					if(ifHoliday)
 					{
-						Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+						Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
 						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
 					}
 					//算出剩余处理时间
@@ -227,7 +227,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					//需要考虑节假日的日期来算出结束时间
 					if(ifHoliday)
 					{
-						Integer totalMaxDay = flowableCalendarService.totalMaxDay(Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+						Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
 						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
 					}
 					//算出剩余处理时间
@@ -285,6 +285,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		//计算出代办的截止日期
 		Date endDate = DateUtil.addDate(taskExtensionVo.getStartTime(),Integer.parseInt(params.getCustomTaskMaxDay()));
 		taskExtensionVo.setEndTime(endDate);
+		//需要考虑节假日的日期来算出结束时间
+		if(ifHoliday)
+		{
+			Integer totalMaxDay = flowableCalendarService.totalMaxDay(taskExtensionVo.getStartTime(),Integer.parseInt(params.getCustomTaskMaxDay()));
+			taskExtensionVo.setEndTime(DateUtil.addDate(taskExtensionVo.getStartTime(),totalMaxDay));
+		}
 		taskExtensionVo.setUpdateTime(new Date());
 		taskExtensionVo.setCustomTaskMaxDay(params.getCustomTaskMaxDay());
 		Long restTime = DateUtil.diffDateTime(endDate,new Date());
