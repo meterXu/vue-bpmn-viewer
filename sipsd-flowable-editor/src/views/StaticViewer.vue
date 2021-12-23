@@ -44,14 +44,14 @@
                        :options="options"
                        @click="handleClick"
                        @viewChange="handleViewChange">
-<!--          <template v-slot:time="slotProps">-->
-<!--            <p>{{slotProps.item.taskName}}</p>-->
-<!--            <p>审批类型：{{slotProps.item.approveType}}</p>-->
-<!--            <p>状态：{{slotProps.item.status}}</p>-->
-<!--            <p v-if="slotProps.item.status==='已办'">持续时间：{{timeFormat(slotProps.item.duration)}}</p>-->
-<!--            <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>-->
-<!--            <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>-->
-<!--          </template>-->
+          <template v-slot:time="slotProps">
+            <p>{{slotProps.item.taskName}}</p>
+            <p>审批类型：{{slotProps.item.approveType}}</p>
+            <p>状态：{{slotProps.item.status}}</p>
+            <p v-if="slotProps.item.status==='已办'">持续时间：{{timeFormat(slotProps.item.duration)}}</p>
+            <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>
+            <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
+          </template>
         </VueBpmnViewer>
         <el-dialog
             title="提示"

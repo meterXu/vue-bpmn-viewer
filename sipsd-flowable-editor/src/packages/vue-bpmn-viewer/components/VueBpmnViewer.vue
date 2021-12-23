@@ -8,7 +8,13 @@
                 @click="handleClick"
                 @viewChange="handleViewChange"></vue-bpmn>
     </div>
-    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData"></BTLayout>
+    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData">
+      <slot></slot>
+      <template v-slot:time="slotProps">
+        <slot name="time" v-bind:item="slotProps.item">
+        </slot>
+      </template>
+    </BTLayout>
   </div>
 </template>
 

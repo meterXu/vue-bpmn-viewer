@@ -75,7 +75,10 @@ export default {
   <VueBpmnViewer :type="2"
                  :baseApi="baseApi"
                  :instanceId="instanceId"
-                 :options="options">
+                 :options="options"
+                  :styl="{theme:'myStyl',stylMap:{
+                    myStyl:bpmnThemeMyStyl
+                  }}">
   </VueBpmnViewer>
 </template>
 <script>
