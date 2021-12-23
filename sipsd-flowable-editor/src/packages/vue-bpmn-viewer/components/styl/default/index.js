@@ -1,8 +1,8 @@
-import '../../../assets/theme/blue/css/custom.css'
+import './css/index.css'
 import custom from './custom'
 export default {
-    __init__: ['bpmn-theme-blue'],
-    'bpmn-theme-blue': ['type', custom],
+    __init__: ['bpmn-theme-default'],
+    'bpmn-theme-default': ['type', custom],
     'utils':{
         setTaskHighlight:null,
         setStartHighLight:null,

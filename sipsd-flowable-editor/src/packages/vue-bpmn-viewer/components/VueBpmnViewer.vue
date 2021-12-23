@@ -14,7 +14,7 @@
 
 <script>
 import VueBpmn from './bpmn/VueBpmn.vue';
-import bpmnThemeBlue from './styl/default/index.js'
+import bpmnThemeDefault from './styl/default/index.js'
 import BTLayout from './controls/BTLayout'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -85,7 +85,7 @@ export default {
       let _styl =  {
         theme:'default',
         stylMap:{
-          default:bpmnThemeBlue
+          default:bpmnThemeDefault
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
