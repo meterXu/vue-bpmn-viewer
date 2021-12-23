@@ -1,0 +1,3 @@
+ALTER TABLE act_ru_extension_task MODIFY  COLUMN  FROM_KEY_  VARCHAR(255);
+ALTER TABLE act_ru_extension_task MODIFY  COLUMN  ASSIGNEE_  VARCHAR(500);
+ALTER TABLE act_ru_extension_task MODIFY  COLUMN  GROUP_ID_  VARCHAR(500);

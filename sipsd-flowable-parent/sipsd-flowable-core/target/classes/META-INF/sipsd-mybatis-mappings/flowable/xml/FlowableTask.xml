@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sipsd.flow.dao.flowable.IFlowableTaskDao" >
+    <select id="getApplyingTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
+        SELECT DISTINCT
+            t4.ID_ as id,
+            t1.ID_ AS taskId,
+            t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
+            t2.NAME_ AS formName,
+            t2.TENANT_ID_ AS systemSn,
+            t2.BUSINESS_KEY_ AS businessKey,
+            t2.PROC_INST_ID_ AS processInstanceId,
+            t1.CREATE_TIME_ AS startTime,
+            t4.CUSTOM_TASK_MAX_DAY_  as customTaskMaxDay,
+            t4.TASK_MAX_DAY_ as taskMaxDay,
+            t4.IS_DB_ as isDb,
+            t4.BUSINESS_INFO_ as businessInfo,
+            t5.DISPLAY_NAME_ as realName,
+        <!-- 剩余时间-->
+        if(t4.SUSPENSION_STATE_=2 &amp;&amp; t4.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t4.SUSPENSION_TIME_,t4.END_TIME_)
+        ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t4.END_TIME_))  as restTime
+        FROM
+            act_ru_task t1
+        INNER JOIN act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_
+        LEFT JOIN act_ru_identitylink t3 ON t3.TASK_ID_ = t1.ID_
+        LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
+        LEFT JOIN  act_id_user t5 ON t1.ASSIGNEE_ = t5.ID_
+        WHERE
+            t2.BUSINESS_KEY_ IS NOT NULL
+
+        <if test="formName != null and formName != ''">
+            AND t2.NAME_ = #{formName}
+        </if>
+
+        <if test="businessKey != null and businessKey != ''">
+            AND t2.BUSINESS_KEY_ = #{businessKey}
+        </if>
+
+        AND (
+            t1.ASSIGNEE_ like CONCAT('%',#{userCode},'%')
+            OR (
+                t1.ASSIGNEE_ IN (
+                    SELECT
+                        G.group_id_
+                    FROM
+                        act_id_membership G
+                    WHERE
+
+                        G.user_id_   = #{userCode}
+                )
+            )
+            OR (
+                (
+                    t1.ASSIGNEE_ IS NULL
+                    OR t1.ASSIGNEE_ = ''
+                )
+                AND (
+                    t3.USER_ID_ like CONCAT('%',#{userCode},'%')
+                    OR t3.GROUP_ID_ IN (
+                        SELECT
+                            g.group_id_
+                        FROM
+                            act_id_membership g
+                        WHERE
+                            g.user_id_ = #{userCode}
+                    )
+                )
+            )
+        )  order by t1.CREATE_TIME_
+    </select>
+    <select id="getApplyedTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
+        SELECT DISTINCT
+            t4.ID_ as id,
+            t1.ID_ AS taskId,
+            t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
+            t2.FIRST_ AS approver,
+            t2.ID_ AS approverId,
+        TIMESTAMPDIFF(SECOND,t1.START_TIME_,t1.END_TIME_) as duration,
+            t3.NAME_ AS formName,
+            t3.BUSINESS_KEY_ AS businessKey,
+            t3.PROC_INST_ID_ AS processInstanceId,
+            t3.TENANT_ID_ as systemSn,
+            t1.START_TIME_ AS startTime,
+            t1.END_TIME_ as endTime,
+            t4.IS_DB_ as isDb,
+            t4.BUSINESS_INFO_ as businessInfo,
+            t5.MESSAGE_ as comment,
+            t2.DISPLAY_NAME_ as realName
+        FROM
+            act_hi_taskinst t1
+        LEFT JOIN act_id_user t2 ON t1.ASSIGNEE_ = t2.ID_
+        LEFT JOIN act_hi_procinst t3 ON t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+        LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
+        LEFT JOIN act_hi_comment t5 ON T1.ID_ = t5.TASK_ID_ and t1.PROC_INST_ID_ = t5.PROC_INST_ID_
+        WHERE
+            t1.END_TIME_ is not null
+        AND t1.ASSIGNEE_ = #{userCode}
+
+        <if test="formName != null and formName != ''">
+            AND t3.NAME_ = #{formName}
+        </if>
+
+        <if test="businessKey != null and businessKey != ''">
+            AND t3.BUSINESS_KEY_ = #{businessKey}
+        </if>
+
+        order by t1.END_TIME_
+    </select>
+
+    <select id="getAllTasks" parameterType="com.sipsd.flow.vo.flowable.TaskQueryVo" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
+        SELECT DISTINCT
+        t4.ID_ as id,
+        t1.ID_ AS taskId,
+        t1.NAME_ AS taskName,
+        t1.TASK_DEF_KEY_ as taskDefinitionKey,
+        t2.FIRST_ AS approver,
+        t2.ID_ AS approverId,
+        IF(t1.END_TIME_ IS NOT NULL,TIMESTAMPDIFF( SECOND, t1.START_TIME_, t1.END_TIME_ ),IF(t4.SUSPENSION_STATE_ = 1,
+        TIMESTAMPDIFF(SECOND,t1.START_TIME_,CURRENT_TIMESTAMP ()),TIMESTAMPDIFF( SECOND, t1.START_TIME_, t4.SUSPENSION_TIME_ ))) AS duration,
+        t3.NAME_ AS formName,
+        t3.BUSINESS_KEY_ AS businessKey,
+        t3.PROC_INST_ID_ AS processInstanceId,
+        t3.TENANT_ID_ as systemSn,
+        t1.START_TIME_ AS startTime,
+        t1.END_TIME_ as endTime,
+        t4.IS_DB_ as isDb,
+        t4.BUSINESS_INFO_ as businessInfo,
+        IF(t1.END_TIME_ IS NOT NULL,0,IF(t4.SUSPENSION_STATE_ = 2 &amp;&amp; t4.OVER_TIME = 2,TIMESTAMPDIFF( SECOND, t4.SUSPENSION_TIME_, t4.END_TIME_ ),TIMESTAMPDIFF( SECOND, CURRENT_TIMESTAMP (), t4.END_TIME_ ))) AS restTime,
+        t5.MESSAGE_ as comment,
+        t2.DISPLAY_NAME_ as realName,
+        FROM
+        act_hi_taskinst t1
+        LEFT JOIN act_id_user t2 ON t1.ASSIGNEE_ = t2.ID_
+        LEFT JOIN act_hi_procinst t3 ON t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+        LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
+        LEFT JOIN act_hi_comment t5 ON T1.ID_ = t5.TASK_ID_ and t1.PROC_INST_ID_ = t5.PROC_INST_ID_
+        WHERE t1.ASSIGNEE_ = #{userCode}
+
+        <if test="formName != null and formName != ''">
+            AND t3.NAME_ = #{formName}
+        </if>
+
+        <if test="businessKey != null and businessKey != ''">
+            AND t3.BUSINESS_KEY_ = #{businessKey}
+        </if>
+
+        order by t1.END_TIME_
+    </select>
+    
+    <select id="getTaskById" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskVo">
+        SELECT DISTINCT
+            t1.ID_ AS taskId,
+            t1.NAME_ AS taskName,
+            t1.TASK_DEF_KEY_ as taskDefinitionKey,
+            t2.FIRST_ AS approver,
+            t2.ID_ AS approverId,
+            t3.NAME_ AS formName,
+            t3.BUSINESS_KEY_ AS businessKey,
+            t3.PROC_INST_ID_ AS processInstanceId,
+            t3.TENANT_ID_ as systemSn,
+            t1.START_TIME_ AS startTime,
+            t1.END_TIME_ as endTime
+        FROM
+            act_hi_taskinst t1
+        LEFT JOIN act_id_user t2 ON t1.ASSIGNEE_ = t2.ID_
+        LEFT JOIN act_hi_procinst t3 ON t1.PROC_INST_ID_ = t3.PROC_INST_ID_
+        WHERE
+            t1.ID_ = #{taskId}
+    </select>
+</mapper>

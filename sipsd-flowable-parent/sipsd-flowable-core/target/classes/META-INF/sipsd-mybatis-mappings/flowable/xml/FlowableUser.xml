@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sipsd.flow.dao.flowable.IFlowableUserDao">
+    <select id="getUserListByGroupIds" parameterType="java.util.List" resultType="com.sipsd.flow.bean.User">
+        select distinct t2.ID_ id ,
+               t2.DISPLAY_NAME_ as name
+               from act_id_membership t1
+               left join act_id_user t2 on t1.USER_ID_ = t2.ID_
+               where t1.GROUP_ID_ in
+               <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+                 #{item}
+               </foreach>
+    </select>
+</mapper>
