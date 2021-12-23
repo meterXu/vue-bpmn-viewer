@@ -19,9 +19,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@dpark/icon": "^1.0.19",
-    "@dpark/logfv-web-vue": "^1.0.23",
-    "@highlightjs/vue-plugin": "^2.1.0",
+    "@dpark/logfv-web-vue": "^1.0.24",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
     "moment": "^2.29.1",

@@ -1,20 +1,17 @@
 <template>
   <div class="io-zoom-controls" v-if="options.zoom">
     <ul class="io-zoom-reset io-control io-control-list">
-      <li class="icon" @click="handleZoomReset">
-        <i class="el-icon-aim"/>
+      <li class="icon icon-aim" @click="handleZoomReset">
       </li>
       <li>
         <hr/>
       </li>
-      <li class="icon" @click="handleZoomIn">
-        <i class="el-icon-plus"/>
+      <li class="icon icon-plus" @click="handleZoomIn">
       </li>
       <li>
         <hr/>
       </li>
-      <li class="icon" @click="handleZoomOut">
-        <i class="el-icon-minus"/>
+      <li class="icon icon-minus" @click="handleZoomOut">
       </li>
     </ul>
   </div>
@@ -105,8 +102,31 @@ export default {
   justify-content: center;
   font-size: 24px;
   color: #8f8f8f;
+  width: 20px;
+  height: 20px;
 }
-.icon:hover{
-  color: #000;
+.icon-aim{
+  background: url("../styl/default/icons/DoAiming.svg") no-repeat;
+  background-size: contain;
+}
+.icon-aim:hover{
+  background: url("../styl/default/icons/DoAiming-hover.svg") no-repeat;
+  background-size: contain;
+}
+.icon-plus{
+  background: url("../styl/default/icons/DoZoomIn.svg") no-repeat;
+  background-size: contain;
+}
+.icon-plus:hover{
+  background: url("../styl/default/icons/DoZoomIn-hover.svg") no-repeat;
+  background-size: contain;
+}
+.icon-minus{
+  background: url("../styl/default/icons/DoZoomOut.svg") no-repeat;
+  background-size: contain;
+}
+.icon-minus:hover{
+  background: url("../styl/default/icons/DoZoomOut-hover.svg") no-repeat;
+  background-size: contain;
 }
 </style>
