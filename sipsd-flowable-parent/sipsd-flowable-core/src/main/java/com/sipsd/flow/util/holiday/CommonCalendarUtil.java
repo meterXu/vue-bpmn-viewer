@@ -389,8 +389,16 @@ public class CommonCalendarUtil
 				case 4: sysCalendar.setIfWeekend(false); sysCalendar.setWeek("星期三");sysCalendar.setWeekCode("Wednesday"); break;
 				case 5: sysCalendar.setIfWeekend(false); sysCalendar.setWeek("星期四");sysCalendar.setWeekCode("Thursday"); break;
 				case 6: sysCalendar.setIfWeekend(false); sysCalendar.setWeek("星期五");sysCalendar.setWeekCode("Friday"); break;
-				case 7: sysCalendar.setIfWeekend(true); sysCalendar.setWeek("星期六");sysCalendar.setWeekCode("Saturday"); break;
-				case 1: sysCalendar.setIfWeekend(true); sysCalendar.setWeek("星期日");sysCalendar.setWeekCode("Sunday"); break;
+				case 7: sysCalendar.setIfWeekend(true); sysCalendar.setWeek("星期六");
+				sysCalendar.setWeekCode("Saturday");
+				sysCalendar.setHolidaySign(1);
+				sysCalendar.setHolidayDesc("周末休息");
+				break;
+				case 1: sysCalendar.setIfWeekend(true); sysCalendar.setWeek("星期日");
+				sysCalendar.setWeekCode("Sunday");
+				sysCalendar.setHolidaySign(1);
+				sysCalendar.setHolidayDesc("周末休息");
+				break;
 				default:
 			}
 		}
