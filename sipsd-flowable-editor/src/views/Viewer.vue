@@ -33,7 +33,6 @@ export default {
     }
   },
   created() {
-    this.baseApi = this.$project_bpmn.variable.baseAp
     this.type = parseInt(this.$route.query.type)
     this.instanceId = this.$route.query.instanceId
     this.xmlId = this.$route.query.xmlId
