@@ -4,7 +4,7 @@ import {
     clearFlowHighLight,
     clearHighLight,
     setEndHighLight,
-    setFlowHighLight,
+    setFlowHighLight, setStartTaskHighlight,
     setTaskHighlight, taskSyncHighLight
 } from "../classic/approach";
 export default {
@@ -17,6 +17,7 @@ export default {
         setFlowHighLight:setFlowHighLight,
         // clearStartHighLight:null,
         // clearEndHighLight:null,
+        setStartTaskHighlight: setStartTaskHighlight,
         clearHighLight:clearHighLight,
         clearFlowHighLight:clearFlowHighLight,
         taskSyncHighLight: taskSyncHighLight

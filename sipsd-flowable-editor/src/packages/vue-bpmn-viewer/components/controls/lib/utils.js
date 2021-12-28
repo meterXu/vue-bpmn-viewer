@@ -183,6 +183,25 @@ function utils() {
         this.setEndHighLight(container)
     }
 
+    // this.setStartTaskHighlight = function (container, ids, options = {
+    //     color: '#5BC14B',
+    //     setline: false,
+    //     user: undefined,
+    //     shadow: false,
+    //     stroke: true
+    // }) {
+    //     ids.forEach(id => {
+    //         this.clearHighLight(container, id)
+    //         const xx = setStaetSingleTaskHighLight(container, id, options)
+    //         if (xx) {
+    //             taskHighlightTimer[id] = xx
+    //         }
+    //         if (options.setline) {
+    //             this.setFlowHighLight(container, id, options)
+    //         }
+    //     })
+    // }
+
     // this.setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#FD706D'}, setline = false) {
     //     let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
     //     if (endEvents.length > 0) {
