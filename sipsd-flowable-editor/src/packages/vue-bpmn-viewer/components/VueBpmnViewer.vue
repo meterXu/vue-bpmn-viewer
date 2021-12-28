@@ -21,6 +21,7 @@
 <script>
 import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeDefault from './styl/default/index.js'
+import bpmnThemeClassic from './styl/classic/index.js'
 import BTLayout from './controls/BTLayout'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
@@ -36,7 +37,7 @@ export default {
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
-    styl:{type:Object,default(){return {theme:null,stylMap:null}}},
+    styl:{type:Object,default(){return {theme:'classic',stylMap:null}}},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
@@ -91,7 +92,8 @@ export default {
       let _styl =  {
         theme:'default',
         stylMap:{
-          default:bpmnThemeDefault
+          default:bpmnThemeDefault,
+          classic:bpmnThemeClassic
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
