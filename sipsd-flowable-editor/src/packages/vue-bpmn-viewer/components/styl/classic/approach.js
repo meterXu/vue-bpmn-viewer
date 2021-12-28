@@ -40,6 +40,7 @@ function setStaetSingleTaskHighLight(container, id, options) {
                 let rect = completeTask.querySelector('.djs-visual rect')
                 let path1 = completeTask.querySelector('.f_userColor1')
                 let path2 = completeTask.querySelector('.f_userColor2')
+                console.log(options.color)
                 if(rect) {
                     attr(rect, {
                         stroke: options.color,
@@ -183,7 +184,7 @@ export let setStartTaskHighlight = function (container, ids, options = {
     stroke: true
 }) {
     ids.forEach(id => {
-        this.clearHighLight(container, id)
+        clearHighLight(container, id)
         const xx = setStaetSingleTaskHighLight(container, id, options)
         if (xx) {
             taskHighlightTimer[id] = xx
@@ -199,7 +200,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
         switch (c.status) {
             case '已办': {
                 if (c.approveType === '驳回') {
-                    setTaskHighlight(container, [c.taskDefinitionKey], {
+                    setStartTaskHighlight(container, [c.taskDefinitionKey], {
                         color: '#ff0000',
                         setline: false,
                         shadow: false,
@@ -207,7 +208,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
                         stroke: true
                     })
                 } else {
-                    setTaskHighlight(container, [c.taskDefinitionKey], {
+                    setStartTaskHighlight(container, [c.taskDefinitionKey], {
                         color: '#5BC14B',
                         setline: false,
                         shadow: false,
@@ -218,7 +219,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
             }
                 break;
             case '待办': {
-                setTaskHighlight(container, [c.taskDefinitionKey], {
+                setStartTaskHighlight(container, [c.taskDefinitionKey], {
                     color: '#f5842c',
                     setline: options.setline,
                     shadow: false,
