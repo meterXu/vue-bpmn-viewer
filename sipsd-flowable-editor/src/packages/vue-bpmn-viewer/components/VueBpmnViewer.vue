@@ -37,7 +37,7 @@ export default {
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
-    styl:{type:Object,default(){return {theme:'classic',stylMap:null}}},
+    styl:{type:Object,default(){return {theme:null,stylMap: null}}},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
@@ -121,7 +121,7 @@ export default {
   watch:{
     taskData:{
       handler:function (nv){
-        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions)
+        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions,this.bpmnOptions.additionalModules[0].colors)
       }
     }
   },
@@ -175,7 +175,6 @@ export default {
       window.bpmnViewer =  this.bpmnViewer
       utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
-      console.log(this.taskData)
       if(this.taskData&&this.taskData.length>0){
         let lastData = this.taskData[this.taskData.length-1]
         if(lastData.status!=='已办'&&this.myOptions.focus){

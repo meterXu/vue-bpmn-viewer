@@ -1,110 +1,110 @@
 import {attr, classes} from "tiny-svg";
 import axios from "axios";
 
-function setSingleTaskHighLight(container, id, options) {
-    if (id) {
-        let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
-        if (completeTasks.length > 0) {
-            completeTasks.forEach(completeTask => {
-                let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
-                let rect = completeTask.querySelector('.djs-visual rect')
-                let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-                let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
-                let user = completeTask.querySelectorAll('.djs-visual text')[1]
-                if (options.user) {
-                    user.innerHTML = options.user
-                } else {
-                    attr(user, {
-                        fill: '#cdcdcd'
-                    })
-                }
-                if (title1) {
-                    attr(title1, {
-                        fill: options.color,
-                    })
-                }
-                if (title2) {
-                    attr(title2, {
-                        fill: options.color,
-                    })
-                }
-                if (options.shadow && feColorMatrix && rect) {
-                    const rgb = hexToRgb(options.color)
-                    attr(feColorMatrix, {
-                        values: `${(rgb[0] / 255).toFixed(3)} 0 0 0 0
-                           0 ${(rgb[1] / 255).toFixed(3)} 0 0 0
-                           0 0 ${(rgb[2] / 255).toFixed(3)} 0 0
-                           0 0 0 0.8 0`
-                    })
-                    if (options.stroke) {
-                        attr(rect, {
-                            stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
-                        })
-                    }
-                }
-            })
-        }
+// function setSingleTaskHighLight(container, id, options) {
+//     if (id) {
+//         let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+//         if (completeTasks.length > 0) {
+//             completeTasks.forEach(completeTask => {
+//                 let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
+//                 let rect = completeTask.querySelector('.djs-visual rect')
+//                 let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+//                 let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
+//                 let user = completeTask.querySelectorAll('.djs-visual text')[1]
+//                 if (options.user) {
+//                     user.innerHTML = options.user
+//                 } else {
+//                     attr(user, {
+//                         fill: '#cdcdcd'
+//                     })
+//                 }
+//                 if (title1) {
+//                     attr(title1, {
+//                         fill: options.color,
+//                     })
+//                 }
+//                 if (title2) {
+//                     attr(title2, {
+//                         fill: options.color,
+//                     })
+//                 }
+//                 if (options.shadow && feColorMatrix && rect) {
+//                     const rgb = hexToRgb(options.color)
+//                     attr(feColorMatrix, {
+//                         values: `${(rgb[0] / 255).toFixed(3)} 0 0 0 0
+//                            0 ${(rgb[1] / 255).toFixed(3)} 0 0 0
+//                            0 0 ${(rgb[2] / 255).toFixed(3)} 0 0
+//                            0 0 0 0.8 0`
+//                     })
+//                     if (options.stroke) {
+//                         attr(rect, {
+//                             stroke: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
+//                         })
+//                     }
+//                 }
+//             })
+//         }
+//
+//     }
+// }
 
-    }
-}
+// function clearSingleTaskHighLight(container, id) {
+//     let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+//     if (completeTasks.length > 0) {
+//         completeTasks.forEach(completeTask => {
+//             let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
+//             let rect = completeTask.querySelector('.djs-visual rect')
+//             let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
+//             let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
+//             if (rect) {
+//                 attr(rect, {
+//                     stroke: '#ececec',
+//                 })
+//             }
+//             if (title1) {
+//                 attr(title1, {
+//                     fill: "#aaa",
+//                 })
+//             }
+//             if (title2) {
+//                 attr(title2, {
+//                     fill: "#aaa",
+//                 })
+//             }
+//             if (feColorMatrix) {
+//                 attr(feColorMatrix, {
+//                     values: `0 0 0 0 0
+//               0 0 0 0 0
+//               0 0 0 0 0
+//               0 0 0 0.1 0`
+//                 })
+//             }
+//         })
+//     }
+// }
 
-function clearSingleTaskHighLight(container, id) {
-    let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
-    if (completeTasks.length > 0) {
-        completeTasks.forEach(completeTask => {
-            let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
-            let rect = completeTask.querySelector('.djs-visual rect')
-            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-            let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
-            if (rect) {
-                attr(rect, {
-                    stroke: '#ececec',
-                })
-            }
-            if (title1) {
-                attr(title1, {
-                    fill: "#aaa",
-                })
-            }
-            if (title2) {
-                attr(title2, {
-                    fill: "#aaa",
-                })
-            }
-            if (feColorMatrix) {
-                attr(feColorMatrix, {
-                    values: `0 0 0 0 0
-              0 0 0 0 0
-              0 0 0 0 0
-              0 0 0 0.1 0`
-                })
-            }
-        })
-    }
-}
-
-function hexToRgb(hex) {
-    if (hex.indexOf('#') === 0) {
-        let r = parseInt('0x' + hex.slice(1, 3))
-        let g = parseInt('0x' + hex.slice(3, 5))
-        let b = parseInt('0x' + hex.slice(5, 7))
-        return [
-            r,
-            g,
-            b,
-        ]
-    } else {
-        let color = hex.match(/\d+/g)
-        return [
-            color[0],
-            color[1],
-            color[2]
-        ]
-    }
-}
+// function hexToRgb(hex) {
+//     if (hex.indexOf('#') === 0) {
+//         let r = parseInt('0x' + hex.slice(1, 3))
+//         let g = parseInt('0x' + hex.slice(3, 5))
+//         let b = parseInt('0x' + hex.slice(5, 7))
+//         return [
+//             r,
+//             g,
+//             b,
+//         ]
+//     } else {
+//         let color = hex.match(/\d+/g)
+//         return [
+//             color[0],
+//             color[1],
+//             color[2]
+//         ]
+//     }
+// }
 
 function utils() {
-    let taskHighlightTimer = {}
+    // let taskHighlightTimer = {}
     this.getTaskObj = function (container, id) {
         let completeTask = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
         let task_container = container.querySelector(`[class="djs-element djs-shape"][data-element-id="${id}"]`)

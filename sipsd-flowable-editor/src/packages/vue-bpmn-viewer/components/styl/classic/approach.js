@@ -1,5 +1,6 @@
 import {attr, classes} from "tiny-svg";
 import axios from "axios";
+let colorsArr = []
 function setSingleTaskHighLight(container, id, options) {
     if (id) {
         let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
@@ -40,7 +41,6 @@ function setStaetSingleTaskHighLight(container, id, options) {
                 let rect = completeTask.querySelector('.djs-visual rect')
                 let path1 = completeTask.querySelector('.f_userColor1')
                 let path2 = completeTask.querySelector('.f_userColor2')
-                console.log(options.color)
                 if(rect) {
                     attr(rect, {
                         stroke: options.color,
@@ -194,14 +194,15 @@ export let setStartTaskHighlight = function (container, ids, options = {
         }
     })
 }
-export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
+export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors) {
+    colorsArr = colors
     clearAllHighLight(container)
     nv.forEach(c => {
         switch (c.status) {
             case '已办': {
                 if (c.approveType === '驳回') {
                     setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: '#ff0000',
+                        color: colors[3],
                         setline: false,
                         shadow: false,
                         type: 3,
@@ -209,7 +210,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
                     })
                 } else {
                     setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: '#5BC14B',
+                        color: colors[2],
                         setline: false,
                         shadow: false,
                         type: 2,
@@ -220,7 +221,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options) {
                 break;
             case '待办': {
                 setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                    color: '#f5842c',
+                    color: colors[1],
                     setline: options.setline,
                     shadow: false,
                     type: 1,

@@ -3,6 +3,7 @@ import {
     classes,
     create,
 } from 'tiny-svg';
+import bpmnThemeClassic from '../index'
 const svgWH ={
     "width": '',
     "height": ''
@@ -36,7 +37,7 @@ export default (options)=>{
         height:options.height+1,
         rx:4,
         ry:4,
-        stroke:'#000',
+        stroke: bpmnThemeClassic.colors[0],
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
         fill:'#F5F5F5',
