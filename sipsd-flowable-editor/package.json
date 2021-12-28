@@ -17,6 +17,8 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@dpark/logfv-web-vue": "^1.0.24",
+    "bpmn-js": "^8.2.2",
     "ant-design-vue": "^1.7.8",
     "axios": "^0.24.0",
     "element-ui": "^2.15.6",
