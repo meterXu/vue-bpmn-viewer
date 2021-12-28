@@ -34,7 +34,7 @@ import ms from 'pretty-ms'
 import moment from 'moment'
 export default {
   name: "BTimeLine",
-  props:['taskData','bpmnViewer','options'],
+  props:['taskData','bpmnViewer','options','bpmnOptions'],
   data(){
     return {
       selectItem:null,
@@ -46,6 +46,9 @@ export default {
         {color:'#ff0000',setline:false,user:null,shadow:true,stroke:true}
       ]
     }
+  },
+  mounted() {
+    console.log(this.bpmnOptions)
   },
   watch:{
     taskData:{
@@ -107,11 +110,11 @@ export default {
       if(taskObj){
         item.oldStyle = Object.assign({},this.oldStyle,{color:taskObj.color})
       }
-      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.highLight[type-1])
+      this.bpmnOptions.additionalModules[0].utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.highLight[type-1])
     },
     handleItemOut(item){
-      utils.clearHighLight(this.bpmnViewer._container,item.taskDefinitionKey)
-      utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],item.oldStyle)
+      this.bpmnOptions.additionalModules[0].utils.clearHighLight(this.bpmnViewer._container,item.taskDefinitionKey)
+      this.bpmnOptions.additionalModules[0].utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],item.oldStyle)
     },
     handleClick(item){
       if(this.options.track){

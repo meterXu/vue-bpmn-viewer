@@ -8,7 +8,7 @@
                 @click="handleClick"
                 @viewChange="handleViewChange"></vue-bpmn>
     </div>
-    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData">
+    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData" :bpmnOptions="bpmnOptions">
       <slot></slot>
       <template v-slot:time="slotProps">
         <slot name="time" v-bind:item="slotProps.item">
@@ -119,7 +119,7 @@ export default {
   watch:{
     taskData:{
       handler:function (nv){
-        utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions)
+        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions)
       }
     }
   },
@@ -173,6 +173,7 @@ export default {
       window.bpmnViewer =  this.bpmnViewer
       utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
+      console.log(this.taskData)
       if(this.taskData&&this.taskData.length>0){
         let lastData = this.taskData[this.taskData.length-1]
         if(lastData.status!=='已办'&&this.myOptions.focus){

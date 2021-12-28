@@ -118,61 +118,61 @@ function utils() {
         return null
     }
 
-    this.setTaskHighlight = function (container, ids, options = {
-        color: '#5BC14B',
-        setline: false,
-        user: undefined,
-        shadow: false,
-        stroke: true
-    }) {
-        ids.forEach(id => {
-            this.clearHighLight(container, id)
-            const xx = setSingleTaskHighLight(container, id, options)
-            if (xx) {
-                taskHighlightTimer[id] = xx
-            }
-            if (options.setline) {
-                this.setFlowHighLight(container, id, options)
-            }
-        })
-    }
+    // this.setTaskHighlight = function (container, ids, options = {
+    //     color: '#5BC14B',
+    //     setline: false,
+    //     user: undefined,
+    //     shadow: false,
+    //     stroke: true
+    // }) {
+    //     ids.forEach(id => {
+    //         this.clearHighLight(container, id)
+    //         const xx = setSingleTaskHighLight(container, id, options)
+    //         if (xx) {
+    //             taskHighlightTimer[id] = xx
+    //         }
+    //         if (options.setline) {
+    //             this.setFlowHighLight(container, id, options)
+    //         }
+    //     })
+    // }
 
-    this.setFlowHighLight = function (container, id, options = {color: '#5BC14B'}) {
-        let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
-        if (paths) {
-            paths.forEach(c => {
-                let path = c.querySelector('path')
-                attr(path, {
-                    stroke: options.color
-                })
-                classes(path).add('highlight-custom-path')
-            })
+    // this.setFlowHighLight = function (container, id, options = {color: '#5BC14B'}) {
+    //     let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
+    //     if (paths) {
+    //         paths.forEach(c => {
+    //             let path = c.querySelector('path')
+    //             attr(path, {
+    //                 stroke: options.color
+    //             })
+    //             classes(path).add('highlight-custom-path')
+    //         })
+    //
+    //     }
+    //
+    // }
 
-        }
+    // this.clearAllFlowHighLight = function (container) {
+    //     let paths = container.querySelectorAll('.djs-connection path')
+    //     paths.forEach(c => {
+    //         attr(c, {
+    //             stroke: '#ccc'
+    //         })
+    //         classes(c).remove('highlight-custom-path')
+    //     })
+    // }
 
-    }
-
-    this.clearAllFlowHighLight = function (container) {
-        let paths = container.querySelectorAll('.djs-connection path')
-        paths.forEach(c => {
-            attr(c, {
-                stroke: '#ccc'
-            })
-            classes(c).remove('highlight-custom-path')
-        })
-    }
-
-    this.clearFlowHighLight = function (container, id) {
-        let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
-        if (paths) {
-            paths.forEach(c => {
-                attr(c, {
-                    stroke: '#ccc'
-                })
-                classes(c).remove('highlight-custom-path')
-            })
-        }
-    }
+    // this.clearFlowHighLight = function (container, id) {
+    //     let paths = container.querySelectorAll(`[data-targetRef-id="${id}"]`)
+    //     if (paths) {
+    //         paths.forEach(c => {
+    //             attr(c, {
+    //                 stroke: '#ccc'
+    //             })
+    //             classes(c).remove('highlight-custom-path')
+    //         })
+    //     }
+    // }
 
     this.setAllHighLight = function (container) {
         this.clearAllHighLight(container)
@@ -183,44 +183,44 @@ function utils() {
         this.setEndHighLight(container)
     }
 
-    this.setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#FD706D'}, setline = false) {
-        let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
-        if (endEvents.length > 0) {
-            endEvents.forEach(c => {
-                let circle = c.querySelector('circle')
-                attr(circle, {
-                    stroke: color.stroke,
-                    fill: color.fill,
-                })
-                if (setline) {
-                    this.setFlowHighLight(container, c.getAttribute('data-element-id'))
-                }
-            })
-        }
-    }
+    // this.setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#FD706D'}, setline = false) {
+    //     let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
+    //     if (endEvents.length > 0) {
+    //         endEvents.forEach(c => {
+    //             let circle = c.querySelector('circle')
+    //             attr(circle, {
+    //                 stroke: color.stroke,
+    //                 fill: color.fill,
+    //             })
+    //             if (setline) {
+    //                 this.setFlowHighLight(container, c.getAttribute('data-element-id'))
+    //             }
+    //         })
+    //     }
+    // }
 
-    this.clearAllHighLight = function (container) {
-        if (taskHighlightTimer) {
-            Object.keys(taskHighlightTimer).forEach(key => {
-                window.clearInterval(taskHighlightTimer[key])
-            })
-        }
-        taskHighlightTimer = {}
-        let tasks = container.querySelectorAll('[data-element-type="bpmn:userTask"]')
-        tasks.forEach(c => {
-            clearSingleTaskHighLight(container, c.getAttribute('data-element-id'))
-        })
-        this.setEndHighLight(container, {stroke: '#8f8f8f', fill: '#aaa'})
-        this.clearAllFlowHighLight(container)
-    }
+    // this.clearAllHighLight = function (container) {
+    //     if (taskHighlightTimer) {
+    //         Object.keys(taskHighlightTimer).forEach(key => {
+    //             window.clearInterval(taskHighlightTimer[key])
+    //         })
+    //     }
+    //     taskHighlightTimer = {}
+    //     let tasks = container.querySelectorAll('[data-element-type="bpmn:userTask"]')
+    //     tasks.forEach(c => {
+    //         clearSingleTaskHighLight(container, c.getAttribute('data-element-id'))
+    //     })
+    //     this.setEndHighLight(container, {stroke: '#8f8f8f', fill: '#aaa'})
+    //     this.clearAllFlowHighLight(container)
+    // }
 
-    this.clearHighLight = function (container, id) {
-        if (taskHighlightTimer) {
-            window.clearInterval(taskHighlightTimer[id])
-        }
-        clearSingleTaskHighLight(container, id)
-        this.clearFlowHighLight(container, id)
-    }
+    // this.clearHighLight = function (container, id) {
+    //     if (taskHighlightTimer) {
+    //         window.clearInterval(taskHighlightTimer[id])
+    //     }
+    //     clearSingleTaskHighLight(container, id)
+    //     this.clearFlowHighLight(container, id)
+    // }
 
     this.setTaskMaxDay = function (container, id, day) {
         let text = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .custom-max-day text`)
@@ -261,46 +261,46 @@ function utils() {
         }
         canvas.viewbox(newViewbox);
     }
-    this.taskSyncHighLight = function (container, bpmnObj, nv, options) {
-        this.clearAllHighLight(container, bpmnObj)
-        nv.forEach(c => {
-            switch (c.status) {
-                case '已办': {
-                    if (c.approveType === '驳回') {
-                        this.setTaskHighlight(container, [c.taskDefinitionKey], {
-                            color: '#ff0000',
-                            setline: false,
-                            shadow: false,
-                            type: 3,
-                            stroke: true
-                        })
-                    } else {
-                        this.setTaskHighlight(container, [c.taskDefinitionKey], {
-                            color: '#5BC14B',
-                            setline: false,
-                            shadow: false,
-                            type: 2,
-                            stroke: true
-                        })
-                    }
-                }
-                    break;
-                case '待办': {
-                    this.setTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: '#f5842c',
-                        setline: options.setline,
-                        shadow: false,
-                        type: 1,
-                        stroke: true
-                    })
-                }
-                    break;
-            }
-        })
-        if (nv.filter(c => c.status === '待办').length === 0) {
-            this.setEndHighLight(container, {stroke: '#5ac14a', fill: '#53D894'})
-        }
-    }
+    // this.taskSyncHighLight = function (container, bpmnObj, nv, options) {
+    //     this.clearAllHighLight(container, bpmnObj)
+    //     nv.forEach(c => {
+    //         switch (c.status) {
+    //             case '已办': {
+    //                 if (c.approveType === '驳回') {
+    //                     this.setTaskHighlight(container, [c.taskDefinitionKey], {
+    //                         color: '#ff0000',
+    //                         setline: false,
+    //                         shadow: false,
+    //                         type: 3,
+    //                         stroke: true
+    //                     })
+    //                 } else {
+    //                     this.setTaskHighlight(container, [c.taskDefinitionKey], {
+    //                         color: '#5BC14B',
+    //                         setline: false,
+    //                         shadow: false,
+    //                         type: 2,
+    //                         stroke: true
+    //                     })
+    //                 }
+    //             }
+    //                 break;
+    //             case '待办': {
+    //                 this.setTaskHighlight(container, [c.taskDefinitionKey], {
+    //                     color: '#f5842c',
+    //                     setline: options.setline,
+    //                     shadow: false,
+    //                     type: 1,
+    //                     stroke: true
+    //                 })
+    //             }
+    //                 break;
+    //         }
+    //     })
+    //     if (nv.filter(c => c.status === '待办').length === 0) {
+    //         this.setEndHighLight(container, {stroke: '#5ac14a', fill: '#53D894'})
+    //     }
+    // }
     this.clearWatermark = function () {
         if (document.querySelector('.bjs-powered-by')) {
             document.querySelector('.bjs-powered-by').remove()

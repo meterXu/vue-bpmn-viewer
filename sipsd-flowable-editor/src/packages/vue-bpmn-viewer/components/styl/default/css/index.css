@@ -1,3 +1,4 @@
+/*@import "../index.js";*/
 .dpark-bpmn-viewer[data-theme='default'] .clock-spin{
     transform-origin: 512px 512px;
     animation: spin 1s infinite;

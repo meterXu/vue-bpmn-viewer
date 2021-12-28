@@ -14,7 +14,7 @@
     </div>
     <div class="bt-layout-right">
       <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" @zoomReset="zoomReset"/>
-      <BTimeLine ref="cBTimeLine" :options="myOptions" :taskData="taskData" :bpmnViewer="bpmnViewer"
+      <BTimeLine ref="cBTimeLine" :options="myOptions" :taskData="taskData" :bpmnViewer="bpmnViewer" :bpmnOptions="bpmnOptions"
                  @itemClick="itemClick"
       >
         <template v-slot="slotProps">
@@ -31,7 +31,7 @@ import BTimeLine from './BTimeLine'
 import BTZoom from './BTZoom'
 export default {
 name: "BTLayout",
-  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData"],
+  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions"],
   data(){
     return{
       legend:[
