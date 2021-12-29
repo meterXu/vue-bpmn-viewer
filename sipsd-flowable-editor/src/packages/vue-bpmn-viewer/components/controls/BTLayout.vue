@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import BTimeLine from './BTimeLine'
-import BTZoom from './BTZoom'
+import BTimeLine from './BTimeLine.vue'
+import BTZoom from './BTZoom.vue'
 export default {
 name: "BTLayout",
   props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions"],

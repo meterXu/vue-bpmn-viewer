@@ -34,16 +34,10 @@
         </el-form>
       </el-aside>
       <el-main>
-        <VueBpmnViewer ref="vbv"
-                       :type="form.type"
-                       :baseApi="form.baseApi"
-                       :instanceId="form.instanceId"
-                       :xmlId="form.xmlId"
-                       :source="form.source"
-                       :timeData="timeData"
-                       :options="options"
-                       @click="handleClick"
-                       @viewChange="handleViewChange">
+        <VueBpmnViewer :type="1"
+                       baseApi="http://192.168.126.25/sipsd-flow-modeler/"
+                       xmlId="63d0e928-dd36-11eb-8d24-5e2c421612f0"
+                       :styl="{theme:'default'}">
           <template v-slot:time="slotProps">
             <p>{{slotProps.item.taskName}}</p>
             <p>审批类型：{{slotProps.item.approveType}}</p>

@@ -162,43 +162,63 @@ export let clearFlowHighLight = function (container, id) {
 export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors) {
     colorsArr = colors
     clearAllHighLight(container)
-    nv.forEach(c => {
-        switch (c.status) {
-            case '已办': {
-                if (c.approveType === '驳回') {
+    if(nv&&nv.length>0){
+        nv.forEach(c => {
+            switch (c.status) {
+                case '已办': {
+                    if (c.approveType === '驳回') {
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colorsArr[3],
+                            setline: false,
+                            shadow: false,
+                            type: 3,
+                            stroke: true
+                        })
+                    } else {
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colorsArr[2],
+                            setline: false,
+                            shadow: false,
+                            type: 2,
+                            stroke: true
+                        })
+                    }
+                }
+                    break;
+                case '待办': {
                     setTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: colorsArr[3],
-                        setline: false,
+                        color: colorsArr[1],
+                        setline: options.setline,
                         shadow: false,
-                        type: 3,
-                        stroke: true
-                    })
-                } else {
-                    setTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: colorsArr[2],
-                        setline: false,
-                        shadow: false,
-                        type: 2,
+                        type: 1,
                         stroke: true
                     })
                 }
+                    break;
             }
-                break;
-            case '待办': {
-                setTaskHighlight(container, [c.taskDefinitionKey], {
-                    color: colorsArr[1],
-                    setline: options.setline,
-                    shadow: false,
-                    type: 1,
-                    stroke: true
-                })
-            }
-                break;
+        })
+        if (nv.filter(c => c.status === '待办').length === 0) {
+            setEndHighLight(container, {stroke: '#5ac14a', fill: '#53D894'})
+        }
+    }
+}
+export let setStartTaskHighlight = function (container, ids, options = {
+    color: '#5BC14B',
+    setline: false,
+    user: undefined,
+    shadow: false,
+    stroke: true
+}) {
+    ids.forEach(id => {
+        this.clearHighLight(container, id)
+        const xx = setStaetSingleTaskHighLight(container, id, options)
+        if (xx) {
+            taskHighlightTimer[id] = xx
+        }
+        if (options.setline) {
+            this.setFlowHighLight(container, id, options)
         }
     })
-    if (nv.filter(c => c.status === '待办').length === 0) {
-        setEndHighLight(container, {stroke: '#5ac14a', fill: '#53D894'})
-    }
 }
 export let clearAllFlowHighLight = function (container) {
     let paths = container.querySelectorAll('.djs-connection path')
