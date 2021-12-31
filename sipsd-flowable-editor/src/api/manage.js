@@ -1,5 +1,6 @@
-import { axios } from '@/utils/request'
-
+import {request } from '@dpark/s2-utils'
+import project from '../project'
+const axios = request.getService(project)
 
 //post
 export function postAction(url,parameter) {

@@ -39,9 +39,9 @@ const project_bpmn = {
     autoHideHeader: false,
   },
   config: {
-    "logo": require("./assets/logo_sipsd.png"),
-    "darkLogo": require("./assets/logo_sipsd_white.png"),
-    "favicon": require("./assets/logo_sipsd_favicon.png"),
+    "logo": "static/dpark/logo_sipsd.png",
+    "darkLogo": "static/dpark/logo_sipsd_white.png",
+    "favicon": "static/dpark/logo_sipsd_favicon.png",
     "title": "sipsd-flowable-editor",
     "login": {
       "title": "bpmn-viewer",

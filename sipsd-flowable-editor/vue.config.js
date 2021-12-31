@@ -1,6 +1,7 @@
 const namespace = "bpmn"
 const CopyPlugin  = require('copy-webpack-plugin');
 module.exports = {
+  publicPath: './',
   lintOnSave: undefined,
   productionSourceMap: false,
   css: {
@@ -21,10 +22,6 @@ module.exports = {
       optimization: {
         runtimeChunk: false, // 依赖处理与bundle合并
         splitChunks: {
-          chunks: 'all',
-          maxSize: 102400,
-          maxAsyncRequests: 5,
-          maxInitialRequests: 3,
           cacheGroups: {
             default: false
           }
@@ -34,8 +31,8 @@ module.exports = {
         new CopyPlugin({patterns:
           [{
             from: './src/project.js', to: `biz/${namespace}/js/project.[contenthash:4].js`,
-            transform:(res,p)=>{
-              res = res.toString().replace('export default project_bpmn','')
+            transform: (res, p) => {
+              res = res.toString().replace(/export default project_.*/, '')
               return res
             }
           }]
@@ -43,23 +40,58 @@ module.exports = {
       ]
     }
   },
-  chainWebpack:config=>{
-    const svgRule = config.module.rule('svg');
-    svgRule.uses.clear();
-    config.module
-      .rule("images")
-        .test(/\.(png|jpe?g|gif|webp|svg)(\?.*)?$/)
-      .use("url-loader")
-      .tap(options => {
-        options.name = `biz/${namespace}/img/[name].[ext]`;
-        options.fallback = {
-          loader: "file-loader",
-          options: {
-            name: `biz/${namespace}/img/[name].[ext]`
+  chainWebpack: config => {
+    const imgRule = config.module.rule('images')
+    imgRule.use('url-loader')
+        .tap(options => {
+          options.name = `biz/${namespace}/img/[name].[hash:8].[ext]`
+          options.fallback = {
+            loader: 'file-loader',
+            options: {
+              name: `biz/${namespace}/img/[name].[hash:8].[ext]`
+            }
           }
-        };
-        return options;
-      })
+          return options
+        })
+    const svgRule = config.module.rule('svg')
+    svgRule
+        .use('file-loader')
+        .tap(options => {
+          options.name = `biz/${namespace}/img/[name].[hash:8].[ext]`
+          options.fallback = {
+            loader: 'file-loader',
+            options: {
+              name: `biz/${namespace}/img/[name].[hash:8].[ext]`
+            }
+          }
+          return options
+        })
+    const fontRule = config.module.rule('fonts')
+    fontRule
+        .use('url-loader')
+        .tap(options => {
+          options.name = `biz/${namespace}/fonts/[name].[hash:8].[ext]`
+          options.fallback = {
+            loader: 'file-loader',
+            options: {
+              name: `biz/${namespace}/fonts/[name].[hash:8].[ext]`
+            }
+          }
+          return options
+        })
+    const mediaRule = config.module.rule('media')
+    mediaRule
+        .use('url-loader')
+        .tap(options => {
+          options.name = `biz/${namespace}/media/[name].[hash:8].[ext]`
+          options.fallback = {
+            loader: 'file-loader',
+            options: {
+              name: `biz/${namespace}/media/[name].[hash:8].[ext]`
+            }
+          }
+          return options
+        })
   },
   devServer: {
     port: 8081
