@@ -5,6 +5,7 @@ import routes,{frameRoutes} from './routes'
 import {portal} from '@dpark/s2-utils'
 import "./assets/less/common.less";
 import 'element-ui/lib/theme-chalk/index.css'
+import elementUI from 'element-ui'
 import project from './project'
 import {staticPermission} from "./api";
 Vue.use(Vuels,{
@@ -25,4 +26,5 @@ portal.registerApp({routes,permission:_staticPer,store,frameRoutes,project},func
             console.error(err)
         }
     }
+    globaVue.use(elementUI)
 })
