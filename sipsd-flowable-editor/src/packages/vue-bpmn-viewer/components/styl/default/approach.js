@@ -10,7 +10,7 @@ function setSingleTaskHighLight(container, id, options) {
                 let rect = completeTask.querySelector('.djs-visual rect')
                 let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
                 let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
-                let user = completeTask.querySelectorAll('.djs-visual text')[1]
+                let user = completeTask.querySelectorAll('.djs-visual .d-userTask-content .d-con-user span')[0]
                 if (options.user) {
                     user.innerHTML = options.user
                 } else {

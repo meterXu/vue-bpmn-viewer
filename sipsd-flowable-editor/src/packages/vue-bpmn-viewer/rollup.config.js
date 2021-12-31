@@ -24,7 +24,7 @@ function pgl() {
                 cssnano(),
                 postcssUrl({
                     url: "inline",
-                    maxSize: 10,
+                    maxSize: 100,
                     fallback: "copy"
                 })
             ],

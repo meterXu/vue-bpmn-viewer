@@ -1,5 +1,4 @@
 .dpark-bpmn-viewer[data-theme='default'] .clock-spin{
-    transform-origin: 512px 512px;
     animation: spin 1s infinite;
     animation-timing-function:linear;
 }
@@ -25,7 +24,53 @@
     animation: complete 2s infinite;
     animation-timing-function:linear;
 }
-
+.dpark-bpmn-viewer[data-theme='default'] .d-userTask-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-userTask-content ul{
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    list-style: none;
+    padding-right: 6px;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-userTask-content ul li{
+    height: 24px;
+    line-height: 24px;
+    color: #cdcdcd;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-userTask-content li{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-userTask-content span{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-con-user-icon,.dpark-bpmn-viewer[data-theme='default'] .d-con-clock-icon{
+    display: inline-block;
+    background: url("../icons/user.svg") no-repeat center center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+    margin: 0 4px;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-con-clock-icon{
+    background: url("../icons/clock.svg") no-repeat center center;
+    background-size: contain;
+}
+.dpark-bpmn-viewer[data-theme='default'] .d-con-user-icon:after,.dpark-bpmn-viewer[data-theme='default'] .d-con-clock-icon:after{
+    content: '';
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+}
 @keyframes complete {
     0%{
         stroke-dashoffset:0;
