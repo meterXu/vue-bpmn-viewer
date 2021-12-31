@@ -190,14 +190,14 @@ function createCon(options,text,clock){
     let div = document.createElement("div");
     div.classList.add('d-userTask-content')
     div.innerHTML=`
-    <ul style="max-width: ${options.width}px">
+    <ul style="max-width: ${options.width-6}px">
         <li class="d-con-user">
             <i class="d-con-user-icon"></i>
-            <span style="color:${text?'#6c6c6c':''}">${text||'未分配'}</span>
+            <span title="${text||'未分配'}" style="color:${text?'#6c6c6c':''}">${text||'未分配'}</span>
         </li>
        <li class="d-con-clock">
             <i class="${clock?'d-con-clock-icon clock-spin':'d-con-clock-icon'}"></i>
-            <span style="color:${clock?'#f88062':''}">${clock||'-'}</span>
+            <span title="${clock||'-'}" style="color:${clock?'#f88062':''}">${clock||'-'}</span>
        </li>
     </ul>`
     append(foreignObject,div)
