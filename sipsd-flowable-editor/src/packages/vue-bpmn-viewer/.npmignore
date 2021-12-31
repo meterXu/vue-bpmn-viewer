@@ -1,6 +1,6 @@
 !dist
-index.js
+!index.js
 rollup.config.js
 yarn.lock
 assets
-components
+!components

@@ -97,20 +97,6 @@ export default (options)=>{
         rx:0,
         ry:0
     }))
-    // let text = create('text',{
-    //     x:24,
-    //     y:18,
-    //     fontSize:'12px',
-    //     fontWeight:400,
-    //     fill: "#333"
-    // })
-    // if(options.width<=100&&options.businessObject.name){
-    //     text.innerHTML=options.businessObject.name.substring(0,5)||'-'
-    // }
-    // else {
-    //     text.innerHTML=options.businessObject.name||'-'
-    // }
-    // append(g,text)
     classes(rect).add('d-userTask')
 
     // 设置标题图标和内容
@@ -145,13 +131,6 @@ function userObj(options){
          text = createUnConText()
     }
     append(user,text)
-    // if(icon){
-    //     append(user,icon)
-    // }
-    // let clock = clockObj(options)
-    // if(clock){
-    //     append(user,clock)
-    // }
     return user
 }
 

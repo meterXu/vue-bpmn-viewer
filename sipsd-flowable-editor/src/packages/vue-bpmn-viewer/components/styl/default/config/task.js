@@ -83,7 +83,7 @@ export default (options)=>{
         rx:4,
         ry:4
     }))
-    append(g,create('rect',{
+    let titleRect = create('rect',{
         x:1,
         y:5,
         width:options.width-1,
@@ -91,27 +91,26 @@ export default (options)=>{
         fill: "#aaaaaa",
         rx:0,
         ry:0
-    }))
-    let text = create('text',{
-        x:24,
-        y:18,
-        fontSize:'12px',
-        fontWeight:700,
-        fill: "#fff"
     })
-    if(options.width<=100&&options.businessObject.name){
-        text.innerHTML=options.businessObject.name.substring(0,5)||'-'
-    }
-    else {
-        text.innerHTML=options.businessObject.name||'-'
-    }
-    append(g,text)
-    classes(rect).add('d-userTask')
+    append(g,titleRect)
 
+    let foreignObject = create('foreignObject',{
+        x:1,
+        y:5,
+        width:options.width-1,
+        height:20,
+    })
+    let div = document.createElement("div");
+    div.classList.add('d-userTask-title')
+    div.innerText=options.businessObject.name||'-'
+    div.title=div.innerText
+    append(foreignObject,div)
+    append(g,foreignObject)
+
+    classes(rect).add('d-userTask')
     // 设置标题图标和内容
     let titleIcon = taskIcon[type].icon()
     append(g,titleIcon)
-
     let content = taskIcon[type].content(options)
     append(g,content)
     return g
