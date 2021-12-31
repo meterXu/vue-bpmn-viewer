@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.73",
+  "version": "1.0.75",
   "description": "沃壤平台工作流引擎执行器",
   "main": "dist/index.js",
   "scripts": {
