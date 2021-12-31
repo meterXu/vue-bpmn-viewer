@@ -8,7 +8,7 @@
                 @click="handleClick"
                 @viewChange="handleViewChange"></vue-bpmn>
     </div>
-    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData">
+    <BTLayout :showBpmn="showBpmn" :myOptions="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" :taskData="taskData" :bpmnOptions="bpmnOptions">
       <slot></slot>
       <template v-slot:time="slotProps">
         <slot name="time" v-bind:item="slotProps.item">
@@ -21,7 +21,8 @@
 <script>
 import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeDefault from './styl/default/index.js'
-import BTLayout from './controls/BTLayout'
+import bpmnThemeClassic from './styl/classic/index.js'
+import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
 import {LogFv} from '@dpark/logfv-web-vue'
 import utils from './controls/lib/utils'
@@ -36,7 +37,7 @@ export default {
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
-    styl:{type:Object,default(){return {theme:null,stylMap:null}}},
+    styl:{type:Object,default(){return {theme:null,stylMap: null}}},
     logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
   },
   components:{
@@ -91,7 +92,8 @@ export default {
       let _styl =  {
         theme:'default',
         stylMap:{
-          default:bpmnThemeDefault
+          default:bpmnThemeDefault,
+          classic:bpmnThemeClassic
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
@@ -119,7 +121,7 @@ export default {
   watch:{
     taskData:{
       handler:function (nv){
-        utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions)
+        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions,this.bpmnOptions.additionalModules[0].colors)
       }
     }
   },

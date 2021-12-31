@@ -76,9 +76,7 @@ export default {
                  :baseApi="baseApi"
                  :instanceId="instanceId"
                  :options="options"
-                  :styl="{theme:'myStyl',stylMap:{
-                    myStyl:bpmnThemeMyStyl
-                  }}">
+                 :styl="styl">
   </VueBpmnViewer>
 </template>
 <script>
@@ -91,6 +89,14 @@ export default {
       instanceId:'e6c573bcc99211eba5465e2c421612f0',
       options:{
         timeLine:true
+      },
+      styl: {
+        theme:"classic",
+        stylMap: {
+          classic: {
+            color: ["#8f8f8f","#f5eb2c","#63ee6a","#ff0000"]
+          }
+        }
       }
     }
   }
@@ -105,6 +111,7 @@ export default {
 |source|流程图xml地址或者xml字符串|null|
 |baseApi|工作流引擎后端地址，如果配置了source，则该属性不生效|null|
 |xmlId|流程图ID，配合baseApi使用|null|
+|styl|流程图主题，目前支持两种主题default、classic|{theme:"default"}}|
 |instanceId|flowable实例ID，配合baseApi使用|null|
 |type|流程图显示模式|1：流程图，2：流程实例，配合baseApi使用|
 |timeData|时间轴数据，此数据会替换接口获得的数据|null|

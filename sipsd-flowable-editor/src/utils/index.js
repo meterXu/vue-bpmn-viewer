@@ -17,7 +17,6 @@ export async function registerApp (app,callback){
 }
 
 export function getAssets(path){
-    console.log(path)
     if(process.env.NODE_ENV==="development"){
         const script=document.querySelector("script[src*='"+bl_project.namespace+".js']")
         let src =script.getAttribute('src')
