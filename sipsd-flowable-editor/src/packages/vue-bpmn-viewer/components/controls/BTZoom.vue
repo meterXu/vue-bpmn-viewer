@@ -50,9 +50,6 @@ export default {
         }
       }
     }
-  },
-  destroyed() {
-    utils.clearAllHighLight(this.bpmnViewer._container)
   }
 }
 </script>

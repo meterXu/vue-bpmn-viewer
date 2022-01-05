@@ -5,6 +5,7 @@ import { terser } from 'rollup-plugin-terser'
 import vue from "rollup-plugin-vue";
 import cssnano from 'cssnano';
 import postcss from 'rollup-plugin-postcss'
+import postcssUrl from 'postcss-url'
 function pgl() {
     return [
         cjs(),
@@ -21,6 +22,11 @@ function pgl() {
         postcss({
             plugins: [
                 cssnano(),
+                postcssUrl({
+                    url: "inline",
+                    maxSize: 100,
+                    fallback: "copy"
+                })
             ],
             extensions: [ '.css' ],
         }),

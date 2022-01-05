@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <img alt="Vue logo" :src="getAssetsImg(require('../assets/logo.png'))" :style="{'width':size}">
+    <img alt="Vue logo" :src="require('../assets/logo.png')" :style="{'width':size}">
     <h1>{{msg}}</h1>
   </div>
 </template>

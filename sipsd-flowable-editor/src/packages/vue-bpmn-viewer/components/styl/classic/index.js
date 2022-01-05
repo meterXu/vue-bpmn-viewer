@@ -1,9 +1,15 @@
 import './css/index.css'
 import custom from './custom'
-import {setTaskHighlight,setEndHighLight,setFlowHighLight,clearHighLight,clearFlowHighLight,taskSyncHighLight} from './approach'
+import {
+    clearFlowHighLight,
+    clearHighLight,
+    setEndHighLight,
+    setFlowHighLight, setStartTaskHighlight,
+    setTaskHighlight, taskSyncHighLight
+} from "../classic/approach";
 export default {
-    __init__: ['bpmn-theme-default'],
-    'bpmn-theme-default': ['type', custom],
+    __init__: ['bpmn-theme-blue'],
+    'bpmn-theme-blue': ['type', custom],
     'utils':{
         setTaskHighlight:setTaskHighlight,
         // setStartHighLight:null,
@@ -11,6 +17,7 @@ export default {
         setFlowHighLight:setFlowHighLight,
         // clearStartHighLight:null,
         // clearEndHighLight:null,
+        setStartTaskHighlight: setStartTaskHighlight,
         clearHighLight:clearHighLight,
         clearFlowHighLight:clearFlowHighLight,
         taskSyncHighLight: taskSyncHighLight

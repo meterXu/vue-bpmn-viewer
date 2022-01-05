@@ -1,12 +1,8 @@
-import Vue from 'vue'
-import axios from 'axios'
-import {globalStore,project} from '@/utils'
-import { ACCESS_TOKEN} from "@/utils/mutation-types"
-import {parseRoutes} from '@/utils/util'
+import {util} from '@dpark/s2-utils'
 
 export function staticPermission(){
     return {
-        menu:parseRoutes([
+        menu:util.parseRoutes([
             {
                 'path':'/bpmn',
                 'name':'@getRoutesName(path)',

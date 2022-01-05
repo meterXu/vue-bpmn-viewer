@@ -5,7 +5,7 @@
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
-                   :options="{zoom,timeLine,fit,setline,static}">
+                   :options="{zoom,timeLine,fit,setline,static,focus,track}">
     </VueBpmnViewer>
   </div>
 </template>
@@ -26,13 +26,14 @@ export default {
       zoom:true,
       timeLine:true,
       setline:false,
+      focus:false,
       fit:false,
       static:false,
-      log:false
+      log:false,
+      track:false
     }
   },
   created() {
-    this.baseApi = this.$project_bpmn.variable.baseApi
     this.type = parseInt(this.$route.query.type)
     this.instanceId = this.$route.query.instanceId
     this.xmlId = this.$route.query.xmlId
@@ -41,6 +42,8 @@ export default {
     this.fit = (this.$route.query.fit||'false')==='true'
     this.static = (this.$route.query.static||'false')==='true'
     this.setline = (this.$route.query.setline||'false')==='true'
+    this.focus = (this.$route.query.focus||'false')==='true'
+    this.track = (this.$route.query.track||'false')==='true'
     this.baseApi = this.$project_bpmn.variable.baseApi
     if(this.type===1){
       this.timeLine = false

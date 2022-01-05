@@ -5,6 +5,7 @@
 <script>
 import BpmnJS from 'bpmn-js/dist/bpmn-navigated-viewer.development.js';
 import BpmnViewer from "bpmn-js/lib/Viewer"
+import utils from "../controls/lib/utils";
 export default {
   name: 'VueBpmn',
   props: {
@@ -49,9 +50,10 @@ export default {
           }
         });
       }
+      utils.clearWatermark()
       this.fetchDiagram(this.url).then(xml=>{
         this.drawXml(xml)
-      });
+      })
     },
     fetchDiagram: function(url) {
       return new Promise((resolve, reject)=>{
