@@ -1,0 +1,37 @@
+spring:
+    boot:
+        admin:
+            client:
+                #springboot admin client连接 spring boot admin server 端点地址springboot admin client连接 spring boot admin server 端点地址
+                url: http://192.168.77.1:8200
+                instance:
+                    #默认使用的是主机名注册，改为使用ip注册
+                    prefer-ip: true
+                    name: sipsd-flowable-manager
+                    ##使用元数据
+                    metadata:
+                        tags:
+                            environment: dev
+                    service-base-url: http://192.168.77.1:9001
+                username: admin
+                password: 123@abcd
+management:
+    endpoints:
+        web:
+            exposure:
+                #开放所有页面节点  默认只开启了health、info两个节点
+                include: '*'
+    endpoint:
+        health:
+            #显示健康具体信息  默认不会显示详细信息
+            show-details: always
+    #使用信息端点
+info:
+    version: 沃壤工作流
+    groupId: com.sipsd
+    artifactId: sipsd-flowable-manager
+    tags:
+        environment: 开发环境
+        name: 沃壤工作流
+
+

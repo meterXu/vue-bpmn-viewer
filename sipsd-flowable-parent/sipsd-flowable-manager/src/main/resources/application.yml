@@ -19,18 +19,18 @@ flowable:
       authentication-mode: verify-privilege
   xml:
     encoding: UTF-8
-management:
-  endpoint:
-    health:
-      roles: access-admin
-      show-details: when_authorized
-  endpoints:
-    jmx:
-      unique-names: true
-    web:
-      exposure:
-        include: '*'
-        
+#management:
+#  endpoint:
+#    health:
+#      roles: access-admin
+#      show-details: when_authorized
+#  endpoints:
+#    jmx:
+#      unique-names: true
+#    web:
+#      exposure:
+#        include: '*'
+
 mybatis-plus:
   #config-location: classpath:/META-INF/mybatis-config.xml
   mapper-locations: classpath:/META-INF/sipsd-mybatis-mappings/*/xml/*.xml,classpath:/META-INF/modeler-mybatis-mappings/*.xml
@@ -84,4 +84,4 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
   profiles:
-    active: dev
+    active: dev,admin
