@@ -1148,15 +1148,15 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			} else {
 				// B为其他并行网关上的节点
 				ParallelGatwayDTO currentTopPgw = allForkGatewayMap.get(currentNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
-				while (currentTopPgw.getParentParallelGatwayDTO() != null) {
+				while (currentTopPgw != null && currentTopPgw.getParentParallelGatwayDTO() != null) {
 					currentTopPgw = currentTopPgw.getParentParallelGatwayDTO();
 				}
 				ParallelGatwayDTO targetTopPgw = allForkGatewayMap.get(targetNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
-				while (targetTopPgw.getParentParallelGatwayDTO() != null) {
+				while ( targetTopPgw != null && targetTopPgw.getParentParallelGatwayDTO() != null) {
 					targetTopPgw = targetTopPgw.getParentParallelGatwayDTO();
 				}
 
-				if (currentTopPgw.getForkId().equals(targetTopPgw.getForkId())) {
+				if ( currentTopPgw != null &&  targetTopPgw!= null && currentTopPgw.getForkId().equals(targetTopPgw.getForkId())) {
 					logger.info("相同顶级父并行网关下的节点不可进行跳转操作，currentNode={} targetNode={}", currentNode.getTaskDefKey(), targetNode.getTaskDefKey());
 					return GatewayJumpTypeEnum.NO_SUPPORT_JUMP;
 				}
@@ -1322,11 +1322,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		currentNode.getChildForkParallelGatewayIds().forEach(item -> taskKeys.addAll(allForkGatewayMap.get(item).getUserTaskModels().keySet()));
 		// 所有并行网关内的用户keys
 		ParallelGatwayDTO parallelGatwayDTO = allForkGatewayMap.get(currentNode.getForkParallelGatewayId());
-		ParallelGatwayDTO parentParallelGatwayDTO = parallelGatwayDTO.getParentParallelGatwayDTO();
-		while (parentParallelGatwayDTO != null) {
-			taskKeys.addAll(parentParallelGatwayDTO.getUserTaskModels().keySet());
-			parentParallelGatwayDTO = parentParallelGatwayDTO.getParentParallelGatwayDTO();
-		}
+		LinkedHashMap<String, BpmTaskModelEntity> userTaskModels = parallelGatwayDTO.getUserTaskModels();
+		taskKeys.addAll(userTaskModels.keySet());
 
 		return taskKeys;
 	}
