@@ -103,7 +103,6 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
         const type = element.type // 获取到类型
         if (customElements.includes(type)) {
             if(type==='bpmn:SubProcess') {
-                debugger
                 const shape = this.bpmnRenderer.drawShape(parentNode, element)
                 const rect = drawRect(parentNode, element.width, element.height, 2, '#52B415');
                 prependTo(rect, parentNode);
