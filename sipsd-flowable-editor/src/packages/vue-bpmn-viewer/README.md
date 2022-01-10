@@ -127,7 +127,7 @@ export default {
 |static|是否静态不可拖动|false|
 |log|是否记录使用日志|false|
 |setline|是否显示动态线条(实验性功能，待完善)|false|
-|zoomScroll|是否滚动缩放|false|
+|scrollZoom|是否滚动缩放|false|
 |track|时间轴和流程图是否追踪高亮|false|
 |focus|流程图是否聚焦居中|false|
 
