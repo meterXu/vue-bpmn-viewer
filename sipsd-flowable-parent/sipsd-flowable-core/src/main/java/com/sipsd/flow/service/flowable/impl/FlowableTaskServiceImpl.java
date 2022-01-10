@@ -1105,7 +1105,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		} else if (gatewayJumpFlag.equals(GatewayJumpTypeEnum.TO_OUT_OTHER_PARALLEL)) {
 			// 获取本并行网关上的全部任务
 			Set<String> taskKeys = getMyOtherForkGatewayTaskKeys(
-					currentNode, userTaskModelsDTO.getAllForkGatewayMap());
+					currentNode, userTaskModelsDTO.getAllForkGatewayMap(),task);
 
 			String forkParallelGatwayId = targetNodes.get(0).getForkParallelGatewayId();
 			ParallelGatwayDTO forkGatewayB = userTaskModelsDTO.getAllForkGatewayMap().get(forkParallelGatwayId);
@@ -1148,15 +1148,15 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			} else {
 				// B为其他并行网关上的节点
 				ParallelGatwayDTO currentTopPgw = allForkGatewayMap.get(currentNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
-				while (currentTopPgw.getParentParallelGatwayDTO() != null) {
+				while (currentTopPgw != null && currentTopPgw.getParentParallelGatwayDTO() != null) {
 					currentTopPgw = currentTopPgw.getParentParallelGatwayDTO();
 				}
 				ParallelGatwayDTO targetTopPgw = allForkGatewayMap.get(targetNode.getForkParallelGatewayId()).getParentParallelGatwayDTO();
-				while (targetTopPgw.getParentParallelGatwayDTO() != null) {
+				while ( targetTopPgw != null && targetTopPgw.getParentParallelGatwayDTO() != null) {
 					targetTopPgw = targetTopPgw.getParentParallelGatwayDTO();
 				}
 
-				if (currentTopPgw.getForkId().equals(targetTopPgw.getForkId())) {
+				if ( currentTopPgw != null &&  targetTopPgw!= null && currentTopPgw.getForkId().equals(targetTopPgw.getForkId())) {
 					logger.info("相同顶级父并行网关下的节点不可进行跳转操作，currentNode={} targetNode={}", currentNode.getTaskDefKey(), targetNode.getTaskDefKey());
 					return GatewayJumpTypeEnum.NO_SUPPORT_JUMP;
 				}
@@ -1247,13 +1247,13 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private void deleteMyRelateTask(Set<String> deleteTaskKeys, Task currentTask) {
 		deleteTaskKeys.remove(currentTask.getTaskDefinitionKey());
 		TaskQuery taskQuery = taskService.createTaskQuery().processInstanceId(currentTask.getProcessInstanceId());
-		taskQuery.or();
-		deleteTaskKeys.forEach(taskQuery::taskDefinitionKey);
-		taskQuery.endOr();
-		List<Task> runningTasks = taskQuery.list();
-		if (runningTasks != null) {
-			runningTasks.forEach(item -> deleteExecutionByTaskId(item.getId()));
+		for(String deleteDefKey : deleteTaskKeys){
+			List<Task> runningTasks = taskQuery.taskDefinitionKey(deleteDefKey).list();
+			if (runningTasks != null) {
+				runningTasks.forEach(item -> deleteExecutionByTaskId(item.getId()));
+			}
 		}
+
 	}
 	/**
 	 * 场景一、由于多实例（串行）减签操作有异常数据产生，所以该方法用于删除部分异常数据，flowable BUG
@@ -1307,27 +1307,34 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	}
 
 	/**
-	 * 本节点所在的全部相关网(包括父子并行网关)内的任务定义的key，除了本节点之外
+	 * 本节点所在的全部相关网(包括父子并行网关)内的任务定义的key，除了本节点之外(正在运行当中)
 	 *
 	 * @param currentNode       ignore
 	 * @param allForkGatewayMap ignore
 	 * @return Set<String>
 	 */
-	private Set<String> getMyOtherForkGatewayTaskKeys(BpmTaskModelEntity currentNode, Map<String, ParallelGatwayDTO> allForkGatewayMap) {
-		Set<String> taskKeys = new HashSet<>(4);
+	private Set<String> getMyOtherForkGatewayTaskKeys(BpmTaskModelEntity currentNode, Map<String, ParallelGatwayDTO> allForkGatewayMap,Task task) {
+		Set<String> otherTaskKeys = new HashSet<>(4);
+
 		if (!currentNode.getInParallelGateway()) {
-			return taskKeys;
+			return otherTaskKeys;
 		}
+
+		Set<String> taskKeys = new HashSet<>(4);
 		// 所有子网关内的用户keys
 		currentNode.getChildForkParallelGatewayIds().forEach(item -> taskKeys.addAll(allForkGatewayMap.get(item).getUserTaskModels().keySet()));
 		// 所有并行网关内的用户keys
 		ParallelGatwayDTO parallelGatwayDTO = allForkGatewayMap.get(currentNode.getForkParallelGatewayId());
-		ParallelGatwayDTO parentParallelGatwayDTO = parallelGatwayDTO.getParentParallelGatwayDTO();
-		while (parentParallelGatwayDTO != null) {
-			taskKeys.addAll(parentParallelGatwayDTO.getUserTaskModels().keySet());
-			parentParallelGatwayDTO = parentParallelGatwayDTO.getParentParallelGatwayDTO();
-		}
+		LinkedHashMap<String, BpmTaskModelEntity> userTaskModels = parallelGatwayDTO.getUserTaskModels();
+		taskKeys.addAll(userTaskModels.keySet());
+		taskKeys.remove(currentNode.getTaskDefKey());
 
-		return taskKeys;
+		for(String defKey : taskKeys){
+			List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(defKey).active().list();
+			if(CollUtil.isNotEmpty(taskList)){
+				otherTaskKeys.add(defKey);
+			}
+		}
+		return otherTaskKeys;
 	}
 }

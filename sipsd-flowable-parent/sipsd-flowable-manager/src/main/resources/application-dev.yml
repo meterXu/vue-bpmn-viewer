@@ -45,7 +45,7 @@ info:
         description: "@project.description@"  
         version: "@project.version@"  
         spring-boot-version: "@project.parent.version@"
-security : 
+security :
     basic :
         enabled:false
 sipsd:
