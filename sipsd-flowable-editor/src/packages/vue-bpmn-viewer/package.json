@@ -19,7 +19,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@dpark/logfv-web-vue": "^1.0.24",
+    "@dpark/logfv-web-vue": "^1.0.25",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
     "diagram-js": "^7.8.1",
