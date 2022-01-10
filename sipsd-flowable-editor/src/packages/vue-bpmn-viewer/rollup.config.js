@@ -17,7 +17,7 @@ function pgl() {
         url({
             include: ['**/*.svg', '**/*.png', '**/*.jpg', '**/*.gif', '**/*.woff', '**/*.woff2'],
             limit: Infinity,
-            publicPath: '/assets',
+            publicPath: '/icons',
         }),
         postcss({
             plugins: [

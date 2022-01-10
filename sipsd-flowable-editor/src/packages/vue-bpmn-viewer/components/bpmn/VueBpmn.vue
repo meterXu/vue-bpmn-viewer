@@ -33,6 +33,7 @@ export default {
       let _options = Object.assign({
         container: this.$refs.graphics,
       },this.options)
+      console.log(_options)
       if(!this.bpmnViewer) {
         if(this.viewer){
           this.bpmnViewer = new BpmnViewer(_options);
