@@ -6,7 +6,7 @@ import {
 import {
     assign,
 } from 'min-dash';
-import customConfig from './config'
+import customConfig from './config/index.js'
 import {getDi} from "bpmn-js/lib/draw/BpmnRenderUtil";
 
 const HIGH_PRIORITY = 1500 // 最高优先级

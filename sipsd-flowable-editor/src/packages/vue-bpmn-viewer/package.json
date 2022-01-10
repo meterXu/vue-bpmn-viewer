@@ -22,6 +22,8 @@
     "@dpark/logfv-web-vue": "^1.0.24",
     "axios": "^0.18.0",
     "bpmn-js": "^8.2.2",
+    "diagram-js": "^7.8.1",
+    "min-dash": "^3.8.0",
     "moment": "^2.29.1",
     "pretty-ms": "^7.0.1",
     "tiny-svg": "^2.2.2",

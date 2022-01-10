@@ -37,6 +37,7 @@ export default (options)=>{
         fill:'#fff',
         filter:`url(#f1_${options.element.id})`
     })
+    // 创建投影
     const filter = create('filter',{
         id:"f1_"+options.element.id,
         x:0,
@@ -59,7 +60,6 @@ export default (options)=>{
               0 0 0 0 0
               0 0 0 0.1 0`
     })
-
     append(filter,feColorMatrix)
     classes(feColorMatrix).add('highlight-custom-rect')
     append(filter,create('feGaussianBlur',{
@@ -74,6 +74,8 @@ export default (options)=>{
     }))
     append(g,append(create('defs'),filter))
     append(g,rect)
+    classes(rect).add('d-userTask')
+    // 创建标题
     append(g,create('rect',{
         x:1,
         y:1,
@@ -93,7 +95,6 @@ export default (options)=>{
         ry:0
     })
     append(g,titleRect)
-
     let foreignObject = create('foreignObject',{
         x:1,
         y:5,
@@ -106,9 +107,7 @@ export default (options)=>{
     div.title=div.innerText
     append(foreignObject,div)
     append(g,foreignObject)
-
-    classes(rect).add('d-userTask')
-    // 设置标题图标和内容
+    // 设置标题图标和task内容
     let titleIcon = taskIcon[type].icon()
     append(g,titleIcon)
     let content = taskIcon[type].content(options)

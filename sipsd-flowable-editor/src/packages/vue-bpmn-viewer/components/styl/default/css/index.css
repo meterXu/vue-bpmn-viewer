@@ -18,6 +18,16 @@
     white-space: nowrap;
     height: 100%;
 }
+.dpark-bpmn-viewer[data-theme='default'] .d-subProcess-title{
+    text-align: left;
+    font-size: 12px;
+    color: #fff;
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
 .dpark-bpmn-viewer[data-theme='default'] .highlight-custom-path{
     stroke-dasharray:6;
     animation: complete 2s infinite;

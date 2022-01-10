@@ -3,11 +3,9 @@ import {
     append,
     append as svgAppend, attr, create,remove
 } from 'tiny-svg';
-import {
-    assign,
-} from 'min-dash';
-import customConfig from './config'
-import {getDi} from "bpmn-js/lib/draw/BpmnRenderUtil";
+import {assign} from 'min-dash';
+import customConfig from './config/index.js'
+import {getDi} from "bpmn-js/lib/draw/BpmnRenderUtil.js";
 
 const HIGH_PRIORITY = 1500 // 最高优先级
 const customElements = Object.keys(customConfig)
@@ -99,16 +97,8 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
 
     }
     drawShape(parentNode, element) {
-        console.log(element)
         const type = element.type // 获取到类型
         if (customElements.includes(type)) {
-            if(type==='bpmn:SubProcess') {
-                const shape = this.bpmnRenderer.drawShape(parentNode, element)
-                const rect = drawRect(parentNode, element.width, element.height, 2, '#52B415');
-                prependTo(rect, parentNode);
-                remove(shape);
-                return shape
-            }
             const { draw} = customConfig[type]
             const customIcon = draw({
                 width:element.width,
@@ -117,23 +107,17 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
                 parentNode,
                 element
             })
-
-            attr(customIcon,{
-                'data-element-id':element.id
-            })
-            svgAppend(parentNode, customIcon)
+            if(customIcon){
+                attr(customIcon,{
+                    'data-element-id':element.id
+                })
+                svgAppend(parentNode, customIcon)
+            }
             return customIcon
         }else{
             const di =getDi(element)
             di.set('bioc:stroke','#999')
             const shape = this.bpmnRenderer.drawShape(parentNode, element)
-            // let shape
-            // debugger
-            // if(element.type==='bpmn:SubProcess') {
-            //     // shape= this.bpmnRenderer.drawShape(parentNode, element)
-            // } else {
-            //     shape = this.bpmnRenderer.drawShape(parentNode, element)
-            // }
             return shape
         }
     }
@@ -144,26 +128,3 @@ export default class CustomRenderer extends BaseRenderer { // 继承BaseRendere
 }
 
 CustomRenderer.$inject = ['eventBus', 'bpmnRenderer']
-// copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
-function drawRect(parentNode, width, height, borderRadius, strokeColor) {
-    const rect = create('rect');
-
-    attr(rect, {
-        width: width,
-        height: height,
-        rx: borderRadius,
-        ry: borderRadius,
-        stroke: strokeColor || '#000',
-        strokeWidth: 2,
-        fill: '#fff',
-    });
-
-    svgAppend(parentNode, rect);
-
-    return rect;
-}
-
-// copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
-function prependTo(newNode, parentNode, siblingNode) {
-    parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild);
-}
