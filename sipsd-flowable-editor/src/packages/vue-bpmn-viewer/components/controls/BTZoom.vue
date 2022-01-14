@@ -19,11 +19,6 @@
       <li class="icon icon-minus" @click="handleZoomOut">
       </li>
     </ul>
-    <DownloadModel ref="downloadModel"
-                   :baseApi="baseApi" :xmlId="xmlId"
-                   :type="type" :source="source" :timeData="timeData"
-                   :options="options" :styl="styl"
-                   @close="closeModel"></DownloadModel>
   </div>
 </template>
 
@@ -32,7 +27,6 @@ import utils from "./lib/utils.js";
 import * as htmlToImage from 'html-to-image';
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 import download from "downloadjs"
-import DownloadModel from "./DownloadModel.vue"
 export default {
   name: "BTZoom",
   props: ['bpmnViewer', 'myOptions','selectKey',"baseApi","xmlId","type","source","timeData","options","styl"],
@@ -42,7 +36,6 @@ export default {
       dialogVisible: false
     }
   },
-  components:{DownloadModel},
   methods: {
     handleZoomReset() {
       utils.setView(this.bpmnViewer,this.myOptions,this.selectKey)
@@ -68,7 +61,7 @@ export default {
     },
     download() {
       if(this.bpmnViewer){
-        this.$refs.downloadModel.init()
+        this.$emit('download')
         // let Html = document.querySelector(".djs-container")
         // let g = document.querySelector(".djs-container svg g")
         // let width= document.getElementsByClassName('viewport')[0].getBBox().width
@@ -82,9 +75,6 @@ export default {
         //       download(dataUrl, 'my-node.png');
         //     });
       }
-    },
-    closeModel() {
-      console.log(2222)
     }
   }
 }

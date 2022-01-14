@@ -1,5 +1,5 @@
 <template>
-  <div class="mask-layer" v-if="showClose">
+  <div class="mask-layer" v-if="visible">
     <div class="content-layer">
       <div class="content-top">
         <div style="color: #8a8a8a">流程图下载</div>
@@ -9,16 +9,7 @@
       </div>
       <div class="content-inside">
               <div class="download-model">
-                <VueBpmnViewer
-                    :type="type"
-                    :baseApi="baseApi"
-                    :xmlId="xmlId"
-                    :source="source"
-                    :timeData="timeData"
-                    :options="options"
-                    :styl="styl"
-                    style="height: 100%">
-                </VueBpmnViewer>
+                <slot></slot>
               </div>
       </div>
     </div>
@@ -26,13 +17,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import {portal} from "@dpark/s2-utils"
-import VueBpmnViewer from "../../index.js";
+import VueBpmnViewer from "../VueBpmnViewer.vue";
 export default {
   name: "DownloadModel",
   components: {VueBpmnViewer},
-  props: ["baseApi","xmlId","type","source","timeData","options","styl"],
+  props: ["visible"],
+  model:{
+    prop:'visible',
+    event:'change'
+  },
   // computed:{
   //   ...mapState({
   //     form: state => state.biz.bpmn.form,
@@ -40,23 +33,14 @@ export default {
   //     options: state => state.biz.bpmn.options
   //   }),
   // },
-  data() {
-    return {
-      showClose:false
-    }
-  },
   created() {
 
   },
   methods:{
     handleClose() {
-      this.showClose = false
-      // this.$emit('close',true)
-    },
-    init() {
-      this.showClose = true
-      console.log(this.xmlId)
-    },
+      this.visible = false
+      this.$emit('change',false)
+    }
   }
 }
 </script>
