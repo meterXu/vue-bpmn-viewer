@@ -13,7 +13,12 @@
       <slot></slot>
     </div>
     <div class="bt-layout-right">
-      <BTZoom ref="cBTZoom" :options="myOptions" :bpmnViewer="bpmnViewer" :selectKey="selectKey" @zoomReset="zoomReset"/>
+      <BTZoom ref="cBTZoom" :myOptions="myOptions"
+              :bpmnViewer="bpmnViewer" :selectKey="selectKey"
+              :baseApi="baseApi" :xmlId="xmlId"
+              :type="type" :source="source" :timeData="timeData"
+              :options="options" :styl="styl"
+              @zoomReset="zoomReset"/>
       <BTimeLine ref="cBTimeLine" :options="myOptions" :taskData="taskData" :bpmnViewer="bpmnViewer" :bpmnOptions="bpmnOptions"
                  @itemClick="itemClick"
       >
@@ -31,7 +36,7 @@ import BTimeLine from './BTimeLine.vue'
 import BTZoom from './BTZoom.vue'
 export default {
 name: "BTLayout",
-  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions"],
+  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions","baseApi","xmlId","type","source","timeData","options","styl"],
   data(){
     return{
       legend:[

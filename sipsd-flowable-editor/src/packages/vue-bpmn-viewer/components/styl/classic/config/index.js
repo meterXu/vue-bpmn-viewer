@@ -3,6 +3,7 @@ import startEvent from './startEvent'
 import endEvent from "./endEvent";
 import sequenceFlow from "./sequenceFlow";
 import gateway from './gateway'
+import subProcess from "../../default/config/subProcess";
 const customConfig = {
     'bpmn:UserTask': {
         draw:Task
@@ -33,6 +34,9 @@ const customConfig = {
     },
     'bpmn:EventGateway':{
         draw:gateway
+    },
+    'bpmn:SubProcess':{
+        draw:subProcess
     }
 }
 

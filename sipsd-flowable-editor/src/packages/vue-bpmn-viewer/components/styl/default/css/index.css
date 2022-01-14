@@ -204,6 +204,14 @@
     width: 20px;
     height: 20px;
 }
+.dpark-bpmn-viewer[data-theme='default'] .icon-download{
+    background: url("../icons/download.svg") no-repeat;
+    background-size: contain;
+}
+.dpark-bpmn-viewer[data-theme='default'] .icon-download:hover{
+    background: url("../icons/download-hover.svg") no-repeat;
+    background-size: contain;
+}
 .dpark-bpmn-viewer[data-theme='default'] .icon-aim{
     background: url("../icons/DoAiming.svg") no-repeat;
     background-size: contain;

@@ -38,7 +38,16 @@
         transform: rotate(360deg);
     }
 }
-
+.dpark-bpmn-viewer[data-theme='classic'] .d-subProcess-title{
+    text-align: left;
+    font-size: 12px;
+    color: #000;
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
 .dpark-bpmn-viewer[data-theme='classic'] .bt-layout-header{
     position: absolute;
     top: 6px;
@@ -150,7 +159,7 @@
     border-top: solid 1px #DDD;
     width: 15px;
 }
-.dpark-bpmn-viewer[data-theme='classicv'] .icon{
+.dpark-bpmn-viewer[data-theme='classic'] .icon{
     display: flex;
     align-items:center;
     justify-content: center;
@@ -158,6 +167,14 @@
     color: #8f8f8f;
     width: 20px;
     height: 20px;
+}
+.dpark-bpmn-viewer[data-theme='classic'] .icon-download{
+    background: url("../icons/download.svg") no-repeat;
+    background-size: contain;
+}
+.dpark-bpmn-viewer[data-theme='classic'] .icon-download:hover{
+    background: url("../icons/download-hover.svg") no-repeat;
+    background-size: contain;
 }
 .dpark-bpmn-viewer[data-theme='classic'] .icon-aim{
     background: url("../icons/DoAiming.svg") no-repeat;
