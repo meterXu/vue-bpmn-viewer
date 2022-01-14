@@ -68,7 +68,7 @@ export default {
 ```
 
 
-## 基于沃壤平台工作流引擎
+## 配合工作流后端使用
 
 ```vue
 <template>
@@ -94,7 +94,7 @@ export default {
         theme:"classic",
         stylMap: {
           classic: {
-            color: ["#8f8f8f","#f5eb2c","#63ee6a","#ff0000"]
+            color: ["#8f8f8f","#f5eb2c","#63ee6a","#ff0000"] //重写classic主题中任务的四种状态颜色
           }
         }
       }
