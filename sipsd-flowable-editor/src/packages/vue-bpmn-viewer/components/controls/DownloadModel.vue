@@ -12,16 +12,21 @@
                 <slot></slot>
               </div>
       </div>
+      <div class="content-footer">
+        <button @click="downloadByPng">下载png格式</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import VueBpmnViewer from "../VueBpmnViewer.vue";
+import utils from "./lib/utils";
+import saveSvgAsPng from "save-svg-as-png"
 export default {
   name: "DownloadModel",
   components: {VueBpmnViewer},
-  props: ["visible"],
+  props: ["visible","bpmnViewer2"],
   model:{
     prop:'visible',
     event:'change'
@@ -40,6 +45,21 @@ export default {
     handleClose() {
       this.visible = false
       this.$emit('change',false)
+    },
+    downloadByPng() {
+      let graphics = document.querySelector(".content-inside .download-model svg")
+      let g = document.querySelector(".content-inside .download-model svg g")
+      let _width= document.getElementsByClassName('viewport')[0].getBBox().width
+      let _height= document.getElementsByClassName('viewport')[0].getBBox().height
+
+      let width =  Math.ceil(_width)+Math.ceil(g.transform.animVal[0].matrix.e*2)
+      let height = Math.ceil(_height)+Math.ceil(g.transform.animVal[0].matrix.f*2)
+
+      if(height<640) {
+        saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{encoderOptions:1})
+      } else {
+        saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{height:height,encoderOptions:1})
+      }
     }
   }
 }
@@ -65,7 +85,7 @@ export default {
 }
 .content-top {
   width: 100%;
-  height: 50px;
+  height: 10%;
   font-size: 24px;
   display: flex;
   justify-content: space-between;
@@ -76,10 +96,15 @@ export default {
   cursor: pointer;
 }
 .content-inside {
-
+  width: 1200px;
+  height: 80%;
 }
 .download-model{
-  width: 1200px;
-  height: 800px;
+  width: 100%;
+  height: 100%;
+}
+.content-footer {
+  width: 100%;
+  height: 10%;
 }
 </style>

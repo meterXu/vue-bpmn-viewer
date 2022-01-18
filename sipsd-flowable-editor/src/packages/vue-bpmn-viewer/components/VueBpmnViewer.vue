@@ -11,12 +11,13 @@
     <BTLayout :showBpmn="showBpmn" :myOptions="myOptions"
               :bpmnViewer="bpmnViewer" :selectKey="selectKey"
               :taskData="taskData" :bpmnOptions="bpmnOptions"
+              :bpmnViewer2="bpmnViewer2"
     >
       <slot></slot>
       <template v-slot:dialog>
-        <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
+        <vue-bpmn :viewer="myOptions.static" ref="bpmnObj2" :options="bpmnOptions" :url="xml"
                   @loading="bpmnLoading"
-                  @loaded="bpmnLoadDone"
+                  @loaded="bpmnLoadDone2"
                   @error="bpmnLoadError"
                   @click="handleClick"
                   @viewChange="handleViewChange"></vue-bpmn>
@@ -62,6 +63,7 @@ export default {
       logfv:null,
       showBpmn:false,
       bpmnViewer:null,
+      bpmnViewer2:null,
       bpmnOptions:{
         additionalModules:[]
       },
@@ -279,12 +281,36 @@ export default {
         let lastData = this.taskData[this.taskData.length-1]
         if(lastData.status!=='已办'&&this.myOptions.focus){
           this.selectKey = lastData.taskDefinitionKey
-          utils.setView(this.bpmnViewer,this.options,this.selectKey)
+          utils.setView(this.bpmnViewer,this.myOptions,this.selectKey)
 
         }
 
       }
       this.$emit('loaded')
+    },
+    async bpmnLoadDone2(){
+      utils.log({
+        title:'流程图xml加载成功！',
+        xmlUrl:this.xml,
+      },this)
+      let myOptions2 = Object.assign({},this.myOptions,{track:false,focus:false})
+      // myOptions2.track = false
+      // myOptions2.focus = false
+      utils.clearWatermark()
+      this.showBpmn = true
+      this.bpmnViewer2= this.$refs.bpmnObj2.bpmnViewer
+      window.bpmnViewer2 =  this.bpmnViewer2
+      utils.setView(this.bpmnViewer2,myOptions2)
+      //await this.getTaskList()
+      if(this.taskData&&this.taskData.length>0){
+        let lastData = this.taskData[this.taskData.length-1]
+        if(lastData.status!=='已办'&&this.myOptions.focus){
+          this.selectKey = lastData.taskDefinitionKey
+          utils.setView(this.bpmnViewer2,myOptions2,this.selectKey)
+        }
+        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer2._container,this.$refs.bpmnObj2,this.taskData,myOptions2,this.bpmnOptions.additionalModules[0].colors)
+      }
+      //this.$emit('loaded')
     },
     bpmnLoadError(err){
       utils.error({ title: '流程图加载失败！',

@@ -26,7 +26,9 @@
         </template>
       </BTimeLine>
       <DownloadModel ref="downloadModel"
-                     v-model="dialogVisible">
+                     v-model="dialogVisible"
+                     :bpmnViewer2="bpmnViewer2"
+      >
         <slot name="dialog"></slot>
       </DownloadModel>
     </div>
@@ -40,7 +42,7 @@ import BTZoom from './BTZoom.vue'
 import DownloadModel from "./DownloadModel.vue"
 export default {
 name: "BTLayout",
-  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions"],
+  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions","bpmnViewer2"],
   data(){
     return{
       legend:[
