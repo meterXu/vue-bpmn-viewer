@@ -11,49 +11,13 @@ export default (options)=>{
         height:options.height,
         rx:4,
         ry:4,
-        stroke:'#ececec',
+        stroke:'#8f8f8f',
         collapsed:false,
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
-        fill:'#fff',
-        filter:`url(#f1_${options.element.id})`
+        fill:'#f5f5f5'
     })
     options.element.collapsed=false
-    const filter = create('filter',{
-        id:"f1_"+options.element.id,
-        x:0,
-        y:0,
-        width:"200%",
-        height:"200%"
-    })
-    append(filter,create('feOffset',{
-        result:"offOut",
-        in:"SourceGraphic",
-        dx:1,
-        dy:1
-    }))
-    let feColorMatrix = create('feColorMatrix',{
-        result:"matrixOut",
-        in:"offOut",
-        type:"matrix",
-        values:`0 0 0 0 0
-              0 0 0 0 0
-              0 0 0 0 0
-              0 0 0 0.1 0`
-    })
-    append(filter,feColorMatrix)
-    classes(feColorMatrix).add('highlight-custom-rect')
-    append(filter,create('feGaussianBlur',{
-        result:"blurOut",
-        in:"matrixOut",
-        stdDeviation:3
-    }))
-    append(filter,create('feBlend',{
-        in:"SourceGraphic",
-        in2:"blurOut",
-        mode:"normal"
-    }))
-    append(g,append(create('defs'),filter))
     append(g,rect)
     // 创建标题
     append(g,create('rect',{
@@ -61,7 +25,7 @@ export default (options)=>{
         y:1,
         width:options.width-1,
         height:24,
-        fill: "#ffffff",
+        fill: "#f5f5f5",
         rx:4,
         ry:4
     }))
@@ -70,7 +34,7 @@ export default (options)=>{
         y:5,
         width:options.width-1,
         height:20,
-        fill: "#ffffff",
+        fill: "#f5f5f5",
         rx:0,
         ry:0
     })

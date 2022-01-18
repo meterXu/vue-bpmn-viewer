@@ -1,5 +1,5 @@
 <template>
-  <div class="dpark-bpmn-viewer" data-theme="default">
+  <div class="dpark-bpmn-viewer" :data-theme="myStyl.theme">
     <div class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
