@@ -3,7 +3,7 @@ import startEvent from './startEvent'
 import endEvent from "./endEvent";
 import sequenceFlow from "./sequenceFlow";
 import gateway from './gateway'
-import subProcess from "../../default/config/subProcess";
+import subProcess from "../../classic/config/subProcess";
 const customConfig = {
     'bpmn:UserTask': {
         draw:Task
