@@ -1,9 +1,3 @@
-
-.dpark-bpmn-viewer[data-theme='default'] .highlight-custom-path{
-    stroke-dasharray:6;
-    animation: complete 2s infinite;
-    animation-timing-function:linear;
-}
 @keyframes complete {
     0%{
         stroke-dashoffset:0;

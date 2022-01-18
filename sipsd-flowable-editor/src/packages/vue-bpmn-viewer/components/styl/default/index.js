@@ -1,4 +1,5 @@
-
+import './css/index.css'
+import style from './css/style.js'
 import custom from './custom'
 import {setTaskHighlight,setEndHighLight,setFlowHighLight,clearHighLight,clearFlowHighLight,taskSyncHighLight,setStartTaskHighlight,clearAllFlowHighLight,clearAllHighLight} from './approach'
 export default {
@@ -15,5 +16,6 @@ export default {
         taskSyncHighLight: taskSyncHighLight,
         setStartTaskHighlight: setStartTaskHighlight
     },
-    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"]
+    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"],
+    'style':style
 }

@@ -22,5 +22,5 @@ export default {
         clearFlowHighLight:clearFlowHighLight,
         taskSyncHighLight: taskSyncHighLight
     },
-    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"]
+    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"],
 }
