@@ -55,6 +55,7 @@ export default {
       let width =  Math.ceil(_width)+Math.ceil(g.transform.animVal[0].matrix.e*2)
       let height = Math.ceil(_height)+Math.ceil(g.transform.animVal[0].matrix.f*2)
 
+      debugger
       if(height<640) {
         saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{encoderOptions:1})
       } else {
