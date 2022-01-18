@@ -1,4 +1,4 @@
-import './css/index.css'
+
 import custom from './custom'
 import {setTaskHighlight,setEndHighLight,setFlowHighLight,clearHighLight,clearFlowHighLight,taskSyncHighLight,setStartTaskHighlight,clearAllFlowHighLight,clearAllHighLight} from './approach'
 export default {

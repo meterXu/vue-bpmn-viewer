@@ -112,6 +112,8 @@ export default (options)=>{
     append(g,titleIcon)
     let content = taskIcon[type].content(options)
     append(g,content)
+    let style= createStyle()
+    append(g,style)
     return g
 }
 
@@ -240,4 +242,69 @@ function createScriptTitleIcon(){
     })
     append(g,icon_1)
     return g
+}
+
+function createStyle(){
+    let style = create('style',{
+        type:"text/css"
+    })
+    style.innerHTML=`
+    .clock-spin{
+    animation: spin 1s infinite;
+    animation-timing-function:linear;
+}
+    .d-userTask{
+    cursor: pointer;
+}
+.d-userTask-title{
+    text-align: left;
+    font-size: 12px;
+    color: #fff;
+    padding-left: 23px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
+.d-subProcess-title{
+    text-align: left;
+    font-size: 12px;
+    color: #fff;
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
+.d-userTask-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.d-userTask-content ul{
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    list-style: none;
+    padding-right: 6px;
+}
+.d-userTask-content ul li{
+    height: 24px;
+    line-height: 24px;
+    color: #cdcdcd;
+}
+.d-userTask-content li{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+.d-userTask-content span{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+    `
+    return style
 }

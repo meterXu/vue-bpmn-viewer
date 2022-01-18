@@ -51,7 +51,7 @@ export default {
         });
       }
       utils.clearWatermark()
-      this.fetchDiagram(this.url).then(xml=>{
+      this.fetchDiagram(this    .url).then(xml=>{
         this.drawXml(xml)
       })
     },
