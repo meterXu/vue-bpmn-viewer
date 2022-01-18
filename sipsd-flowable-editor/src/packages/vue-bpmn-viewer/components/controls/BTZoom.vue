@@ -24,9 +24,6 @@
 
 <script>
 import utils from "./lib/utils.js";
-import * as htmlToImage from 'html-to-image';
-import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
-import download from "downloadjs"
 export default {
   name: "BTZoom",
   props: ['bpmnViewer', 'myOptions','selectKey',"baseApi","xmlId","type","source","timeData","options","styl"],
@@ -62,18 +59,6 @@ export default {
     download() {
       if(this.bpmnViewer){
         this.$emit('download')
-        // let Html = document.querySelector(".djs-container")
-        // let g = document.querySelector(".djs-container svg g")
-        // let width= document.getElementsByClassName('viewport')[0].getBBox().width
-        // let height= document.getElementsByClassName('viewport')[0].getBBox().height
-        //
-        // Html.style.width = width+g.transform.animVal[0].matrix.e*2+"px"
-        // Html.style.height = height+g.transform.animVal[0].matrix.f*2+"px"
-        //
-        // htmlToImage.toPng(Html)
-        //     .then(function (dataUrl) {
-        //       download(dataUrl, 'my-node.png');
-        //     });
       }
     }
   }
