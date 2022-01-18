@@ -187,7 +187,7 @@ export default {
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
       window.bpmnViewer =  this.bpmnViewer
-      let g = this.bpmnViewer._container
+      let g = this.bpmnViewer._container.getElementsByClassName('viewport')[0]
       append(g,this.myStyl.stylMap[this.myStyl.theme].style)
       utils.setView(this.bpmnViewer,this.myOptions)
       await this.getTaskList()
@@ -196,9 +196,7 @@ export default {
         if(lastData.status!=='已办'&&this.myOptions.focus){
           this.selectKey = lastData.taskDefinitionKey
           utils.setView(this.bpmnViewer,this.myOptions,this.selectKey)
-
         }
-
       }
       this.$emit('loaded')
     },

@@ -1,19 +1,4 @@
-.dpark-bpmn-viewer[data-theme='classic'] .clock-spin{
-    transform-origin: 512px 512px;
-    animation: spin 1s infinite;
-    animation-timing-function:linear;
-}
-.dpark-bpmn-viewer[data-theme='classic'] .d-userTask{
-    cursor: pointer;
-}
-.dpark-bpmn-viewer[data-theme='classic'] .d-userTask:hover{
-    stroke: #aaa !important;
-}
-.dpark-bpmn-viewer[data-theme='classic'] .highlight-custom-path{
-    stroke-dasharray:6;
-    animation: complete 2s infinite;
-    animation-timing-function:linear;
-}
+
 
 @keyframes complete {
     0%{

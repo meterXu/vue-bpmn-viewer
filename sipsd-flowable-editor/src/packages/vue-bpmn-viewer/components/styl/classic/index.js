@@ -1,4 +1,5 @@
 import './css/index.css'
+import style from './css/style.js'
 import custom from './custom'
 import {
     clearFlowHighLight,
@@ -23,4 +24,5 @@ export default {
         taskSyncHighLight: taskSyncHighLight
     },
     'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"],
+    'style':style
 }
