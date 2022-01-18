@@ -314,12 +314,12 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 			// 驳回到会签节点
 			else if(userTaskModel.hasMultiInstanceLoopCharacteristics()){
-
+				SequenceFlow sequenceFlow = userTaskModel.getIncomingFlows().get(0);
+				String sourceRef = sequenceFlow.getSourceRef();
 				List<Execution> executions = runtimeService.createExecutionQuery()
 						.parentId(taskEntity.getProcessInstanceId()).list();
 				executions.forEach(execution -> executionIds.add(execution.getId()));
-				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
-
+				this.moveExecutionsToSingleActivityId(executionIds, sourceRef);
 			}
 			// 驳回到并联网关内节点
 			else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
