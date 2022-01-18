@@ -16,7 +16,7 @@
       <BTZoom ref="cBTZoom" :myOptions="myOptions"
               :bpmnViewer="bpmnViewer" :selectKey="selectKey"
               @zoomReset="zoomReset"
-              @download="download">
+      >
       </BTZoom>
       <BTimeLine ref="cBTimeLine" :options="myOptions" :taskData="taskData" :bpmnViewer="bpmnViewer" :bpmnOptions="bpmnOptions"
                  @itemClick="itemClick"
@@ -25,12 +25,6 @@
           <slot name="time" v-bind:item="slotProps.item"></slot>
         </template>
       </BTimeLine>
-      <DownloadModel ref="downloadModel"
-                     v-model="dialogVisible"
-                     :bpmnViewer2="bpmnViewer2"
-      >
-        <slot name="dialog"></slot>
-      </DownloadModel>
     </div>
   </div>
 
@@ -39,10 +33,9 @@
 <script>
 import BTimeLine from './BTimeLine.vue'
 import BTZoom from './BTZoom.vue'
-import DownloadModel from "./DownloadModel.vue"
 export default {
 name: "BTLayout",
-  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions","bpmnViewer2"],
+  props:["showBpmn","myOptions","bpmnViewer","selectKey","taskData","bpmnOptions"],
   data(){
     return{
       legend:[
@@ -60,8 +53,7 @@ name: "BTLayout",
   },
   components:{
     BTimeLine,
-    BTZoom,
-    DownloadModel
+    BTZoom
   },
   mounted() {
     this.colorNone = this.bpmnOptions.additionalModules[0].colors[0]
@@ -75,9 +67,6 @@ name: "BTLayout",
     },
     zoomReset(){
       this.$refs.cBTimeLine.scrollMove()
-    },
-    download(){
-      this.dialogVisible = true
     }
   }
 }

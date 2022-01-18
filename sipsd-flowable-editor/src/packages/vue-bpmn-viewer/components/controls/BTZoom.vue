@@ -24,6 +24,7 @@
 
 <script>
 import utils from "./lib/utils.js";
+import saveSvgAsPng from "save-svg-as-png";
 export default {
   name: "BTZoom",
   props: ['bpmnViewer', 'myOptions','selectKey',"baseApi","xmlId","type","source","timeData","options","styl"],
@@ -57,9 +58,13 @@ export default {
       }
     },
     download() {
-      if(this.bpmnViewer){
-        this.$emit('download')
-      }
+      let graphics = document.querySelector(".djs-container svg")
+      let g = document.querySelector(".djs-container svg g")
+      let _width= document.getElementsByClassName('viewport')[0].getBBox().width
+      let _height= document.getElementsByClassName('viewport')[0].getBBox().height
+      let width =  Math.ceil(_width)+Math.ceil(g.transform.animVal[0].matrix.e*3)
+      let height = Math.ceil(_height)+Math.ceil(g.transform.animVal[0].matrix.f*3)
+      saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{height:height,encoderOptions:1})
     }
   }
 }
