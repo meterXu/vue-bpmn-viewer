@@ -17,6 +17,16 @@ let styleCon=`
     animation: complete 2s infinite;
     animation-timing-function:linear;
 }
+.d-subProcess-title{
+    text-align: left;
+    font-size: 12px;
+    color: #000;
+    padding-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+}
 `
 
 let style = create('style',{
