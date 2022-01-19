@@ -124,4 +124,31 @@ public interface IFlowableExtensionTaskDao
      */
     public void updateEndTimeByProcessInstanceId(@Param("processInstanceId") String processInstanceId,@Param("state") String state);
 
+
+
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return void
+     * @Description 根据流程实例ID和任务ID来查询extension表中的数据
+     */
+    public TaskExtensionVo getExtensionTaskByProcessInstanceIdAndTaskID(@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
+
+    /**
+     *
+     * @param params
+     * @return void
+     * @Description  根据流程实例ID和任务ID来更新结束时间
+     */
+    public void updateEndTimeByProcessInstanceIdAndTaskId(TaskExtensionVo params);
+
+    /**
+     *
+     * @param
+     * @return java.util.List<com.sipsd.flow.vo.flowable.ret.TaskExtensionVo>
+     * @Description 获取所有的待办任务
+     */
+    public List<TaskExtensionVo> getRunTasks();
 }

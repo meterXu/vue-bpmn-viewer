@@ -120,7 +120,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						if(ifHoliday)
 						{
 							Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
-							taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+							taskExtensionVo.setEndTime(DateUtil.addDate(startTime,totalMaxDay));
 						}
 						//算出剩余处理时间
 						Long restTime = DateUtil.diffDateTime(taskExtensionVo.getEndTime(),new Date());
@@ -175,7 +175,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					if(ifHoliday)
 					{
 						Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
-						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+						vo.setEndTime(DateUtil.addDate(startTime,totalMaxDay));
 					}
 					//算出剩余处理时间
 					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
@@ -228,7 +228,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					if(ifHoliday)
 					{
 						Integer totalMaxDay = flowableCalendarService.totalMaxDay(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
-						vo.setEndTime(DateUtil.addDate(new Date(),totalMaxDay));
+						vo.setEndTime(DateUtil.addDate(startTime,totalMaxDay));
 					}
 					//算出剩余处理时间
 					Long restTime = DateUtil.diffDateTime(vo.getEndTime(),new Date());
@@ -359,4 +359,24 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	{
 		flowableExtensionTaskDao.updateEndTimeByProcessInstanceId(processInstanceId,state);
 	}
+
+	@Override
+	public List<TaskExtensionVo> getRunTasks()
+	{
+		return flowableExtensionTaskDao.getRunTasks();
+	}
+
+	@Override
+	public TaskExtensionVo getExtensionTaskByProcessInstanceIdAndTaskID(String processInstanceId, String taskId)
+	{
+		return flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndTaskID(processInstanceId,taskId);
+	}
+
+	@Override
+	public void updateEndTimeByProcessInstanceIdAndTaskId(TaskExtensionVo params)
+	{
+		flowableExtensionTaskDao.updateEndTimeByProcessInstanceIdAndTaskId(params);
+	}
+
+
 }

@@ -269,4 +269,36 @@
         UPDATE  act_ru_extension_task t1 SET t1.END_TIME_ =  date_add(t1.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t1.SUSPENSION_TIME_, NOW())  SECOND)
         WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.SUSPENSION_STATE_ = #{state}
     </update>
+
+    <!--查询待办信息的-->
+    <select id="getRunTasks"  resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT DISTINCT
+        t1.ID_ AS taskId,
+        t1.PROC_INST_ID_ AS processInstanceId
+        FROM
+        act_ru_task t1
+    </select>
+
+    <!--查询待办信息的-->
+    <select id="getExtensionTaskByProcessInstanceIdAndTaskID" parameterType="java.lang.String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT
+            t1.ID_ AS id,
+            t1.END_TIME_  as endTime,
+            t2.CREATE_TIME_ AS startTime,
+            t1.CUSTOM_TASK_MAX_DAY_  as customTaskMaxDay,
+            t1.PROC_INST_ID_ as processInstanceId,
+            t1.TASK_ID_ as taskId
+        FROM
+            act_ru_extension_task t1
+        left join act_ru_task t2 on t1.TASK_ID_ = t2.ID_ and t1.PROC_INST_ID_=t2.PROC_INST_ID_
+        WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
+    </select>
+
+
+
+    <update id="updateEndTimeByProcessInstanceIdAndTaskId" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        UPDATE  act_ru_extension_task t1 SET t1.END_TIME_ =  #{endTime}
+        WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
+    </update>
+
 </mapper>

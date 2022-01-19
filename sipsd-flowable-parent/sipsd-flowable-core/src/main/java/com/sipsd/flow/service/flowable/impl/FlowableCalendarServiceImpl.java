@@ -8,10 +8,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sipsd.flow.common.DateUtil;
 import com.sipsd.flow.dao.flowable.IFlowableCalendarMapper;
 import com.sipsd.flow.service.flowable.IFlowableCalendarService;
+import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.vo.flowable.holiday.ActDeCalendar;
 import com.sipsd.flow.vo.flowable.holiday.SysCalendarVo;
 import com.sipsd.flow.vo.flowable.holiday.SysStatutoryHolidayVo;
+import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +33,13 @@ import java.util.Locale;
 @Service
 public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMapper, ActDeCalendar> implements IFlowableCalendarService
 {
+
+	@Autowired
+	@Lazy(true)
+	private IFlowableExtensionTaskService flowableExtensionTaskService;
+
+	@Value("${sipsd.flowable.calendar:true}")
+	private boolean ifHoliday;
 
 	@Override
 	public IPage<List<ActDeCalendar>> QueryCalendars(Page page, SysCalendarVo sysCalendarVo)
@@ -216,5 +229,29 @@ public class FlowableCalendarServiceImpl extends ServiceImpl<IFlowableCalendarMa
 			}
 		}
 		return maxday;
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public boolean updateById(ActDeCalendar entity)
+	{
+		baseMapper.updateById(entity);
+		if(ifHoliday)
+		{
+			//遍历所有实例id修改待办的最后审批期限 1.查询act_ru_task表中的所有数据 2.更新extension表中所有最后审批期限
+			List<TaskExtensionVo> taskExtensionVoList = flowableExtensionTaskService.getRunTasks();
+			for(TaskExtensionVo taskExtensionVo:taskExtensionVoList)
+			{
+				TaskExtensionVo vo = flowableExtensionTaskService.getExtensionTaskByProcessInstanceIdAndTaskID(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
+				//没有设置最大审批天数则不对此流程节点结算最后审批时间
+				if(vo!=null && !StringUtils.isBlank(vo.getCustomTaskMaxDay()))
+				{
+					Integer totalMaxDay = totalMaxDay(vo.getStartTime(),Integer.parseInt(vo.getCustomTaskMaxDay()));
+					vo.setEndTime(DateUtil.addDate(vo.getStartTime(),totalMaxDay));
+					flowableExtensionTaskService.updateEndTimeByProcessInstanceIdAndTaskId(vo);
+				}
+			}
+		}
+		return true;
 	}
 }
