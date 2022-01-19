@@ -378,5 +378,9 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		flowableExtensionTaskDao.updateEndTimeByProcessInstanceIdAndTaskId(params);
 	}
 
-
+	@Override
+	public List<TaskExtensionVo> getExtensionTaskByProcessInstanceIdAndState(String processInstanceId, String suspensionState)
+	{
+		return flowableExtensionTaskDao.getExtensionTaskByProcessInstanceIdAndState(processInstanceId,suspensionState);
+	}
 }

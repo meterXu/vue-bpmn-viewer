@@ -294,6 +294,18 @@
         WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </select>
 
+    <!--激活挂起查询时间状态-->
+    <select id="getExtensionTaskByProcessInstanceIdAndState" parameterType="java.lang.String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT
+            t1.PROC_INST_ID_ as processInstanceId,
+            t1.OVER_TIME as overTime,
+            t1.SUSPENSION_TIME_ as suspensionTime
+        FROM
+            act_ru_extension_task t1
+          where  t1.PROC_INST_ID_ = #{processInstanceId}
+    </select>
+
+
 
 
     <update id="updateEndTimeByProcessInstanceIdAndTaskId" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">

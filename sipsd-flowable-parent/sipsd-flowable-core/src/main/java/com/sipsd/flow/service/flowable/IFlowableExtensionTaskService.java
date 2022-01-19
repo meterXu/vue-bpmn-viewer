@@ -151,4 +151,13 @@ public interface IFlowableExtensionTaskService
      */
     public List<TaskExtensionVo> getRunTasks();
 
+    /**
+     *
+     * @param processInstanceId
+     * @param suspensionState
+     * @return void
+     * @Description 根据流程实例ID和激活状态来查询extension表中的数据
+     */
+    public List<TaskExtensionVo> getExtensionTaskByProcessInstanceIdAndState(String processInstanceId,String suspensionState);
+
 }
