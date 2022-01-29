@@ -18,15 +18,17 @@ pipeline {
         }
         stage('项目构建'){
             steps {
-                sh "cd $rootPath && yarn install && npm run build"
+                script {
+                    versionLocal = sh(script: "node -p 'let path=\"$rootPath\";require(path+\"/package.json\").version'", returnStdout: true).trim()
+                    packageName = sh(script: "node -p 'let path=\"$rootPath\";require(path+\"/package.json\").name'", returnStdout: true).trim()
+                    sh "cd $rootPath && yarn install && npm run build"
+                }
             }
         }
         stage('发布npm包'){
             steps {
                 script {
                     echo "获取包的本地版本和线上版本"
-                    versionLocal = sh(script: "node -p 'let path=\"$rootPath\";require(path+\"/package.json\").version'", returnStdout: true).trim()
-                    packageName = sh(script: "node -p 'let path=\"$rootPath\";require(path+\"/package.json\").name'", returnStdout: true).trim()
                     def versionOnline =  sh(script: "npm view $packageName version --registry='$npm'", returnStdout: true).trim()
                     if ("$versionOnline" == "$versionLocal" && cover){
                         echo "版本相同则撤销线上版本"
