@@ -62,7 +62,7 @@ pipeline {
         success {
             script {
                 if(publish){
-                    dingtalk(robot: '${robot}',
+                    dingtalk(robot: "$robot",
                                 type: 'ACTION_CARD',
                                 at: [],
                                 atAll: false,
@@ -92,7 +92,7 @@ pipeline {
         failure {
             script {
                 if(publish){
-                    dingtalk(robot: '${robot}',
+                    dingtalk(robot: "$robot",
                                 type: 'ACTION_CARD',
                                 at: [],
                                 atAll: false,
