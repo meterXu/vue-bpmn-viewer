@@ -5,6 +5,7 @@ def gitUrl = "http://192.168.126.25/git/cbb/flowable_v4.git"
 def branch = "master"
 def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
 def npm = "http://192.168.126.25/npm"
+def robot = "360ac2ce-efe5-4478-8703-7cd3bd463044"
 def versionLocal
 def packageName
 def publish = true
@@ -61,7 +62,7 @@ pipeline {
         success {
             script {
                 if(publish){
-                    dingtalk(robot: '360ac2ce-efe5-4478-8703-7cd3bd463044',
+                    dingtalk(robot: '${robot}',
                                 type: 'ACTION_CARD',
                                 at: [],
                                 atAll: false,
@@ -91,7 +92,7 @@ pipeline {
         failure {
             script {
                 if(publish){
-                    dingtalk(robot: '360ac2ce-efe5-4478-8703-7cd3bd463044',
+                    dingtalk(robot: '${robot}',
                                 type: 'ACTION_CARD',
                                 at: [],
                                 atAll: false,
