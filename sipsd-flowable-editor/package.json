@@ -26,6 +26,7 @@
     "html-to-image": "^1.9.0",
     "element-ui": "^2.15.6",
     "pretty-ms": "^7.0.1",
+    "save-svg-as-png": "^1.4.17",
     "tiny-svg": "^2.2.2",
     "url-join": "^4.0.1",
     "vue": "^2.6.11",
