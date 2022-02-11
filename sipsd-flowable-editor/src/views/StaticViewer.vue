@@ -53,7 +53,7 @@
             <p>状态：{{slotProps.item.status}}</p>
             <p v-if="slotProps.item.status==='已办'">持续时间：{{timeFormat(slotProps.item.duration)}}</p>
             <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>
-            <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
+            <p>下载xxx：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
           </template>
         </VueBpmnViewer>
       </el-main>
