@@ -1,7 +1,7 @@
 def gitUrl = "http://192.168.126.25/git/sipsd-open-source/flowable_v4.git"
 def branch = "master"
 def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
-def rootPath= "./"
+def rootPath= "./sipsd-flowable-editor"
 def appName = "flowable-editor"
 def bakPath = "/home/jenkins_bak"
 def putPath = "/home/jenkins_put"
