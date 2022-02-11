@@ -1,5 +1,6 @@
 import Viewer from './Viewer.vue'
 import StaticViewer from "./StaticViewer";
+import test from "./test";
 export default [
   {
     path: '/bpmn/viewer',
@@ -16,5 +17,13 @@ export default [
       title: 'saticViewer'
     },
     component: StaticViewer
+  },
+  {
+    path: '/bpmn/test',
+    name: 'bpmn-test',
+    meta: {
+      title: 'test'
+    },
+    component: test
   }
 ]
