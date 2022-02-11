@@ -19,7 +19,7 @@ pipeline {
             stage('项目编译') {
                 steps {
                     script{
-                        sh "npm install && npm run build"
+                        sh "cd {rootPath} && npm install && npm run build"
                     }
                 }
             }
