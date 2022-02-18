@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.BpmnAutoLayout;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.bpmn.model.Process;
 import org.flowable.editor.language.json.converter.BpmnJsonConverter;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
 import org.flowable.idm.api.User;
@@ -22,6 +24,7 @@ import org.flowable.ui.common.service.exception.BadRequestException;
 import org.flowable.ui.common.util.XmlUtil;
 import org.flowable.ui.modeler.domain.AbstractModel;
 import org.flowable.ui.modeler.domain.Model;
+import org.flowable.ui.modeler.model.ModelRepresentation;
 import org.flowable.ui.modeler.repository.ModelRepository;
 import org.flowable.ui.modeler.serviceapi.ModelService;
 import org.flowable.validation.ProcessValidator;
@@ -82,6 +85,61 @@ public class FlowableModelServiceImpl implements IFlowableModelService {
         	result = Result.sucess("Invalid file name, only .bpmn and .bpmn20.xml files are supported not " + fileName);
         }
         return result;
+    }
+
+    @Override
+    public void batchImportProcessModel(MultipartFile[] files) {
+        if(files!=null&&files.length>0){
+            //循环获取file数组中得文件
+            for(int i = 0;i<files.length;i++){
+                MultipartFile file = files[i];
+                //保存文件
+                createModel(file);
+            }
+        }
+    }
+
+    private void createModel(MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        if (fileName != null && (fileName.endsWith(".bpmn") || fileName.endsWith(".bpmn20.xml"))) {
+            try {
+                XMLInputFactory xif = XmlUtil.createSafeXmlInputFactory();
+                InputStreamReader xmlIn = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8);
+                XMLStreamReader xtr = xif.createXMLStreamReader(xmlIn);
+                BpmnModel bpmnModel = bpmnXmlConverter.convertToBpmnModel(xtr);
+                if (CollectionUtils.isEmpty(bpmnModel.getProcesses())) {
+                    throw new BadRequestException("No process found in definition " + fileName);
+                }
+
+                if (bpmnModel.getLocationMap().size() == 0) {
+                    BpmnAutoLayout bpmnLayout = new BpmnAutoLayout(bpmnModel);
+                    bpmnLayout.execute();
+                }
+
+                ObjectNode modelNode = bpmnJsonConverter.convertToJson(bpmnModel);
+
+                Process process = bpmnModel.getMainProcess();
+                String name = process.getId();
+                if (StringUtils.isNotEmpty(process.getName())) {
+                    name = process.getName();
+                }
+                String description = process.getDocumentation();
+
+                ModelRepresentation model = new ModelRepresentation();
+                model.setKey(process.getId());
+                model.setName(name);
+                model.setDescription(description);
+                model.setModelType(AbstractModel.MODEL_TYPE_BPMN);
+                modelService.createModel(model, modelNode.toString(), SecurityUtils.getCurrentUserObject());
+            } catch (BadRequestException e) {
+                throw e;
+            } catch (Exception e) {
+                LOGGER.error("Import failed for {}", fileName, e);
+                throw new BadRequestException("Import failed for " + fileName + ", error message " + e.getMessage());
+            }
+        } else {
+            throw new BadRequestException("Invalid file name, only .bpmn and .bpmn20.xml files are supported not " + fileName);
+        }
     }
 
     private Result<String> createModel(InputStream inputStream) {

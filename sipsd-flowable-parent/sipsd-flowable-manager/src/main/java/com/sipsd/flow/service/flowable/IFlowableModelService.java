@@ -20,6 +20,14 @@ public interface IFlowableModelService {
      */
     public Result<String> importProcessModel(MultipartFile file);
 
+
+    /**
+     * 批量导入模型
+     * @param files 文件
+     * @return
+     */
+    public void batchImportProcessModel(MultipartFile[] files);
+
     /**
      * 添加模型
      * @param modelVo
