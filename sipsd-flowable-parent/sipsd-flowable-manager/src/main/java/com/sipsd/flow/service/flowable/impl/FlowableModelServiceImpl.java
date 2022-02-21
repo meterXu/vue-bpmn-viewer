@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -82,11 +83,9 @@ public class FlowableModelServiceImpl implements IFlowableModelService {
 
     @Override
     public Result<List<String>> deployBatch(String modelId) {
+        Assert.hasText(modelId,"模板ID不能为空");
+
         Result<List<String>> result = Result.failed("部署流程失败！");
-        if (StringUtils.isBlank(modelId)) {
-            result.setMessage("模板ID不能为空！");
-            return result;
-        }
         try {
             List<String> modelIdList = Arrays.asList(StringUtils.split(modelId, ","));
             List<String> resultData = new ArrayList<>();
