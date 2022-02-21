@@ -5,6 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.vo.flowable.ModelVo;
 
+import java.util.List;
+
 /**
  * @author : chengtg
  * @projectName : flowable
@@ -22,11 +24,11 @@ public interface IFlowableModelService {
 
 
     /**
-     * 批量导入模型
+     * 批量导入流程模型
      * @param files 文件
      * @return
      */
-    public void batchImportProcessModel(MultipartFile[] files);
+    public void importProcessModelBatch(MultipartFile[] files);
 
     /**
      * 添加模型
@@ -34,4 +36,12 @@ public interface IFlowableModelService {
      * @return
      */
     public Result<String> addModel(ModelVo modelVo);
+
+    /**
+     * 批量发布
+     * @param modelId 文件
+     * @return
+     */
+    public Result<List<String>> deployBatch(String modelId);
+
 }

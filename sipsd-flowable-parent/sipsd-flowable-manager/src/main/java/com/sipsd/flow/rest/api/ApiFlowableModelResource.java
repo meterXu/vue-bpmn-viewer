@@ -118,7 +118,7 @@ public class ApiFlowableModelResource extends BaseResource {
 	public Result<String> importProcessModel(@RequestParam("files") MultipartFile[] files) {
 		Result<String> result = Result.sucess("OK");
 		try {
-			flowableModelService.batchImportProcessModel(files);
+			flowableModelService.importProcessModelBatch(files);
 		} catch (BadRequestException e) {
 			result = Result.failed(e.getMessage());
 		}
@@ -200,6 +200,12 @@ public class ApiFlowableModelResource extends BaseResource {
 			result.setMessage(String.format("部署流程异常！- %s", e.getMessage()));
 		}
 		return result;
+	}
+
+	@ApiOperation("根据模型ID批量发布")
+	@PostMapping(value = "/deploy/batch")
+	public Result<List<String>> batchDeploy(String modelId){
+		return flowableModelService.deployBatch(modelId);
 	}
 
 	@ApiOperation("根据模型ID发布(cmd)")
