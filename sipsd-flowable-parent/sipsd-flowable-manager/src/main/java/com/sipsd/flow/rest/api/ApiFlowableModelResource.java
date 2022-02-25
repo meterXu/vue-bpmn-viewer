@@ -1,5 +1,7 @@
 package com.sipsd.flow.rest.api;
 
+import cn.hutool.core.util.StrUtil;
+import com.fasterxml.uuid.UUIDGenerator;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.cmd.DeployModelCmd;
@@ -12,7 +14,9 @@ import com.sipsd.flow.service.form.FlowableFormService;
 import com.sipsd.flow.vo.flowable.ModelVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.StartEvent;
@@ -35,11 +39,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * @author : chengtg/gaoqiang
@@ -104,6 +107,18 @@ public class ApiFlowableModelResource extends BaseResource {
 		Result<String> result = Result.sucess("OK");
 		try {
 			flowableModelService.importProcessModel(file);
+		} catch (BadRequestException e) {
+			result = Result.failed(e.getMessage());
+		}
+		return result;
+	}
+
+	@ApiOperation("批量导入流程")
+	@PostMapping(value = "/import-process-model/batch")
+	public Result<String> importProcessModel(@RequestParam("files") MultipartFile[] files) {
+		Result<String> result = Result.sucess("OK");
+		try {
+			flowableModelService.importProcessModelBatch(files);
 		} catch (BadRequestException e) {
 			result = Result.failed(e.getMessage());
 		}
@@ -187,6 +202,12 @@ public class ApiFlowableModelResource extends BaseResource {
 		return result;
 	}
 
+	@ApiOperation("根据模型ID批量发布")
+	@PostMapping(value = "/deploy/batch")
+	public Result<List<String>> batchDeploy(String modelId){
+		return flowableModelService.deployBatch(modelId);
+	}
+
 	@ApiOperation("根据模型ID发布(cmd)")
 	@PostMapping(value = "/deploy/cmd")
 	public Result deployModel(String modelId) {
@@ -238,6 +259,29 @@ public class ApiFlowableModelResource extends BaseResource {
 		return modelRepository.findByKeyAndType(key,modelType);
 	}
 
+	@ApiOperation("导出bpmn20.xml文件")
+	@GetMapping(value = "/downLoadXmlByModelId")
+	public void downLoadXmlByModelId(String modelId, HttpServletResponse response) {
+		if (StringUtils.isBlank(modelId)) {
+			return;
+		}
+		try {
+			Model model = modelService.getModel(modelId);
+			byte[]  bpmnXML = modelService.getBpmnXML(model);
+			ByteArrayInputStream in = new ByteArrayInputStream(bpmnXML);
+			String filename = model.getName() + ".bpmn20.xml";
+			response.setContentType("application/xml");
+			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(filename,"UTF-8"));
+			response.setCharacterEncoding("UTF-8");
+			IOUtils.copy(in, response.getOutputStream());  //这句必须放到setHeader下面，否则10K以上的xml无法导出，
+			response.flushBuffer();
+		} catch (IOException e) {
+			LOGGER.info("导出失败,失败信息为"+e.getMessage());
+		}
+	}
+
+
+
 	@GetMapping(value = "/loadPngByModelId/{modelId}")
 	public void loadPngByModelId(@PathVariable String modelId, HttpServletResponse response) {
 		Model model = modelService.getModel(modelId);
@@ -256,5 +300,7 @@ public class ApiFlowableModelResource extends BaseResource {
 			e.printStackTrace();
 		}
 	}
+
+
 
 }
