@@ -22,6 +22,7 @@ package com.sipsd.flow.fegin;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.fegin.vo.AbstractModel;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
@@ -152,5 +153,52 @@ public interface RemoteFlowableService
 	public Result<List<FlowNodeVo>> getBackNodesByProcessInstanceId(@PathVariable String processInstanceId,
 																	@PathVariable String taskId);
 
+	//TODO 流程所有节点接口
+
+
+	/**
+	 * 获取当前以及下一任务节点
+	 * @param node
+	 * @param taskId
+	 * @return
+	 */
+	@ApiOperation("获取当前以及下一任务节点信息")
+	@GetMapping(value = "/rest/processInstance/nextFlowNode")
+	public Result nextFlowNode(@RequestParam String node, @RequestParam String taskId);
+
+
+	@ApiOperation("查询model流程列表(最新)")
+	@GetMapping(value = "/rest/model/page-model")
+	public Result<PageModel<AbstractModel>> pageModel(@SpringQueryMap Query query);
+
+	/**
+	 * 签收
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("签收")
+	@PostMapping(value = "/rest/formdetail/claimTask")
+	public Result<String> claimTask(@Validated @RequestBody ClaimTaskVo params);
+
+	/**
+	 * 反签收
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("反签收")
+	@PostMapping(value = "/rest/formdetail/unClaimTask")
+	public Result<String> unClaimTask(@Validated @RequestBody ClaimTaskVo params);
+
+	/**
+	 * 委派
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("委派")
+	@PostMapping(value = "/rest/formdetail/delegateTask")
+	public Result<String> delegateTask(@Validated @RequestBody DelegateTaskVo params);
 
 }
