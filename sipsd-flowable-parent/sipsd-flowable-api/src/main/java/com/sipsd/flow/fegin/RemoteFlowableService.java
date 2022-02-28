@@ -22,18 +22,18 @@ package com.sipsd.flow.fegin;
 import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.vo.flowable.CompleteTaskVo;
-import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
+import com.sipsd.flow.vo.flowable.*;
+import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
+import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author gaoq
@@ -73,4 +73,84 @@ public interface RemoteFlowableService
 	@ApiOperation("根据流程实例id查询待办任务")
 	@GetMapping(value = "/rest/extension/task/get-extension-tasks")
 	public PageModel<TaskExtensionVo> getExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId,@SpringQueryMap Query query);
+
+
+	/**
+	 * 根据流程实例id查询历史自定义任务属性表(已办代办查询)
+	 *
+	 * @param processInstanceId 参数
+	 * @return
+	 */
+	@ApiOperation("根据流程实例id查询已办任务")
+	@GetMapping(value = "/rest/extension/task/get-finish-extension-tasks")
+	public PageModel<TaskExtensionVo> getFinishExtensionTaskByProcessInstanceId(@RequestParam(required = false) String processInstanceId,@SpringQueryMap Query query);
+
+
+	/**
+	 * 获取待办任务列表
+	 *
+	 * @param feginQueryVo 参数
+	 * @return
+	 */
+	@ApiOperation("获取待办任务列表")
+	@GetMapping(value = "/rest/task/get-applying-tasks")
+	public PageModel<TaskVo> getApplyingTasks(@SpringQueryMap FeginQueryVo feginQueryVo);
+
+
+	/**
+	 * 获取已办任务列表
+	 *
+	 * @param feginQueryVo 参数
+	 * @return
+	 */
+	@ApiOperation("获取已办任务列表")
+	@GetMapping(value = "/rest/task/get-applyed-tasks")
+	public PageModel<TaskVo> getApplyedTasks(@SpringQueryMap FeginQueryVo feginQueryVo);
+
+
+
+	/**
+	 * 跳转
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("跳转")
+	@PostMapping(value = "/rest/formdetail/doJumpStep")
+	public Result<String> doJumpStep(@Validated @RequestBody BackTaskVo params);
+
+	/**
+	 * 驳回
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("驳回")
+	@PostMapping(value = "/rest/formdetail/doBackStep")
+	public Result<String> doBackStep(@Validated @RequestBody PreBackTaskVo params);
+
+
+	/**
+	 * 终止
+	 *
+	 * @param params 参数
+	 * @return
+	 */
+	@ApiOperation("终止")
+	@PostMapping(value = "/rest/formdetail/stopProcess")
+	public Result<String> stopProcess(@Validated @RequestBody EndProcessVo params);
+
+
+	/**
+	 * 获取可驳回节点列表
+	 *
+	 * @param processInstanceId 流程实例id
+	 * @return
+	 */
+	@ApiOperation("获取可驳回节点列表")
+	@GetMapping(value = "/rest/formdetail/getBackNodesByProcessInstanceId/{processInstanceId}/{taskId}")
+	public Result<List<FlowNodeVo>> getBackNodesByProcessInstanceId(@PathVariable String processInstanceId,
+																	@PathVariable String taskId);
+
+
 }
