@@ -3,6 +3,7 @@ package com.sipsd.flow.service.flowable.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.druid.support.json.JSONUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
@@ -29,7 +30,6 @@ import org.flowable.bpmn.model.Process;
 import org.flowable.bpmn.model.*;
 import org.flowable.common.engine.impl.cfg.IdGenerator;
 import org.flowable.editor.language.json.converter.util.CollectionUtils;
-import org.flowable.engine.DynamicBpmnService;
 import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -55,11 +55,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotBlank;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author : chengtg
@@ -792,10 +789,13 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				//保存流程的自定义属性-最大审批天数
 				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo());
 				//更新当前节点的实际审批人
-				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode());
+				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
 				// 5.生成审批意见
 				this.addComment(taskId, params.getUserCode(), params.getProcessInstanceId(), type, params.getMessage());
+				//修改variables
+
+
 			} else {
 				result = Result.failed("没有此任务，请确认!");
 			}

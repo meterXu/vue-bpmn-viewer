@@ -95,7 +95,7 @@ public interface IFlowableExtensionTaskService
      * @return com.sipsd.cloud.common.core.util.Result<java.lang.String>
      * @Description
      */
-    public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee);
+    public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee,String variables);
 
     /**
      *

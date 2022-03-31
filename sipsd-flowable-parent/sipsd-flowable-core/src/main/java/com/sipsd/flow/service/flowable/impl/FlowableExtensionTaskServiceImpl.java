@@ -300,9 +300,9 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	}
 
 	@Override
-	public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee)
+	public void updateAssigneeByProcessInstanceIdAndTaskID(String processInstanceId,String taskId,String assignee,String variables)
 	{
-		flowableExtensionTaskDao.updateAssigneeByProcessInstanceIdAndTaskID(processInstanceId,taskId,assignee);
+		flowableExtensionTaskDao.updateAssigneeByProcessInstanceIdAndTaskID(processInstanceId,taskId,assignee,variables);
 	}
 
 	@Override

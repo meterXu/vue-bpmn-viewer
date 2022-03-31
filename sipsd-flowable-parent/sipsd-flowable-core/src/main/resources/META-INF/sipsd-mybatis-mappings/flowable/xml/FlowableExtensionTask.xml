@@ -243,7 +243,7 @@
 
     <update id="updateAssigneeByProcessInstanceIdAndTaskID" parameterType="java.lang.String">
         UPDATE  act_ru_extension_task t1
-        SET ASSIGNEE_ = #{assignee}
+        SET ASSIGNEE_ = #{assignee},business_info_ = #{variables}
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </update>

@@ -77,7 +77,7 @@ public interface IFlowableExtensionTaskDao
      * @return void
      * @Description 根据实例ID和任务ID更新实际审批人
      */
-    public void updateAssigneeByProcessInstanceIdAndTaskID(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId,@Param("assignee") String assignee);
+    public void updateAssigneeByProcessInstanceIdAndTaskID(@Param("processInstanceId") String processInstanceId,@Param("taskId") String taskId,@Param("assignee") String assignee,@Param("variables") String variables);
 
 
     /**
