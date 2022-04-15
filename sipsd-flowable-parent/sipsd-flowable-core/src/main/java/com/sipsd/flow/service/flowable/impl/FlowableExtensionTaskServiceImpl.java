@@ -119,7 +119,12 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						{
 							//更改当前代办数据的实际审批人
 							String assignee = flowableTaskDao.getPreTaskAssignee(task.getProcessInstanceId(),task.getTaskDefinitionKey());
-							taskExtensionVo.setAssignee(assignee);
+							//防止执行的时候不是审批驳回但是确在参数中传了approve=0的这种情况
+							if(StringUtils.isNotBlank(assignee))
+							{
+								taskExtensionVo.setAssignee(assignee);
+							}
+
 						}
 
 					}
