@@ -792,7 +792,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					}
 				}
 				//保存流程的自定义属性-最大审批天数
-				boolean hasApproveKey  = "1".equals(params.getVariables().get(approveKey).toString());
+				boolean hasApproveKey  = "0".equals(params.getVariables().get(approveKey)==null?"":params.getVariables().get(approveKey).toString());
 				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo(),hasApproveKey);
 				//更新当前节点的实际审批人
 				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
