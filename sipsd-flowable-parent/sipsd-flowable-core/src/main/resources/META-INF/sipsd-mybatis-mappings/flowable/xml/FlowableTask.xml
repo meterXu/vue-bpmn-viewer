@@ -172,7 +172,7 @@
 
 
     <select id="getPreTaskAssignee" parameterType="String" resultType="String">
-        select * from ACT_HI_TASKINST where PROC_INST_ID_ = #{processInstanceId}
+        select ASSIGNEE_ from ACT_HI_TASKINST where PROC_INST_ID_ = #{processInstanceId}
          and END_TIME_ is not null and  TASK_DEF_KEY_ = #{taskDefKey} order by END_TIME_ desc limit 1
     </select>
 
