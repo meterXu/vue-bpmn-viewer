@@ -51,6 +51,7 @@ import org.flowable.task.service.impl.persistence.entity.TaskEntity;
 import org.flowable.task.service.impl.persistence.entity.TaskEntityImpl;
 import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +87,9 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	private IFlowableNoticeTaskService noticeTaskService;
 
 	protected final String NUMBER_OF_ACTIVE_INSTANCES = "nrOfActiveInstances";
+
+	@Value("${sipsd.flowable.approveKey}")
+	private String approveKey;
 
 	@Override
 	public boolean checkParallelgatewayNode(String taskId) {
@@ -346,6 +350,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 			//插入自定义属性表
 			flowableExtensionTaskService.saveBackExtensionTask(preBackTaskVo.getProcessInstanceId());
+			//TODO 没有更新当前任务的实际审批人
 			result = Result.sucess("驳回成功!");
 		} else {
 			result = Result.failed("不存在任务实例,请确认!");
@@ -600,7 +605,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				//添加多实例
 				runtimeService.addMultiInstanceExecution(task.getTaskDefinitionKey(), task.getProcessInstanceId(), executionVariables);
 
-				flowableExtensionTaskService.saveExtensionTask(task.getProcessInstanceId(), task.getTaskDefinitionKey(), null);
+				flowableExtensionTaskService.saveExtensionTask(task.getProcessInstanceId(), task.getTaskDefinitionKey(), null,false);
 			}
 
 
@@ -787,7 +792,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					}
 				}
 				//保存流程的自定义属性-最大审批天数
-				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo());
+				boolean hasApproveKey  = "1".equals(params.getVariables().get(approveKey).toString());
+				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo(),hasApproveKey);
 				//更新当前节点的实际审批人
 				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
@@ -1336,5 +1342,11 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			}
 		}
 		return otherTaskKeys;
+	}
+
+	@Override
+	public String getPreTaskAssignee(String processInstanceId, String taskDefKey)
+	{
+		return flowableTaskDao.getPreTaskAssignee(processInstanceId,taskDefKey);
 	}
 }

@@ -23,7 +23,7 @@ public interface IFlowableExtensionTaskService
      * @return void
      * @Description 插入自定义属性表
      */
-    public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo);
+    public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo,boolean hasApproveKey);
 
     /**
      *

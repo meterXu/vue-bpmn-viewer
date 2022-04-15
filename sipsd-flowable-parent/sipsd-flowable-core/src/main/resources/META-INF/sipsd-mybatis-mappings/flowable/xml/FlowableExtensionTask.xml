@@ -20,7 +20,7 @@
         <!-- 如果是挂起状态需要实时更改结束时间-->
             if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2,
             date_add(t3.END_TIME_,interval  TIMESTAMPDIFF(SECOND, t3.SUSPENSION_TIME_, NOW())  SECOND),t3.END_TIME_ )  as endTime,
-            t1.ASSIGNEE_ as assignee,
+            t3.ASSIGNEE_ as assignee,
         <!-- 剩余时间-->
             if(t3.SUSPENSION_STATE_=2 &amp;&amp; t3.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t3.SUSPENSION_TIME_,t3.END_TIME_)
             ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t3.END_TIME_))  as restTime,
@@ -69,7 +69,7 @@
             t3.TASK_MAX_DAY_ AS taskMaxDay,
             t3.TASK_DEF_KEY_ AS taskDefinitionKey,
             t3.PROC_DEF_ID_ AS processDefinitionId,
-            t1.ASSIGNEE_ AS assignee,
+            t3.ASSIGNEE_ AS assignee,
             t6.DISPLAY_NAME_ as realName,
             IF
                 (

@@ -180,5 +180,14 @@ public interface IFlowableTaskService {
 
 	TaskVo getTask(FormInfoQueryVo formInfoQueryVo);
 
+	/**
+	 *
+	 * @param processInstanceId
+	 * @param taskDefKey
+	 * @return java.lang.String
+	 * @Description 获取上个审批节点的实际审批人
+	 */
+	public String getPreTaskAssignee(String processInstanceId,String taskDefKey);
+
 
 }

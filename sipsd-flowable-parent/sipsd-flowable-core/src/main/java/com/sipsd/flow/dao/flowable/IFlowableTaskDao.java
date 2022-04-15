@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.sipsd.flow.vo.flowable.TaskQueryVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -45,5 +46,14 @@ public interface IFlowableTaskDao {
      * @return
      */
     public TaskVo getTaskById(String taskId) ;
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskDefKey
+     * @return java.lang.String
+     * @Description 获取上个审批节点的实际审批人
+     */
+    public String getPreTaskAssignee(@Param("processInstanceId") String processInstanceId, @Param("taskDefKey") String taskDefKey);
 
 }

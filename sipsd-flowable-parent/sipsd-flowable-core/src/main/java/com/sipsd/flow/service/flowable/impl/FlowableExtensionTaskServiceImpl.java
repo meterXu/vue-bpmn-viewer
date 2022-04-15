@@ -9,6 +9,7 @@ import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
+import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
 import com.sipsd.flow.service.flowable.IFlowableCalendarService;
 import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.vo.flowable.ExtensionTaskQueryVo;
@@ -41,13 +42,18 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	@Autowired
 	private IFlowableExtensionTaskDao flowableExtensionTaskDao;
 	@Autowired
+	private IFlowableTaskDao flowableTaskDao;
+	@Autowired
 	private IFlowableCalendarService flowableCalendarService;
 
 	@Value("${sipsd.flowable.calendar:true}")
 	private boolean ifHoliday;
 
+	@Value("${sipsd.flowable.approveState:false}")
+	private boolean approveState;
+
 	@Override
-	public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo)
+	public void saveExtensionTask(String processDefinitionId,String fromKey,String businessInfo,boolean hasApproveKey)
 	{
 		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
 		Date startTime = new Date();
@@ -105,6 +111,19 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 					TaskExtensionVo taskExtensionVo = new TaskExtensionVo();
 					taskExtensionVo.setTaskId(task.getId());
 					taskExtensionVo.setAssignee(assigneeList.stream().collect(Collectors.joining(",")));
+					//是否开启审批驳回到实际审批人模式
+					if(approveState)
+					{
+						//如果这个审批的状态是approve==1(其实是驳回的意思)
+						if(hasApproveKey)
+						{
+							//更改当前代办数据的实际审批人
+							String assignee = flowableTaskDao.getPreTaskAssignee(task.getProcessInstanceId(),task.getTaskDefinitionKey());
+							taskExtensionVo.setAssignee(assignee);
+						}
+
+					}
+
 					taskExtensionVo.setGroupId(groupIdList.stream().collect(Collectors.joining(",")));
 					taskExtensionVo.setExecutionId(task.getExecutionId());
 					taskExtensionVo.setProcessDefinitionId(task.getProcessDefinitionId());
