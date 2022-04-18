@@ -51,7 +51,7 @@ security :
 sipsd:
     flowable:
         calendar: true
-        approveState: true
+        approveState: false
         approveKey: approve
 #License相关配置
 #license:

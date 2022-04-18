@@ -85,6 +85,13 @@ public class TaskExtensionVo implements Serializable {
     private Date endTime;
 
     /**
+     * 自然时结束时间 应该完成的结束时间
+     */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date workEndTime;
+
+
+    /**
      * 更新时间
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
@@ -492,4 +499,15 @@ public class TaskExtensionVo implements Serializable {
     {
         this.comment = comment;
     }
+
+    public Date getWorkEndTime()
+    {
+        return workEndTime;
+    }
+
+    public void setWorkEndTime(Date workEndTime)
+    {
+        this.workEndTime = workEndTime;
+    }
+
 }

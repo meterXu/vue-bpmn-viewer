@@ -1,0 +1,1 @@
+ALTER TABLE act_ru_extension_task add  COLUMN  WORK_END_TIME_  datetime;

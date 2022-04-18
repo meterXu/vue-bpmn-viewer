@@ -81,7 +81,14 @@ public class TaskVo implements Serializable {
      */
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
-    
+
+    /**
+     * 自然时结束时间 应该完成的结束时间
+     */
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date workEndTime;
+
+
     @ApiModelProperty("毫秒")
     @Setter
     @Getter
@@ -303,4 +310,15 @@ public class TaskVo implements Serializable {
     {
         this.realName = realName;
     }
+
+    public Date getWorkEndTime()
+    {
+        return workEndTime;
+    }
+
+    public void setWorkEndTime(Date workEndTime)
+    {
+        this.workEndTime = workEndTime;
+    }
+
 }

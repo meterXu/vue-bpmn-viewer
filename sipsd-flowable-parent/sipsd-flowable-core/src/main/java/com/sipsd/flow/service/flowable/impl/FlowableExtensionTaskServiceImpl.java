@@ -126,9 +126,7 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 							}
 
 						}
-
 					}
-
 					taskExtensionVo.setGroupId(groupIdList.stream().collect(Collectors.joining(",")));
 					taskExtensionVo.setExecutionId(task.getExecutionId());
 					taskExtensionVo.setProcessDefinitionId(task.getProcessDefinitionId());
@@ -139,7 +137,10 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 						//算出结束日期
 						taskExtensionVo.setTaskMaxDay(elementText);
 						taskExtensionVo.setCustomTaskMaxDay(elementText);
-						taskExtensionVo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+						Date endDate = DateUtil.addDate(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+						taskExtensionVo.setEndTime(endDate);
+						//自然时结束时间
+						taskExtensionVo.setWorkEndTime(endDate);
 						//需要考虑节假日的日期来算出结束时间
 						if(ifHoliday)
 						{
@@ -194,7 +195,10 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
 				if(StringUtils.isNotEmpty(taskMaxDay))
 				{
-					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					Date endDate = DateUtil.addDate(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+					vo.setEndTime(endDate);
+					//自然时结束时间
+					vo.setWorkEndTime(endDate);
 					//需要考虑节假日的日期来算出结束时间
 					if(ifHoliday)
 					{
@@ -247,7 +251,10 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 				String taskMaxDay = taskExtensionVo.getCustomTaskMaxDay()==null?"":taskExtensionVo.getTaskMaxDay();
 				if(StringUtils.isNotEmpty(taskMaxDay))
 				{
-					vo.setEndTime(DateUtil.addDate(new Date(),Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay())));
+					Date endDate = DateUtil.addDate(startTime,Integer.parseInt(taskExtensionVo.getCustomTaskMaxDay()));
+					vo.setEndTime(endDate);
+					//自然时结束时间
+					vo.setWorkEndTime(endDate);
 					//需要考虑节假日的日期来算出结束时间
 					if(ifHoliday)
 					{
@@ -309,6 +316,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 		//计算出代办的截止日期
 		Date endDate = DateUtil.addDate(taskExtensionVo.getStartTime(),Integer.parseInt(params.getCustomTaskMaxDay()));
 		taskExtensionVo.setEndTime(endDate);
+		//自然时结束时间
+		taskExtensionVo.setWorkEndTime(endDate);
 		//需要考虑节假日的日期来算出结束时间
 		if(ifHoliday)
 		{

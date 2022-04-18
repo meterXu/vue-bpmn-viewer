@@ -168,4 +168,9 @@
     <changeSet id="7" author="flowable">
         <sqlFile path="db/sqlfile/v_4.1.0/flowable.mysql.update.holiday.sql" relativeToChangelogFile="true"/>
     </changeSet>
+
+    <!--新增自然时字段-->
+    <changeSet id="8" author="flowable">
+        <sqlFile path="db/sqlfile/v_4.2.0/flowable.mysql.update.extension-3.sql" relativeToChangelogFile="true"/>
+    </changeSet>
 </databaseChangeLog>
