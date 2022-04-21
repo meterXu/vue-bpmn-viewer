@@ -12,14 +12,16 @@
  */
 package com.sipsd.flow.rest.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
+import cn.hutool.core.lang.UUID;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sipsd.cloud.common.core.util.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.flowable.engine.ManagementService;
 import org.flowable.idm.api.IdmIdentityService;
 import org.flowable.idm.api.User;
+import org.flowable.idm.engine.impl.persistence.entity.UserEntityImpl;
 import org.flowable.ui.common.model.ResultListDataRepresentation;
 import org.flowable.ui.common.model.UserRepresentation;
 import org.flowable.ui.common.security.DefaultPrivileges;
@@ -27,16 +29,11 @@ import org.flowable.ui.common.service.exception.UnauthorizedException;
 import org.flowable.ui.idm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Api(tags = { "工作流用户管理API类" })
 @RestController
@@ -111,11 +108,43 @@ public class EditorUsersResource {
 		return userRepresentation;
 	}
 
-	@RequestMapping(value = "/rest/user", method = RequestMethod.GET, produces = "application/json")
-	public String getUserById(@RequestParam String userId) {
-		List<User>  list = idmIdentityService.createNativeUserQuery().sql("select * from act_id_user where ID_ like #{id} ").parameter("id", userId).list();
-		User user = list.get(0);
-		return user.getDisplayName();
+	/**
+	 * 添加用户
+	 * @param user  用户
+	 * @return
+	 */
+	@ApiOperation("插入用户")
+	@PostMapping("/rest/saveUser")
+	public Result<String> saveUser(UserEntityImpl user) {
+		Result result = Result.sucess("添加成功");
+		userService.createNewUser(UUID.randomUUID().toString(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(),"flow");
+		return result;
+	}
+
+	/**
+	 * 根据userId更新用户
+	 * @param user  用户
+	 * @return
+	 */
+	@ApiOperation("根据userId更新用户")
+	@PostMapping("/rest/updateUser")
+	public Result<String> updateUser(UserEntityImpl user) {
+		Result result = Result.sucess("更新成功");
+		userService.updateUserDetails(user.getId(),user.getFirstName(),user.getLastName(),user.getEmail(),"flow");
+		return result;
+	}
+
+	/**
+	 * 根据userId删除用户
+	 * @param userId  用户id
+	 * @return
+	 */
+	@ApiOperation("根据userId删除用户")
+	@PostMapping("/rest/deleteUser")
+	public Result<String> updateUser(@RequestParam("userId") String userId) {
+		Result result = Result.sucess( "删除成功");
+		userService.deleteUser(userId);
+		return result;
 	}
 
 }
