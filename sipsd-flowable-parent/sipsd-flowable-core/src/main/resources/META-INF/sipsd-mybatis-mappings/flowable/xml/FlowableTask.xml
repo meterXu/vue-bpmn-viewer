@@ -27,7 +27,7 @@
         INNER JOIN act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_
         LEFT JOIN act_ru_identitylink t3 ON t3.TASK_ID_ = t1.ID_
         LEFT JOIN act_ru_extension_task t4 on t4.TASK_ID_ = t1.ID_
-        LEFT JOIN  act_id_user t5 ON t4.ASSIGNEE_ = t5.ID_
+        LEFT JOIN  act_id_user t5 ON t1.ASSIGNEE_ = t5.ID_
         WHERE
             t2.BUSINESS_KEY_ IS NOT NULL
 
@@ -40,9 +40,9 @@
         </if>
 
         AND (
-            t4.ASSIGNEE_ like CONCAT('%',#{userCode},'%')
+            t1.ASSIGNEE_ like CONCAT('%',#{userCode},'%')
             OR (
-                t4.ASSIGNEE_ IN (
+                t1.ASSIGNEE_ IN (
                     SELECT
                         G.group_id_
                     FROM
@@ -54,8 +54,8 @@
             )
             OR (
                 (
-                    t4.ASSIGNEE_ IS NULL
-                    OR t4.ASSIGNEE_ = ''
+                    t1.ASSIGNEE_ IS NULL
+                    OR t1.ASSIGNEE_ = ''
                 )
                 AND (
                     t3.USER_ID_ like CONCAT('%',#{userCode},'%')
@@ -178,5 +178,12 @@
         select ASSIGNEE_ from ACT_HI_TASKINST where PROC_INST_ID_ = #{processInstanceId}
          and END_TIME_ is not null and  TASK_DEF_KEY_ = #{taskDefKey} order by END_TIME_ desc limit 1
     </select>
+
+    <update id="updateAssigneeByProcessInstanceIdAndTaskId" parameterType="java.lang.String">
+        UPDATE  act_ru_task
+        SET assignee_ = #{assignee}
+        WHERE
+            proc_inst_id_ = #{processInstanceId} and id_ = #{taskId}
+    </update>
 
 </mapper>

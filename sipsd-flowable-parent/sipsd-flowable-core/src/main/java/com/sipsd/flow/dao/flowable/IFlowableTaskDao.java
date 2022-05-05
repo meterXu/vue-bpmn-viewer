@@ -56,4 +56,14 @@ public interface IFlowableTaskDao {
      */
     public String getPreTaskAssignee(@Param("processInstanceId") String processInstanceId, @Param("taskDefKey") String taskDefKey);
 
+    /**
+     *
+     * @param assignee 审批人
+     * @param processInstanceId 实例Id
+     * @param taskId 任务Id
+     * @return void
+     * @Description 根据实例ID和taskId来更新审批人
+     */
+    public void updateAssigneeByProcessInstanceIdAndTaskId(@Param("assignee") String assignee,@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
+
 }

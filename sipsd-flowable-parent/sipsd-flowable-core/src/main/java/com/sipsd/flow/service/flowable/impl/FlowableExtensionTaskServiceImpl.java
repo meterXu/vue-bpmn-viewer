@@ -124,7 +124,8 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 							{
 								taskExtensionVo.setAssignee(assignee);
 							}
-
+							//更新act_run_task表中assignee
+							flowableTaskDao.updateAssigneeByProcessInstanceIdAndTaskId(assignee,task.getProcessInstanceId(),task.getId());
 						}
 					}
 					taskExtensionVo.setGroupId(groupIdList.stream().collect(Collectors.joining(",")));
