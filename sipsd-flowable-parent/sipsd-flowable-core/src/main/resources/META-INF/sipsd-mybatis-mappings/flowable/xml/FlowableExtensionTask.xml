@@ -32,7 +32,7 @@
             t3.SUSPENSION_TIME_ as suspensionTime,
             case  t3.SUSPENSION_STATE_ when 1 then '激活' else '挂起' end as suspensionState,
             case  t3.OVER_TIME when 1 then '正常' else '延长' end as overtime,
-        identitylink.GROUP_ID_ as groupId,
+        t3.GROUP_ID_ as groupId,
             t3.FLOW_TYPE_ as flowType,
             t3.FROM_KEY_ as fromKey,
             t3.IS_DB_ as isDb,
@@ -44,7 +44,6 @@
                 LEFT JOIN  act_ru_extension_task t3 ON T1.ID_ = t3.TASK_ID_ and t1.PROC_INST_ID_ = t3.PROC_INST_ID_
                 LEFT JOIN  act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
                 LEFT JOIN  act_id_user t5 ON t1.ASSIGNEE_ = t5.ID_
-                LEFT JOIN  act_hi_identitylink identitylink ON t1.ID_ = identitylink.TASK_ID_
         WHERE   t3.ID_  is not null
         <if test="null != processInstanceId and '' != processInstanceId ">
             and t1.PROC_INST_ID_ = #{processInstanceId}
@@ -118,7 +117,7 @@
                                     t1.START_TIME_,
                                     CURRENT_TIMESTAMP ()),
                             TIMESTAMPDIFF( SECOND, t1.START_TIME_, t3.SUSPENSION_TIME_ ))) AS duration,
-            identitylink.GROUP_ID_ as groupId,
+            t3.GROUP_ID_ as groupId,
             t1.TENANT_ID_ AS tenantId,
             t1.PROC_INST_ID_ AS processInstanceId,
             t3.FLOW_TYPE_ AS flowType,
@@ -145,7 +144,6 @@
                 LEFT JOIN act_hi_procinst t4 ON T1.PROC_INST_ID_ = t4.PROC_INST_ID_
                 LEFT JOIN act_hi_comment t5 ON T1.ID_ = t5.TASK_ID_ and t1.PROC_INST_ID_ = t5.PROC_INST_ID_
                 LEFT JOIN  act_id_user t6 ON t1.ASSIGNEE_ = t6.ID_
-                LEFT JOIN  act_hi_identitylink identitylink ON t1.ID_ = identitylink.TASK_ID_
         WHERE
             t1.PROC_INST_ID_ = #{processInstanceId} and (t1.DELETE_REASON_ is null or t1.DELETE_REASON_ != 'MI_END')
     </select>
