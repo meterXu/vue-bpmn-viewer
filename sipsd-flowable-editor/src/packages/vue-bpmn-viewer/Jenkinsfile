@@ -1,11 +1,11 @@
-def cover = false //相同版本是否覆盖
+def cover = true //相同版本是否覆盖
 def rootPath = "./sipsd-flowable-editor/src/packages/vue-bpmn-viewer"
 def tgzName = "vue-bpmn-viewer"
 def gitUrl = "http://192.168.126.25/git/cbb/flowable_v4.git"
 def branch = "master"
 def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
 def npm = "http://192.168.126.25/npm"
-def robot = "360ac2ce-efe5-4478-8703-7cd3bd463044"
+def robot = "flowable_publish"
 def versionLocal
 def packageName
 def publish = true
