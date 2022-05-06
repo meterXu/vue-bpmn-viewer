@@ -242,10 +242,15 @@ function utils() {
     // }
 
     this.setTaskMaxDay = function (container, id, day) {
-        let text = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .custom-max-day text`)
+        let text = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .d-con-clock span`)
         if (text) {
-            text.innerHTML = day
+            text.innerText = day
         }
+    }
+
+    this.hideTaskMaxDay = function (container, id) {
+        let clock = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .d-con-clock`)
+        clock.style.display='none'
     }
 
     this.setTaskRealName = function (container, id, day) {
@@ -331,7 +336,11 @@ function utils() {
         _timeRes.sort((a, b) => {
             return a.startTime - b.startTime
         }).forEach(f => {
-            this.setTaskMaxDay(container, f.taskDefinitionKey, f.customTaskMaxDay + '天')
+            if(f.customTaskMaxDay){
+                this.setTaskMaxDay(container, f.taskDefinitionKey, f.customTaskMaxDay + '天')
+            }else{
+                this.hideTaskMaxDay(container, f.taskDefinitionKey)
+            }
             if (f.realName) {
                 this.setTaskRealName(container, f.taskDefinitionKey, f.realName)
             }

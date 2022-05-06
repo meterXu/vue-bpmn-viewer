@@ -188,16 +188,22 @@ function createCon(options,text,clock){
     })
     let div = document.createElement("div");
     div.classList.add('d-userTask-content')
+    let clockLi = ''
+    if(clock){
+        clockLi=`
+        <li class="d-con-clock">
+            <i class="d-con-clock-icon clock-spin"></i>
+            <span title="${clock}" style="color:#f88062">${clock}</span>
+        </li>
+        `
+    }
     div.innerHTML=`
     <ul style="max-width: ${options.width-6}px">
         <li class="d-con-user">
             <i class="d-con-user-icon"></i>
             <span title="${text||'未分配'}" style="color:${text?'#6c6c6c':''}">${text||'未分配'}</span>
         </li>
-       <li class="d-con-clock">
-            <i class="${clock?'d-con-clock-icon clock-spin':'d-con-clock-icon'}"></i>
-            <span title="${clock||'-'}" style="color:${clock?'#f88062':''}">${clock||'-'}</span>
-       </li>
+        ${clockLi}
     </ul>`
     append(foreignObject,div)
     return foreignObject
