@@ -8,7 +8,7 @@ def npm = "http://192.168.126.25/npm"
 def robot = "flowable_publish"
 def versionLocal
 def packageName
-def publish = false
+def notice = false
 pipeline {
     agent any
     stages {
@@ -57,7 +57,7 @@ pipeline {
     post {
         success {
             script {
-                if(publish){
+                if(notice){
                     dingtalk(robot: "$robot",
                                 type: 'ACTION_CARD',
                                 at: [],
@@ -87,7 +87,7 @@ pipeline {
         }
         failure {
             script {
-                if(publish){
+                if(notice){
                     dingtalk(robot: "$robot",
                                 type: 'ACTION_CARD',
                                 at: [],
