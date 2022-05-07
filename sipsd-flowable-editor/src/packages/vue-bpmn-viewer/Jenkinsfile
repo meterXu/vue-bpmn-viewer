@@ -1,4 +1,4 @@
-def cover = true //相同版本是否覆盖
+def cover = false //相同版本是否覆盖
 def rootPath = "./sipsd-flowable-editor/src/packages/vue-bpmn-viewer"
 def tgzName = "vue-bpmn-viewer"
 def gitUrl = "http://192.168.126.25/git/cbb/flowable_v4.git"
@@ -33,7 +33,6 @@ pipeline {
                     def versionOnline =  sh(script: "npm view $packageName version --registry='$npm'", returnStdout: true).trim()
                     if ("$versionOnline" == "$versionLocal" && cover){
                         echo "版本相同则撤销线上版本"
-                        publish = true
                         sh "npm unpublish $packageName@$versionLocal --force --registry='$npm'"
                         stage ('删除服务器中的包') {
                                def remote = [:]
@@ -49,10 +48,7 @@ pipeline {
                         sh "cd $rootPath && npm publish --registry='$npm'"
                     }else if ("$versionOnline" != "$versionLocal"){
                         echo "发布新版本"
-                        publish = true
                         sh "cd $rootPath && npm publish --registry='$npm'"
-                    }else{
-                        publish = false
                     }
                 }
           }
