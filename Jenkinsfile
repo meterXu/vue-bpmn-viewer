@@ -3,7 +3,7 @@ def branch = "master"
 def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
 def packageName='沃壤工作流发版'
 def versionLocal
-def robot='flowable_publish'
+def robot='test'
 def issuesUrl= 'http://issues.dpark.com.cn/git/issues/flowable_v4/-/issues'
 def releasesUrl= 'http://192.168.126.25/git/cbb/flowable_v4/-/releases'
 def docUrl= 'http://58.210.9.133/iplatform/geekdoc/docs/wow/wow-1deg8tivp0hhv'
