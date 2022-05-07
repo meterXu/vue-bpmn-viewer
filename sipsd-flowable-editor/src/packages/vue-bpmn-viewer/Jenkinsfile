@@ -11,7 +11,7 @@ def releasesUrl= 'http://58.210.9.133/iplatform/npm/-/web/detail/@dpark/vue-bpmn
 def docUrl= 'http://58.210.9.133/iplatform/geekdoc/docs/wow/wow-1df4mgf24hnuh'
 def versionLocal
 def packageName
-def notice = false
+def notice = true
 pipeline {
     agent any
     stages {
