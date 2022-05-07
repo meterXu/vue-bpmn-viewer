@@ -5,13 +5,13 @@ def gitUrl = "http://192.168.126.25/git/cbb/flowable_v4.git"
 def branch = "master"
 def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
 def npm = "http://192.168.126.25/npm"
-def robot = "test"
+def robot = "flowable_publish"
 def issuesUrl= 'http://issues.dpark.com.cn/git/issues/flowable_v4/-/issues'
 def releasesUrl= 'http://58.210.9.133/iplatform/npm/-/web/detail/@dpark/vue-bpmn-viewer'
 def docUrl= 'http://58.210.9.133/iplatform/geekdoc/docs/wow/wow-1df4mgf24hnuh'
 def versionLocal
 def packageName
-def notice = true
+def notice = false
 pipeline {
     agent any
     stages {
