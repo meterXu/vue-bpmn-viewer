@@ -318,7 +318,7 @@
         SELECT
             count(*) as count
         FROM
-            act_ru_extension_task t1 where  t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId} and task_def_key_ = #{taskDefKey}
+            act_ru_extension_task t1 where  t1.PROC_INST_ID_ = #{processInstanceId}  and task_def_key_ = #{taskDefKey}
     </select>
 
     <select id="getAssigneeByProcessInstanceIdAndTaskId" parameterType="String" resultType="String">

@@ -45,7 +45,7 @@ public class ApiFlowableRecorrectResource extends BaseResource {
         for(TaskExtensionVo taskExtensionVo:taskExtensionVoList)
         {
             //根据实例ID和任务ID以及taskdefKey判断是否是有多个
-            Integer count = flowableExtensionTaskDao.getCountByProcessInstanceIdAndTaskId(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId(),taskExtensionVo.getTaskDefinitionKey());
+            Integer count = flowableExtensionTaskDao.getCountByProcessInstanceIdAndTaskId(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskDefinitionKey());
             if(count>1)
             {
                 //该节点被执行过，可能是被驳回了 1.确实是驳回的节点待办,extension的assignee肯定不为空 2.正常审批的节点再次待办有可能assignee是空

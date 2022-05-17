@@ -169,7 +169,7 @@ public interface IFlowableExtensionTaskDao
      * @return java.util.List<java.lang.String>
      * @Description 获取所有审批人列表
      */
-    public Integer getCountByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId,@Param("taskDefKey") String taskDefKey);
+    public Integer getCountByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId,@Param("taskDefKey") String taskDefKey);
 
 
     /**
