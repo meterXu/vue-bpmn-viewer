@@ -188,16 +188,7 @@ public interface IFlowableTaskService {
 	 * @Description 获取上个审批节点的实际审批人
 	 */
 	public String getPreTaskAssignee(String processInstanceId,String taskDefKey);
-
-    /**
-     *
-     * @param processInstanceId
-     * @param taskId
-     * @return java.lang.String
-     * @Description 通过实例id和任务id查询审批人
-     */
-    public String getAssigneeByProcessInstanceIdAndTaskId(String processInstanceId, String taskId);
-
+	
     /**
      *
      * @param assignee 审批人
@@ -207,5 +198,4 @@ public interface IFlowableTaskService {
      * @Description 根据实例ID和taskId来更新审批人
      */
     public void updateAssigneeByProcessInstanceIdAndTaskId(String assignee, String processInstanceId, String taskId);
-
 }

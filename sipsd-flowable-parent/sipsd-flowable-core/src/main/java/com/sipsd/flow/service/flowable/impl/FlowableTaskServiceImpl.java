@@ -3,7 +3,6 @@ package com.sipsd.flow.service.flowable.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.druid.support.json.JSONUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sipsd.cloud.common.core.util.Result;
@@ -796,7 +795,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				boolean hasApproveKey  = "0".equals(params.getVariables().get(approveKey)==null?"":params.getVariables().get(approveKey).toString());
 				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo(),hasApproveKey);
 				//更新当前节点的实际审批人
-				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
+				//flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
 				// 5.生成审批意见
 				this.addComment(taskId, params.getUserCode(), params.getProcessInstanceId(), type, params.getMessage());
@@ -1349,12 +1348,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	public String getPreTaskAssignee(String processInstanceId, String taskDefKey)
 	{
 		return flowableTaskDao.getPreTaskAssignee(processInstanceId,taskDefKey);
-	}
-
-	@Override
-	public String getAssigneeByProcessInstanceIdAndTaskId(String processInstanceId, String taskId)
-	{
-		return flowableTaskDao.getAssigneeByProcessInstanceIdAndTaskId(processInstanceId,taskId);
 	}
 
 	@Override

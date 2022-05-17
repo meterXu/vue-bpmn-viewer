@@ -169,5 +169,16 @@ public interface IFlowableExtensionTaskDao
      * @return java.util.List<java.lang.String>
      * @Description 获取所有审批人列表
      */
-    public List<TaskExtensionVo> getAssigneeListByProcessInstanceIdAndTaskId();
+    public Integer getCountByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId,@Param("taskDefKey") String taskDefKey);
+
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return java.lang.String
+     * @Description 通过实例id和任务id查询审批人
+     */
+    public String getAssigneeByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
+
 }

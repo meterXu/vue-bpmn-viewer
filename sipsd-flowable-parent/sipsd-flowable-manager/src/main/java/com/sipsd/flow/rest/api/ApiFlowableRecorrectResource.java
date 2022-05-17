@@ -1,13 +1,12 @@
 package com.sipsd.flow.rest.api;
 
 import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
+import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
+import com.sipsd.flow.dao.flowable.IFlowableTaskDao;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +28,9 @@ import java.util.List;
 public class ApiFlowableRecorrectResource extends BaseResource {
 
     @Autowired
-    private IFlowableExtensionTaskService flowableExtensionTaskService;
+    private IFlowableExtensionTaskDao flowableExtensionTaskDao;
     @Autowired
-    private IFlowableTaskService flowableTaskService;
+    private IFlowableTaskDao flowableTaskDao;
 
     /**
      * 修正act_run_task和act_run_extension_task中assignee中不一致的情况
@@ -41,19 +40,24 @@ public class ApiFlowableRecorrectResource extends BaseResource {
     @PostMapping(value = "/correct-assignee-task")
     public Result<String> correctAssigneeTask() {
         //遍历所有act_run_task中的待办数据
-        List<TaskExtensionVo> taskExtensionVoList = flowableExtensionTaskService.getAssigneeListByProcessInstanceIdAndTaskId();
+        List<TaskExtensionVo> taskExtensionVoList = flowableTaskDao.getAssigneeListByProcessInstanceIdAndTaskId();
         for(TaskExtensionVo taskExtensionVo:taskExtensionVoList)
         {
-            //通过实例id和任务id查询act_run_task表中的assignee
-            String assignee = flowableTaskService.getAssigneeByProcessInstanceIdAndTaskId(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
-            if(StringUtils.isNotBlank(assignee) && StringUtils.isNotBlank(taskExtensionVo.getAssignee()))
+            //根据实例ID和任务ID以及taskdefKey判断是否是有多个
+            Integer count = flowableExtensionTaskDao.getCountByProcessInstanceIdAndTaskId(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId(),taskExtensionVo.getTaskDefinitionKey());
+            if(count>1)
             {
-                if(!assignee.equals(taskExtensionVo.getAssignee()))
+                //该节点被执行过，可能是被驳回了
+                String assignee = flowableExtensionTaskDao.getAssigneeByProcessInstanceIdAndTaskId(taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
+                assignee = assignee==null?"":assignee;
+                String taskAssignee = taskExtensionVo.getAssignee()==null?"":taskExtensionVo.getAssignee();
+                if(!assignee.equals(taskAssignee))
                 {
                     log.info("实例ID:"+ taskExtensionVo.getProcessInstanceId() + "--taskId为:"+ taskExtensionVo.getTaskId()+"--错误的assignee为:"+ assignee+"--正确的assignee为:"+taskExtensionVo.getAssignee());
                     //不一致的情况下更新数据
                     //  flowableTaskService.updateAssigneeByProcessInstanceIdAndTaskId(taskExtensionVo.getAssignee(),taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
                 }
+
             }
         }
         return Result.ok();
