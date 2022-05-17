@@ -55,7 +55,7 @@ public class ApiFlowableRecorrectResource extends BaseResource {
                 {
                     log.info("实例ID:"+ taskExtensionVo.getProcessInstanceId() + "--taskId为:"+ taskExtensionVo.getTaskId()+"--错误的assignee为:"+ assignee+"--正确的assignee为:"+taskExtensionVo.getAssignee());
                     //不一致的情况下更新数据
-                    //  flowableTaskService.updateAssigneeByProcessInstanceIdAndTaskId(taskExtensionVo.getAssignee(),taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
+                   //  flowableTaskDao.updateAssigneeByProcessInstanceIdAndTaskId(taskExtensionVo.getAssignee(),taskExtensionVo.getProcessInstanceId(),taskExtensionVo.getTaskId());
                 }
 
             }
