@@ -66,4 +66,13 @@ public interface IFlowableTaskDao {
      */
     public void updateAssigneeByProcessInstanceIdAndTaskId(@Param("assignee") String assignee,@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
 
+
+    /**
+     *
+     * @param processInstanceId
+     * @param taskId
+     * @return java.lang.String
+     * @Description 通过实例id和任务id查询审批人
+     */
+    public String getAssigneeByProcessInstanceIdAndTaskId(@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
 }

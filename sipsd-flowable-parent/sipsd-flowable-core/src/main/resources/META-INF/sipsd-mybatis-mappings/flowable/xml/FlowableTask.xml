@@ -186,4 +186,10 @@
             proc_inst_id_ = #{processInstanceId} and id_ = #{taskId}
     </update>
 
+
+    <select id="getAssigneeByProcessInstanceIdAndTaskId" parameterType="String" resultType="String">
+       select assignee_ as assignee from act_ru_task  WHERE
+           proc_inst_id_ = #{processInstanceId} and id_ = #{taskId}
+    </select>
+
 </mapper>

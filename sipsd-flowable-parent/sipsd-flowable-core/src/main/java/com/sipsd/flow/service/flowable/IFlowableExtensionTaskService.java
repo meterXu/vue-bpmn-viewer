@@ -160,4 +160,11 @@ public interface IFlowableExtensionTaskService
      */
     public List<TaskExtensionVo> getExtensionTaskByProcessInstanceIdAndState(String processInstanceId,String suspensionState);
 
+    /**
+     *
+     * @param
+     * @return java.util.List<java.lang.String>
+     * @Description 获取所有审批人列表
+     */
+    public List<TaskExtensionVo> getAssigneeListByProcessInstanceIdAndTaskId();
 }

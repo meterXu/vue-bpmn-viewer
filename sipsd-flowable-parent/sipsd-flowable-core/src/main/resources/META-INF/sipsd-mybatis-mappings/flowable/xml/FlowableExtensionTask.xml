@@ -308,12 +308,17 @@
           where  t1.PROC_INST_ID_ = #{processInstanceId}
     </select>
 
-
-
-
     <update id="updateEndTimeByProcessInstanceIdAndTaskId" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         UPDATE  act_ru_extension_task t1 SET t1.END_TIME_ =  #{endTime}
         WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </update>
+
+
+    <select id="getAssigneeListByProcessInstanceIdAndTaskId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT
+            t1.ASSIGNEE_ as assignee,t1.proc_inst_id_ as processInstanceId,t1.task_id_ as taskId
+        FROM
+            act_ru_extension_task t1
+    </select>
 
 </mapper>

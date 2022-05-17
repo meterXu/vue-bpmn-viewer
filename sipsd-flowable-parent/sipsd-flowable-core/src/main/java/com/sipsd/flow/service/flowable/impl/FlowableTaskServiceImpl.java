@@ -1350,4 +1350,16 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	{
 		return flowableTaskDao.getPreTaskAssignee(processInstanceId,taskDefKey);
 	}
+
+	@Override
+	public String getAssigneeByProcessInstanceIdAndTaskId(String processInstanceId, String taskId)
+	{
+		return flowableTaskDao.getAssigneeByProcessInstanceIdAndTaskId(processInstanceId,taskId);
+	}
+
+	@Override
+	public void updateAssigneeByProcessInstanceIdAndTaskId(String assignee, String processInstanceId, String taskId)
+	{
+		 flowableTaskDao.updateAssigneeByProcessInstanceIdAndTaskId(assignee,processInstanceId,taskId);
+	}
 }
