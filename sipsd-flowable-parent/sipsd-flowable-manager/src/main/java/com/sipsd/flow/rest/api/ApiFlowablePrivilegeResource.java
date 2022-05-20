@@ -1,7 +1,8 @@
 package com.sipsd.flow.rest.api;
 
-import java.util.List;
-
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import org.flowable.idm.api.IdmIdentityService;
 import org.flowable.idm.api.Privilege;
 import org.flowable.idm.api.PrivilegeQuery;
@@ -11,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
+import java.util.List;
 
 /**
  * @author : gaoqiang

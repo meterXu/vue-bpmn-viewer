@@ -1,9 +1,10 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;

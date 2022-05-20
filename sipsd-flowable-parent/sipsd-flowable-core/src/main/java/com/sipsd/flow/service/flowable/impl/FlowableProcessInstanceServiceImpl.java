@@ -2,7 +2,6 @@ package com.sipsd.flow.service.flowable.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.bean.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
@@ -12,6 +11,7 @@ import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableProcessInstanceDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.service.flowable.*;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;

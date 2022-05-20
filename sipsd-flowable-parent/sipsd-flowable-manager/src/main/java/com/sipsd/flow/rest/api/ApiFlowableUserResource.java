@@ -1,10 +1,11 @@
 package com.sipsd.flow.rest.api;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.service.flowable.IFlowableIdentityService;
 import com.sipsd.flow.service.flowable.IFlowableUserService;
+import com.sipsd.flow.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
