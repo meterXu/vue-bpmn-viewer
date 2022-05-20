@@ -7,7 +7,7 @@ import com.sipsd.flow.vo.flowable.ProcessDefinitionQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessDefinitionVo;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : IFlowProcessDi
  * @projectName : flowable
  * @description: 流程定义

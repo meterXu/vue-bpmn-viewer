@@ -13,6 +13,8 @@
 package com.sipsd.flow.rest.api;
 
 import cn.hutool.core.lang.UUID;
+import com.codingapi.txlcn.tc.annotation.DTXPropagation;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sipsd.cloud.common.core.util.Result;
@@ -28,6 +30,7 @@ import org.flowable.ui.common.security.DefaultPrivileges;
 import org.flowable.ui.common.service.exception.UnauthorizedException;
 import org.flowable.ui.idm.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -145,6 +148,14 @@ public class EditorUsersResource {
 		Result result = Result.sucess( "删除成功");
 		userService.deleteUser(userId);
 		return result;
+	}
+
+	@GetMapping("/rest/saveUser2")
+	@LcnTransaction(propagation = DTXPropagation.SUPPORTS)
+	@Transactional
+	public String saveUser() {
+		userService.createNewUser(UUID.randomUUID().toString(),UUID.randomUUID().toString(),UUID.randomUUID().toString(),UUID.randomUUID().toString(),UUID.randomUUID().toString(),"flow");
+		return "111";
 	}
 
 }

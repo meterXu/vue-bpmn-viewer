@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Description: 全局的任务创建监听
- * @Author: chengtg
+ * @Author: gaoqiang
  * @Since:19:15 2019/12/13
  *  2018 ~ 2030 版权所有
  */

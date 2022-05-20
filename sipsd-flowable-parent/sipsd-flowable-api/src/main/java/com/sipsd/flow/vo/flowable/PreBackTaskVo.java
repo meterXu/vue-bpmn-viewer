@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @Description: 流程执行过程中的基本参数VO
- * @Author: chengtg
+ * @Author: gaoqiang
  */
 @ApiModel("返回原节点流程执行过程中的基本参数VO")
 public class PreBackTaskVo implements Serializable {

@@ -13,7 +13,7 @@ import org.flowable.engine.runtime.ProcessInstance;
 import java.io.Serializable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : DeleteFlowableProcessInstanceCmd
  * @projectName : flowable
  * @description: 删除流程实例命令

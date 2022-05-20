@@ -16,7 +16,7 @@ import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : ApiFlowableIdentityResource
  * @projectName : flowable
  * @description: 权限

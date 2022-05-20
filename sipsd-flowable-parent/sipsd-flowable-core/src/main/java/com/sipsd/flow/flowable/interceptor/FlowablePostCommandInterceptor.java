@@ -7,7 +7,7 @@ import org.flowable.common.engine.impl.interceptor.CommandExecutor;
 import org.flowable.engine.impl.cmd.CompleteTaskCmd;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowablePostCommandInterceptor
  * @projectName : flowable
  * @description: 后置拦截器

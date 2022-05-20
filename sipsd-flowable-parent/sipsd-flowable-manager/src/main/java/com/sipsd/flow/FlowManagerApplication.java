@@ -1,5 +1,6 @@
 package com.sipsd.flow;
 
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import com.sipsd.flow.config.ApplicationConfiguration;
 import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.servlet.AppDispatcherServletConfiguration;
@@ -10,16 +11,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowManagerApplication
  * @projectName : flowable
  * @description: 启动类
@@ -32,9 +33,10 @@ import java.net.UnknownHostException;
 @EnableScheduling
 @MapperScan(FlowConstant.MAPPER_SCAN)
 @ComponentScan(basePackages = {"com.sipsd.flow","org.flow"})
-@EnableTransactionManagement
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @Slf4j
+@EnableDistributedTransaction //客户端使用tx-lcn分布式事务
+@EnableAspectJAutoProxy
 public class FlowManagerApplication {
 
     public static void main(String[] args) throws UnknownHostException {

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : ProcessInstanceVo
  * @projectName : flowable
  * @description: 流程实例Vo

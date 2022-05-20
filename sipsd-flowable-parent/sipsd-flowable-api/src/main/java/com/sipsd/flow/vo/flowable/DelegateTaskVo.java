@@ -1,14 +1,14 @@
 package com.sipsd.flow.vo.flowable;
 
-import javax.validation.constraints.NotBlank;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : DelegateTaskVo
  * @projectName : flowable
  * @description: 委派

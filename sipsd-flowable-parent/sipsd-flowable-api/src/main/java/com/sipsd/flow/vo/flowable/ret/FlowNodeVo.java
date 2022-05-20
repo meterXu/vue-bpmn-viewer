@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowNodeVo
  * @projectName : flowable
  * @description: 流程节点的Vo

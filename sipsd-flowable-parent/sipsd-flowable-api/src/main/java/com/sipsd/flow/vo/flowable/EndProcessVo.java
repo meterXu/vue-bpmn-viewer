@@ -1,7 +1,7 @@
 package com.sipsd.flow.vo.flowable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : EndVo
  * @projectName : flowable
  * @description: 终止流程的VO

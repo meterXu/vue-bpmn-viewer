@@ -1,15 +1,15 @@
 package com.sipsd.flow.vo.flowable;
 
-import javax.validation.constraints.NotBlank;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @Description: 驳回的实体VO
- * @Author: chengtg
+ * @Author: gaoqiang
  * @Since:9:19 2018/9/8 那个男人真牛逼牛逼 2018 ~ 2030 版权所有
  */
 @Data

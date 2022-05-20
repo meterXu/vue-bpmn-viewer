@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : BaseProcessService
  * @projectName : flowable
  * @description: 基本的流程service

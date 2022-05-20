@@ -5,10 +5,9 @@ import org.flowable.common.engine.impl.interceptor.CommandContext;
 import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.impl.persistence.entity.ExecutionEntityManager;
 import org.flowable.engine.impl.util.CommandContextUtil;
-import org.flowable.engine.runtime.Execution;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : AddExecutionCmd
  * @projectName : flowable
  * @description: 创建子执行实例

@@ -11,7 +11,7 @@
 //
 ///**
 // * @Description: RestTemplate配置类
-// * @Author: chengtg
+// * @Author: gaoqiang
 // * @Since:11:00 2019/12/12
 // * 2018 ~ 2030 版权所有
 // */

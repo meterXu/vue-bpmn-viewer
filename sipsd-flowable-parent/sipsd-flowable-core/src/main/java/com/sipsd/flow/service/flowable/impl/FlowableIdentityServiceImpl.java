@@ -6,7 +6,7 @@ import org.flowable.idm.api.User;
 import org.springframework.stereotype.Service;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowableIdentityServiceImpl
  * @projectName : flowable
  * @description: 用户组service

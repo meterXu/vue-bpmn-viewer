@@ -20,7 +20,7 @@ import org.springframework.core.task.TaskExecutor;
 
 /**
  * @Description: flowable配置
- * @Author: chengtg
+ * @Author: gaoqiang
  * @Since:18:44 2018/9/7
  */
 @Configuration

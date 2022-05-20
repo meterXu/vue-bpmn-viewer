@@ -1,7 +1,7 @@
 package com.sipsd.flow.enm.flowable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : CommentTypeEnum
  * @projectName : flowable
  * @description: 审批意见的类型
