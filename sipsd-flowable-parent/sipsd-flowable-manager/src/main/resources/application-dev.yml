@@ -14,6 +14,7 @@ spring:
         username: root
         password: 123@abcd
 
+
 info: 
     app:  
         name: "@project.name@"
