@@ -1,7 +1,11 @@
 package com.sipsd.flow.rest.api;
 
-import java.util.List;
-
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.service.flowable.IFlowableIdentityService;
+import com.sipsd.flow.utils.Result;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
 import org.flowable.idm.api.Group;
 import org.flowable.idm.api.GroupQuery;
@@ -13,13 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.service.flowable.IFlowableIdentityService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
 
 /**
  * @author : gaoqiang
