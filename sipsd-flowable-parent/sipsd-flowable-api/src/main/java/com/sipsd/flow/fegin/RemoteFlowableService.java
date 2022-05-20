@@ -19,10 +19,11 @@
 
 package com.sipsd.flow.fegin;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.fegin.vo.AbstractModel;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
