@@ -1,6 +1,6 @@
 package com.sipsd.flow.service.flowable.impl;
 
-import com.sipsd.flow.bean.User;
+import com.sipsd.flow.vo.flowable.User;
 import com.sipsd.flow.dao.flowable.IFlowableUserDao;
 import com.sipsd.flow.service.flowable.IFlowableUserService;
 import org.springframework.beans.factory.annotation.Autowired;

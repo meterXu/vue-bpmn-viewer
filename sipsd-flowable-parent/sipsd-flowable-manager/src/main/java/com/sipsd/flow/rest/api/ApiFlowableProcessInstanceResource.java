@@ -1,7 +1,7 @@
 package com.sipsd.flow.rest.api;
 
 
-import com.sipsd.flow.bean.AssigneeVo;
+import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -178,7 +178,7 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
                         {
                             AssigneeVo  assigneeVo = new AssigneeVo();
                             assigneeVo.setGroupId(groupId);
-                            List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                            List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
                             assigneeVo.setUserList(userList);
                             groupList.add(assigneeVo);
                         }

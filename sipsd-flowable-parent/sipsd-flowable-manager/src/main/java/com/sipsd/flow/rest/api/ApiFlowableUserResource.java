@@ -118,7 +118,7 @@ public class ApiFlowableUserResource extends BaseResource {
     @GetMapping("/queryUserListByGroupIds")
     public Result<String> queryUserListByGroupIds(@RequestParam(value = "groupIds") List<String> groupIds) {
         Result result = Result.sucess("查询成功");
-        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(groupIds);
+        List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(groupIds);
         result.setData(userList);
         return result;
     }

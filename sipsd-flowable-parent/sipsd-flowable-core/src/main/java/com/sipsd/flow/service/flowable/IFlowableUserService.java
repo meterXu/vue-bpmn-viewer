@@ -1,6 +1,6 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.flow.bean.User;
+import com.sipsd.flow.vo.flowable.User;
 
 import java.util.List;
 

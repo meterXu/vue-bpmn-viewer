@@ -1,4 +1,4 @@
-package com.sipsd.flow.bean;
+package com.sipsd.flow.fegin.vo;
 
 import com.sipsd.flow.vo.flowable.AssigneeVo;
 import lombok.Getter;
@@ -10,8 +10,11 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FlowElementVo extends FlowNodeVo
+public class FlowElementDto
 {
     private List<String> assigneeList;
     private List<AssigneeVo> groupList;
+    private String flowNodeId;
+    private String flowNodeName;
+    private String flowElementType;
 }
