@@ -7,14 +7,23 @@ log:
 
 spring:
     datasource:
-        hikari:
-            maximum-pool-size: 20
         driver-class-name: com.mysql.jdbc.Driver
         url: jdbc:mysql://127.0.0.1:3306/flowable_test?characterEncoding=UTF-8&useUnicode=true&useSSL=false
         username: root
         password: 123@abcd
-
-
+        hikari:
+            auto-commit: true
+            cachePrepStmts: true
+            connection-test-query: SELECT 1
+            connection-timeout: 30000
+            idle-timeout: 600000
+            max-lifetime: 28740000
+            maximum-pool-size: 20
+            minimum-idle: 5
+            pool-name: DatebookHikariCP
+            prepStmtCacheSize: 300
+            prepStmtCacheSqlLimit: 2048
+            useServerPrepStmts: true
 info: 
     app:  
         name: "@project.name@"
