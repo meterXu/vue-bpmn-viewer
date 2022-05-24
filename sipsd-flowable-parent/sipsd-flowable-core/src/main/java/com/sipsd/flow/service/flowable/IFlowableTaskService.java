@@ -2,7 +2,6 @@ package com.sipsd.flow.service.flowable;
 
 
 import com.sipsd.flow.bean.FlowElementVo;
-import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.utils.Result;

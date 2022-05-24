@@ -2,11 +2,9 @@ package com.sipsd.flow.dao.flowable;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
-import com.sipsd.flow.bean.NoticeTask;
+import com.sipsd.flow.vo.flowable.NoticeTask;
 import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
 import org.apache.ibatis.annotations.Param;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
