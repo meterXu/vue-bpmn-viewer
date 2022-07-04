@@ -1118,7 +1118,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
 			dealParallelGatewayFinishLog(forkGatewayB, task, targetNodes.size());
 			// 跳转
-			moveActivityIdToOtherParallelGateway(taskKeys, task, distList);
+			moveActivityIdsToOtherParallelGateway(taskKeys, task, distList);
 		} else {
 			throw new SipsdBootException("暂不支持这样的流程跳转");
 		}
@@ -1243,6 +1243,24 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					.moveSingleActivityIdToActivityIds(currentTask.getTaskDefinitionKey(), targetTaskDefineKes)
 					.changeState();
 		}
+	}
+
+	/**
+	 * 并行网关内节点跳转其他并行网关上的用户任务.
+	 *
+	 * @param otherUserTaskKeys   本并行网关上的其他在运行的全部任务
+	 * @param currentTask         当前并行网关上用户任务
+	 * @param targetTaskDefineKes 跳转的目标节点
+	 */
+	private void moveActivityIdsToOtherParallelGateway(
+			Set<String> otherUserTaskKeys,
+			Task currentTask,
+			List<String> targetTaskDefineKes) {
+		// 删除本并行网关上的其他在运行的全部任务
+		deleteMyRelateTask(otherUserTaskKeys, currentTask);
+		runtimeService.createChangeActivityStateBuilder().processInstanceId(currentTask.getProcessInstanceId())
+				.moveSingleActivityIdToActivityIds(currentTask.getTaskDefinitionKey(), targetTaskDefineKes)
+				.changeState();
 	}
 	/**
 	 * 并行网关跳转时，本节点之外的并行网关上的节点任务需要删除
