@@ -1291,13 +1291,13 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			return;
 		}
 		String executionId = task.getExecutionId();
-		logger.info("删除executionId=" + executionId);
+
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_hi_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
 
-		deleteExecutionById(executionId);
+		deleteExecutionById(executionId,taskId);
 
 	}
 	/**
@@ -1306,12 +1306,12 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	 *
 	 * @param executionId 并行网关上的任务对应的executionId
 	 */
-	protected void deleteExecutionById(String executionId) {
+	protected void deleteExecutionById(String executionId,String taskId) {
 		logger.info("删除executionId=" + executionId);
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_hi_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_hi_actinst  WHERE TASK_ID_ = '" + taskId + "' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_hi_taskinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_hi_taskinst  WHERE ID_ = '"+ taskId +"' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_hi_varinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
@@ -1321,9 +1321,9 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_timer_job  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_ru_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_ru_actinst  WHERE TASK_ID_ = '" + taskId + "' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_ru_task  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_ru_task  WHERE ID_ = '"+ taskId +"' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_variable  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
