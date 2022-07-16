@@ -17,7 +17,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@dpark/logfv-web-vue": "^1.0.24",
+    "@dpark/logfv-web-vue": "^1.0.25",
     "@dpark/s2-utils": "^1.0.43",
     "ant-design-vue": "^1.7.8",
     "axios": "^0.24.0",
