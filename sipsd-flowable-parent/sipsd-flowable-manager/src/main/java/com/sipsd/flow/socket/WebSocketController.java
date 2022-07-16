@@ -4,7 +4,7 @@
 package com.sipsd.flow.socket;
 
 
-import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.utils.Result;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

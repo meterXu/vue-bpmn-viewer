@@ -4,7 +4,7 @@ import org.flowable.idm.api.Group;
 import org.flowable.idm.api.User;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @projectName : flowable
  * @description: 用户组
  * @date : 2019/11/1411:46

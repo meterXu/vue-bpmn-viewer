@@ -1,23 +1,18 @@
 package com.sipsd.flow.service.flowable.impl;
 
+import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.flowable.bpmn.model.Process;
+import org.flowable.bpmn.model.*;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.flowable.bpmn.model.Activity;
-import org.flowable.bpmn.model.BpmnModel;
-import org.flowable.bpmn.model.EndEvent;
-import org.flowable.bpmn.model.FlowElement;
-import org.flowable.bpmn.model.FlowNode;
-import org.flowable.bpmn.model.Process;
-import org.springframework.stereotype.Service;
-
-import com.sipsd.flow.service.flowable.IFlowableBpmnModelService;
-
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowableBpmnModelServiceImpl
  * @projectName : flowable
  * @description: BpmnModel service

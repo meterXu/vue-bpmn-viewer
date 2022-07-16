@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sipsd.flow.bean.CandidateParam;
 import com.sipsd.flow.bean.ProcessParam;
-import com.sipsd.flow.bean.User;
+import com.sipsd.flow.vo.flowable.User;
 import com.sipsd.flow.bean.enums.AuditStatus;
 import org.activiti.engine.history.HistoricVariableInstance;
 import org.apache.commons.lang3.ArrayUtils;

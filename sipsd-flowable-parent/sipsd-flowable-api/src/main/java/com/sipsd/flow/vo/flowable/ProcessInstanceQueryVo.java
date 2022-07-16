@@ -3,7 +3,7 @@ package com.sipsd.flow.vo.flowable;
 import java.io.Serializable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : QueryProcessInstanceVo
  * @projectName : flowable
  * @description: 查询流程实例VO

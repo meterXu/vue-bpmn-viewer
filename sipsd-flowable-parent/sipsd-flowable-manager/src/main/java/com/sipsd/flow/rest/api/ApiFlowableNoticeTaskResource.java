@@ -1,8 +1,9 @@
 package com.sipsd.flow.rest.api;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.bean.NoticeTask;
+
 import com.sipsd.flow.service.flowable.IFlowableNoticeTaskService;
+import com.sipsd.flow.utils.Result;
+import com.sipsd.flow.vo.flowable.NoticeTask;
 import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

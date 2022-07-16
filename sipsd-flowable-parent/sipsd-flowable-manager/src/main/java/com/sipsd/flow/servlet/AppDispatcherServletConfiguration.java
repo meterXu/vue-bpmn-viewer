@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 /**
  * @ClassName AppDispatcherServletConfiguration
  * @Description 集成modeler
- * @Author chengtg
+ * @Author gaoqiang
  * @Date 2018/9/19/019 21:40
  * @Version 1.0
  **/

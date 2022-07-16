@@ -1,9 +1,10 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @projectName : flowable
  * @description: 流程实例service
  * @date : 2019/10/2511:40

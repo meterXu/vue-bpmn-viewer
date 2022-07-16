@@ -13,13 +13,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowManagerApplication
  * @projectName : flowable
  * @description: 启动类
@@ -32,7 +31,6 @@ import java.net.UnknownHostException;
 @EnableScheduling
 @MapperScan(FlowConstant.MAPPER_SCAN)
 @ComponentScan(basePackages = {"com.sipsd.flow","org.flow"})
-@EnableTransactionManagement
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @Slf4j
 public class FlowManagerApplication {

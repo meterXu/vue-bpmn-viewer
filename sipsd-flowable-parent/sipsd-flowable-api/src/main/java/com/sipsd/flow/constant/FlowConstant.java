@@ -1,7 +1,7 @@
 package com.sipsd.flow.constant;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowConstant
  * @projectName : flowable
  * @description: 常量
@@ -46,7 +46,7 @@ public class FlowConstant {
     /**
      * BUCKET_NAME
      */
-    public final static String BUCKET_NAME = "chengtg";
+    public final static String BUCKET_NAME = "gaoqiang";
 
     /**
      * 增强客户端UI界面 节点最大审批天数属性-PROPERTY_USERTASK_TASKMAXDAY-高强

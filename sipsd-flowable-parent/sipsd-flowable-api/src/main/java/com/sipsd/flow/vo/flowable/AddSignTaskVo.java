@@ -1,14 +1,14 @@
 package com.sipsd.flow.vo.flowable;
 
-import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : AddSignTaskVo
  * @projectName : flowable
  * @description: 加签Vo

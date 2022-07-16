@@ -1,17 +1,15 @@
 package com.sipsd.flow.flowable.listener.task;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.dao.flowable.IFlowableExtensionTaskDao;
 import com.sipsd.flow.service.flowable.IFlowableNoticeTaskService;
 import com.sipsd.flow.util.SpringUtil;
+import com.sipsd.flow.vo.flowable.NoticeTask;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import lombok.extern.slf4j.Slf4j;
-
 import org.flowable.bpmn.model.Activity;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.MultiInstanceLoopCharacteristics;
@@ -26,15 +24,13 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.delegate.ExecutionListener;
 import org.flowable.engine.impl.cfg.ProcessEngineConfigurationImpl;
 import org.flowable.engine.impl.context.BpmnOverrideContext;
-import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
-import org.flowable.engine.impl.persistence.entity.ExecutionEntityManager;
 import org.flowable.engine.impl.util.CommandContextUtil;
 import org.flowable.engine.impl.util.ProcessDefinitionUtil;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
-import org.flowable.task.api.TaskQuery;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

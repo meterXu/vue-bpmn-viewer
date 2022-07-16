@@ -1,7 +1,7 @@
 package com.sipsd.flow.vo.flowable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : RevokeVo
  * @projectName : flowable
  * @description: 撤回流程VO

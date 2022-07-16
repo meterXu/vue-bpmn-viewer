@@ -1,5 +1,6 @@
 package com.sipsd.flow.bean;
 
+import com.sipsd.flow.vo.flowable.AssigneeVo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

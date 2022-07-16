@@ -3,10 +3,8 @@ package com.sipsd.flow.service.flowable.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.druid.support.json.JSONUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.bean.*;
 import com.sipsd.flow.cmd.SaveExecutionCmd;
 import com.sipsd.flow.common.DateUtil;
@@ -19,6 +17,7 @@ import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.enm.flowable.GatewayJumpTypeEnum;
 import com.sipsd.flow.exception.SipsdBootException;
 import com.sipsd.flow.service.flowable.*;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
@@ -60,7 +59,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowableTaskServiceImpl
  * @projectName : flowable
  * @description: task service
@@ -796,7 +795,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				boolean hasApproveKey  = "0".equals(params.getVariables().get(approveKey)==null?"":params.getVariables().get(approveKey).toString());
 				flowableExtensionTaskService.saveExtensionTask(params.getProcessInstanceId(),taskEntity.getTaskDefinitionKey(),params.getBusinessInfo(),hasApproveKey);
 				//更新当前节点的实际审批人
-				flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
+				//flowableExtensionTaskService.updateAssigneeByProcessInstanceIdAndTaskID(params.getProcessInstanceId(),params.getTaskId(),params.getUserCode(),JSONUtils.toJSONString(params.getVariables()));
 				String type = params.getType() == null ? CommentTypeEnum.SP.toString() : params.getType();
 				// 5.生成审批意见
 				this.addComment(taskId, params.getUserCode(), params.getProcessInstanceId(), type, params.getMessage());
@@ -1119,7 +1118,7 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			// B为并行网关上节点，需要创建其B所在并行网关内其他任务节点已完成日志
 			dealParallelGatewayFinishLog(forkGatewayB, task, targetNodes.size());
 			// 跳转
-			moveActivityIdToOtherParallelGateway(taskKeys, task, distList);
+			moveActivityIdsToOtherParallelGateway(taskKeys, task, distList);
 		} else {
 			throw new SipsdBootException("暂不支持这样的流程跳转");
 		}
@@ -1245,6 +1244,24 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 					.changeState();
 		}
 	}
+
+	/**
+	 * 并行网关内节点跳转其他并行网关上的用户任务.
+	 *
+	 * @param otherUserTaskKeys   本并行网关上的其他在运行的全部任务
+	 * @param currentTask         当前并行网关上用户任务
+	 * @param targetTaskDefineKes 跳转的目标节点
+	 */
+	private void moveActivityIdsToOtherParallelGateway(
+			Set<String> otherUserTaskKeys,
+			Task currentTask,
+			List<String> targetTaskDefineKes) {
+		// 删除本并行网关上的其他在运行的全部任务
+		deleteMyRelateTask(otherUserTaskKeys, currentTask);
+		runtimeService.createChangeActivityStateBuilder().processInstanceId(currentTask.getProcessInstanceId())
+				.moveSingleActivityIdToActivityIds(currentTask.getTaskDefinitionKey(), targetTaskDefineKes)
+				.changeState();
+	}
 	/**
 	 * 并行网关跳转时，本节点之外的并行网关上的节点任务需要删除
 	 *
@@ -1274,13 +1291,13 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			return;
 		}
 		String executionId = task.getExecutionId();
-		logger.info("删除executionId=" + executionId);
+
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_hi_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_identitylink  WHERE TASK_ID_ = '" + taskId + "'").list();
 
-		deleteExecutionById(executionId);
+		deleteExecutionById(executionId,taskId);
 
 	}
 	/**
@@ -1289,12 +1306,12 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	 *
 	 * @param executionId 并行网关上的任务对应的executionId
 	 */
-	protected void deleteExecutionById(String executionId) {
+	protected void deleteExecutionById(String executionId,String taskId) {
 		logger.info("删除executionId=" + executionId);
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_hi_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_hi_actinst  WHERE TASK_ID_ = '" + taskId + "' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_hi_taskinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_hi_taskinst  WHERE ID_ = '"+ taskId +"' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_hi_varinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
@@ -1304,9 +1321,9 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_timer_job  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_ru_actinst  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_ru_actinst  WHERE TASK_ID_ = '" + taskId + "' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
-				"DELETE FROM act_ru_task  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
+				"DELETE FROM act_ru_task  WHERE ID_ = '"+ taskId +"' AND EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
 				"DELETE FROM act_ru_variable  WHERE EXECUTION_ID_ = '" + executionId + "'").list();
 		runtimeService.createNativeExecutionQuery().sql(
@@ -1349,5 +1366,11 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 	public String getPreTaskAssignee(String processInstanceId, String taskDefKey)
 	{
 		return flowableTaskDao.getPreTaskAssignee(processInstanceId,taskDefKey);
+	}
+
+	@Override
+	public void updateAssigneeByProcessInstanceIdAndTaskId(String assignee, String processInstanceId, String taskId)
+	{
+		 flowableTaskDao.updateAssigneeByProcessInstanceIdAndTaskId(assignee,processInstanceId,taskId);
 	}
 }

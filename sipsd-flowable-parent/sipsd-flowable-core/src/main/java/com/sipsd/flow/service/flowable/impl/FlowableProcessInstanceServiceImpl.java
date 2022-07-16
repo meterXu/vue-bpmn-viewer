@@ -2,8 +2,7 @@ package com.sipsd.flow.service.flowable.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.bean.AssigneeVo;
+import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
 import com.sipsd.flow.common.page.PageModel;
@@ -12,6 +11,7 @@ import com.sipsd.flow.constant.FlowConstant;
 import com.sipsd.flow.dao.flowable.IFlowableProcessInstanceDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.service.flowable.*;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.RevokeProcessVo;
@@ -41,7 +41,7 @@ import java.io.InputStream;
 import java.util.*;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowableProcessInstanceServiceImpl
  * @projectName : flowable
  * @description: 流程实例service
@@ -484,7 +484,7 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
                     {
                         AssigneeVo  assigneeVo = new AssigneeVo();
                         assigneeVo.setGroupId(groupId);
-                        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                        List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
                         assigneeVo.setUserList(userList);
                         groupList.add(assigneeVo);
                     }

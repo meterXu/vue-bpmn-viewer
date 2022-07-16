@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : TaskVo
  * @projectName : flowable
  * @description: 任务vo

@@ -3,7 +3,7 @@ package com.sipsd.flow.vo.flowable.ret;
 import java.io.Serializable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : IdentitylinkVo
  * @projectName : flowable
  * @description: 关联审批表

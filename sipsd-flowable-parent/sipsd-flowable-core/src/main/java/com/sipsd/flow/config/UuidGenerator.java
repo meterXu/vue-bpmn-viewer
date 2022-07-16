@@ -4,7 +4,7 @@ import org.flowable.common.engine.impl.persistence.StrongUuidGenerator;
 
 /**
  * @Description:
- * @Author: chengtg
+ * @Author: gaoqiang
  * @Since:13:26 2018/9/8
  */
 public class UuidGenerator extends StrongUuidGenerator {

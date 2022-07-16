@@ -1,10 +1,7 @@
 package com.sipsd.flow.service.flowable.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.JsonUtils;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.exception.SipsdBootException;
@@ -12,6 +9,7 @@ import com.sipsd.flow.service.flowable.IFlowableExtensionTaskService;
 import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
 import com.sipsd.flow.service.flowable.IFlowableTaskService;
 import com.sipsd.flow.service.flowable.IFlowableTestProcessService;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.CompleteTaskVo;
 import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
 import com.sipsd.flow.vo.flowable.TestProcessIntsanceVo;
@@ -22,7 +20,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Struct;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -186,4 +186,13 @@
             proc_inst_id_ = #{processInstanceId} and id_ = #{taskId}
     </update>
 
+    <select id="getAssigneeListByProcessInstanceIdAndTaskId" parameterType="String" resultType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
+        SELECT
+            t1.ASSIGNEE_ as assignee,t1.proc_inst_id_ as processInstanceId,t1.id_ as taskId,t1.task_def_key_ as taskDefinitionKey
+        FROM
+            act_ru_task t1
+    </select>
+
+
+
 </mapper>

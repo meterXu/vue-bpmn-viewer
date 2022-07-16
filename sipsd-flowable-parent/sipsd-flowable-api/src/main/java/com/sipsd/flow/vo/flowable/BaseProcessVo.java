@@ -10,7 +10,7 @@ import lombok.Data;
 
 /**
  * @Description: 流程执行过程中的基本参数VO
- * @Author: chengtg
+ * @Author: gaoqiang
  */
 @Data
 @ApiModel("流程执行过程中的基本参数VO")

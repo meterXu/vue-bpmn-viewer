@@ -2,13 +2,16 @@ package com.sipsd.flow.dao.flowable;
 
 import com.github.pagehelper.Page;
 import com.sipsd.flow.vo.flowable.TaskQueryVo;
+import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : IFlowableTaskDao
  * @projectName : flowable
  * @description: flowabletask的查询
@@ -66,4 +69,13 @@ public interface IFlowableTaskDao {
      */
     public void updateAssigneeByProcessInstanceIdAndTaskId(@Param("assignee") String assignee,@Param("processInstanceId") String processInstanceId, @Param("taskId") String taskId);
 
+
+
+    /**
+     *
+     * @param
+     * @return java.util.List<java.lang.String>
+     * @Description 获取所有审批人列表
+     */
+    public List<TaskExtensionVo> getAssigneeListByProcessInstanceIdAndTaskId();
 }

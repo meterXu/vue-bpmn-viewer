@@ -9,6 +9,7 @@ import com.sipsd.flow.bean.enums.OperateType;
 import com.sipsd.flow.service.v3.services.ProcessService;
 import com.sipsd.flow.util.FlowUtil;
 import com.sipsd.flow.util.ProcessDefinitionUtils;
+import com.sipsd.flow.vo.flowable.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.flowable.bpmn.model.*;

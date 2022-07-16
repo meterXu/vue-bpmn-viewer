@@ -1,10 +1,10 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.bean.FlowElementVo;
-import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.FlowNodeVo;
 import com.sipsd.flow.vo.flowable.ret.TaskVo;
@@ -14,7 +14,7 @@ import org.flowable.task.api.Task;
 import java.util.List;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @projectName : flowable
  * @description: 运行时的任务service
  * @date : 2019/11/1315:05
@@ -188,6 +188,14 @@ public interface IFlowableTaskService {
 	 * @Description 获取上个审批节点的实际审批人
 	 */
 	public String getPreTaskAssignee(String processInstanceId,String taskDefKey);
-
-
+	
+    /**
+     *
+     * @param assignee 审批人
+     * @param processInstanceId 实例Id
+     * @param taskId 任务Id
+     * @return void
+     * @Description 根据实例ID和taskId来更新审批人
+     */
+    public void updateAssigneeByProcessInstanceIdAndTaskId(String assignee, String processInstanceId, String taskId);
 }

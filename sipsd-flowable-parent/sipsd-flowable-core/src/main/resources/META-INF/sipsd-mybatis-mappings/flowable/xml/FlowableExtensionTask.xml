@@ -308,12 +308,22 @@
           where  t1.PROC_INST_ID_ = #{processInstanceId}
     </select>
 
-
-
-
     <update id="updateEndTimeByProcessInstanceIdAndTaskId" parameterType="com.sipsd.flow.vo.flowable.ret.TaskExtensionVo">
         UPDATE  act_ru_extension_task t1 SET t1.END_TIME_ =  #{endTime}
         WHERE t1.PROC_INST_ID_ = #{processInstanceId} and t1.TASK_ID_ = #{taskId}
     </update>
+
+
+    <select id="getCountByProcessInstanceIdAndTaskId" parameterType="String" resultType="java.lang.Integer">
+        SELECT
+            count(*) as count
+        FROM
+            act_ru_extension_task t1 where  t1.PROC_INST_ID_ = #{processInstanceId}  and task_def_key_ = #{taskDefKey}
+    </select>
+
+    <select id="getAssigneeByProcessInstanceIdAndTaskId" parameterType="String" resultType="String">
+        select assignee_ as assignee from act_ru_extension_task  WHERE
+            proc_inst_id_ = #{processInstanceId} and id_ = #{taskId}
+    </select>
 
 </mapper>

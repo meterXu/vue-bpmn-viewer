@@ -7,7 +7,7 @@ import org.flowable.ui.common.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : BaseResource
  * @projectName : flowable
  * @description: TODO

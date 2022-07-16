@@ -3,7 +3,7 @@ package com.sipsd.flow.vo.flowable.ret;
 import java.io.Serializable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FormInfoVo
  * @projectName : flowable
  * @description: 表单的信息

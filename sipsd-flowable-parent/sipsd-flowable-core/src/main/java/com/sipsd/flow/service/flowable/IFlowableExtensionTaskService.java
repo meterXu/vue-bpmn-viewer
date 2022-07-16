@@ -1,8 +1,9 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.ExtensionTaskQueryVo;
 import com.sipsd.flow.vo.flowable.ret.TaskExtensionVo;
 import org.apache.ibatis.annotations.Param;
@@ -159,5 +160,4 @@ public interface IFlowableExtensionTaskService
      * @Description 根据流程实例ID和激活状态来查询extension表中的数据
      */
     public List<TaskExtensionVo> getExtensionTaskByProcessInstanceIdAndState(String processInstanceId,String suspensionState);
-
 }

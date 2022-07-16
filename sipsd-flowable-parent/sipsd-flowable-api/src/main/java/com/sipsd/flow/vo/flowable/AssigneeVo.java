@@ -1,4 +1,4 @@
-package com.sipsd.flow.bean;
+package com.sipsd.flow.vo.flowable;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AssigneeVo{
+public class AssigneeVo
+{
     private String groupId;
     private List<User> userList;
 }

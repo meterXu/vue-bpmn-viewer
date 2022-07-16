@@ -2,9 +2,9 @@ package com.sipsd.flow.rest.api;
 
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONUtil;
-import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.exception.SipsdBootException;
 import com.sipsd.flow.service.flowable.IFlowableTestProcessService;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.TestProcessIntsanceVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

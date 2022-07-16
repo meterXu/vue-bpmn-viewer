@@ -15,7 +15,7 @@ package com.sipsd.flow.rest.api;
 import cn.hutool.core.lang.UUID;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.flowable.engine.ManagementService;
@@ -146,5 +146,4 @@ public class EditorUsersResource {
 		userService.deleteUser(userId);
 		return result;
 	}
-
 }

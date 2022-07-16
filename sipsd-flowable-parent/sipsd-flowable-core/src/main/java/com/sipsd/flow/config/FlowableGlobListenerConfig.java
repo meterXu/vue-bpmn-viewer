@@ -12,7 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import com.sipsd.flow.flowable.listener.global.GlobalTaskCreateListener;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : FlowableGlobListenerConfig
  * @projectName : flowable
  * @description: 全局监听配置 ContextRefreshedEvent在类被初始化之后触发

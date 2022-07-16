@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : IFlowableProcessInstentDao
  * @projectName : flowable
  * @description: TODO

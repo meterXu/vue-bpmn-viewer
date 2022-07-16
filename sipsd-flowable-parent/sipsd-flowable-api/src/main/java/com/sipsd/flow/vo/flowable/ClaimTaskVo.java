@@ -1,7 +1,7 @@
 package com.sipsd.flow.vo.flowable;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : ClaimTaskVo
  * @projectName : flowable
  * @description: 签收Vo

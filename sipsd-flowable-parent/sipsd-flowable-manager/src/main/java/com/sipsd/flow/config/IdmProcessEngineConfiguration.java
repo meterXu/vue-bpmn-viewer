@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * @Description: 密码加密策略
- * @Author: chengtg
+ * @Author: gaoqiang
  * @Since:15:16 2019/1/11
  * 那个男人真牛逼 2018 ~ 2030 版权所有
  */

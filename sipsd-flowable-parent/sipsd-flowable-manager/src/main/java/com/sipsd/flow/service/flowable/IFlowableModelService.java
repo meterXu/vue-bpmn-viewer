@@ -1,14 +1,13 @@
 package com.sipsd.flow.service.flowable;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.sipsd.cloud.common.core.util.Result;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.ModelVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @projectName : flowable
  * @description: 模型service
  * @date : 2019/11/1920:56

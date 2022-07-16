@@ -1,11 +1,11 @@
 package com.sipsd.flow.vo.flowable.ret;
 
-import java.io.Serializable;
-
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : GroupVo
  * @projectName : flowable
  * @description: 组的VO

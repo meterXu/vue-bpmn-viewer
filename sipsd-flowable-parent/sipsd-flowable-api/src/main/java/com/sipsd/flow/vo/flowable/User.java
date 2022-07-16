@@ -1,4 +1,4 @@
-package com.sipsd.flow.bean;
+package com.sipsd.flow.vo.flowable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

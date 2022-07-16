@@ -1,4 +1,4 @@
-package com.sipsd.flow.bean;
+package com.sipsd.flow.vo.flowable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -22,7 +22,8 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="抄送任务", description="抄送任务")
-public class NoticeTask {
+public class NoticeTask
+{
 
     @TableId(type = IdType.ASSIGN_UUID)
     String id;

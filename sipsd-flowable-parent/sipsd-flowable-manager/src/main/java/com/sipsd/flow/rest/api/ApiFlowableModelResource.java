@@ -1,9 +1,6 @@
 package com.sipsd.flow.rest.api;
 
-import cn.hutool.core.util.StrUtil;
-import com.fasterxml.uuid.UUIDGenerator;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.cloud.common.core.util.Result;
 import com.sipsd.flow.cmd.DeployModelCmd;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
@@ -11,12 +8,12 @@ import com.sipsd.flow.model.form.FlowableForm;
 import com.sipsd.flow.service.flowable.FlowProcessDiagramGenerator;
 import com.sipsd.flow.service.flowable.IFlowableModelService;
 import com.sipsd.flow.service.form.FlowableFormService;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.ModelVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.bpmn.model.FlowElement;
 import org.flowable.bpmn.model.StartEvent;
@@ -42,7 +39,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : chengtg/gaoqiang

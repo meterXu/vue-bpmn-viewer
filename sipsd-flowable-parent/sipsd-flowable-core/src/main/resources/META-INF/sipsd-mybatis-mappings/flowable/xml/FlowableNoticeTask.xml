@@ -22,14 +22,14 @@
         FORM_NAME_ as  formName
         from act_hi_notice_task
     </sql>
-    <insert id="insertNoticeTask" parameterType="com.sipsd.flow.bean.NoticeTask">
+    <insert id="insertNoticeTask" parameterType="com.sipsd.flow.vo.flowable.NoticeTask">
         insert into act_hi_notice_task (ID_, PROC_DEF_ID_,TASK_DEF_ID_,TASK_DEF_KEY_,PROC_INST_ID_,NAME_,PARENT_TASK_ID_,DESCRIPTION_,OWNER_,
         ASSIGNEE_,CREATE_TIME_,PRIORITY_,FORM_KEY_,CATEGORY_,TENANT_ID_,BUSINESS_INFO_,BUSINESS_KEY_,FORM_NAME_)
         values (#{id},#{procDefId},#{taskDefId},#{taskDefKey},#{procInstId},#{name},#{parentTaskId},#{description},#{owner},#{assignee},#{createTime},
         #{priority},#{formKey},#{category},#{tenantId},#{businessInfo},#{businessKey},#{formName})
     </insert>
 
-    <select id="noticeTaskPage" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.bean.NoticeTask">
+    <select id="noticeTaskPage" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.vo.flowable.NoticeTask">
 
         <include refid="result"></include>
         <where>
@@ -45,11 +45,11 @@
         </where>
         order by CREATE_TIME_ desc
     </select>
-    <select id="queryById" parameterType="String" resultType="com.sipsd.flow.bean.NoticeTask">
+    <select id="queryById" parameterType="String" resultType="com.sipsd.flow.vo.flowable.NoticeTask">
         <include refid="result"></include>
         where ID_ = #{taskId}
     </select>
-    <select id="noticeTaskList" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.bean.NoticeTask">
+    <select id="noticeTaskList" parameterType="com.sipsd.flow.vo.flowable.NoticeTaskQuery" resultType="com.sipsd.flow.vo.flowable.NoticeTask">
         <include refid="result"></include>
         <where>
             <if test="userCode != null and userCode != ''">

@@ -1,11 +1,10 @@
 package com.sipsd.flow.service.flowable;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.vo.flowable.NoticeTask;
 import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
 
 import java.util.List;
 

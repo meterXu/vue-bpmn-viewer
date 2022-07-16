@@ -1,10 +1,11 @@
 package com.sipsd.flow.rest.api;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.service.flowable.IFlowableIdentityService;
 import com.sipsd.flow.service.flowable.IFlowableUserService;
+import com.sipsd.flow.utils.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.collections.CollectionUtils;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : ApiFlowableIdentityResource
  * @projectName : flowable
  * @description: 用户组
@@ -117,7 +118,7 @@ public class ApiFlowableUserResource extends BaseResource {
     @GetMapping("/queryUserListByGroupIds")
     public Result<String> queryUserListByGroupIds(@RequestParam(value = "groupIds") List<String> groupIds) {
         Result result = Result.sucess("查询成功");
-        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(groupIds);
+        List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(groupIds);
         result.setData(userList);
         return result;
     }

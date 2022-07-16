@@ -1,13 +1,14 @@
 package com.sipsd.flow.service.flowable;
 
-import com.sipsd.cloud.common.core.util.Result;
+
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.utils.Result;
 import com.sipsd.flow.vo.flowable.ProcessDefinitionQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessDefinitionVo;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : IFlowProcessDi
  * @projectName : flowable
  * @description: 流程定义
@@ -38,6 +39,6 @@ public interface IFlowableProcessDefinitionService {
      * @param suspensionState     状态1挂起 2激活
      * @param suspensionState     状态1延长时间 2不需要延长时间
      */
-    public Result suspendOrActivateProcessDefinitionById(String processDefinitionId, int suspensionState,int overtime);
+    public Result suspendOrActivateProcessDefinitionById(String processDefinitionId, int suspensionState, int overtime);
 
 }

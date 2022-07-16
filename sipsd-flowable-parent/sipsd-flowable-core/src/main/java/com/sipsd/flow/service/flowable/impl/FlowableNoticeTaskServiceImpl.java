@@ -3,13 +3,12 @@ package com.sipsd.flow.service.flowable.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.flow.bean.NoticeTask;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.dao.flowable.IFlowableNoticeTaskDao;
 import com.sipsd.flow.service.flowable.IFlowableNoticeTaskService;
+import com.sipsd.flow.vo.flowable.NoticeTask;
 import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

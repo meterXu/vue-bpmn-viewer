@@ -4,6 +4,7 @@ import com.sipsd.flow.bean.Process;
 import com.sipsd.flow.bean.*;
 import com.sipsd.flow.bean.enums.AuditStatus;
 import com.sipsd.flow.bean.enums.OperateType;
+import com.sipsd.flow.vo.flowable.User;
 import org.flowable.task.api.Task;
 
 import java.io.InputStream;

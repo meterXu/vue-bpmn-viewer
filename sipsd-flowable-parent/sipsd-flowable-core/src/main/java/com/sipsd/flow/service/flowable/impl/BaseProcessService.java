@@ -1,6 +1,6 @@
 package com.sipsd.flow.service.flowable.impl;
 
-import com.sipsd.flow.bean.AssigneeVo;
+import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.UUIDGenerator;
 import com.sipsd.flow.dao.flowable.IHisFlowableActinstDao;
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.*;
 
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : BaseProcessService
  * @projectName : flowable
  * @description: 基本的流程service
@@ -195,7 +195,7 @@ public abstract class BaseProcessService {
                     {
                         AssigneeVo  assigneeVo = new AssigneeVo();
                         assigneeVo.setGroupId(groupId);
-                        List<com.sipsd.flow.bean.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
+                        List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
                         assigneeVo.setUserList(userList);
                         groupList.add(assigneeVo);
                     }

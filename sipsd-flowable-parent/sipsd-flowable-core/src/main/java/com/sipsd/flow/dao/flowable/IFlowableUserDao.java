@@ -1,6 +1,6 @@
 package com.sipsd.flow.dao.flowable;
 
-import com.sipsd.flow.bean.User;
+import com.sipsd.flow.vo.flowable.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

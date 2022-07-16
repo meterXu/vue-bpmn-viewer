@@ -1,7 +1,18 @@
 package com.sipsd.flow.rest.api;
 
-import com.sipsd.flow.bean.NoticeTask;
-import com.sipsd.flow.vo.flowable.NoticeTaskQuery;
+import com.sipsd.flow.common.page.PageModel;
+import com.sipsd.flow.common.page.Query;
+import com.sipsd.flow.model.leave.Leave;
+import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
+import com.sipsd.flow.service.flowable.IFlowableTaskService;
+import com.sipsd.flow.service.leave.ILeaveService;
+import com.sipsd.flow.utils.Result;
+import com.sipsd.flow.vo.flowable.*;
+import com.sipsd.flow.vo.flowable.ret.FormInfoVo;
+import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
+import com.sipsd.flow.vo.flowable.ret.TaskVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.flowable.engine.HistoryService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -11,25 +22,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sipsd.cloud.common.core.util.Result;
-import com.sipsd.flow.common.page.PageModel;
-import com.sipsd.flow.common.page.Query;
-import com.sipsd.flow.model.leave.Leave;
-import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
-import com.sipsd.flow.service.flowable.IFlowableTaskService;
-import com.sipsd.flow.service.leave.ILeaveService;
-import com.sipsd.flow.vo.flowable.FormInfoQueryVo;
-import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
-import com.sipsd.flow.vo.flowable.TaskQueryVo;
-import com.sipsd.flow.vo.flowable.ret.FormInfoVo;
-import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
-import com.sipsd.flow.vo.flowable.ret.TaskVo;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 /**
- * @author : chengtg
+ * @author : gaoqiang
  * @title: : ApiFlowableTaskResource
  * @projectName : flowable
  * @description: 任务列表
