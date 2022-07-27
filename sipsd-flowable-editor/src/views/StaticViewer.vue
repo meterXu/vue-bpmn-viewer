@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
+import VueBpmnViewer from "../packages/vue-bpmn-viewer/dist/index.esm";
 import {portal} from "@dpark/s2-utils"
 import ms from 'pretty-ms'
 import axios from "axios";

@@ -1,12 +1,12 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.76",
+  "version": "1.0.77",
   "description": "沃壤平台工作流引擎执行器",
-  "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "module": "dist/index.esm.js",
   "keywords": [
     "flowable",
     "view",
@@ -31,6 +31,7 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "cssnano": "^5.1.12",
     "postcss": "^8.2.9",
     "postcss-url": "^10.1.3",
     "rollup": "^2.44.0",
