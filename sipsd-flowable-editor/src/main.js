@@ -8,12 +8,14 @@ import 'element-ui/lib/theme-chalk/index.css'
 import elementUI from 'element-ui'
 import project from './project'
 import {staticPermission} from "./api";
+import LogFv from "@dpark/logfv-web-vue";
 Vue.use(Vuels,{
     namespace: 'pro__',
     name: 'ls',
     storage: 'local',
 })
 let _staticPer = staticPermission()
+let _project = portal.getProject(project);
 portal.registerApp({routes,permission:_staticPer,store,frameRoutes,project},function(globaVue,globalRouter, globalStore){
     if(globaVue.config.errorHandler){
         let _handler  = globaVue.config.errorHandler
@@ -26,5 +28,8 @@ portal.registerApp({routes,permission:_staticPer,store,frameRoutes,project},func
             console.error(err)
         }
     }
+
     globaVue.use(elementUI)
+    globaVue.use(LogFv,_project.variable.logfv)
 })
+

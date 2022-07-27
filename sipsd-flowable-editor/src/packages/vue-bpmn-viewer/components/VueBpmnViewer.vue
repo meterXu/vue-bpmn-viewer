@@ -27,7 +27,6 @@ import bpmnThemeDefault from './styl/default/index.js'
 import bpmnThemeClassic from './styl/classic/index.js'
 import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
-import {LogFv} from '@dpark/logfv-web-vue'
 import utils from './controls/lib/utils'
 import zoomScroll from './controls/lib/zoomScroll'
 import {append, create} from "tiny-svg";
@@ -41,8 +40,7 @@ export default {
     source:{type:String},
     timeData:{type:Array},
     options:{type:Object},
-    styl:{type:Object,default(){return {theme:null,stylMap: null}}},
-    logReportUrl:{type:String,default:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'}
+    styl:{type:Object,default(){return {theme:null,stylMap: null}}}
   },
   components:{
     VueBpmn,
@@ -51,7 +49,6 @@ export default {
   data(){
     return {
       selectKey:null,
-      logfv:null,
       showBpmn:false,
       bpmnViewer:null,
       bpmnOptions:{
@@ -145,20 +142,9 @@ export default {
       return new Promise((resolve,reject)=>{
         if(this.instanceId){
           utils.getTimeData(urljoin(this.baseApi,this.url.allExtensionTasks),this.instanceId).then(res=>{
-            this.logfv.info(JSON.stringify({
-              title: '获取流程详细执行数据成功！',
-              actionUrl:urljoin(this.baseApi,this.url.allExtensionTasks),
-            }))
             this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
             resolve(this.taskData)
           }).catch(err=>{
-            utils.error({
-              title: '获取流程详细执行数据失败！',
-              error:{
-                message:err.message,
-                stack:err.stack
-              },
-            },this)
             console.error(err)
             reject(err)
           })
@@ -169,10 +155,6 @@ export default {
       this.$emit('loading')
     },
     async bpmnLoadDone(){
-      utils.log({
-        title:'流程图xml加载成功！',
-        xmlUrl:this.xml,
-      },this)
       utils.clearWatermark()
       this.showBpmn = true
       this.bpmnViewer= this.$refs.bpmnObj.bpmnViewer
@@ -191,18 +173,9 @@ export default {
       this.$emit('loaded')
     },
     bpmnLoadError(err){
-      utils.error({ title: '流程图加载失败！',
-        error:{
-          message:err.message,
-          stack:err.stack
-        },},this)
       this.$emit('loadError',err)
     },
     reload(){
-      utils.log({
-        title:'执行了组件刷新方法！',
-        xmlUrl:this.xml,
-      },this)
       this.$nextTick(()=>{
         if(this.$refs.bpmnObj){
           this.$refs.bpmnObj.reload()
@@ -226,21 +199,6 @@ export default {
     itemClick(item){
       this.$emit('timeItemClick',item)
     }
-  },
-  mounted() {
-    utils.log({
-      title:'工作流执行器挂载成功！',
-      url:window.location.href,
-    },this)
-  },
-  created() {
-    this.logfv = new LogFv({
-      reportUrl:this.logReportUrl,
-      appId:'vue-bpmn-viewer',
-      appName:'工作流执行器',
-      objType:2,
-      enable:this.myOptions.log
-    })
   }
 }
 </script>

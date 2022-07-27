@@ -397,32 +397,6 @@ function utils() {
             this.setCenter(canvas,options)
         }
     }
-    this.log = function (data, obj) {
-        obj.logfv.info(JSON.stringify(Object.assign({
-                props: {
-                    baseApi: obj.baseApi,
-                    instanceId: obj.instanceId,
-                    xmlId: obj.xmlId,
-                    type: obj.type,
-                    static: obj.static,
-                    options: obj.myOptions
-                }
-            }, data)
-        ))
-    }
-    this.error = function (data, obj) {
-        obj.logfv.error(JSON.stringify(Object.assign({
-                props: {
-                    baseApi: obj.baseApi,
-                    instanceId: obj.instanceId,
-                    xmlId: obj.xmlId,
-                    type: obj.type,
-                    static: obj.static,
-                    options: obj.myOptions
-                }
-            }, data)
-        ))
-    }
 }
 
 export default new utils()

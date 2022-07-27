@@ -149,6 +149,7 @@ export default {
         portal.globalStore.commit("setTimeData",this.timeData)
         portal.globalStore.commit("setOptions",this.options)
       })
+      this.$logfv.log('点击了刷新','action')
     },
     handleClose(done) {
       done();

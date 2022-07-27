@@ -6,21 +6,29 @@ const project_bpmn = {
       baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000,
       logfv:{
-        enable:false
+        enable:false,
+        console:false,
+        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
       }
     },
     production: {
       baseApi: "http://58.210.9.133/iplatform/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000,
       logfv:{
-        enable:false
+        enable:true,
+        console:false,
+        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
       }
     },
     proxy:{
       baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000,
       logfv:{
-        enable:false
+        appId:'bpmn',
+        appName:'工作流',
+        enable:true,
+        console:false,
+        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
       }
     }
   },
