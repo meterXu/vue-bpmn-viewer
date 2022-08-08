@@ -129,6 +129,21 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     }
 
     /**
+     * 获取当前以及下一任务节点
+     * @param node
+     * @param taskId
+     * @return
+     */
+    @ApiOperation("获取当前以及下一任务节点信息的待办人列表")
+    @GetMapping(value = "/nextFlowNodeAssignee")
+    public Result nextFlowNodeAssignee(@RequestParam String node, @RequestParam String taskId) {
+        Result<List<FlowElementVo>> result =new Result<>();
+        List<FlowElementVo> flowElementVoList =  flowableProcessInstanceService.nextFlowNodeAssignee(node,taskId);
+        result.setData(flowElementVoList);
+        return result;
+    }
+
+    /**
      * 根据流程实例ID获取当前流程所有节点信息
      * @param processInstanceId
      * @return
