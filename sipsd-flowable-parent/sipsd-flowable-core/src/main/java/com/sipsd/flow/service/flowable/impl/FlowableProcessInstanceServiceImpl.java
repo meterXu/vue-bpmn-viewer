@@ -27,6 +27,7 @@ import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.identitylink.api.IdentityLink;
 import org.flowable.idm.api.IdmIdentityService;
 import org.flowable.idm.api.User;
 import org.flowable.task.api.Task;
@@ -507,90 +508,32 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 
 
     /**
-     * 获取任务节点的待办人列表
-     *
-     * @param node   查询节点选择
+     * 获取当前待办人列表
      * @param taskId 任务id
      */
     @Override
-    public List<FlowElementVo> nextFlowNodeAssignee(String node, String taskId)
+    public List<String> activeNodeAssigneeList(String taskId)
     {
-        Task task = processEngine.getTaskService().createTaskQuery().taskId(taskId).singleResult();
-        ExecutionEntity ee = (ExecutionEntity) processEngine.getRuntimeService().createExecutionQuery()
-                .executionId(task.getExecutionId()).singleResult();
-        // 当前审批节点
-        String crruentActivityId = ee.getActivityId();
-        FlowElement flowElement = null;
-
-        List<FlowElementVo> flowNodeVos = null;
-
-        BpmnModel bpmnModel = processEngine.getRepositoryService().getBpmnModel(task.getProcessDefinitionId());
-        FlowNode flowNode = (FlowNode) bpmnModel.getFlowElement(crruentActivityId);
-        // 输出连线
-        List<SequenceFlow> outFlows = flowNode.getOutgoingFlows();
-        if (org.springframework.util.CollectionUtils.isEmpty(outFlows))
-        {
-            return flowNodeVos;
-        }
-        flowNodeVos = new ArrayList<>();
         List<String> assigneeList = new ArrayList<>();
-        for (SequenceFlow sequenceFlow : outFlows)
-        {
-            FlowElementVo flowElementVo = new FlowElementVo();
-            //当前审批节点
-            if ("now".equals(node))
+        List<IdentityLink> identityLinks=taskService.getIdentityLinksForTask(taskId);
+        if(!CollectionUtils.isEmpty(identityLinks)){
+            for(IdentityLink identityLink:identityLinks)
             {
-                flowElement = sequenceFlow.getSourceFlowElement();
-                log.info("当前节点: id=" + flowElement.getId() + ",name=" + flowElement.getName());
-            }
-            else if ("next".equals(node))
-            {
-                // 下一个审批节点
-                flowElement = sequenceFlow.getTargetFlowElement();
-                log.info("下一节点: id=" + flowElement.getId() + ",name=" + flowElement.getName());
-            }
-
-            List<FlowElement> flowElementList =  getTargetFlowElement(flowElement);
-            for(FlowElement element:flowElementList)
-            {
-                flowElementVo = new FlowElementVo();
-                assigneeList = new ArrayList<>();
-                flowElementVo.setFlowNodeName(element.getName());
-                flowElementVo.setFlowNodeId(element.getId());
-                if (StringUtils.isEmpty(((UserTask) element).getAssignee()))
+                if(StringUtils.isNotBlank(identityLink.getUserId()))
                 {
-                    assigneeList.addAll(((UserTask) element).getCandidateUsers());
+                    assigneeList.add(identityLink.getUserId());
                 }
-                else
+                if(StringUtils.isNotBlank(identityLink.getGroupId()))
                 {
-                    assigneeList.add(((UserTask) element).getAssignee());
-                }
-                List<String> groupIdList = ((UserTask) element).getCandidateGroups();
-                if(CollectionUtils.isNotEmpty(groupIdList))
-                {
-                    for(String groupId:groupIdList)
+                    List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(identityLink.getGroupId()));
+                    for(com.sipsd.flow.vo.flowable.User user:userList)
                     {
-                        List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(groupId));
-                        for(com.sipsd.flow.vo.flowable.User user:userList)
-                        {
-                            assigneeList.add(user.getId());
-                        }
+                        assigneeList.add(user.getId());
                     }
                 }
-                flowElementVo.setAssigneeList(assigneeList);
-                flowNodeVos.add(flowElementVo);
             }
-            // 如果下个审批节点为结束节点
-            if (flowElement instanceof EndEvent)
-            {
-                log.info("下一节点为结束节点：id=" + flowElement.getId() + ",name=" + flowElement.getName());
-                flowElementVo.setFlowNodeName(flowElement.getName());
-                flowElementVo.setFlowNodeId(flowElement.getId());
-            }
-
-
         }
-        return flowNodeVos;
+        return assigneeList;
     }
 
 
