@@ -129,12 +129,11 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     }
 
     /**
-     * 获取当前以及下一任务节点
-     * @param node
+     * 根据taskId查询当前待办人列表
      * @param taskId
      * @return
      */
-    @ApiOperation("获取当前以及下一任务节点信息的待办人列表")
+    @ApiOperation("根据taskId查询当前待办人列表")
     @GetMapping(value = "/activeNodeAssigneeList")
     public Result activeNodeAssigneeList(@RequestParam String taskId) {
         Result<List<String>> result =new Result<>();
