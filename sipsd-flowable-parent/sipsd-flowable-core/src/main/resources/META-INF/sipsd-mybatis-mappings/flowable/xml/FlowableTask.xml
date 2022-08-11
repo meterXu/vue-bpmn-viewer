@@ -21,7 +21,10 @@
             t5.DISPLAY_NAME_ as realName,
         <!-- 剩余时间-->
         if(t4.SUSPENSION_STATE_=2 &amp;&amp; t4.OVER_TIME = 2, TIMESTAMPDIFF(SECOND,t4.SUSPENSION_TIME_,t4.END_TIME_)
-        ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t4.END_TIME_))  as restTime
+        ,TIMESTAMPDIFF(SECOND,CURRENT_TIMESTAMP(),t4.END_TIME_))  as restTime,
+        <!-- 持续时间-->
+        if(t4.SUSPENSION_STATE_=1, TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,CURRENT_TIMESTAMP()),
+        TIMESTAMPDIFF(SECOND,t1.CREATE_TIME_,t4.SUSPENSION_TIME_))  as duration
         FROM
             act_ru_task t1
         INNER JOIN act_ru_execution t2 ON t1.PROC_INST_ID_ = t2.PROC_INST_ID_
