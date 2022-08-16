@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -165,6 +166,7 @@ public class FlowableModelServiceImpl implements IFlowableModelService {
     }
 
     @Override
+    @Transactional
     public void importProcessModelBatch(MultipartFile[] files) {
         if(files!=null&&files.length>0){
             //循环获取file数组中得文件
@@ -200,8 +202,8 @@ public class FlowableModelServiceImpl implements IFlowableModelService {
                 if (StringUtils.isNotEmpty(process.getName())) {
                     name = process.getName();
                 }
-                String description = process.getDocumentation();
 
+                String description = process.getDocumentation();
                 ModelRepresentation model = new ModelRepresentation();
                 model.setKey(process.getId());
                 model.setName(name);
