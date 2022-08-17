@@ -55,32 +55,6 @@ module.exports = {
           }
           return options
         })
-    const fontRule = config.module.rule('fonts')
-    fontRule
-        .use('url-loader')
-        .tap(options => {
-          options.name = `/fonts/[name].[hash:8].[ext]`
-          options.fallback = {
-            loader: 'file-loader',
-            options: {
-              name: `/fonts/[name].[hash:8].[ext]`
-            }
-          }
-          return options
-        })
-    const mediaRule = config.module.rule('media')
-    mediaRule
-        .use('url-loader')
-        .tap(options => {
-          options.name = `/media/[name].[hash:8].[ext]`
-          options.fallback = {
-            loader: 'file-loader',
-            options: {
-              name: `/media/[name].[hash:8].[ext]`
-            }
-          }
-          return options
-        })
   },
   devServer: {
     port: 8081
