@@ -20,10 +20,12 @@
 
                 <div class="import-process-form">
 
-                    <input type="file" ngf-select="" ngf-change="onFileSelect($files, true)" style="font-size: smaller; padding-top:6px;" >
+                    <input type="file" ngf-select="" multiple ngf-change="onFileSelect2($files, true)" style="font-size: smaller; padding-top:6px;" >
                     <div class="import-process-dropbox"
-                         ngf-drop="onFileSelect($files)"
+                         ngf-drop="onFileSelect2($files)"
                          ngf-drag-over-class="dragover"
+                         ng-model="files"
+                         ngf-multiple="true"
                          ng-show="dropSupported">
                         {{'PROCESS.POPUP.IMPORT.DROPZONE' | translate}}
                     </div>
@@ -43,11 +45,12 @@
                 <![endif]-->
                 <!--[if gt IE 9]> <!-- -->
                 <div class="import-process-form">
-
-                    <input type="file" ngf-select="" ngf-change="onFileSelect($files)" style="font-size: smaller; padding-top:6px;" >
+                    <input type="file" ngf-select="" multiple ngf-change="onFileSelect2($files)" style="font-size: smaller; padding-top:6px;" >
                     <div class="import-process-dropbox"
-                         ngf-drop ngf-change="onFileSelect($files)"
+                         ngf-drop ngf-change="onFileSelect2($files)"
                          ngf-drag-over-class="dragover"
+                         ng-model="files"
+                         ngf-multiple="true"
                          ng-show="dropSupported">
                         {{'PROCESS.POPUP.IMPORT.DROPZONE' | translate}}
                     </div>

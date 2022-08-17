@@ -142,6 +142,10 @@ FLOWABLE.APP_URL = {
         return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-process-model';
     },
 
+    getImportMultiProcessModelUrl: function () {
+        return FLOWABLE.CONFIG.contextRoot + '/rest/model/import-process-models';
+    },
+
     getImportProcessModelTextUrl: function () {
         return FLOWABLE.CONFIG.contextRoot + '/app/rest/import-process-model/text';
     },

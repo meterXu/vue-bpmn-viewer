@@ -253,39 +253,75 @@ angular.module('flowableModeler')
 }]);
 
 angular.module('flowableModeler')
-.controller('ImportProcessModelCtrl', ['$rootScope', '$scope', '$http', 'Upload', '$location', function ($rootScope, $scope, $http, Upload, $location) {
+.controller('ImportProcessModelCtrl', ['$rootScope', '$scope', '$http','$timeout', 'Upload', '$location', function ($rootScope, $scope, $http, $timeout,Upload, $location) {
 
   $scope.model = {
        loading: false
   };
 
-  $scope.onFileSelect = function($files, isIE) {
+    $scope.onFileSelect = function($files, isIE) {
 
+        $scope.model.loading = true;
+
+        for (var i = 0; i < $files.length; i++) {
+            var file = $files[i];
+
+            var url;
+            if (isIE) {
+                url = FLOWABLE.APP_URL.getImportProcessModelTextUrl();
+            } else {
+                url = FLOWABLE.APP_URL.getImportProcessModelUrl();
+            }
+
+            Upload.upload({
+                url: url,
+                method: 'POST',
+                file: file
+            }).progress(function(evt) {
+                $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+
+            }).success(function(data) {
+                $scope.model.loading = false;
+                $location.path("/editor/" + data.id);
+                $scope.$hide();
+
+            }).error(function(data) {
+
+                if (data && data.message) {
+                    $scope.model.errorMessage = data.message;
+                }
+
+                $scope.model.error = true;
+                $scope.model.loading = false;
+            });
+        }
+    };
+
+  $scope.onFileSelect2 = function($files, isIE) {
       $scope.model.loading = true;
-
-      for (var i = 0; i < $files.length; i++) {
-          var file = $files[i];
-
-          var url;
+      if($files.length>0){
+          let url;
           if (isIE) {
               url = FLOWABLE.APP_URL.getImportProcessModelTextUrl();
           } else {
-              url = FLOWABLE.APP_URL.getImportProcessModelUrl();
+              url = FLOWABLE.APP_URL.getImportMultiProcessModelUrl();
           }
-
           Upload.upload({
               url: url,
               method: 'POST',
-              file: file
+              file: $files
           }).progress(function(evt) {
               $scope.model.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
 
           }).success(function(data) {
               $scope.model.loading = false;
-
-              $location.path("/editor/" + data.id);
               $scope.$hide();
-
+              $timeout(function (){
+                  let queryBtn = document.querySelector(".btn-group button[ng-click='filterDelayed()']")
+                  if(queryBtn){
+                      queryBtn.click()
+                  }
+              },500)
           }).error(function(data) {
 
               if (data && data.message) {
@@ -296,7 +332,7 @@ angular.module('flowableModeler')
               $scope.model.loading = false;
           });
       }
-  };
+    };
 
   $scope.cancel = function () {
 	  if(!$scope.model.loading) {
