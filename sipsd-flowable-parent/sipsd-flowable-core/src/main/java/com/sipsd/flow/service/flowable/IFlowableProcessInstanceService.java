@@ -111,4 +111,10 @@ public interface IFlowableProcessInstanceService {
      * @param taskId 任务id
      */
     public List<FlowElementVo> nextFlowNode(String node, String taskId);
+
+    /**
+     * 获取当前待办人列表
+     * @param taskId 任务id
+     */
+    public List<String> activeNodeAssigneeList(String taskId);
 }

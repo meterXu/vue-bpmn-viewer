@@ -220,8 +220,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 
 			}
 			return Result.sucess("跳转成功!");
-
-
 		}
 		//跳转目标节点B 的任务节点编码
 		distList = targetNodes.stream().map(BpmTaskMinModelEntity::getTaskDefKey).collect(Collectors.toList());

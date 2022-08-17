@@ -8,7 +8,7 @@ log:
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.126.47:3306/flowable_v8?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+        url: jdbc:mysql://192.168.175.208:3306/flowable_v4?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT
         username: root
         password: 123@abcd
         hikari:
@@ -38,6 +38,8 @@ sipsd:
         calendar: true
         approveState: false
         approveKey: approve
+        saveBpmnfile: /Users/mac/Downloads/files
+
 #License相关配置
 license:
     licensePath: /Users/mac/Documents/Apache/license_demo/license.lic

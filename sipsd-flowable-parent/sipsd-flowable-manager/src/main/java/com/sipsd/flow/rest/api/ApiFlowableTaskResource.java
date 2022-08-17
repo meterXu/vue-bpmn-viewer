@@ -14,13 +14,13 @@ import com.sipsd.flow.vo.flowable.ret.TaskVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.flowable.engine.HistoryService;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author : gaoqiang
@@ -86,6 +86,13 @@ public class ApiFlowableTaskResource extends BaseResource {
     public PageModel<TaskVo> getAllTasks(TaskQueryVo params, Query query) {
         PageModel<TaskVo> pm = flowableTaskService.getApplyedTasks(params, query);
         return pm;
+    }
+
+    @ApiOperation("获取已办Http任务列表")
+    @GetMapping(value = "/get-http-tasks")
+    public List<HistoricActivityInstance> getHttpTasks(@RequestParam("processInstanceId") String processInstanceId) {
+        List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).activityType("httpServiceTask").list();
+        return historicActivityInstances;
     }
 
     /**

@@ -2,7 +2,6 @@ package com.sipsd.flow.service.flowable.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.cmd.processinstance.DeleteFlowableProcessInstanceCmd;
 import com.sipsd.flow.common.page.PageModel;
@@ -12,10 +11,7 @@ import com.sipsd.flow.dao.flowable.IFlowableProcessInstanceDao;
 import com.sipsd.flow.enm.flowable.CommentTypeEnum;
 import com.sipsd.flow.service.flowable.*;
 import com.sipsd.flow.utils.Result;
-import com.sipsd.flow.vo.flowable.EndProcessVo;
-import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
-import com.sipsd.flow.vo.flowable.RevokeProcessVo;
-import com.sipsd.flow.vo.flowable.StartProcessInstanceVo;
+import com.sipsd.flow.vo.flowable.*;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -31,6 +27,8 @@ import org.flowable.engine.impl.persistence.entity.ExecutionEntity;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.identitylink.api.IdentityLink;
+import org.flowable.idm.api.IdmIdentityService;
 import org.flowable.idm.api.User;
 import org.flowable.task.api.Task;
 import org.flowable.variable.api.history.HistoricVariableInstance;
@@ -66,6 +64,8 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
     private ProcessEngine processEngine;
     @Autowired
     private IFlowableUserService flowableUserService;
+    @Autowired
+    protected IdmIdentityService idmIdentityService;
 
     @Override
     public PageModel<ProcessInstanceVo> getPagerModel(ProcessInstanceQueryVo params, Query query)
@@ -504,6 +504,36 @@ public class FlowableProcessInstanceServiceImpl extends BaseProcessService imple
 
         }
         return flowNodeVos;
+    }
+
+
+    /**
+     * 获取当前待办人列表
+     * @param taskId 任务id
+     */
+    @Override
+    public List<String> activeNodeAssigneeList(String taskId)
+    {
+        List<String> assigneeList = new ArrayList<>();
+        List<IdentityLink> identityLinks=taskService.getIdentityLinksForTask(taskId);
+        if(!CollectionUtils.isEmpty(identityLinks)){
+            for(IdentityLink identityLink:identityLinks)
+            {
+                if(StringUtils.isNotBlank(identityLink.getUserId()))
+                {
+                    assigneeList.add(identityLink.getUserId());
+                }
+                if(StringUtils.isNotBlank(identityLink.getGroupId()))
+                {
+                    List<com.sipsd.flow.vo.flowable.User> userList = flowableUserService.getUserListByGroupIds(Arrays.asList(identityLink.getGroupId()));
+                    for(com.sipsd.flow.vo.flowable.User user:userList)
+                    {
+                        assigneeList.add(user.getId());
+                    }
+                }
+            }
+        }
+        return assigneeList;
     }
 
 

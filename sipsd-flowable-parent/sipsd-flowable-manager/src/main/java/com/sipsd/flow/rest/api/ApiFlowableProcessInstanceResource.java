@@ -1,13 +1,13 @@
 package com.sipsd.flow.rest.api;
 
 
-import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.bean.FlowElementVo;
 import com.sipsd.flow.common.page.PageModel;
 import com.sipsd.flow.common.page.Query;
 import com.sipsd.flow.service.flowable.IFlowableProcessInstanceService;
 import com.sipsd.flow.service.flowable.IFlowableUserService;
 import com.sipsd.flow.utils.Result;
+import com.sipsd.flow.vo.flowable.AssigneeVo;
 import com.sipsd.flow.vo.flowable.EndProcessVo;
 import com.sipsd.flow.vo.flowable.ProcessInstanceQueryVo;
 import com.sipsd.flow.vo.flowable.ret.ProcessInstanceVo;
@@ -46,6 +46,7 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     private IFlowableUserService flowableUserService;
     @Autowired
     private HistoryService historyService;
+
     /**
      * 分页查询流程定义列表
      *
@@ -124,6 +125,20 @@ public class ApiFlowableProcessInstanceResource extends BaseResource {
     public Result nextFlowNode(@RequestParam String node, @RequestParam String taskId) {
         Result<List<FlowElementVo>> result =new Result<>();
         List<FlowElementVo> flowElementVoList =  flowableProcessInstanceService.nextFlowNode(node,taskId);
+        result.setData(flowElementVoList);
+        return result;
+    }
+
+    /**
+     * 根据taskId查询当前待办人列表
+     * @param taskId
+     * @return
+     */
+    @ApiOperation("根据taskId查询当前待办人列表")
+    @GetMapping(value = "/activeNodeAssigneeList")
+    public Result activeNodeAssigneeList(@RequestParam String taskId) {
+        Result<List<String>> result =new Result<>();
+        List<String> flowElementVoList =  flowableProcessInstanceService.activeNodeAssigneeList(taskId);
         result.setData(flowElementVoList);
         return result;
     }
