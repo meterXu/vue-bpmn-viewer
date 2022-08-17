@@ -3,7 +3,7 @@ const project_bpmn = {
   mainSys:true,
   variable: {
     development: {
-      baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
+      baseApi: "http://localhost:9001/sipsd-flow-modeler/",
       accessTokenTime: 3600 * 1000,
       logfv:{
         enable:false,

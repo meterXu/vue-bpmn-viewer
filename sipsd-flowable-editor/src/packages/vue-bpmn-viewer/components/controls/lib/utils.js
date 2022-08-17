@@ -250,7 +250,9 @@ function utils() {
 
     this.hideTaskMaxDay = function (container, id) {
         let clock = container.querySelector(`[data-element-type="bpmn:userTask"][data-element-id="${id}"] .d-con-clock`)
-        clock.style.display='none'
+        if(clock){
+            clock.style.display='none'
+        }
     }
 
     this.setTaskRealName = function (container, id, day) {

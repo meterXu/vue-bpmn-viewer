@@ -75,7 +75,6 @@
     display: inline-block;
     width: 18px;
     height: 18px;
-    background: #333;
     vertical-align: sub;
 }
 .dpark-bpmn-viewer[data-theme='classic'] .legend-none{

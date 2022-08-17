@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item label="xmlId" v-if="dataSource===1">
             <el-select style="width: 290px" v-model="form.xmlId" placeholder="请选择xmlId">
-              <el-option :label="item.name" :value="item.id" v-for="item in xmlId" :key="item.id"></el-option>
+              <el-option :label="item.name" :value="item.id" v-for="item in xmlIds" :key="item.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="source" v-if="dataSource===2">
@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import VueBpmnViewer from "@dpark/vue-bpmn-viewer";
+import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
 import ms from 'pretty-ms'
 import axios from "axios";
 export default {
@@ -72,7 +72,7 @@ export default {
       options: null,
       dataSource: 2,
       source: false,
-      xmlId: [],
+      xmlIds: [],
       drawer: false,
       theme: 1,
       form: {
@@ -86,24 +86,30 @@ export default {
         options: '{"zoom":true,"timeLine":true,"fit":false,"setline":false,"scrollZoom":true,"static":false,"track":true,"focus":true,"log":false}'
       },
       url:{
-        pageModel: "http://58.210.9.133/iplatform/sipsd-flow-modeler/rest/model/page-model"
+        pageModel: "/rest/model/page-model"
       },
+    }
+  },
+  watch:{
+    'form.baseApi':{
+      handler(nv){
+        axios.get(nv+this.url.pageModel).then(res=>{
+          this.xmlIds = res.data.data.data
+          this.form.xmlId= this.xmlIds[0].id
+        })
+      },
+      deep:true
     }
   },
   methods: {
     handleClick(obj){
       console.log(obj)
     },
-    dataSourceChange(value) {
-      this.form.baseApi= ''
+    dataSourceChange() {
       this.form.xmlId= ""
       this.form.source= ""
       this.form.timeData= ""
       this.form.options= ""
-      if(value===1) {
-        this.form.baseApi='http://58.210.9.133/iplatform/sipsd-flow-modeler/'
-        this.form.xmlId= this.xmlId[0].id
-      }
     },
     handleViewChange(event){
       console.log(event)
@@ -155,8 +161,8 @@ export default {
     }
   },
   mounted() {
-    axios.get(this.url.pageModel).then(res=>{
-      this.xmlId = res.data.data.data
+    axios.get(this.form.baseApi+this.url.pageModel).then(res=>{
+      this.xmlIds = res.data.data.data
       this.source = true
       this.setPro()
       this.$store.commit("setForm",this.form)
