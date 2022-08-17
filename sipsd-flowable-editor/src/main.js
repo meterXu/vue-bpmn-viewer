@@ -17,6 +17,7 @@ Vue.use(Vuels,{
 Vue.use(elementUI)
 let _project = portal.getProject(project);
 Vue.use(LogFv,_project.variable.logfv)
+Vue.prototype.$project_bpmn = _project
 // 启动应用
 new Vue({
     router,
