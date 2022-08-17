@@ -38,11 +38,11 @@ pipeline {
                          }
                          stage ('更新') {
                             sshCommand remote: remote,command: "mkdir -p ${putPath}/${appName}"
-                            sshPut remote: remote,from: "${rootPath}/build",into:"${putPath}/${appName}"
+                            sshPut remote: remote,from: "${rootPath}/dist",into:"${putPath}/${appName}"
                          }
                          stage ('启动') {
                             sshCommand remote: remote,command: "rm -rf ${publishPath}"
-                            sshCommand remote: remote,command: "mv ${putPath}/${appName}/build ${publishPath}"
+                            sshCommand remote: remote,command: "mv ${putPath}/${appName}/dist ${publishPath}"
                          }
                     }
                 }
