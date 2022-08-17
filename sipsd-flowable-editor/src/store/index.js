@@ -1,3 +1,8 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
 const bpmn = {
     state: {
         form:{},
@@ -23,4 +28,10 @@ const bpmn = {
     }
 }
 
-export default bpmn
+const store = new Vuex.Store({
+    modules:{
+        bpmn:bpmn
+    }
+})
+
+export default store

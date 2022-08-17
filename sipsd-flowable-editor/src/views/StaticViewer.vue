@@ -33,7 +33,7 @@
             <el-input type="textarea" :rows="4" v-model="form.options"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="refresh">刷新</el-button>
+            <el-button type="primary" @click="refresh" style="width: 100%">生效</el-button>
           </el-form-item>
         </el-form>
       </el-aside>
@@ -62,7 +62,6 @@
 </template>
 <script>
 import VueBpmnViewer from "@dpark/vue-bpmn-viewer";
-import {portal} from "@dpark/s2-utils"
 import ms from 'pretty-ms'
 import axios from "axios";
 export default {
@@ -145,11 +144,11 @@ export default {
       this.setPro()
       this.$nextTick(()=>{
         this.source = true
-        portal.globalStore.commit("setForm",this.form)
-        portal.globalStore.commit("setTimeData",this.timeData)
-        portal.globalStore.commit("setOptions",this.options)
+        this.$store.commit("setForm",this.form)
+        this.$store.commit("setTimeData",this.timeData)
+        this.$store.commit("setOptions",this.options)
       })
-      this.$logfv.log('点击了刷新','action')
+      this.$logfv.log('点击了生效','action')
     },
     handleClose(done) {
       done();
@@ -160,9 +159,9 @@ export default {
       this.xmlId = res.data.data.data
       this.source = true
       this.setPro()
-      portal.globalStore.commit("setForm",this.form)
-      portal.globalStore.commit("setTimeData",this.timeData)
-      portal.globalStore.commit("setOptions",this.options)
+      this.$store.commit("setForm",this.form)
+      this.$store.commit("setTimeData",this.timeData)
+      this.$store.commit("setOptions",this.options)
     }).catch(err=>{
       this.$message.error(err)
     })

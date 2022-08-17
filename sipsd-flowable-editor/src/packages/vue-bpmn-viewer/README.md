@@ -43,7 +43,6 @@ export default {
           "duration": 0,
           "approveType": "审批",
           "status": "待办"
-        },
         {
           "id": 2,
           "taskMaxDay": "1",

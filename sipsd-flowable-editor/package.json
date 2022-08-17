@@ -4,15 +4,8 @@
   "private": false,
   "license": "MIT",
   "scripts": {
-    "pre": "yarn install",
-    "dev": "s2 r",
-    "devProxy": "s2 r proxy",
-    "mm": "s2 m",
     "serve": "vue-cli-service serve",
-    "proxy": "vue-cli-service serve --mode proxy",
-    "build": "s2 b",
-    "build:module": "s2 mod",
-    "package": "vue-cli-service build",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -32,6 +25,7 @@
     "url-join": "^4.0.1",
     "vue": "^2.6.11",
     "vue-ls": "^3.2.0",
+    "vue-router": "^3.5.1",
     "vuex": "^3.5.1"
   },
   "devDependencies": {

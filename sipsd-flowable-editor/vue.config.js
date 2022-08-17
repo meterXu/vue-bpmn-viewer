@@ -1,4 +1,3 @@
-const namespace = "bpmn"
 const CopyPlugin  = require('copy-webpack-plugin');
 module.exports = {
   publicPath: './',
@@ -8,17 +7,7 @@ module.exports = {
     extract: false
   },
   configureWebpack:  config => {
-    config.entry = {
-      [namespace]: ["./src/main.js"]
-    }
     return {
-      output: {
-        library: namespace,
-        filename: process.env.NODE_ENV === 'production'
-          ? `biz/${namespace}/js/[id].[contenthash:4].js`
-          : '[id].js' ,
-        chunkFilename: `biz/${namespace}/js/${namespace}.vendors.[contenthash:4].js`,
-      },
       optimization: {
         runtimeChunk: false, // 依赖处理与bundle合并
         splitChunks: {
@@ -30,7 +19,7 @@ module.exports = {
       plugins:[
         new CopyPlugin({patterns:
           [{
-            from: './src/project.js', to: `biz/${namespace}/js/project.[contenthash:4].js`,
+            from: './src/project.js', to: `/js/project.[contenthash:4].js`,
             transform: (res, p) => {
               res = res.toString().replace(/export default project_.*/, '')
               return res
@@ -44,11 +33,11 @@ module.exports = {
     const imgRule = config.module.rule('images')
     imgRule.use('url-loader')
         .tap(options => {
-          options.name = `biz/${namespace}/img/[name].[hash:8].[ext]`
+          options.name = `/img/[name].[hash:8].[ext]`
           options.fallback = {
             loader: 'file-loader',
             options: {
-              name: `biz/${namespace}/img/[name].[hash:8].[ext]`
+              name: `/img/[name].[hash:8].[ext]`
             }
           }
           return options
@@ -57,11 +46,11 @@ module.exports = {
     svgRule
         .use('file-loader')
         .tap(options => {
-          options.name = `biz/${namespace}/img/[name].[hash:8].[ext]`
+          options.name = `/img/[name].[hash:8].[ext]`
           options.fallback = {
             loader: 'file-loader',
             options: {
-              name: `biz/${namespace}/img/[name].[hash:8].[ext]`
+              name: `/img/[name].[hash:8].[ext]`
             }
           }
           return options
@@ -70,11 +59,11 @@ module.exports = {
     fontRule
         .use('url-loader')
         .tap(options => {
-          options.name = `biz/${namespace}/fonts/[name].[hash:8].[ext]`
+          options.name = `/fonts/[name].[hash:8].[ext]`
           options.fallback = {
             loader: 'file-loader',
             options: {
-              name: `biz/${namespace}/fonts/[name].[hash:8].[ext]`
+              name: `/fonts/[name].[hash:8].[ext]`
             }
           }
           return options
@@ -83,11 +72,11 @@ module.exports = {
     mediaRule
         .use('url-loader')
         .tap(options => {
-          options.name = `biz/${namespace}/media/[name].[hash:8].[ext]`
+          options.name = `/media/[name].[hash:8].[ext]`
           options.fallback = {
             loader: 'file-loader',
             options: {
-              name: `biz/${namespace}/media/[name].[hash:8].[ext]`
+              name: `/media/[name].[hash:8].[ext]`
             }
           }
           return options

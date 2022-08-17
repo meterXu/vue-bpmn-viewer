@@ -1,20 +1,30 @@
-import routes from '../views/'
-import Login from '../views/Login'
-import {util} from "@dpark/s2-utils";
-export const frameRoutes = util.parseRoutes([
-    {
-        path:'/bpmn/login',
-        name:'@getRoutesName(path)',
-        component:Login
-    },
-    ...routes
-])
-export default util.parseRoutes([
-    {
-        'path':'/bpmn',
-        'name':'@getRoutesName(path)',
-        'component':"layouts/RouteView",
-        'children':[
-        ]
-    }
-])
+import Vue from 'vue'
+import Viewer from '../views/Viewer.vue'
+import StaticViewer from "../views/StaticViewer";
+import Router from 'vue-router'
+Vue.use(Router)
+
+export default new Router({
+    routes:[
+        {
+            path: '/',
+            redirect:'/bpmn/staticViewer'
+        },
+        {
+            path: '/bpmn/viewer',
+            name: 'bpmn-viewer',
+            meta: {
+                title: 'viewer'
+            },
+            component: Viewer
+        },
+        {
+            path: '/bpmn/staticViewer',
+            name: 'bpmn-staticViewer',
+            meta: {
+                title: 'saticViewer'
+            },
+            component: StaticViewer
+        }
+    ]
+})
