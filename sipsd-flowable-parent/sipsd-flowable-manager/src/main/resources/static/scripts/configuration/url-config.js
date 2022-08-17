@@ -250,5 +250,9 @@ FLOWABLE.APP_URL = {
     
     getPublishModel:function (modelId) {
         return FLOWABLE.CONFIG.contextRoot + '/rest/model/deploy?modelId=' + modelId;
+    },
+
+    getMultiXmls:function () {
+        return FLOWABLE.CONFIG.contextRoot + '/rest/model/downLoadMultiXml';
     }
 };

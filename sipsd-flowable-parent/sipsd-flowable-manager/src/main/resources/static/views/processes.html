@@ -5,6 +5,8 @@
 			<button type="button" class="btn btn-default marginBtn" ng-click="filterDelayed()" translate>PROCESS-LIST.ACTION.SEARCH</button>
 			<button type="button" class="btn btn-default marginBtn" ng-click="createProcess()" translate>PROCESS-LIST.ACTION.CREATE</button>
 			<button type="button" class="btn btn-default marginBtn" ng-click="importProcess()" translate>PROCESS-LIST.ACTION.IMPORT</button>
+			<button type="button" class="btn btn-default marginBtn" ng-click="multiImportProcess()" translate>PROCESS-LIST.ACTION.MULTI-IMPORT</button>
+			<button type="button" class="btn btn-default marginBtn" ng-click="outputProcess()" translate>PROCESS-LIST.ACTION.OUTPUT</button>
 		</div>
 	</div>
 		<div class="col-xs-12 item-wrapper" id="list-items" style="padding-right: 0">
@@ -47,6 +49,16 @@
                             <span translate="PROCESS-LIST.FILTER.PROCESSES-BPMN-IMPORT-HINT"></span>
                             <br>
                         </div>
+						<div class="help-entry" ng-click="multiImportProcess()">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+							<span translate="PROCESS-LIST.FILTER.PROCESSES-BPMN-MULTI-IMPORT-HINT"></span>
+							<br>
+						</div>
+						<div class="help-entry" ng-click="outputProcess()">
+							<span class="glyphicon glyphicon-plus-sign"></span>
+							<span translate="PROCESS-LIST.FILTER.PROCESSES-BPMN-OUTPUT-HINT"></span>
+							<br>
+						</div>
                     </div>
                 </div>
             </div>

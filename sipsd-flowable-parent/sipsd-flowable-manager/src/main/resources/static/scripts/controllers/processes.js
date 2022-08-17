@@ -110,6 +110,10 @@ angular.module('flowableModeler')
 	      }
 	  };
 
+      $scope.outputProcess = function() {
+          window.open(FLOWABLE.APP_URL.getMultiXmls(),"_blank")
+      };
+
 	  $scope.createProcess = function(mode) {
 	    var modalInstance = _internalCreateModal({
 	        template: 'views/popup/process-create.html?version=' + Date.now()
@@ -121,6 +125,12 @@ angular.module('flowableModeler')
               template: 'views/popup/process-import.html?version=' + Date.now()
           }, $modal, $scope);
 	  };
+
+      $scope.multiImportProcess = function () {
+          _internalCreateModal({
+              template: 'views/popup/multi-process-import.html?version=' + Date.now()
+          }, $modal, $scope);
+      };
 
 	  $scope.showProcessDetails = function(process) {
 	      if (process) {

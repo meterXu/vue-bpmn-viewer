@@ -60,7 +60,9 @@
         "ACTION" : {
             "SEARCH": "查询",
             "CREATE": "创建流程",
-            "IMPORT": "导入流程"
+            "IMPORT": "导入流程",
+            "MULTI-IMPORT": "批量导入流程",
+            "OUTPUT": "批量导出流程"
         },
 
         "FILTER" : {
