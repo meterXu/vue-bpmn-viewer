@@ -30,11 +30,13 @@ import urljoin from 'url-join';
 import utils from './controls/lib/utils'
 import zoomScroll from './controls/lib/zoomScroll'
 import {append, create} from "tiny-svg";
+import {clearHighLight} from "./styl/classic/approach";
 export default {
   name: "VueBpmnViewer",
   props:{
     baseApi:{type:String,required:false},
     instanceId:{type:String},
+    executionId:{type:String},
     xmlId:{type:String},
     type:{type:Number,required: false},
     source:{type:String},
@@ -55,12 +57,14 @@ export default {
         additionalModules:[]
       },
       taskData:[],
+      httpData:[],
       url:{
         xmlUrl:'/rest/model/loadXmlByModelId/',
         instanceUrl:'rest/formdetail/getprocessXml/',
         allExtensionTasks:'rest/extension/task/get-all-extension-tasks',
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
-        restModels:'app/rest/models/'
+        restModels:'app/rest/models/',
+        httpUrl:'rest/task/get-http-tasks'
       }
     }
   },
@@ -119,13 +123,6 @@ export default {
       }
     }
   },
-  watch:{
-    taskData:{
-      handler:function (nv){
-        this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,nv,this.myOptions,this.bpmnOptions.additionalModules[0].colors)
-      }
-    }
-  },
   methods:{
     async getTaskList(){
       if(this.timeData){
@@ -133,10 +130,13 @@ export default {
       }else{
         if(this.type===2){
           this.taskData = await this.getTimeData()
+          this.httpData = await this.getHttpData()
+
         }else{
           this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,[])
         }
       }
+      this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,[...this.taskData,...this.httpData],this.myOptions,this.bpmnOptions.additionalModules[0].colors)
     },
     getTimeData(){
       return new Promise((resolve,reject)=>{
@@ -144,6 +144,24 @@ export default {
           utils.getTimeData(urljoin(this.baseApi,this.url.allExtensionTasks),this.instanceId).then(res=>{
             this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
             resolve(this.taskData)
+          }).catch(err=>{
+            console.error(err)
+            reject(err)
+          })
+        }
+      })
+    },
+    getHttpData(){
+      return new Promise((resolve,reject)=>{
+        if(this.instanceId){
+          utils.getHttpData(urljoin(this.baseApi,this.url.httpUrl),this.instanceId).then(res=>{
+            let data = res.data.map(c=>{
+              return {
+                status:'已办',
+                taskDefinitionKey:c.activityId
+              }
+            })
+            resolve(data)
           }).catch(err=>{
             console.error(err)
             reject(err)
@@ -181,6 +199,12 @@ export default {
           this.$refs.bpmnObj.reload()
         }
       })
+    },
+    setTaskHighlight(ids,options){
+      this.bpmnOptions.additionalModules[0].utils.setTaskHighlight(this.bpmnViewer._container,ids,options)
+    },
+    clearHighLight(ids){
+      this.bpmnOptions.additionalModules[0].utils.clearHighLight(this.bpmnViewer._container,ids)
     },
     handleClick(obj){
       if(this.taskData){
