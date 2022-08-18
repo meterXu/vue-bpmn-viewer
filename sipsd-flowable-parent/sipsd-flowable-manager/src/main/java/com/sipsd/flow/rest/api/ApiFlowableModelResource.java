@@ -128,18 +128,9 @@ public class ApiFlowableModelResource extends BaseResource
 
     @ApiOperation("批量导入流程")
     @PostMapping(value = "/import-process-models")
-    public Result<String> importProcessModels(@RequestParam("file") MultipartFile[] file)
+    public void importProcessModels(@RequestParam("file") MultipartFile[] file)
     {
-        Result<String> result = Result.sucess("OK");
-        try
-        {
-            flowableModelService.importProcessModelBatch(file);
-        }
-        catch (BadRequestException e)
-        {
-            result = Result.failed(e.getMessage());
-        }
-        return result;
+        flowableModelService.importProcessModelBatch(file);
     }
 
     @ApiOperation("根据模型ID发布")
