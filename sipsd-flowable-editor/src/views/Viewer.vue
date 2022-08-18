@@ -8,6 +8,7 @@
                    :styl="{theme:'default'}"
                    :options="{zoom,timeLine,fit,setline,static,focus,track}">
     </VueBpmnViewer>
+
   </div>
 </template>
 
@@ -34,6 +35,7 @@ export default {
       track:false
     }
   },
+
   created() {
     this.type = parseInt(this.$route.query.type)
     this.instanceId = this.$route.query.instanceId
