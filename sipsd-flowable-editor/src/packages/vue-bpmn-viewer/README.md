@@ -138,7 +138,8 @@ export default {
 |名称|说明|示例|
 |:---|:---|:---|
 |reload|重新加载流程图|`this.$refs.bpmnView.reload()`|
-
+|setTaskHighlight|设置任务高亮|`this.$refs.bpmnView.setTaskHighlight(ids, options)`|
+|clearTaskHighLight|清除任务高亮|`this.$refs.bpmnView.clearTaskHighLight(ids)`|
 ## 事件
 |名称|说明|参数|
 |:---|:---|:---|

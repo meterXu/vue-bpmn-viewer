@@ -3,7 +3,7 @@ import axios from "axios";
 let colorsArr = []
 function setSingleTaskHighLight(container, id, options) {
     if (id) {
-        let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+        let completeTasks = container.querySelectorAll(`[data-element-type^="bpmn"][data-element-id="${id}"]`)
         if (completeTasks.length > 0) {
             completeTasks.forEach(completeTask => {
                 let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
@@ -14,7 +14,7 @@ function setSingleTaskHighLight(container, id, options) {
                 if (options.user) {
                     user.innerHTML = options.user
                 } else {
-                    attr(user, {
+                    user&&attr(user, {
                         fill: '#cdcdcd'
                     })
                 }
@@ -48,7 +48,7 @@ function setSingleTaskHighLight(container, id, options) {
     }
 }
 function clearSingleTaskHighLight(container, id) {
-    let completeTasks = container.querySelectorAll(`[data-element-type="bpmn:userTask"][data-element-id="${id}"]`)
+    let completeTasks = container.querySelectorAll(`[data-element-type^="bpmn"][data-element-id="${id}"]`)
     if (completeTasks.length > 0) {
         completeTasks.forEach(completeTask => {
             let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
@@ -116,11 +116,11 @@ export let setTaskHighlight = function (container, ids, options = {
     })
 }
 export let setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#FD706D'}, setline = false) {
-    let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
+    let endEvents = container.querySelectorAll('[data-element-type^="bpmn"]')
     if (endEvents.length > 0) {
         endEvents.forEach(c => {
             let circle = c.querySelector('circle')
-            attr(circle, {
+            circle&&attr(circle, {
                 stroke: color.stroke,
                 fill: color.fill,
             })
@@ -230,7 +230,7 @@ export let clearAllFlowHighLight = function (container) {
     })
 }
 export let clearAllHighLight = function (container) {
-    let tasks = container.querySelectorAll('[data-element-type="bpmn:userTask"]')
+    let tasks = container.querySelectorAll('[data-element-type^="bpmn"]')
     tasks.forEach(c => {
         clearSingleTaskHighLight(container, c.getAttribute('data-element-id'))
     })

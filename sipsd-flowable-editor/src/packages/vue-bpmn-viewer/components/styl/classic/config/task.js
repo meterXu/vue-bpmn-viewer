@@ -28,7 +28,7 @@ export default (options)=>{
     svgWH.height = options.height
     const type = options.element.type
     const g = create('g',{
-        'data-element-type':'bpmn:userTask'
+        'data-element-type':type
     });
     const rect = create('rect',{
         x:-1,
@@ -212,14 +212,20 @@ function createClockIcon(){
 
 
 function createUnConText(option={x:20,y:50,text:'未分配'}){
-    let text  = create('text',{
-        x:option.x,
-        y:option.y,
-        fontSize:'14px',
-        fill:'#bfbfbf',
+    let foreignObject = create('foreignObject',{
+        width:svgWH.width,
+        height:svgWH.height
     })
-    text.innerHTML=option.text
-    return text
+    let div = document.createElement("div");
+    div.style.margin = "10px"
+    div.style.marginTop = "30px"
+    div.style.textAlign = "center"
+    div.style.whiteSpace = "normal"
+    div.style.wordBreak = "break-all"
+    div.style.color = "#bfbfbf"
+    div.innerHTML = option.text
+    append(foreignObject,div)
+    return foreignObject
 }
 function createConText(name,option={x:38,y:50,fill:'#333'}){
     let foreignObject = create('foreignObject',{

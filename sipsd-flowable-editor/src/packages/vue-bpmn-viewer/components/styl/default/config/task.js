@@ -22,7 +22,7 @@ const taskIcon={
 export default (options)=>{
     const type = options.element.type
     const g = create('g',{
-        'data-element-type':'bpmn:userTask'
+        'data-element-type':type
     });
     const rect = create('rect',{
         x:0,

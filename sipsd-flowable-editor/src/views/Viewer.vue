@@ -5,6 +5,7 @@
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
+                   :styl="{theme:'default'}"
                    :options="{zoom,timeLine,fit,setline,static,focus,track}">
     </VueBpmnViewer>
   </div>

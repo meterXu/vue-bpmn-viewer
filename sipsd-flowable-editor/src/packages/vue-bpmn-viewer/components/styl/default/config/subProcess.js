@@ -2,7 +2,7 @@ import {getDi} from "bpmn-js/lib/draw/BpmnRenderUtil";
 import {append, classes, create} from "tiny-svg";
 export default (options)=>{
     const g = create('g',{
-        'data-element-type':'bpmn:userTask'
+        'data-element-type':'bpmn:UserTask'
     });
     const rect = create('rect',{
         x:0,
