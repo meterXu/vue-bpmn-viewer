@@ -2,8 +2,8 @@ const project_bpmn = {
   namespace: "bpmn",
   mainSys:true,
   variable: {
-    baseApi: process.env.baseApi,
-    source:process.env.source,
+    baseApi: process.env.VUE_APP_baseApi,
+    source:process.env.VUE_APP_source,
     accessTokenTime: 3600 * 1000,
     logfv:{
       enable:false,
