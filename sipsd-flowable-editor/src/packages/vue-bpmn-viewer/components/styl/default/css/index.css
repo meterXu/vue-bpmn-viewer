@@ -21,7 +21,13 @@
         transform: rotate(360deg);
     }
 }
-
+.dpark-bpmn-viewer[data-theme='default']{
+    width: 100%;
+    height: 100%;
+    background: #F5F5F7;
+    cursor: grab;
+    position: relative;
+}
 .dpark-bpmn-viewer[data-theme='default'] .bt-layout-header{
     position: absolute;
     top: 6px;

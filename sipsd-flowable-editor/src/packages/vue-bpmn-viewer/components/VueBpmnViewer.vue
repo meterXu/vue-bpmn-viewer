@@ -1,5 +1,6 @@
 <template>
   <div class="dpark-bpmn-viewer" :data-theme="myStyl.theme">
+<!--    <div :class="[isDark?'dpark-bpmn-viewer dpark-bpmn-viewer-dark':'dpark-bpmn-viewer']" :data-theme="myStyl.theme">-->
     <div class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
@@ -25,6 +26,7 @@
 import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeDefault from './styl/default/index.js'
 import bpmnThemeClassic from './styl/classic/index.js'
+import bpmnThemeDark from './styl/dark/index'
 import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
 import utils from './controls/lib/utils'
@@ -65,7 +67,8 @@ export default {
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/',
         httpUrl:'rest/task/get-http-tasks'
-      }
+      },
+      isDark:'',
     }
   },
   computed:{
@@ -98,10 +101,12 @@ export default {
         theme:'default',
         stylMap:{
           default:bpmnThemeDefault,
-          classic:bpmnThemeClassic
+          classic:bpmnThemeClassic,
+          dark:bpmnThemeDark,
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
+      // console.log(this.styl.theme)
       if(this.styl.stylMap){
         Object.keys(this.styl.stylMap).forEach(key=>{
           _styl.stylMap[key]=Object.assign(_styl.stylMap[key]||{},this.styl.stylMap[key])
@@ -223,18 +228,31 @@ export default {
     itemClick(item){
       this.$emit('timeItemClick',item)
     }
+  },
+  created() {
+    if(this.styl.theme == 'dark'){
+      this.isDark = true
+    }
   }
 }
 </script>
 
 <style scoped>
-.dpark-bpmn-viewer{
-  width: 100%;
-  height: 100%;
-  background: #F5F5F7;
-  cursor: grab;
-  position: relative;
-}
+/*.dpark-bpmn-viewer{*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background: #F5F5F7 ;*/
+/*  cursor: grab;*/
+/*  position: relative;*/
+/*}*/
+/*.dpark-bpmn-viewer-dark{*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background: #00344C !important;*/
+/*  color: #b6b6b6;*/
+/*  cursor: grab;*/
+/*  position: relative;*/
+/*}*/
 .dpark-bbpmn-viewer:active{
   cursor: grabbing;
 }
@@ -243,6 +261,7 @@ export default {
   height: 100%;
   position: relative;
 }
+
 </style>
 <style>
 .dpark-bbpmn-viewer .bpmn-viewer-canvas{
