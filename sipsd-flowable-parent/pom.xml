@@ -7,7 +7,7 @@
 	<groupId>com.sipsd</groupId>
 	<artifactId>sipsd-flowable-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>4.1.0-SNAPSHOT</version>
+	<version>4.3.0</version>
 
 	<parent>
 		<groupId>cn.com.dpark.bzh</groupId>
