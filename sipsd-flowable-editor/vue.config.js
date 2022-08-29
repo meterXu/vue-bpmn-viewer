@@ -29,33 +29,6 @@ module.exports = {
       ]
     }
   },
-  chainWebpack: config => {
-    const imgRule = config.module.rule('images')
-    imgRule.use('url-loader')
-        .tap(options => {
-          options.name = `/img/[name].[hash:8].[ext]`
-          options.fallback = {
-            loader: 'file-loader',
-            options: {
-              name: `/img/[name].[hash:8].[ext]`
-            }
-          }
-          return options
-        })
-    const svgRule = config.module.rule('svg')
-    svgRule
-        .use('file-loader')
-        .tap(options => {
-          options.name = `/img/[name].[hash:8].[ext]`
-          options.fallback = {
-            loader: 'file-loader',
-            options: {
-              name: `/img/[name].[hash:8].[ext]`
-            }
-          }
-          return options
-        })
-  },
   devServer: {
     port: 8081
   }
