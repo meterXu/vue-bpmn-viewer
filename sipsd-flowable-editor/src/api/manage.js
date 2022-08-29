@@ -1,6 +1,6 @@
-import {request } from '@dpark/s2-utils'
-import project from '../project'
-const axios = request.getService(project)
+import request from './request'
+import Vue from "vue";
+const axios = request.getService(Vue.prototype.$project_bpmn)
 
 //post
 export function postAction(url,parameter) {

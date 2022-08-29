@@ -2,11 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import Vuels from 'vue-ls'
 import store from './store'
-import {portal} from '@dpark/s2-utils'
 import "./assets/less/common.less";
 import 'element-ui/lib/theme-chalk/index.css'
 import elementUI from 'element-ui'
-import project from './project'
 import router from './routes'
 import LogFv from "@dpark/logfv-web-vue";
 Vue.use(Vuels,{
@@ -15,10 +13,9 @@ Vue.use(Vuels,{
     storage: 'local',
 })
 Vue.use(elementUI)
-let _project = portal.getProject(project);
-Vue.use(LogFv,_project.variable.logfv)
-Vue.prototype.$project_bpmn = _project
-window.project_bpmn= _project
+Vue.prototype.$project_bpmn = window.project['bpmn']
+console.log(Vue.prototype.$project_bpmn)
+Vue.use(LogFv,Vue.prototype.$project_bpmn.variable.logfv)
 // 启动应用
 new Vue({
     router,

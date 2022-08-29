@@ -2,36 +2,13 @@ const project_bpmn = {
   namespace: "bpmn",
   mainSys:true,
   variable: {
-    development: {
-      baseApi: "http://192.168.75.106:9001/sipsd-flow-modeler/",
-      source:'http://192.168.75.106:9001/sipsd-flow-modeler/rest/model/loadXmlByModelId/2cf19d8a-2742-11ed-ad80-acde48001122',
-      accessTokenTime: 3600 * 1000,
-      logfv:{
-        enable:false,
-        console:false,
-        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
-      }
-    },
-    production: {
-      baseApi: "http://58.210.9.133/iplatform/sipsd-flow-modeler/",
-      source:'http://58.210.9.133/iplatform/sipsd-flow-modeler/rest/model/loadXmlByModelId/12604728-d007-11eb-a546-5e2c421612f0',
-      accessTokenTime: 3600 * 1000,
-      logfv:{
-        enable:true,
-        console:false,
-        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
-      }
-    },
-    proxy:{
-      baseApi: "http://192.168.126.25/sipsd-flow-modeler/",
-      accessTokenTime: 3600 * 1000,
-      logfv:{
-        appId:'bpmn',
-        appName:'工作流',
-        enable:true,
-        console:false,
-        reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
-      }
+    baseApi: process.env.baseApi,
+    source:process.env.source,
+    accessTokenTime: 3600 * 1000,
+    logfv:{
+      enable:false,
+      console:false,
+      reportUrl:'http://58.210.9.133/iplatform/logfv-server/logfv/web/upload'
     }
   },
   redirect: {
