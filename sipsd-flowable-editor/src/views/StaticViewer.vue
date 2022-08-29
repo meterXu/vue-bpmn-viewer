@@ -10,7 +10,7 @@
               <el-radio :label="3">source</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="baseApi" v-if="dataSource===1">
+          <el-form-item label="baseApi" v-if="dataSource!==3">
             <el-input v-model="form.baseApi"></el-input>
           </el-form-item>
           <el-form-item label="xmlId" v-if="dataSource===1">
@@ -18,7 +18,10 @@
               <el-option :label="item.name" :value="item.id" v-for="item in xmlIds" :key="item.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="source" v-if="dataSource===2">
+          <el-form-item label="instanceId" v-else-if="dataSource===2">
+            <el-input v-model="form.instanceId" placeholder="请输入instanceId"></el-input>
+          </el-form-item>
+          <el-form-item label="source" v-else-if="dataSource===3">
             <el-input type="textarea" :rows="4" v-model="form.source"></el-input>
           </el-form-item>
           <el-form-item label="切换主题：">
@@ -164,9 +167,6 @@ export default {
         this.$store.commit("setOptions",this.options)
       })
       this.$logfv.log('点击了生效','action')
-    },
-    handleClose(done) {
-      done();
     }
   },
   mounted() {
