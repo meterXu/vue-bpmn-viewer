@@ -29,7 +29,7 @@ module.exports = {
               let regex = new RegExp('(?<=process.env\\.)\\w*','gi')
               let ms = res.match(regex)
               ms.forEach(m=>{
-                res = res.replaceAll(`process.env.${m}`,`"${process.env[m]}"`)
+                res = res.replace(new RegExp(`process.env.${m}`,'g'),`"${process.env[m]}"`)
               })
               return res
             }
