@@ -11,11 +11,12 @@ export default (options)=>{
         height:options.height,
         rx:4,
         ry:4,
-        stroke:'#8f8f8f',
+        stroke:'#6f6f6f',
         collapsed:false,
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
-        fill:'#f5f5f5'
+        fill:'#00344C',
+
     })
     options.element.collapsed=false
     append(g,rect)
@@ -25,7 +26,7 @@ export default (options)=>{
         y:1,
         width:options.width-1,
         height:24,
-        fill: "#f5f5f5",
+        fill: "#00344C",
         rx:4,
         ry:4
     }))
@@ -34,7 +35,7 @@ export default (options)=>{
         y:5,
         width:options.width-1,
         height:20,
-        fill: "#f5f5f5",
+        fill: "#00344C",
         rx:0,
         ry:0
     })

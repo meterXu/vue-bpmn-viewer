@@ -10,8 +10,8 @@ export default (options)=>{
         r:options.width/2,
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
-        fill:'#00557D',
-        stroke:'#125968'
+        fill:'#aaa',
+        stroke:'#6f6f6f'
         // filter:"url(#f1)"
     })
     let text = create('text',{
@@ -28,12 +28,12 @@ export default (options)=>{
     append(g,text)
     append(g,circle)
 
-    // let ok = create('path')
-    // attr(ok,{d:'M45.6,55.2c2.7-4.8,12-13.3,18.7-17.7l2.6-1.6c1-0.5,1.9-0.9,2.7-1.1c-2.1-4.6-0.3-8.3,0-12.6l0,0\n' +
-    //         '\tc-2.5,1.2-5,3-7.4,5l-2.8,2.5C51.4,37.1,45,46.3,45,46.3l-4.7-8.9l-10.7,5.1C34.1,44.1,41,49.7,45.6,55.2L45.6,55.2z',
-    //     fill:'#fff',
-    //     transform:'matrix(0.5 0 0 0.5 -11 -4)'
-    //     })
-    // append(g,ok)
+    let ok = create('path')
+    attr(ok,{d:'M45.6,55.2c2.7-4.8,12-13.3,18.7-17.7l2.6-1.6c1-0.5,1.9-0.9,2.7-1.1c-2.1-4.6-0.3-8.3,0-12.6l0,0\n' +
+            '\tc-2.5,1.2-5,3-7.4,5l-2.8,2.5C51.4,37.1,45,46.3,45,46.3l-4.7-8.9l-10.7,5.1C34.1,44.1,41,49.7,45.6,55.2L45.6,55.2z',
+        fill:'#fff',
+        transform:'matrix(0.5 0 0 0.5 -11 -4)'
+        })
+    append(g,ok)
     return g
 }
