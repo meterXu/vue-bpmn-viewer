@@ -1,22 +1,22 @@
 <template>
-  <div class="io-zoom-controls" v-if="myOptions.zoom">
+  <div :class="controlsClass" v-if="myOptions.zoom">
     <ul class="io-zoom-reset io-control io-control-list">
-      <li class="icon icon-download" @click="download">
+      <li class="icon-download" :class="iconClass" @click="download">
       </li>
       <li>
-        <hr/>
+        <hr :class="hrClass"/>
       </li>
-      <li class="icon icon-aim" @click="handleZoomReset">
-      </li>
-      <li>
-        <hr/>
-      </li>
-      <li class="icon icon-plus" @click="handleZoomIn">
+      <li class="icon-aim" :class="iconClass" @click="handleZoomReset">
       </li>
       <li>
-        <hr/>
+        <hr :class="hrClass"/>
       </li>
-      <li class="icon icon-minus" @click="handleZoomOut">
+      <li class="icon-plus" :class="iconClass" @click="handleZoomIn">
+      </li>
+      <li>
+        <hr :class="hrClass"/>
+      </li>
+      <li class="icon-minus" :class="iconClass" @click="handleZoomOut">
       </li>
     </ul>
   </div>
@@ -31,7 +31,10 @@ export default {
   data() {
     return {
       bpmnObj: null,
-      dialogVisible: false
+      dialogVisible: false,
+      controlsClass: 'io-zoom-controls',
+      iconClass: 'icon',
+      hrClass: ''
     }
   },
   methods: {
@@ -65,6 +68,14 @@ export default {
       let width =  Math.ceil(_width)+Math.ceil(g.transform.animVal[0].matrix.e*3)
       let height = Math.ceil(_height)+Math.ceil(g.transform.animVal[0].matrix.f*3)
       saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{height:height,encoderOptions:1})
+    }
+  },
+  created() {
+    let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    if(flag) {
+      this.controlsClass = 'io-zoom-controls controls-flag'
+      this.iconClass = 'icon icon-flag'
+      this.hrClass = 'hr-flag'
     }
   }
 }

@@ -301,3 +301,14 @@
     line-height: 1;
     font-size: 13px;
 }
+.dpark-bpmn-viewer[data-theme='dark'] .controls-flag {
+    width: 46px;
+    margin-right: 10px;
+}
+.dpark-bpmn-viewer[data-theme='dark'] .icon-flag {
+    width: 36px;
+    height: 36px;
+}
+.dpark-bpmn-viewer[data-theme='dark'] .hr-flag {
+    width: 30px;
+}
