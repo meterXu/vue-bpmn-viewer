@@ -246,6 +246,7 @@
           "DELETE-APP-RELATION": "App模型",
           "IMPORT-DESCRIPTION": "请浏览或拖拽.bpmn或.bpmn20.xml扩展名的BPMN XML定义",
           "IMPORT-TITLE": "导入一个流程模型",
+          "IMPORT-MULTI-TITLE": "导入一个或多个流程模型",
           "USE-AS-NEW-TITLE": "作为一个新版本使用",
           "USE-AS-NEW-DESCRIPTION": "您确定要使用 {{version}}版本 去创建一个关于 \"{{name}}\"的新版本?",
           "USE-AS-NEW-UNRESOLVED-MODELS-ERROR": "无法完全恢复app模型到所选择的版本：由于一些引用的模型过去被删除而丢失。请相应地更新app模型。缺失模型:",
@@ -255,6 +256,7 @@
           "ACTIONS": "动作",
           "IMPORT": {
               "DROPZONE": "拖拽一个 .bpmn 或者 .bpmn20.xml BPMN XML 文件",
+              "MULTI-DROPZONE": "拖拽一个或多个 .cmmn or .cmmn.xml CMMN XML文件",
               "CANCEL-UPLOAD": "取消上传",
               "ERROR": "处理BPMN XML文件时出错",
               "NO-DROP": "不支持拖放"

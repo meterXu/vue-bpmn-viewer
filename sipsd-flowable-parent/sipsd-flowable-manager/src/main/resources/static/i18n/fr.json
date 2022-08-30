@@ -244,6 +244,7 @@
           "DELETE-APP-RELATION": "Modèle d'App",
           "IMPORT-DESCRIPTION": "Veuillez naviguer vers ou déposer un fichier de défnition BPMN XML avec une extension en .bpmn ou .bpmn20.xml",
           "IMPORT-TITLE": "Importer un modèle de processus",
+          "IMPORT-MULTI-TITLE":"Importer un modèle de processus",
           "USE-AS-NEW-TITLE": "Utiliser en tant que nouvelle version",
           "USE-AS-NEW-DESCRIPTION": "Êtes-vous sûr de vouloir utiliser la version {{version}} pour créer une nouvelle version de  \"{{name}}\"?",
           "USE-AS-NEW-UNRESOLVED-MODELS-ERROR": "Impossibilité de restaurer le modèle d'App dans la version choisie: certains modèles référencés sont manquants car précédemment supprimés. Veuillez mettre à jour votre modèle d'App en conséquence. Modèles manquants:",
@@ -253,6 +254,7 @@
           "ACTIONS": "Actions",
           "IMPORT": {
               "DROPZONE": "Déposer un fichier BPMN avec une extension en .bpmn ou .bpmn20.xml",
+              "MULTI-DROPZONE": "Déposer un fichier BPMN avec une extension en .bpmn ou .bpmn20.xml",
               "CANCEL-UPLOAD": "Annuler l'envoi",
               "ERROR": "Une erreur s'est produite lors du traitement du fichier BPMN XML",
               "NO-DROP": "Glisser/déposer n'est pas supporté"

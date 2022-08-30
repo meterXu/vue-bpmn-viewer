@@ -212,6 +212,7 @@
           "DELETE-APP-RELATION": "Modelo de App",
           "IMPORT-DESCRIPTION": "Busca o arrastra una definicion BPMN XML con la extension .bpmn o .bpmn20.xml",
           "IMPORT-TITLE": "Importar un modelo de proceso",
+          "IMPORT-MULTI-TITLE": "Importar un modelo de proceso",
           "USE-AS-NEW-TITLE": "Usar como nueva version",
           "USE-AS-NEW-DESCRIPTION": "Estas seguro que deseas utilizar la version {{version}} para crear una nueva version de \"{{name}}\"?",
           "USE-AS-NEW-UNRESOLVED-MODELS-ERROR": "No se pudo restaurar a la version seleccionada: Algunos modelos no se encuentran debido a que fueron borrados. Por favor actualiza el modelo de la aplicacion. Modelos faltantes:",
@@ -221,6 +222,7 @@
           "ACTIONS": "Acciones",
           "IMPORT": {
               "DROPZONE": "Arrastra un archivo .bpmn or .bpmn20.xml BPMN XML",
+              "MULTI-DROPZONE": "Arrastra un archivo .bpmn or .bpmn20.xml BPMN XML",
               "CANCEL-UPLOAD": "Cancelar la carga de archivo",
               "ERROR": "Error al procesar el archivo BPMN XML",
               "NO-DROP": "Arrastrar y soltar no soportado"
