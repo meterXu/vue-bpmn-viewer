@@ -198,6 +198,12 @@ public class FlowableModelServiceImpl implements IFlowableModelService {
                 ObjectNode modelNode = bpmnJsonConverter.convertToJson(bpmnModel);
 
                 Process process = bpmnModel.getMainProcess();
+                //判断modelKey是否重复
+                List<Model> models = modelRepository.findByKeyAndType(process.getId(), 0);
+                if(!CollectionUtils.isEmpty(models))
+                {
+                    throw new BadRequestException("duplicate model key,this xml file already exists," + fileName);
+                }
                 String name = process.getId();
                 if (StringUtils.isNotEmpty(process.getName())) {
                     name = process.getName();
