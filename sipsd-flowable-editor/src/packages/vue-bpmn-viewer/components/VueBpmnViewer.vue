@@ -30,7 +30,8 @@ import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
 import utils from './controls/lib/utils'
 import zoomScroll from './controls/lib/zoomScroll'
-import {append} from "tiny-svg";
+import TouchModule from 'diagram-js/lib/navigation/touch'
+import {append, create} from "tiny-svg";
 export default {
   name: "VueBpmnViewer",
   props:{
@@ -83,11 +84,13 @@ export default {
       if(_option.scrollZoom){
         this.bpmnOptions.additionalModules=[
           this.myStyl.stylMap[this.myStyl.theme],
-          zoomScroll
+          zoomScroll,
+          TouchModule
         ]
       }else{
         this.bpmnOptions.additionalModules=[
           this.myStyl.stylMap[this.myStyl.theme],
+          TouchModule
         ]
       }
       return _option;

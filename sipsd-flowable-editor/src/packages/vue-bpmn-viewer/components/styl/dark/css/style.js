@@ -20,7 +20,7 @@ let styleCon=`
 .d-subProcess-title{
     text-align: left;
     font-size: 12px;
-    color: #000;
+    color: #9FB5BF;
     padding-left: 4px;
     text-overflow: ellipsis;
     overflow: hidden;

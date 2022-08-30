@@ -558,6 +558,44 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 		return result;
 	}
 
+	/**
+	 * 创建加签子任务
+	 *
+	 * @param signVo     加签参数
+	 * @param taskEntity 父任务
+	 */
+	private void createSignSubTasks(AddSignTaskVo signVo, TaskEntity taskEntity) {
+		if (CollectionUtils.isNotEmpty(signVo.getSignPersoneds())) {
+			String parentTaskId = taskEntity.getParentTaskId();
+			if (StringUtils.isBlank(parentTaskId)) {
+				parentTaskId = taskEntity.getId();
+			}
+			String finalParentTaskId = parentTaskId;
+			// 1.创建被加签人的任务列表
+			signVo.getSignPersoneds().forEach(userCode -> {
+				if (StringUtils.isNotBlank(userCode)) {
+					this.createSubTask(taskEntity, finalParentTaskId, userCode);
+				}
+			});
+			String taskId = taskEntity.getId();
+			if (StringUtils.isBlank(taskEntity.getParentTaskId())) {
+				// 2.创建加签人的任务并执行完毕
+				Task task = this.createSubTask(taskEntity, finalParentTaskId, signVo.getUserCode());
+				taskId = task.getId();
+			}
+			Task taskInfo = taskService.createTaskQuery().taskId(taskId).singleResult();
+			if (null != taskInfo) {
+				taskService.complete(taskId);
+			}
+			// 如果是候选人，需要删除运行时候选表种的数据。
+			long candidateCount = taskService.createTaskQuery().taskId(parentTaskId)
+					.taskCandidateUser(signVo.getUserCode()).count();
+			if (candidateCount > 0) {
+				taskService.deleteCandidateUser(parentTaskId, signVo.getUserCode());
+			}
+		}
+	}
+
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
 	@Override
 	public Result<String> addMultiInstanceExecution(AddSignTaskVo form) {
@@ -615,44 +653,6 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				runtimeService.setVariables(execution.getParentId(), executionVariables);
 			}
 			return Result.sucess("加签成功");
-		}
-	}
-
-	/**
-	 * 创建加签子任务
-	 *
-	 * @param signVo     加签参数
-	 * @param taskEntity 父任务
-	 */
-	private void createSignSubTasks(AddSignTaskVo signVo, TaskEntity taskEntity) {
-		if (CollectionUtils.isNotEmpty(signVo.getSignPersoneds())) {
-			String parentTaskId = taskEntity.getParentTaskId();
-			if (StringUtils.isBlank(parentTaskId)) {
-				parentTaskId = taskEntity.getId();
-			}
-			String finalParentTaskId = parentTaskId;
-			// 1.创建被加签人的任务列表
-			signVo.getSignPersoneds().forEach(userCode -> {
-				if (StringUtils.isNotBlank(userCode)) {
-					this.createSubTask(taskEntity, finalParentTaskId, userCode);
-				}
-			});
-			String taskId = taskEntity.getId();
-			if (StringUtils.isBlank(taskEntity.getParentTaskId())) {
-				// 2.创建加签人的任务并执行完毕
-				Task task = this.createSubTask(taskEntity, finalParentTaskId, signVo.getUserCode());
-				taskId = task.getId();
-			}
-			Task taskInfo = taskService.createTaskQuery().taskId(taskId).singleResult();
-			if (null != taskInfo) {
-				taskService.complete(taskId);
-			}
-			// 如果是候选人，需要删除运行时候选表种的数据。
-			long candidateCount = taskService.createTaskQuery().taskId(parentTaskId)
-					.taskCandidateUser(signVo.getUserCode()).count();
-			if (candidateCount > 0) {
-				taskService.deleteCandidateUser(parentTaskId, signVo.getUserCode());
-			}
 		}
 	}
 
