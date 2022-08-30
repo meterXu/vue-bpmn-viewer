@@ -1,6 +1,5 @@
 <template>
   <div class="dpark-bpmn-viewer" :data-theme="myStyl.theme">
-<!--    <div :class="[isDark?'dpark-bpmn-viewer dpark-bpmn-viewer-dark':'dpark-bpmn-viewer']" :data-theme="myStyl.theme">-->
     <div class="bpmn-viewer-canvas">
       <vue-bpmn :viewer="myOptions.static" ref="bpmnObj" :options="bpmnOptions" :url="xml"
                 @loading="bpmnLoading"
@@ -31,14 +30,12 @@ import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
 import utils from './controls/lib/utils'
 import zoomScroll from './controls/lib/zoomScroll'
-import {append, create} from "tiny-svg";
-import {clearHighLight} from "./styl/classic/approach";
+import {append} from "tiny-svg";
 export default {
   name: "VueBpmnViewer",
   props:{
     baseApi:{type:String,required:false},
     instanceId:{type:String},
-    executionId:{type:String},
     xmlId:{type:String},
     type:{type:Number,required: false},
     source:{type:String},
@@ -67,8 +64,7 @@ export default {
         exportUrl:'app/rest/models/[]/bpmn20?version=1617092632878',
         restModels:'app/rest/models/',
         httpUrl:'rest/task/get-http-tasks'
-      },
-      isDark:'',
+      }
     }
   },
   computed:{
@@ -106,7 +102,6 @@ export default {
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
-      // console.log(this.styl.theme)
       if(this.styl.stylMap){
         Object.keys(this.styl.stylMap).forEach(key=>{
           _styl.stylMap[key]=Object.assign(_styl.stylMap[key]||{},this.styl.stylMap[key])
@@ -130,16 +125,19 @@ export default {
   },
   methods:{
     async getTaskList(){
-      if(this.timeData){
-        this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,this.timeData)
-      }else{
-        if(this.type===2){
-          this.taskData = await this.getTimeData()
-          this.httpData = await this.getHttpData()
-
+      try {
+        if(this.timeData){
+          this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,this.timeData)
         }else{
-          this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,[])
+          if(this.type===2){
+            this.taskData = await this.getTimeData()
+            this.httpData = await this.getHttpData()
+          }else{
+            this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,[])
+          }
         }
+      }catch (err){
+        console.error(err)
       }
       this.bpmnOptions.additionalModules[0].utils.taskSyncHighLight(this.bpmnViewer._container,this.$refs.bpmnObj,[...this.taskData,...this.httpData],this.myOptions,this.bpmnOptions.additionalModules[0].colors)
     },
@@ -150,7 +148,6 @@ export default {
             this.taskData = utils.dealWithTimeData(this.bpmnViewer._container,res.data.data)
             resolve(this.taskData)
           }).catch(err=>{
-            console.error(err)
             reject(err)
           })
         }
@@ -168,7 +165,6 @@ export default {
             })
             resolve(data)
           }).catch(err=>{
-            console.error(err)
             reject(err)
           })
         }
@@ -228,31 +224,11 @@ export default {
     itemClick(item){
       this.$emit('timeItemClick',item)
     }
-  },
-  created() {
-    if(this.styl.theme == 'dark'){
-      this.isDark = true
-    }
   }
 }
 </script>
 
 <style scoped>
-/*.dpark-bpmn-viewer{*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  background: #F5F5F7 ;*/
-/*  cursor: grab;*/
-/*  position: relative;*/
-/*}*/
-/*.dpark-bpmn-viewer-dark{*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*  background: #00344C !important;*/
-/*  color: #b6b6b6;*/
-/*  cursor: grab;*/
-/*  position: relative;*/
-/*}*/
 .dpark-bbpmn-viewer:active{
   cursor: grabbing;
 }

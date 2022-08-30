@@ -1,5 +1,6 @@
 import {attr, classes} from "tiny-svg";
 import axios from "axios";
+import de from "element-ui/src/locale/lang/de";
 let colorsArr = []
 function setSingleTaskHighLight(container, id, options) {
     if (id) {

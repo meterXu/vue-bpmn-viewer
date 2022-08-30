@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:proxy": "vue-cli-service serve --mode proxy",
     "build": "vue-cli-service build",
     "build:106": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint",
