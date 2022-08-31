@@ -129,11 +129,10 @@ public class ApiFormDetailReource extends BaseResource {
 
 	/**
 	 * 撤回
-	 *
 	 * @param params 参数
 	 * @return
 	 */
-	@ApiOperation("撤回")
+//	@ApiOperation("撤回") TODO 撤回有问题需解决
 	@PostMapping(value = "/revokeProcess")
 	public Result<String> revokeProcess(@Validated @RequestBody RevokeProcessVo params) {
 		// params.setUserCode(this.getLoginUser().getId());
@@ -213,7 +212,7 @@ public class ApiFormDetailReource extends BaseResource {
 	 * @param params 参数
 	 * @return
 	 */
-	@ApiOperation("向前加签")
+//	@ApiOperation("向前加签") TODO 向前加签有问题需解决
 	@PostMapping(value = "/beforeAddSignTask")
 	public Result<String> beforeAddSignTask(@Validated @RequestBody AddSignTaskVo params) {
 		Result<String> result = null;
@@ -235,7 +234,7 @@ public class ApiFormDetailReource extends BaseResource {
 	 * @param params 参数
 	 * @return
 	 */
-	@ApiOperation("向后加签")
+//	@ApiOperation("向后加签") TODO 向后加签有问题需解决
 	@PostMapping(value = "/afterAddSignTask")
 	public Result<String> afterAddSignTask(@Validated @RequestBody AddSignTaskVo params) {
 		Result<String> result = null;

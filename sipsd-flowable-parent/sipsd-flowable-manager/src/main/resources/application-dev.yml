@@ -5,6 +5,11 @@ log:
 #    path: classpath:applogs\flow
     root: DEBUG
 
+logging:
+    level:
+        org.flowable.engine.impl.persistence.entity.*: debug
+        org.flowable.task.service.impl.persistence.entity.*: debug
+
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
