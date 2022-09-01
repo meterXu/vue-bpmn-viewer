@@ -1,38 +1,7 @@
 import {attr, classes} from "tiny-svg";
-import axios from "axios";
+import utils from "../../controls/lib/utils";
 let colorsArr = []
 function setSingleTaskHighLight(container, id, options) {
-    if (id) {
-        let completeTasks = container.querySelectorAll(`[data-element-type^="bpmn"][data-element-id="${id}"]`)
-        if (completeTasks.length > 0) {
-            completeTasks.forEach(completeTask => {
-                let feColorMatrix = completeTask.querySelector('.djs-visual feColorMatrix')
-                let rect = completeTask.querySelector('.djs-visual rect')
-                let path1 = completeTask.querySelector('.f_userColor1')
-                let path2 = completeTask.querySelector('.f_userColor2')
-                if (options.shadow && feColorMatrix && rect) {
-                    const rgb = hexToRgb(options.color)
-                    attr(feColorMatrix, {
-                        values: `${(rgb[0] / 255).toFixed(3)} 0 0 0 0
-                           0 ${(rgb[1] / 255).toFixed(3)} 0 0 0
-                           0 0 ${(rgb[2] / 255).toFixed(3)} 0 0
-                           0 0 0 0.8 0`
-                    })
-                    if (options.stroke) {
-                        attr(path1, {
-                            fill: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
-                        })
-                        attr(path2, {
-                            fill: `rgba(${rgb[0]},${rgb[1]},${rgb[2]},1)`,
-                        })
-                    }
-                }
-            })
-        }
-
-    }
-}
-function setStaetSingleTaskHighLight(container, id, options) {
     if (id) {
         let completeTasks = container.querySelectorAll(`[data-element-type^="bpmn"][data-element-id="${id}"]`)
         if (completeTasks.length > 0) {
@@ -47,7 +16,7 @@ function setStaetSingleTaskHighLight(container, id, options) {
                     })
                 }
                 if (options.shadow && feColorMatrix && rect) {
-                    const rgb = hexToRgb(options.color)
+                    const rgb = utils.hexToRgb(options.color)
                     attr(feColorMatrix, {
                         values: `${(rgb[0] / 255).toFixed(3)} 0 0 0 0
                            0 ${(rgb[1] / 255).toFixed(3)} 0 0 0
@@ -100,25 +69,6 @@ function clearSingleTaskHighLight(container, id) {
         })
     }
 }
-function hexToRgb(hex) {
-    if (hex.indexOf('#') === 0) {
-        let r = parseInt('0x' + hex.slice(1, 3))
-        let g = parseInt('0x' + hex.slice(3, 5))
-        let b = parseInt('0x' + hex.slice(5, 7))
-        return [
-            r,
-            g,
-            b,
-        ]
-    } else {
-        let color = hex.match(/\d+/g)
-        return [
-            color[0],
-            color[1],
-            color[2]
-        ]
-    }
-}
 export let setTaskHighlight = function (container, ids, options = {
     color: '#5BC14B',
     setline: false,
@@ -128,19 +78,24 @@ export let setTaskHighlight = function (container, ids, options = {
 }) {
     ids.forEach(id => {
         clearHighLight(container, id)
-        const xx = setSingleTaskHighLight(container, id, options)
-        if (xx) {
-            taskHighlightTimer[id] = xx
-        }
+        setSingleTaskHighLight(container, id, options)
         if (options.setline) {
             setFlowHighLight(container, id, options)
         }
     })
 }
-export let setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#fff'}, setline = false) {
-    let endEvents = container.querySelectorAll('[data-element-type^="bpmn"]')
+export let setEndHighLight = function (container, color = {stroke: '#407080', fill: '#FCCF0A'}, setline = false) {
+    let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
     if (endEvents.length > 0) {
         endEvents.forEach(c => {
+            let circle = c.querySelector('circle')
+            circle&&attr(circle, {
+                stroke: color.stroke
+            })
+            let path = c.querySelector('path')
+            path&&attr(path, {
+                fill: color.fill
+            })
             if (setline) {
                 setFlowHighLight(container, c.getAttribute('data-element-id'))
             }
@@ -185,10 +140,7 @@ export let setStartTaskHighlight = function (container, ids, options = {
 }) {
     ids.forEach(id => {
         clearHighLight(container, id)
-        const xx = setStaetSingleTaskHighLight(container, id, options)
-        if (xx) {
-            taskHighlightTimer[id] = xx
-        }
+        setSingleTaskHighLight(container, id, options)
         if (options.setline) {
             this.setFlowHighLight(container, id, options)
         }
@@ -197,42 +149,44 @@ export let setStartTaskHighlight = function (container, ids, options = {
 export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors) {
     colorsArr = colors
     clearAllHighLight(container)
-    nv.forEach(c => {
-        switch (c.status) {
-            case '已办': {
-                if (c.approveType === '驳回') {
-                    setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: colors[3],
-                        setline: false,
+    if(nv&&nv.length>0){
+        nv.forEach(c => {
+            switch (c.status) {
+                case '已办': {
+                    if (c.approveType === '驳回') {
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colors[3],
+                            setline: options.setline,
+                            shadow: false,
+                            type: 3,
+                            stroke: true
+                        })
+                    } else {
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colors[2],
+                            setline: options.setline,
+                            shadow: false,
+                            type: 2,
+                            stroke: true
+                        })
+                    }
+                }
+                    break;
+                case '待办': {
+                    setTaskHighlight(container, [c.taskDefinitionKey], {
+                        color: colors[1],
+                        setline: options.setline,
                         shadow: false,
-                        type: 3,
-                        stroke: true
-                    })
-                } else {
-                    setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: colors[2],
-                        setline: false,
-                        shadow: false,
-                        type: 2,
+                        type: 1,
                         stroke: true
                     })
                 }
+                    break;
             }
-                break;
-            case '待办': {
-                setStartTaskHighlight(container, [c.taskDefinitionKey], {
-                    color: colors[1],
-                    setline: options.setline,
-                    shadow: false,
-                    type: 1,
-                    stroke: true
-                })
-            }
-                break;
+        })
+        if (nv.filter(c => c.status === '待办').length === 0) {
+            setEndHighLight(container, {stroke: '#407080', fill: '#FCCF0A'})
         }
-    })
-    if (nv.filter(c => c.status === '待办').length === 0) {
-        setEndHighLight(container, {stroke: '#5ac14a', fill: '#53D894'})
     }
 }
 export let clearAllFlowHighLight = function (container) {
@@ -250,6 +204,6 @@ export let clearAllHighLight = function (container) {
     tasks.forEach(c => {
         clearSingleTaskHighLight(container, c.getAttribute('data-element-id'))
     })
-    setEndHighLight(container, {stroke: '#444', fill: '#fff'})
+    setEndHighLight(container, {stroke: '#6f6f6f', fill: '#b6b6b6'})
     clearAllFlowHighLight(container)
 }

@@ -1,20 +1,19 @@
-import {attr, classes} from "tiny-svg";
 import axios from "axios";
+import {clearHighLight, setFlowHighLight} from "../../styl/classic/approach";
 
 function utils() {
-    this.getTaskObj = function (container, id) {
+    this.getTaskObj = function (container, id,index) {
         let completeTask = container.querySelector(`[data-element-type^="bpmn"][data-element-id="${id}"]`)
         let task_container = container.querySelector(`[class="djs-element djs-shape"][data-element-id="${id}"]`)
         if(completeTask){
-            let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
-            if (title1) {
-                let businessObject = Object.assign({container:task_container}, {color: title1.style.fill})
+            let rect = completeTask.querySelectorAll('.djs-visual rect')[0]
+            if (rect) {
+                let businessObject = Object.assign({container:task_container}, {color: rect.style.stroke})
                 return businessObject
             }
         }
         return null
     }
-
     this.setAllHighLight = function (container) {
         this.clearAllHighLight(container)
         let tasks = container.querySelectorAll('.djs-shape')
@@ -23,28 +22,24 @@ function utils() {
         })
         this.setEndHighLight(container)
     }
-
     this.setTaskMaxDay = function (container, id, day) {
         let text = container.querySelector(`[data-element-type^="bpmn"][data-element-id="${id}"] .d-con-clock span`)
         if (text) {
             text.innerText = day
         }
     }
-
     this.hideTaskMaxDay = function (container, id) {
         let clock = container.querySelector(`[data-element-type^="bpmn"][data-element-id="${id}"] .d-con-clock`)
         if(clock){
             clock.style.display='none'
         }
     }
-
     this.setTaskRealName = function (container, id, day) {
         let text = container.querySelector(`[data-element-type^="bpmn"][data-element-id="${id}"] .custom-realName text`)
         if (text) {
             text.innerHTML = day
         }
     }
-
     this.setCenter = function (canvas,options,offset={x:0,y:0}) {
         let vbox = canvas.viewbox(),
             outer = vbox.outer,
@@ -70,7 +65,6 @@ function utils() {
         }
         canvas.viewbox(newViewbox);
     }
-
     this.clearWatermark = function () {
         if (document.querySelector('.bjs-powered-by')) {
             document.querySelector('.bjs-powered-by').remove()
@@ -140,7 +134,7 @@ function utils() {
 
         }
     }
-    this.focus=function(bpmnViewer,canvas,options,key){
+    this.focus = function(bpmnViewer,canvas,options,key){
         const _container =bpmnViewer._container
         const taskObj = this.getTaskObj(_container,key)
         if(taskObj){
@@ -152,6 +146,46 @@ function utils() {
             this.setCenter(canvas,options,{x,y})
         }else{
             this.setCenter(canvas,options)
+        }
+    }
+    this.componentToHex = function(c){
+        let hex = c.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    this.rgbToHex = function (rgb){
+        try{
+            let re = /\d+/gi;
+            let ms = rgb.match(re)
+            if(ms.length>0){
+                return "#" + this.componentToHex(parseInt(ms[0])) + this.componentToHex(parseInt(ms[1])) + this.componentToHex(parseInt(ms[2]));
+            }
+            else{
+                return "#000"
+            }
+        }catch (err){
+            return '#000'
+        }
+    }
+
+
+    this.hexToRgb = function (hex){
+        if (hex.indexOf('#') === 0) {
+            let r = parseInt('0x' + hex.slice(1, 3))
+            let g = parseInt('0x' + hex.slice(3, 5))
+            let b = parseInt('0x' + hex.slice(5, 7))
+            return [
+                r,
+                g,
+                b,
+            ]
+        } else {
+            let color = hex.match(/\d+/g)
+            return [
+                color[0],
+                color[1],
+                color[2]
+            ]
         }
     }
 }

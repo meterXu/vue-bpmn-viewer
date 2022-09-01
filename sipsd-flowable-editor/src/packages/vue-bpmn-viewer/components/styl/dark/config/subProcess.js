@@ -11,7 +11,7 @@ export default (options)=>{
         height:options.height,
         rx:4,
         ry:4,
-        stroke:'#6f6f6f',
+        stroke:'#407080',
         collapsed:false,
         strokeWidth:1,
         transform:"translate(0.5,0.5)",

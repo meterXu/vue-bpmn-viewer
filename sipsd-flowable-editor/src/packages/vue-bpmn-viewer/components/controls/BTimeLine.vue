@@ -36,14 +36,15 @@ export default {
   name: "BTimeLine",
   props:['taskData','bpmnViewer','options','bpmnOptions'],
   data(){
+    let setline = this.options.setline
     return {
       selectItem:null,
       loadingInstance:null,
-      oldStyle:{color:null,setline:false,user:null,shadow:false,stroke:false},
+      oldStyle:{color:null,setline,user:null,shadow:false,stroke:true},
       highLight:[
-        {color:'#f5842c',setline:false,user:null,shadow:true,stroke:true},
-        {color:'#5BC14B',setline:false,user:null,shadow:true,stroke:true},
-        {color:'#ff0000',setline:false,user:null,shadow:true,stroke:true}
+        {color:'#f5842c',setline,user:null,shadow:true,stroke:true},
+        {color:'#5BC14B',setline,user:null,shadow:true,stroke:true},
+        {color:'#ff0000',setline,user:null,shadow:true,stroke:true}
       ],
       colorEd: '',
       colorTurn: '',
@@ -116,7 +117,8 @@ export default {
       const type = item.status==='已办'?(item.approveType==='审批'?2:3):1
       const taskObj = utils.getTaskObj(this.bpmnViewer._container,item.taskDefinitionKey)
       if(taskObj){
-        item.oldStyle = Object.assign({},this.oldStyle,{color:taskObj.color})
+        let xx = utils.rgbToHex(taskObj.color)
+        item.oldStyle = Object.assign({},this.oldStyle,{color:xx})
       }
       this.bpmnOptions.additionalModules[0].utils.setTaskHighlight(this.bpmnViewer._container,[item.taskDefinitionKey],this.highLight[type-1])
     },

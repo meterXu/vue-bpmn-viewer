@@ -1,8 +1,9 @@
 import {
-    append, attr,
+    append,
     classes,
     create,
 } from 'tiny-svg';
+import bpmnThemeClassic from "../../dark";
 
 const taskIcon={
     "bpmn:UserTask":{
@@ -31,7 +32,7 @@ export default (options)=>{
         height:options.height,
         rx:4,
         ry:4,
-        stroke:'#ececec',
+        stroke: bpmnThemeClassic.colors[0],
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
         fill:'#fff',

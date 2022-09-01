@@ -8,11 +8,10 @@ export default (options)=>{
         cx:options.width/2,
         cy:options.height/2,
         r:options.width/2,
-        strokeWidth:1,
+        strokeWidth:2,
         transform:"translate(0.5,0.5)",
-        fill:'#aaa',
-        stroke:'#6f6f6f'
-        // filter:"url(#f1)"
+        fill:'#042f43',
+        stroke:'#6f6f6f',
     })
     let text = create('text',{
         x:(options.width/2)-12,
@@ -28,12 +27,16 @@ export default (options)=>{
     append(g,text)
     append(g,circle)
 
-    let ok = create('path')
-    attr(ok,{d:'M45.6,55.2c2.7-4.8,12-13.3,18.7-17.7l2.6-1.6c1-0.5,1.9-0.9,2.7-1.1c-2.1-4.6-0.3-8.3,0-12.6l0,0\n' +
-            '\tc-2.5,1.2-5,3-7.4,5l-2.8,2.5C51.4,37.1,45,46.3,45,46.3l-4.7-8.9l-10.7,5.1C34.1,44.1,41,49.7,45.6,55.2L45.6,55.2z',
-        fill:'#fff',
-        transform:'matrix(0.5 0 0 0.5 -11 -4)'
-        })
+    let ok = create('svg',{
+        viewBox:"0 0 1024 1024",
+        width:'30',
+        height:'30'
+    })
+    let p1 = create('path',{
+        d:'M512 640l-104.5632 54.976a25.6 25.6 0 0 1-37.1456-26.9952l19.968-116.4288-84.5824-82.4576a25.6 25.6 0 0 1 14.1824-43.6608l116.9024-16.9856 52.288-105.9328a25.6 25.6 0 0 1 45.9008 0l52.288 105.9328 116.9024 16.9856a25.6 25.6 0 0 1 14.1824 43.6608l-84.5824 82.4576 19.968 116.4288a25.6 25.6 0 0 1-37.1456 26.9952L512 640z',
+        fill:'#b6b6b6'
+    })
+    ok.append(p1)
     append(g,ok)
     return g
 }

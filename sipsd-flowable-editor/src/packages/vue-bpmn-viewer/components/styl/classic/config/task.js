@@ -41,6 +41,7 @@ export default (options)=>{
         strokeWidth:1,
         transform:"translate(0.5,0.5)",
         fill:'#F5F5F5',
+        filter:`url(#f1_${options.element.id})`
     })
     const filter = create('filter',{
         id:"f1_"+options.element.id,
