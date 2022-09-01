@@ -14,6 +14,7 @@
 		<start-class>com.sipsd.flow.FlowManagerApplication</start-class>
 	</properties>
 	<dependencies>
+		<!--有可能会被楼栋检测工具扫描出来，其实只要封住暴露的接口是不会有危险的 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>

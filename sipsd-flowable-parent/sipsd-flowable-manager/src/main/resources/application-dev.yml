@@ -13,7 +13,7 @@ logging:
 spring:
     datasource:
         driver-class-name: com.mysql.jdbc.Driver
-        url: jdbc:mysql://192.168.175.208:3306/flowable_v4?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=GMT
+        url: jdbc:mysql://192.168.175.208:3306/flowable_v4?characterEncoding=UTF-8&useUnicode=true&useSSL=false&serverTimezone=Asia/Shanghai
         username: root
         password: 123@abcd
         hikari:
