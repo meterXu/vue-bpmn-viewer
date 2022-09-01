@@ -26,12 +26,13 @@ import VueBpmn from './bpmn/VueBpmn.vue';
 import bpmnThemeDefault from './styl/default/index.js'
 import bpmnThemeClassic from './styl/classic/index.js'
 import bpmnThemeDark from './styl/dark/index'
+import bpmnThemeCCP from './styl/ccp/index'
 import BTLayout from './controls/BTLayout.vue'
 import urljoin from 'url-join';
 import utils from './controls/lib/utils'
 import zoomScroll from './controls/lib/zoomScroll'
 import TouchModule from 'diagram-js/lib/navigation/touch'
-import {append, create} from "tiny-svg";
+import {append} from "tiny-svg";
 export default {
   name: "VueBpmnViewer",
   props:{
@@ -102,6 +103,7 @@ export default {
           default:bpmnThemeDefault,
           classic:bpmnThemeClassic,
           dark:bpmnThemeDark,
+          ccp:bpmnThemeCCP
         }
       }
       _styl.theme = this.styl.theme||_styl.theme
