@@ -248,7 +248,7 @@
           "DELETE-APP-RELATION": "App model",
           "IMPORT-DESCRIPTION": "Please browse for or drop a BPMN XML definition with an .bpmn or .bpmn20.xml extension",
           "IMPORT-TITLE": "Import a process model",
-          "IMPORT-MULTI-TITLE": "Import a or multi process model",
+          "IMPORT-MULTI-TITLE": "Import  multi process model",
           "USE-AS-NEW-TITLE": "Use as new version",
           "USE-AS-NEW-DESCRIPTION": "Are you sure you want to use version {{version}} to create a new version of \"{{name}}\"?",
           "USE-AS-NEW-UNRESOLVED-MODELS-ERROR": "Could not fully restore the app model to the chosen version: some referenced models are missing due to being deleted in the past. Please update the app model accordingly. Missing models:",
@@ -258,7 +258,7 @@
           "ACTIONS": "Actions",
           "IMPORT": {
               "DROPZONE": "Drop a .bpmn or .bpmn20.xml BPMN XML file",
-              "MULTI-DROPZONE": "Drop a .bpmn or .bpmn20.xml BPMN XML file",
+              "MULTI-DROPZONE": "Drop multi .bpmn or .bpmn20.xml BPMN XML file",
               "CANCEL-UPLOAD": "Cancel the upload",
               "ERROR": "Error while processing the BPMN XML file",
               "NO-DROP": "Drag and drop not supported"
