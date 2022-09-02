@@ -293,8 +293,15 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 			// 5.删除节点
 			this.deleteActivity(taskExtensionVo.getTaskDefinitionKey(), taskEntity.getProcessInstanceId());
 
-			Map<String, UserTask> allUserTaskMap = getAllUserTaskMap(taskEntity.getProcessDefinitionId());
-			UserTask userTaskModel = allUserTaskMap.get(taskExtensionVo.getTaskDefinitionKey());
+			//获取当前节点上一个节点的节点信息
+			BpmTaskModelQuery query = new BpmTaskModelQuery();
+			query.setDefineId(taskEntity.getProcessDefinitionId());
+			UserTaskModelDTO userTaskModelsDTO = bpmProcessService.getUserTaskModelDto(query);
+			List<BpmTaskModelEntity> taskModelEntities = userTaskModelsDTO.getAllUserTaskModels();
+			Map<String, BpmTaskModelEntity> taskModelEntitiesMap = taskModelEntities.stream().collect(
+					Collectors.toMap(BpmTaskModelEntity::getTaskDefKey, a -> a, (k1, k2) -> k1));
+			BpmTaskModelEntity taskModelEntity = taskModelEntitiesMap.get(taskExtensionVo.getTaskDefinitionKey());
+
 
 			List<String> executionIds = new ArrayList<>();
 			// 6.判断节点是不是子流程内部的节点
@@ -310,17 +317,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				executions.forEach(execution -> executionIds.add(execution.getId()));
 				this.moveExecutionsToSingleActivityId(executionIds, taskExtensionVo.getTaskDefinitionKey());
 			}
-			// 驳回到会签节点
-			else if(userTaskModel.hasMultiInstanceLoopCharacteristics()){
-				SequenceFlow sequenceFlow = userTaskModel.getIncomingFlows().get(0);
-				String sourceRef = sequenceFlow.getSourceRef();
-				List<Execution> executions = runtimeService.createExecutionQuery()
-						.parentId(taskEntity.getProcessInstanceId()).list();
-				executions.forEach(execution -> executionIds.add(execution.getId()));
-				this.moveExecutionsToSingleActivityId(executionIds, sourceRef);
-			}
 			// 驳回到并联网关内节点
-			else if(taskExtensionVo.getFlowType().equals(FlowConstant.FLOW_PARALLEL)){
+			else if(taskModelEntity.getInParallelGateway()){
 				//驳回到并联节点
 				List<String> distActivityIds = new ArrayList<>();
 				//查询该节点的其他并联节点
