@@ -256,7 +256,7 @@
           "ACTIONS": "动作",
           "IMPORT": {
               "DROPZONE": "拖拽一个 .bpmn 或者 .bpmn20.xml BPMN XML 文件",
-              "MULTI-DROPZONE": "拖拽多个 .bpmn 或者 .bpmn20.xml BPMN XML 文件",
+              "MULTI-DROPZONE": "拖拽 .bpmn 或者 .bpmn20.xml BPMN XML 文件",
               "CANCEL-UPLOAD": "取消上传",
               "ERROR": "处理BPMN XML文件时出错",
               "NO-DROP": "不支持拖放"
