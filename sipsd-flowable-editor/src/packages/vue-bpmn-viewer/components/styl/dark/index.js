@@ -9,8 +9,8 @@ import {
     setTaskHighlight, taskSyncHighLight
 } from "../dark/approach.js";
 export default {
-    __init__: ['bpmn-theme-blue'],
-    'bpmn-theme-blue': ['type', custom],
+    __init__: ['bpmn-theme-dark'],
+    'bpmn-theme-dark': ['type', custom],
     'utils':{
         setTaskHighlight:setTaskHighlight,
         setStartHighLight:null,
@@ -23,6 +23,6 @@ export default {
         clearFlowHighLight:clearFlowHighLight,
         taskSyncHighLight: taskSyncHighLight
     },
-    'colors':["#6f6f6f","#f5842c","#5BC14B","#ff0000"],
+    'colors':["#407080","#f5842c","#5BC14B","#ff0000"],
     'style':style
 }

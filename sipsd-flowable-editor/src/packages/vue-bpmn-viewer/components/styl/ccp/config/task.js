@@ -212,18 +212,13 @@ function createCon(options,text,clock){
 
 function createUserTitleIcon(){
     let g = create('g',{
-        transform:'matrix(0.012 0 0 0.012 8 7)'
+        transform:'matrix(0.015 0 0 0.015 8 5)'
     })
     let user_1 = create('path',{
-        d:'M248.384 264.128C248.384 118.272 366.4 0 512 0s263.616 118.272 263.616 264.128S657.6 528.256 512 528.256 248.384 409.984 248.384 264.128z',
-        fill:'#fff'
-    })
-    let user_2 = create('path',{
-        d:'M972.8 1024c-11.456-245.056-213.376-428.736-460.8-428.736S62.656 778.944 51.2 1024L972.8 1024z',
-        fill:'#fff'
+        d:'M923.2 429.6H608l-97.6-304-97.6 304H97.6l256 185.6L256 917.6l256-187.2 256 187.2-100.8-302.4z',
+        fill:'#FAD97F'
     })
     append(g,user_1)
-    append(g,user_2)
     return g
 }
 function createServiceTitleIcon(){

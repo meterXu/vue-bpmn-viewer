@@ -30,6 +30,7 @@
               <el-radio label="default">默认主题</el-radio>
               <el-radio label="classic">经典主题</el-radio>
               <el-radio label="dark">深色主题</el-radio>
+              <el-radio label="ccp">党建主题</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="timeData">

@@ -9,8 +9,8 @@ import {
     setTaskHighlight, taskSyncHighLight
 } from "../classic/approach";
 export default {
-    __init__: ['bpmn-theme-blue'],
-    'bpmn-theme-blue': ['type', custom],
+    __init__: ['bpmn-theme-classic'],
+    'bpmn-theme-classic': ['type', custom],
     'utils':{
         setTaskHighlight:setTaskHighlight,
         setStartHighLight:null,

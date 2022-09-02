@@ -1,6 +1,5 @@
 import {attr, classes} from "tiny-svg";
-import axios from "axios";
-import de from "element-ui/src/locale/lang/de";
+import utils from "../../controls/lib/utils";
 let colorsArr = []
 function setSingleTaskHighLight(container, id, options) {
     if (id) {
@@ -12,6 +11,11 @@ function setSingleTaskHighLight(container, id, options) {
                 let title1 = completeTask.querySelectorAll('.djs-visual rect')[1]
                 let title2 = completeTask.querySelectorAll('.djs-visual rect')[2]
                 let user = completeTask.querySelectorAll('.djs-visual .d-userTask-content .d-con-user span')[0]
+                if(rect) {
+                    attr(rect, {
+                        stroke: options.color,
+                    })
+                }
                 if (options.user) {
                     user.innerHTML = options.user
                 } else {
@@ -30,7 +34,7 @@ function setSingleTaskHighLight(container, id, options) {
                     })
                 }
                 if (options.shadow && feColorMatrix && rect) {
-                    const rgb = hexToRgb(options.color)
+                    const rgb = utils.hexToRgb(options.color)
                     attr(feColorMatrix, {
                         values: `${(rgb[0] / 255).toFixed(3)} 0 0 0 0
                            0 ${(rgb[1] / 255).toFixed(3)} 0 0 0
@@ -82,25 +86,6 @@ function clearSingleTaskHighLight(container, id) {
         })
     }
 }
-function hexToRgb(hex) {
-    if (hex.indexOf('#') === 0) {
-        let r = parseInt('0x' + hex.slice(1, 3))
-        let g = parseInt('0x' + hex.slice(3, 5))
-        let b = parseInt('0x' + hex.slice(5, 7))
-        return [
-            r,
-            g,
-            b,
-        ]
-    } else {
-        let color = hex.match(/\d+/g)
-        return [
-            color[0],
-            color[1],
-            color[2]
-        ]
-    }
-}
 export let setTaskHighlight = function (container, ids, options = {
     color: '#5BC14B',
     setline: false,
@@ -117,7 +102,7 @@ export let setTaskHighlight = function (container, ids, options = {
     })
 }
 export let setEndHighLight = function (container, color = {stroke: '#db4744', fill: '#FD706D'}, setline = false) {
-    let endEvents = container.querySelectorAll('[data-element-type^="bpmn"]')
+    let endEvents = container.querySelectorAll('[data-element-type="bpmn:EndEvent"]')
     if (endEvents.length > 0) {
         endEvents.forEach(c => {
             let circle = c.querySelector('circle')
@@ -170,7 +155,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors)
                     if (c.approveType === '驳回') {
                         setTaskHighlight(container, [c.taskDefinitionKey], {
                             color: colorsArr[3],
-                            setline: false,
+                            setline: options.setline,
                             shadow: false,
                             type: 3,
                             stroke: true
@@ -178,7 +163,7 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors)
                     } else {
                         setTaskHighlight(container, [c.taskDefinitionKey], {
                             color: colorsArr[2],
-                            setline: false,
+                            setline: options.setline,
                             shadow: false,
                             type: 2,
                             stroke: true
@@ -212,10 +197,7 @@ export let setStartTaskHighlight = function (container, ids, options = {
 }) {
     ids.forEach(id => {
         this.clearHighLight(container, id)
-        const xx = setStaetSingleTaskHighLight(container, id, options)
-        if (xx) {
-            taskHighlightTimer[id] = xx
-        }
+        setSingleTaskHighLight(container, id, options)
         if (options.setline) {
             this.setFlowHighLight(container, id, options)
         }
