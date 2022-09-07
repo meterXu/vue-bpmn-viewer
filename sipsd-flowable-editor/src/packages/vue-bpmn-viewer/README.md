@@ -106,16 +106,16 @@ export default {
 
 ## 属性
 
-|名称|说明|默认值|
-|:---|:---|:---|
-|source|流程图xml地址或者xml字符串|null|
-|baseApi|工作流引擎后端地址，如果配置了source，则该属性不生效|null|
-|xmlId|流程图ID，配合baseApi使用|null|
-|styl|流程图主题，组件自带两种主题default、classic，可以根据需要重写主题，也可以自己开发主题|{theme:"default"}}|
-|instanceId|flowable实例ID，配合baseApi使用|null|
-|type|流程图显示模式|1：流程图，2：流程实例，配合baseApi使用|
-|timeData|时间轴数据，此数据会替换接口获得的数据|null|
-|options|控件配置|{zoom:true,timeLine:false,center:true,setline:false}|
+|名称| 说明                                                          |默认值|
+|:---|:------------------------------------------------------------|:---|
+|source| 流程图xml地址或者xml字符串                                            |null|
+|baseApi| 工作流引擎后端地址，如果配置了source，则该属性不生效                               |null|
+|xmlId| 流程图ID，配合baseApi使用                                           |null|
+|styl| 流程图主题，组件自带四种主题default、classic、dark、ccp，可以根据需要重写主题，也可以自己开发主题 |{theme:"default"}}|
+|instanceId| flowable实例ID，配合baseApi使用                                    |null|
+|type| 流程图显示模式                                                     |1：流程图，2：流程实例，配合baseApi使用|
+|timeData| 时间轴数据，此数据会替换接口获得的数据                                         |null|
+|options| 控件配置                                                        |{zoom:true,timeLine:false,center:true,setline:false}|
 
 ### options
 |名称|说明|默认值|
