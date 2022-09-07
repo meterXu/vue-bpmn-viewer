@@ -154,13 +154,23 @@ export let taskSyncHighLight = function (container, bpmnObj, nv, options,colors)
                 }
                     break;
                 case '待办': {
-                    setTaskHighlight(container, [c.taskDefinitionKey], {
-                        color: colors[1],
-                        setline: options.setline,
-                        shadow: false,
-                        type: 1,
-                        stroke: true
-                    })
+                    if(c.suspensionState === '挂起'){
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colors[4],
+                            setline: options.setline,
+                            shadow: false,
+                            type: 1,
+                            stroke: true
+                        })
+                    }else{
+                        setTaskHighlight(container, [c.taskDefinitionKey], {
+                            color: colors[1],
+                            setline: options.setline,
+                            shadow: false,
+                            type: 1,
+                            stroke: true
+                        })
+                    }
                 }
                     break;
             }

@@ -8,7 +8,7 @@
           <div class="timeline-item__timestamp">
             {{fmtDate(item.startTime)}}
           </div>
-          <div :class="highLightClass(item)" :style="{'--colorEd': colorEd,'--colorTurn':colorTurn,'--colorUned':colorUned}">
+          <div :class="highLightClass(item)" :style="{'--colorEd': colorEd,'--colorTurn':colorTurn,'--colorUned':colorUned,'--colorHang':colorHang}">
             <div @mouseover="handleItemOver(item)"
                  @mouseout="handleItemOut(item)"
                  @click="handleClick(item)">
@@ -42,13 +42,15 @@ export default {
       loadingInstance:null,
       oldStyle:{color:null,setline,user:null,shadow:false,stroke:true},
       highLight:[
-        {color:'#f5842c',setline,user:null,shadow:true,stroke:true},
-        {color:'#5BC14B',setline,user:null,shadow:true,stroke:true},
-        {color:'#ff0000',setline,user:null,shadow:true,stroke:true}
+        {color:null,setline,user:null,shadow:true,stroke:true},
+        {color:null,setline,user:null,shadow:true,stroke:true},
+        {color:null,setline,user:null,shadow:true,stroke:true},
+        {color:null,setline,user:null,shadow:true,stroke:true}
       ],
-      colorEd: '',
-      colorTurn: '',
-      colorUned: ''
+      colorEd: null,
+      colorTurn: null,
+      colorUned: null,
+      colorHang: null
     }
   },
   mounted() {
@@ -58,6 +60,8 @@ export default {
     this.colorEd = this.highLight[1].color
     this.highLight[2].color=this.bpmnOptions.additionalModules[0].colors[3]
     this.colorTurn = this.highLight[2].color
+    this.highLight[3].color=this.bpmnOptions.additionalModules[0].colors[4]
+    this.colorHang = this.highLight[3].color
   },
   watch:{
     taskData:{
@@ -79,8 +83,12 @@ export default {
             cls.push('timeLine-item-over-ed')
           }
         }
-        else{
-          cls.push('timeLine-item-over-uned')
+        else if(item.status==='待办'){
+          if(item.suspensionState==='挂起'){
+            cls.push('timeLine-item-over-hang')
+          }else{
+            cls.push('timeLine-item-over-uned')
+          }
         }
         if(this.selectItem&&this.selectItem.id === item.id){
           cls.push(cls[1].replace('over','active'))
@@ -114,7 +122,7 @@ export default {
       }
     },
     handleItemOver(item){
-      const type = item.status==='已办'?(item.approveType==='审批'?2:3):1
+      const type = item.status==='已办'?(item.approveType==='审批'?2:3):(item.suspensionState==='挂起'?4:1)
       const taskObj = utils.getTaskObj(this.bpmnViewer._container,item.taskDefinitionKey)
       if(taskObj){
         let xx = utils.rgbToHex(taskObj.color)
@@ -141,7 +149,11 @@ export default {
           return this.highLight[2].color
         }
       }else if(obj.status==='待办'){
-        return this.highLight[0].color
+        if(obj.suspensionState==='挂起'){
+          return this.highLight[3].color
+        }else{
+          return this.highLight[0].color
+        }
       }
     },
     scrollMove(){
@@ -187,8 +199,16 @@ export default {
   background: var(--colorUned);
   opacity: 0.8;
 }
-.dpark-bpmn-viewer .timeLine-item-active-ed,.timeLine-item-active-turn,.timeLine-item-active-uned,
-.dpark-bpmn-viewer .timeLine-item-over-uned:hover p,.timeLine-item-over-ed:hover p,.timeLine-item-over-turn:hover p{
+.dpark-bpmn-viewer .timeLine-item-over-hang:hover{
+  background: var(--colorHang);
+  opacity: 0.8;
+}
+.dpark-bpmn-viewer .timeLine-item-active-hang{
+  background: var(--colorHang);
+  opacity: 0.8;
+}
+.dpark-bpmn-viewer .timeLine-item-active-ed,.timeLine-item-active-turn,.timeLine-item-active-uned,.timeLine-item-active-hang,
+.dpark-bpmn-viewer .timeLine-item-over-uned:hover p,.timeLine-item-over-ed:hover p,.timeLine-item-over-turn:hover p,.timeLine-item-over-hang:hover p{
   color: #fff;
 }
 </style>

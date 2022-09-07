@@ -18,6 +18,6 @@ export default {
         taskSyncHighLight: taskSyncHighLight,
         setStartTaskHighlight: setStartTaskHighlight
     },
-    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000"],
+    'colors':["#8f8f8f","#f5842c","#5BC14B","#ff0000","#ff5994"],
     'style':style
 }

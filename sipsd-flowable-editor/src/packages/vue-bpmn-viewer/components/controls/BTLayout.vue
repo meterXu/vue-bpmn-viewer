@@ -4,7 +4,7 @@
     <div v-if="showBpmn" class="legend">
       <ul class="legend-ul">
         <li v-for="item in legend" :key="item.class">
-          <i :class="['legend-icon',item.class]" :style="{'--colorNone': colorNone,'--colorUnExec':colorUnExec,'--colorExec':colorExec,'--colorBack':colorBack}"></i>
+          <i :class="['legend-icon',item.class]" :style="{'--colorNone': colorNone,'--colorUnExec':colorUnExec,'--colorExec':colorExec,'--colorBack':colorBack,'--colorHang':colorHang}"></i>
           <span>{{item.text}}</span>
         </li>
       </ul>
@@ -42,12 +42,14 @@ name: "BTLayout",
         {text:"未执行",class:"legend-none"},
         {text:"待审批",class:"legend-unExec"},
         {text:"已审批",class:"legend-exec"},
-        {text:"被驳回",class:"legend-back"}
+        {text:"被驳回",class:"legend-back"},
+        {text:"已挂起",class:"legend-hang"}
       ],
       colorNone: '',
       colorUnExec: '',
       colorExec: '',
       colorBack: '',
+      colorHang: '',
       dialogVisible:false
     }
   },
@@ -60,6 +62,7 @@ name: "BTLayout",
     this.colorUnExec = this.bpmnOptions.additionalModules[0].colors[1]
     this.colorExec = this.bpmnOptions.additionalModules[0].colors[2]
     this.colorBack = this.bpmnOptions.additionalModules[0].colors[3]
+    this.colorHang = this.bpmnOptions.additionalModules[0].colors[4]
   },
   methods:{
     itemClick(item){
@@ -90,6 +93,11 @@ name: "BTLayout",
 .dpark-bpmn-viewer .legend-back{
   background: var(--colorBack);
   border:1px solid var(--colorBack);
+  opacity: 0.8;
+}
+.dpark-bpmn-viewer .legend-hang{
+  background: var(--colorHang);
+  border:1px solid var(--colorHang);
   opacity: 0.8;
 }
 </style>
