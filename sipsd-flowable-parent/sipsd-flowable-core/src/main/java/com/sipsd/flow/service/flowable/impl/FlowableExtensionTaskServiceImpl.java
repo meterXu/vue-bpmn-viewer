@@ -165,13 +165,16 @@ public class FlowableExtensionTaskServiceImpl extends BaseProcessService impleme
 	}
 
 	@Override
-	public void saveBackExtensionTaskForJump(String processInstanceId,String taskDefKey)
+	public void saveBackExtensionTaskForJump(String processInstanceId,List<String> taskDefKey)
 	{
 		//并联任务的时候保证起始时间相同利于后续驳回查询节点相关的其他并联所有节点
 		Date startTime = new Date();
 		String flowType = FlowConstant.FLOW_SEQUENTIAL;
-		List<Task> waitedTaskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
-		waitedTaskList = waitedTaskList.stream().filter(p -> StrUtil.equals(p.getTaskDefinitionKey(), taskDefKey)).collect(Collectors.toList());
+		List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
+		List<Task> waitedTaskList = new ArrayList<>();
+		for(String key : taskDefKey){
+			waitedTaskList.addAll(taskList.stream().filter(p -> StrUtil.equals(p.getTaskDefinitionKey(), key)).collect(Collectors.toList()));
+		}
 		//TODO 对于加签的情况驳回的时候无法判断
 		if(waitedTaskList.size()>1)
 		{
