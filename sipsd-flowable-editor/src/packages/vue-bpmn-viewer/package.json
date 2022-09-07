@@ -1,6 +1,6 @@
 {
   "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.77",
+  "version": "1.0.78",
   "description": "沃壤平台工作流引擎执行器",
   "scripts": {
     "build": "rollup -c",
