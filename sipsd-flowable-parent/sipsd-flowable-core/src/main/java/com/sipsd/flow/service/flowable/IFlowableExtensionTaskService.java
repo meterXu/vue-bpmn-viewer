@@ -39,7 +39,7 @@ public interface IFlowableExtensionTaskService
      * @param processInstanceId
      * @param taskDefKey
      */
-    public void saveBackExtensionTaskForJump(String processInstanceId,String taskDefKey);
+    public void saveBackExtensionTaskForJump(String processInstanceId,List<String> taskDefKey);
 
     /**
      * @param processInstanceId
