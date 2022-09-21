@@ -37,7 +37,8 @@ const customConfig = {
     },
     'bpmn:SubProcess':{
         draw:subProcess
-    }
+    },
+
 }
 
 export default customConfig

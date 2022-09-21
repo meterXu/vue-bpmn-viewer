@@ -1,5 +1,5 @@
 <template>
-  <div ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':taskData&&taskData.length===0}" v-if="options.timeLine">
+  <div v-show=this.menuShow ref="bpmn-time-line" class="bpmn-time-line" :class="{'spin-center':taskData&&taskData.length===0}" v-if="options.timeLine">
     <div class="timeline" v-if="taskData&&taskData.length>0">
       <div class="timeline-item" v-for="item in taskData" :key="item.id" :color="getTimeLineColor(item)">
         <div class="timeline-item__tail"></div>
@@ -34,7 +34,7 @@ import ms from 'pretty-ms'
 import moment from 'moment'
 export default {
   name: "BTimeLine",
-  props:['taskData','bpmnViewer','options','bpmnOptions'],
+  props:['taskData','bpmnViewer','options','bpmnOptions',"menuShow"],
   data(){
     let setline = this.options.setline
     return {
@@ -50,7 +50,7 @@ export default {
       colorEd: null,
       colorTurn: null,
       colorUned: null,
-      colorHang: null
+      colorHang: null,
     }
   },
   mounted() {
@@ -61,7 +61,6 @@ export default {
     this.highLight[2].color=this.bpmnOptions.additionalModules[0].colors[3]
     this.colorTurn = this.highLight[2].color
     this.highLight[3].color=this.bpmnOptions.additionalModules[0].colors[4]
-    this.colorHang = this.highLight[3].color
   },
   watch:{
     taskData:{

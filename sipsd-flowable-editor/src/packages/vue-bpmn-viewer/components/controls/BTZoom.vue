@@ -1,6 +1,15 @@
 <template>
   <div :class="controlsClass" v-if="myOptions.zoom">
     <ul class="io-zoom-reset io-control io-control-list">
+      <li v-if="this.myOptions.timeLine === true"
+          v-show="this.menuShowUp === true" class="icon-menu-left" :class="iconClass" @click="changeMenu">
+      </li>
+      <li v-if="this.myOptions.timeLine === true"
+          v-show="this.menuShowUp === false" class="icon-menu-right" :class="iconClass" @click="changeMenu">
+      </li>
+      <li>
+        <hr v-if="this.myOptions.timeLine === true" :class="hrClass"/>
+      </li>
       <li class="icon-download" :class="iconClass" @click="download">
       </li>
       <li>
@@ -18,6 +27,8 @@
       </li>
       <li class="icon-minus" :class="iconClass" @click="handleZoomOut">
       </li>
+
+
     </ul>
   </div>
 </template>
@@ -34,7 +45,8 @@ export default {
       dialogVisible: false,
       controlsClass: 'io-zoom-controls',
       iconClass: 'icon',
-      hrClass: ''
+      hrClass: '',
+      menuShowUp:true
     }
   },
   methods: {
@@ -68,6 +80,10 @@ export default {
       let width =  Math.ceil(_width)+Math.ceil(g.transform.animVal[0].matrix.e*3)
       let height = Math.ceil(_height)+Math.ceil(g.transform.animVal[0].matrix.f*3)
       saveSvgAsPng.saveSvgAsPng(graphics,"diagram.png",{height:height,encoderOptions:1})
+    },
+    changeMenu(){
+      this.menuShowUp = !this.menuShowUp
+      this.$emit('changeMenu',this.menuShowUp)
     }
   },
   created() {
