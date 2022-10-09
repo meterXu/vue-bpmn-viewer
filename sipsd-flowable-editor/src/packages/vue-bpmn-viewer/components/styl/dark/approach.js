@@ -208,6 +208,13 @@ export let clearAllFlowHighLight = function (container) {
         })
         classes(c).remove('highlight-custom-path')
     })
+
+    let label= container.querySelectorAll('.djs-label')
+    label.forEach(c=>{
+        attr(c,{
+            fill:'#9FB5BF'
+        })
+    })
 }
 export let clearAllHighLight = function (container) {
     let tasks = container.querySelectorAll('[data-element-type^="bpmn"]')

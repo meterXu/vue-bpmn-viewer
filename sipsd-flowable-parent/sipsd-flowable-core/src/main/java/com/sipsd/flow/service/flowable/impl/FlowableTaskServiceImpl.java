@@ -333,7 +333,8 @@ public class FlowableTaskServiceImpl extends BaseProcessService implements IFlow
 				if(currentNode.getParallelGatewayForkRef().equals(lastNode.getParallelGatewayForkRef())){
 
 					List<Execution> executions = runtimeService.createExecutionQuery()
-							.parentId(taskEntity.getProcessInstanceId()).activityId(currentNode.getTaskDefKey()).list();
+							.parentId(taskEntity.getProcessInstanceId()).list();
+					executions = executions.stream().filter(p->StrUtil.equals(p.getActivityId(),currentNode.getTaskDefKey())).collect(Collectors.toList());
 					executions.forEach(execution -> executionIds.add(execution.getId()));
 					this.moveExecutionsToSingleActivityId(executionIds, lastNode.getTaskDefKey());
 					saveExtensionTask = false;

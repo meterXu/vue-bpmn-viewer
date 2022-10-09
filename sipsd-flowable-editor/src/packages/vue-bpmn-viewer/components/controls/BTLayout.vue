@@ -2,8 +2,8 @@
   <div>
     <div v-if="!showBpmn" class="no-bpmn"></div>
     <div v-if="showBpmn" class="legend">
-      <ul class="legend-ul">
-        <li v-for="item in legend" :key="item.class">
+      <ul :class="[this.screenWidth>1024 ? 'legend-ul':'legend-ul-small']"  >
+        <li v-for="item in legend" :key="item.class" >
           <i :class="['legend-icon',item.class]" :style="{'--colorNone': colorNone,'--colorUnExec':colorUnExec,'--colorExec':colorExec,'--colorBack':colorBack,'--colorHang':colorHang}"></i>
           <span>{{item.text}}</span>
         </li>
@@ -15,11 +15,11 @@
     <div class="bt-layout-right">
       <BTZoom ref="cBTZoom" :myOptions="myOptions"
               :bpmnViewer="bpmnViewer" :selectKey="selectKey"
-              @zoomReset="zoomReset"
+              @zoomReset="zoomReset" @changeMenu="changeMenu"
       >
       </BTZoom>
       <BTimeLine ref="cBTimeLine" :options="myOptions" :taskData="taskData" :bpmnViewer="bpmnViewer" :bpmnOptions="bpmnOptions"
-                 @itemClick="itemClick"
+                 @itemClick="itemClick" :menuShow="isMenuShow" v-show=this.screen
       >
         <template v-slot="slotProps">
           <slot name="time" v-bind:item="slotProps.item"></slot>
@@ -50,7 +50,10 @@ name: "BTLayout",
       colorExec: '',
       colorBack: '',
       colorHang: '',
-      dialogVisible:false
+      dialogVisible:false,
+      isMenuShow:true,
+      screenWidth: null,
+      screen:true
     }
   },
   components:{
@@ -63,6 +66,23 @@ name: "BTLayout",
     this.colorExec = this.bpmnOptions.additionalModules[0].colors[2]
     this.colorBack = this.bpmnOptions.additionalModules[0].colors[3]
     this.colorHang = this.bpmnOptions.additionalModules[0].colors[4]
+    this.screenWidth = document.body.clientWidth
+      window.onresize = () => {
+        return (() => {
+          this.screenWidth = document.body.clientWidth
+        })()
+      }
+  },
+  watch: {
+    screenWidth: {
+      handler: function (val) {
+        if (val < 1024) {
+          this.screen = false
+        } else {
+          this.screen = true
+        }
+      },
+    },
   },
   methods:{
     itemClick(item){
@@ -70,6 +90,9 @@ name: "BTLayout",
     },
     zoomReset(){
       this.$refs.cBTimeLine.scrollMove()
+    },
+    changeMenu(item){
+      this.isMenuShow = item
     }
   }
 }
