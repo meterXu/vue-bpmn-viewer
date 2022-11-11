@@ -1,7 +1,7 @@
 {
-  "name": "@dpark/vue-bpmn-viewer",
-  "version": "1.0.79",
-  "description": "沃壤平台工作流引擎执行器",
+  "name": "meter-vue-bpmn-viewer",
+  "version": "1.0.1",
+  "description": "流程图渲染器",
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,7 @@
     "vue"
   ],
   "private": false,
-  "author": "框架技术研发部",
+  "author": "isaac",
   "contributors": [
     "isaac"
   ],

@@ -1,19 +1,18 @@
-# @dpark/vue-bpmn-viewer
-> 沃壤工作流引擎执行器
+# meter-vue-bpmn-viewer
+> 流程图渲染器
 
-![sipsd-flowable-editor](http://58.210.9.133/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
+![sipsd-flowable-editor](https://dev.dpark.com.cn/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
 
 ## 安装
 1. 在工程目录下增加.npmrc文件，内容为：
 ```yaml=
 registry  = "https://registry.npm.taobao.org"
-@dpark:registry="http://58.210.9.133/iplatform/npm/"
 ```
 
 2. 安装组件
 ``` bash
-npm i @dpark/vue-bpmn-viewer
+npm i meter-vue-bpmn-viewer
 ```
 
 ## 快速上手
@@ -24,12 +23,12 @@ npm i @dpark/vue-bpmn-viewer
   </VueBpmnViewer>
 </template>
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import VueBpmnViewer from 'meter-vue-bpmn-viewer'
 export default {
   components:{VueBpmnViewer},
   data(){
     return {
-      source:"http://58.210.9.133/iplatform/sipsd-flow-modeler/rest/formdetail/getprocessXml/e6c573bcc99211eba5465e2c421612f0",
+      source:"https://dev.dpark.com.cn/iplatform/sipsd-flow-modeler/rest/formdetail/getprocessXml/e6c573bcc99211eba5465e2c421612f0",
       timeData:[
         {
           "id": 1,
@@ -68,7 +67,7 @@ export default {
 ```
 
 
-## 配合工作流后端使用
+## 配合flowable使用
 
 ```vue
 <template>
@@ -80,12 +79,12 @@ export default {
   </VueBpmnViewer>
 </template>
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import VueBpmnViewer from 'meter-vue-bpmn-viewer'
 export default {
   components:{VueBpmnViewer},
   data(){
     return {
-      baseApi:'http://58.210.9.133/iplatform/sipsd-flow-modeler/',
+      baseApi:'http://host/sipsd-flow-modeler/',
       instanceId:'e6c573bcc99211eba5465e2c421612f0',
       options:{
         timeLine:true
@@ -130,7 +129,7 @@ export default {
 |focus|流程图是否聚焦居中|false|
 
 **说明**
-1. 组件可以纯前端使用，也可以配合沃壤平台工作流引擎进行使用
+1. 组件可以纯前端使用，基于bpmn2.0标准，也可以配合flowable引擎进行使用
 2. 纯前端使用不需要配置baseApi，xmlId，instanceId，type属性
 3. 如果同时配置的source和baseApi，则忽略baseApi属性
 
