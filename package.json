@@ -1,0 +1,51 @@
+{
+  "name": "bpmn-viewer",
+  "version": "1.0.0",
+  "private": false,
+  "license": "MIT",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "serve:proxy": "vue-cli-service serve --mode proxy",
+    "serve:production": "vue-cli-service serve --mode production",
+    "build": "vue-cli-service build",
+    "build:106": "vue-cli-service build --mode development",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bpmn-js": "^8.2.2",
+    "downloadjs": "^1.4.7",
+    "element-ui": "^2.15.6",
+    "html-to-image": "^1.9.0",
+    "moment": "^2.29.4",
+    "pretty-ms": "^7.0.1",
+    "save-svg-as-png": "^1.4.17",
+    "tiny-svg": "^2.2.2",
+    "url-join": "^4.0.1",
+    "vue": "^2.6.11",
+    "vue-ls": "^3.2.0",
+    "vue-router": "^3.5.1",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
+    "babel-eslint": "^10.1.0",
+    "copy-webpack-plugin": "^6.1.0",
+    "core-js": "^2.6.5",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "rxjs-compat": "^6.5.4",
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^4.5.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "no-console": "off"
+    }
+  }
+}
