@@ -27,12 +27,12 @@ const project_bpmn = {
     "title": "sipsd-flowable-editor",
     "login": {
       "title": "bpmn-viewer",
-      "desc": "项目由s2驱动！"
+      "desc": "！"
     },
     "head": {
       "title": {
-        "desktop": "欢迎使用S2前端开发框架",
-        "mobile": "S2开发框架"
+        "desktop": "",
+        "mobile": ""
       },
       "searchMenu": {
         "show": true

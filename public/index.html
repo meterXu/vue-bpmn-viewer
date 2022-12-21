@@ -7,6 +7,10 @@
     <link rel="icon" href="static/dpark/logo_sipsd.png">
     <title>sipsd-flowable-editor</title>
     <script src="./project.js"></script>
+    <script>
+        document.title = window.project.config.title
+        document.querySelector('link[rel="icon"]').href = window.project.config.favicon
+    </script>
   </head>
   <body>
     <noscript>
