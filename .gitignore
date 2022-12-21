@@ -21,8 +21,6 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-package-lock.json
-*.lock
-yarn.lock
-public/s2.config.json
+public/project.js
 yarn-error.log
+
