@@ -9,7 +9,7 @@ export default [
     {
         input: './index.js',
         output: [
-            { file: `dist/vue-bpmn-viewer.umd.js`, format: 'umd',name: 'BpmnViewerVue'},
+            { file: `dist/bpmn-viewer-vue.umd.js`, format: 'umd',name: 'BpmnViewerVue'},
             { file: "dist/index.js", format: 'cjs' },
             { file: "dist/index.esm.js", format: 'es' }
         ],
