@@ -1,6 +1,0 @@
-!dist
-!index.js
-rollup.config.js
-yarn.lock
-assets
-!components
