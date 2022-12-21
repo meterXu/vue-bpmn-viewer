@@ -3,7 +3,7 @@
 
 ![bpmn-viewer-vue](http://img.xdo.icu/bpmn-viewer-vue.gif)
 
-[在线DEMO](http://192.168.126.25/flowable-editor/#/bpmn/staticViewer)
+[在线DEMO](https://app.isaacxu.com/vue-bpmn-viewer/)
 
 ## 特点
 * 优化默认流程图样式。
