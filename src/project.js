@@ -26,7 +26,7 @@ const project_bpmn = {
     "favicon": "./static/dpark/logo_sipsd_favicon.png",
     "title": "sipsd-flowable-editor",
     "login": {
-      "title": "bpmn-viewer",
+      "title": "bpmn-viewer-vue",
       "desc": "！"
     },
     "head": {
@@ -38,8 +38,8 @@ const project_bpmn = {
         "show": true
       },
       "helper": {
-        "show": true,
-        "href": "http://192.168.126.25/pldoc/",
+        "show": false,
+        "href": "",
         "target": "_blank"
       }
     },

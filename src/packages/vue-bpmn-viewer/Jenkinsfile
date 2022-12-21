@@ -7,7 +7,7 @@ def credentialsId = "c078ac92-89dd-4842-8292-5e348e68db08"
 def npm = "https://npm.dpark.com.cn/npm"
 def robot = "flowable_publish"
 def issuesUrl= 'http://issues.dpark.com.cn/git/issues/flowable_v4/-/issues'
-def releasesUrl= 'https://npm.dpark.com.cn/npm/-/web/detail/@dpark/vue-bpmn-viewer'
+def releasesUrl= 'https://npm.dpark.com.cn/npm/-/web/detail/bpmn-viewer-vue'
 def docUrl= 'https://doc.dpark.com.cn/iplatform/geekdoc/docs/wow/wow-1df4mgf24hnuh'
 def versionLocal
 def packageName

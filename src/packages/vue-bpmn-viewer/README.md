@@ -1,32 +1,26 @@
-# @dpark/vue-bpmn-viewer
-> 沃壤工作流引擎执行器
+# bpmn-viewer-vue
+> 工作流流程渲染组件
 
-![sipsd-flowable-editor](https://dev.dpark.com.cn/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
+![bpmn-viewer-vue](https://dev.dpark.com.cn/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
 
 
 ## 安装
-1. 在工程目录下增加.npmrc文件，内容为：
-```yaml=
-registry  = "https://registry.npm.taobao.org"
-@dpark:registry="https://npm.dpark.com.cn/npm/"
-```
 
-2. 安装组件
 ``` bash
-npm i @dpark/vue-bpmn-viewer
+npm i bpmn-viewer-vue
 ```
 
 ## 快速上手
 
 ```vue
 <template>
-  <VueBpmnViewer :source="source" :timeData="timeData" :options="options">
-  </VueBpmnViewer>
+  <BpmnViewerVue :source="source" :timeData="timeData" :options="options">
+  </BpmnViewerVue>
 </template>
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import BpmnViewerVue from 'bpmn-viewer-vue'
 export default {
-  components:{VueBpmnViewer},
+  components:{BpmnViewerVue},
   data(){
     return {
       source:"https://dev.dpark.com.cn/iplatform/sipsd-flow-modeler/rest/formdetail/getprocessXml/e6c573bcc99211eba5465e2c421612f0",
@@ -68,35 +62,27 @@ export default {
 ```
 
 
-## 配合工作流后端使用
+## 配合flowable工作流后端使用
 
 ```vue
 <template>
-  <VueBpmnViewer :type="2"
+  <BpmnViewerVue :type="2"
                  :baseApi="baseApi"
                  :instanceId="instanceId"
                  :options="options"
                  :styl="styl">
-  </VueBpmnViewer>
+  </BpmnViewerVue>
 </template>
 <script>
-import VueBpmnViewer from '@dpark/vue-bpmn-viewer'
+import BpmnViewerVue from 'bpmn-viewer-vue'
 export default {
-  components:{VueBpmnViewer},
+  components:{BpmnViewerVue},
   data(){
     return {
-      baseApi:'https://dev.dpark.com.cn/iplatform/sipsd-flow-modeler/',
+      baseApi:'https://example.com/flow-modeler/',
       instanceId:'e6c573bcc99211eba5465e2c421612f0',
       options:{
         timeLine:true
-      },
-      styl: {
-        theme:"classic",
-        stylMap: {
-          classic: {
-            color: ["#8f8f8f","#f5eb2c","#63ee6a","#ff0000"] //重写classic主题中任务的四种状态颜色
-          }
-        }
       }
     }
   }
@@ -132,7 +118,7 @@ export default {
 |taskMaxDayKey| 最大审批时间              |customTaskMaxDay|
 
 **说明**
-1. 组件可以纯前端使用，也可以配合沃壤平台工作流引擎进行使用
+1. 组件可以纯前端使用，也可以配合flowable工作流引擎进行使用
 2. 纯前端使用不需要配置baseApi，xmlId，instanceId，type属性
 3. 如果同时配置的source和baseApi，则忽略baseApi属性
 
@@ -158,7 +144,7 @@ export default {
 
 ```vue
 // slotProps.item 为时间轴每项的数据对象
-<VueBpmnViewer :type="2"
+<BpmnViewerVue :type="2"
                :baseApi="baseApi"
                :instanceId="instanceId">
   <template v-slot:time="slotProps">
@@ -167,7 +153,7 @@ export default {
       <p>状态：{{slotProps.item.status}}</p>
       <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
   </template>
-</VueBpmnViewer>
+</BpmnViewerVue>
 <script>
 export default {
   methods:{
@@ -179,7 +165,7 @@ export default {
 
 ```vue
 <template>
-  <VueBpmnViewer :type="1"
+  <BpmnViewerVue :type="1"
                  :baseApi="baseApi"
                  :xmlId="xmlId">
     <a-button-group>
@@ -187,6 +173,6 @@ export default {
       <a-button>btn2</a-button>
       <a-button>btn3</a-button>
     </a-button-group>
-  </VueBpmnViewer>
+  </BpmnViewerVue>
 </template>
 ```

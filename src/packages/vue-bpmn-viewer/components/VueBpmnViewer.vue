@@ -34,7 +34,7 @@ import zoomScroll from './controls/lib/zoomScroll'
 import TouchModule from 'diagram-js/lib/navigation/touch'
 import {append} from "tiny-svg";
 export default {
-  name: "VueBpmnViewer",
+  name: "BpmnViewerVue",
   props:{
     baseApi:{type:String,required:false},
     instanceId:{type:String},

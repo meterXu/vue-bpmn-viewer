@@ -45,7 +45,7 @@
         </el-form>
       </el-aside>
       <el-main>
-        <VueBpmnViewer v-if="isRefresh" ref="vbv"
+        <BpmnViewerVue v-if="isRefresh" ref="vbv"
                        :type="viewBpmnViewerOps.type"
                        :baseApi="viewBpmnViewerOps.baseApi"
                        :xmlId="viewBpmnViewerOps.xmlId"
@@ -63,17 +63,17 @@
             <p v-else>剩余时间：{{timeFormat(slotProps.item.restTime)}}</p>
             <p>下载：<a target="_blank" href="http://www.baidu.com">baidu</a></p>
           </template>
-        </VueBpmnViewer>
+        </BpmnViewerVue>
       </el-main>
     </el-container>
   </div>
 </template>
 <script>
-import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
+import BpmnViewerVue from "../packages/vue-bpmn-viewer/index.js";
 import ms from 'pretty-ms'
 import axios from "axios";
 export default {
-  components: {VueBpmnViewer},
+  components: {BpmnViewerVue},
   data() {
     return {
       isRefresh: false,

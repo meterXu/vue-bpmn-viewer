@@ -1,22 +1,22 @@
 <template>
   <div id="bpmn">
-    <VueBpmnViewer ref="bpmnObj"
+    <BpmnViewerVue ref="bpmnObj"
                    :baseApi="baseApi"
                    :type="type"
                    :instanceId="instanceId"
                    :xmlId="xmlId"
                    :styl="{theme:'default'}"
                    :options="{zoom,timeLine,fit,setline,static,focus,track}">
-    </VueBpmnViewer>
+    </BpmnViewerVue>
   </div>
 </template>
 
 <script>
-import VueBpmnViewer from "../packages/vue-bpmn-viewer/index.js";
+import BpmnViewerVue from "../packages/vue-bpmn-viewer/index.js";
 export default {
   name: "Viewer",
   components:{
-    VueBpmnViewer
+    BpmnViewerVue
   },
   data(){
     return {

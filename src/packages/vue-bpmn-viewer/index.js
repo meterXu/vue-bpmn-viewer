@@ -1,2 +1,2 @@
-import VueBpmnViewer from './components/VueBpmnViewer.vue'
-export default VueBpmnViewer
+import BpmnViewerVue from './components/BpmnViewerVue.vue'
+export default BpmnViewerVue
