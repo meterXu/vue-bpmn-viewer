@@ -1,7 +1,7 @@
 # bpmn-viewer-vue
-> 工作流流程渲染组件
+> 基于bpmn2.0标准的工作流流程图渲染组件
 
-![bpmn-viewer-vue](https://dev.dpark.com.cn/iplatform/codimd/uploads/upload_e649630e2412b862d9c9314def7635b2.gif)
+![bpmn-viewer-vue](http://img.xdo.icu/bpmn-viewer-vue.gif)
 
 [在线DEMO](http://192.168.126.25/flowable-editor/#/bpmn/staticViewer)
 
@@ -15,5 +15,5 @@
 
 ## 执行器组件
 
-[bpmn-viewer-vue](src/packages/vue-bpmn-viewer/README.md)
+[bpmn-viewer-vue](src/packages/bpmn-viewer-vue/README.md)
 

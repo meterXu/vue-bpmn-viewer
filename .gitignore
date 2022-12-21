@@ -23,5 +23,5 @@ pnpm-debug.log*
 *.sw?
 public/project.js
 yarn-error.log
-src/packages/vue-bpmn-viewer/yarn.lock
+src/packages/bpmn-viewer-vue/yarn.lock
 

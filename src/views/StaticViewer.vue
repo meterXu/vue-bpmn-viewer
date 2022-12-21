@@ -69,7 +69,7 @@
   </div>
 </template>
 <script>
-import BpmnViewerVue from "../packages/vue-bpmn-viewer/index.js";
+import BpmnViewerVue from "../packages/bpmn-viewer-vue/index.js";
 import ms from 'pretty-ms'
 import axios from "axios";
 export default {
