@@ -17,7 +17,7 @@
 * 可自定义主题，组件自带四套主题：默认、经典、深色、党建
 * 可用于大屏展示
 
-## 执行器组件
+## 流程图渲染组件
 
 [bpmn-viewer-vue](src/packages/bpmn-viewer-vue/README.md)
 
