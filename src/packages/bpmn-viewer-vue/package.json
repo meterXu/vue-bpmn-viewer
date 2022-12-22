@@ -1,6 +1,6 @@
 {
   "name": "bpmn-viewer-vue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "基于bpmn2.0标准的工作流流程图渲染组件",
   "scripts": {
     "build": "rollup -c",
